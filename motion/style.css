@@ -232,3 +232,12 @@ body:has(dialog[open]) .stick{display:none}
 
 .bar-cta,.menu-btn,.logo{white-space:nowrap}
 @media(max-width:459px){.bar-cta{display:none}.menu-btn{margin-left:auto}}
+
+.send{display:grid;gap:12px}
+@media(min-width:520px){.send{grid-template-columns:1.4fr 1fr}}
+.btn-wa{background:#25d366;border-color:#25d366;color:#06210f}
+.btn-wa:hover{background:#1fb858;border-color:#1fb858;box-shadow:3px 3px 0 #fff}
+.btn-ghost-d{border-color:#fff;color:#fff}
+.btn-ghost-d:hover{background:#fff;color:var(--ink);box-shadow:3px 3px 0 #7f95ff}
+.direct{color:#aeb3bd;line-height:1.9}
+.direct a{color:#fff;text-underline-offset:4px}

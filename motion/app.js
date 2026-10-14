@@ -135,37 +135,19 @@ form.addEventListener("submit", function(e){
   msg.className = "form-msg";
   if(bad.length){ msg.classList.add("err"); msg.textContent = "Please fill in your name, how to reach you, and what you're launching."; bad[0].focus(); return; }
   var t = C.tiers.filter(function(x){return x.id === form.elements.pkg.value})[0];
-  var body = "Name: "+form.elements.name.value+"\nContact: "+form.elements.contact.value+
+  var via = (e.submitter && e.submitter.value) || "wa";
+  var text = "Hi Blue Particle Studios, I'd like a launch video."+"\n\nName: "+form.elements.name.value+
+    "\nContact: "+form.elements.contact.value+
     "\nPackage: "+(t ? t.name+" ("+money(t.price)+")" : "Not sure yet")+
     "\nDeadline: "+(form.elements.when.value||"flexible")+
     "\n\nWhat I'm launching:\n"+form.elements.what.value;
-  var btn = form.querySelector("button[type=submit]"), label = btn.innerHTML;
-  var fallback = function(){
-    location.href = "mailto:"+C.email+"?subject="+encodeURIComponent("Launch video enquiry: "+form.elements.name.value)+"&body="+encodeURIComponent(body);
-    msg.classList.add("err");
-    msg.textContent = "We couldn't send that automatically, so we opened your email app instead. Or write to " + C.email + ".";
-  };
-  if(form.elements._honey.value){ return; }
-  btn.disabled = true; btn.textContent = "Sending...";
-  msg.textContent = "";
-  fetch(C.formEndpoint + C.email, {
-    method:"POST",
-    headers:{"Content-Type":"application/json","Accept":"application/json"},
-    body:JSON.stringify({
-      _subject:"Launch video enquiry: "+form.elements.name.value,
-      _template:"table", _captcha:"false",
-      name:form.elements.name.value, contact:form.elements.contact.value,
-      package:(t ? t.name+" ("+money(t.price)+")" : "Not sure yet"),
-      deadline:form.elements.when.value||"flexible",
-      launching:form.elements.what.value
-    })
-  }).then(function(r){ return r.json(); }).then(function(d){
-    if(d && (d.success === true || d.success === "true")){
-      form.reset(); $("#pkg").value = "launch";
-      msg.classList.add("ok");
-      msg.textContent = "Got it. We'll reply with a fixed price and delivery date soon.";
-    } else { fallback(); }
-  }).catch(fallback).then(function(){ btn.disabled = false; btn.innerHTML = label; });
+  if(via === "email"){
+    location.href = "mailto:"+C.email+"?subject="+encodeURIComponent("Launch video enquiry: "+form.elements.name.value)+"&body="+encodeURIComponent(text);
+    msg.classList.add("ok"); msg.textContent = "Opening your email app. If nothing opens, write to " + C.email + ".";
+  } else {
+    window.open("https://wa.me/"+C.whatsapp+"?text="+encodeURIComponent(text), "_blank", "noopener");
+    msg.classList.add("ok"); msg.textContent = "Opening WhatsApp with your message ready. Just press send.";
+  }
 });
 
 /* ---------- particle field in the hero ---------- */

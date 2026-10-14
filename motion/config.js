@@ -1,6 +1,6 @@
 /* Blue Particle Studios: everything you'd want to edit without touching layout. */
 window.BPS = {
-  // Where the enquiry form sends its email (opens the visitor's mail app, no backend needed).
+  // Email used for the "email instead" option (opens the visitor's mail app, no backend needed).
   email: "blueparticlestudios@gmail.com",
 
   // The spiral: each project contributes `count` tiles named media/spiral/<id>-1.jpg ... -<count>.jpg.
@@ -12,9 +12,9 @@ window.BPS = {
     { id: "two-halves", label: "Arguuu · Two Halves", count: 6 },
   ],
 
-  // Enquiries are delivered by FormSubmit (formsubmit.co) to `email`. If that ever fails,
-  // the form falls back to opening the visitor's own email app.
-  formEndpoint: "https://formsubmit.co/ajax/",
+  // WhatsApp number in international format, digits only (09061950587 -> 234 906 195 0587).
+  whatsapp: "2349061950587",
+  whatsappDisplay: "0906 195 0587",
 
   // Shown as "NGN 1 = USD x" only for the toggle. Prices below are set by hand, not converted.
   currency: "NGN",
