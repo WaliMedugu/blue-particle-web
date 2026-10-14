@@ -67,7 +67,7 @@ if(matchMedia("(hover:hover)").matches){
 }
 
 /* ---------- reveal on scroll ---------- */
-var rvEls = $$(".head, .row, .trio>div, .steps li, .tier, .promise, .qa, .push");
+var rvEls = $$(".projects .head, .pcard, .head, .trio>div, .steps li, .tier, .promise, .qa, .push");
 rvEls.forEach(function(el){ el.classList.add("rv"); });
 if("IntersectionObserver" in window && !reduced){
   var io = new IntersectionObserver(function(es){
@@ -96,14 +96,19 @@ if(!matchMedia("(hover:hover)").matches && "IntersectionObserver" in window){
 }
 
 var player = $("#player"), pv = $("#playerVideo");
-$$(".row").forEach(function(row){
-  $(".tile", row).addEventListener("click", function(){
-    pv.src = row.dataset.video;
-    pv.style.aspectRatio = row.dataset.ratio;
-    $("#playerTitle").textContent = "[ " + row.dataset.title + " ]";
-    player.showModal();
-    var p = pv.play(); if(p && p.catch) p.catch(function(){});
-  });
+function openCard(card){
+  pv.src = card.dataset.video;
+  pv.style.aspectRatio = card.dataset.ratio;
+  $("#playerTitle").textContent = "[ " + card.dataset.title + " ]";
+  player.showModal();
+  var p = pv.play(); if(p && p.catch) p.catch(function(){});
+}
+$$(".pcard").forEach(function(card){
+  $(".tile", card).addEventListener("click", function(){ openCard(card); });
+});
+/* the 3D spiral asks us to open a project by id */
+document.addEventListener("bps:open", function(e){
+  var card = $('.pcard[data-id="'+e.detail+'"]'); if(card) openCard(card);
 });
 function closePlayer(){ pv.pause(); pv.removeAttribute("src"); pv.load(); }
 player.addEventListener("close", closePlayer);
@@ -134,8 +139,33 @@ form.addEventListener("submit", function(e){
     "\nPackage: "+(t ? t.name+" ("+money(t.price)+")" : "Not sure yet")+
     "\nDeadline: "+(form.elements.when.value||"flexible")+
     "\n\nWhat I'm launching:\n"+form.elements.what.value;
-  location.href = "mailto:"+C.email+"?subject="+encodeURIComponent("Launch video enquiry: "+form.elements.name.value)+"&body="+encodeURIComponent(body);
-  msg.textContent = "Opening your email app. If nothing opens, write to " + C.email + " and paste your details.";
+  var btn = form.querySelector("button[type=submit]"), label = btn.innerHTML;
+  var fallback = function(){
+    location.href = "mailto:"+C.email+"?subject="+encodeURIComponent("Launch video enquiry: "+form.elements.name.value)+"&body="+encodeURIComponent(body);
+    msg.classList.add("err");
+    msg.textContent = "We couldn't send that automatically, so we opened your email app instead. Or write to " + C.email + ".";
+  };
+  if(form.elements._honey.value){ return; }
+  btn.disabled = true; btn.textContent = "Sending...";
+  msg.textContent = "";
+  fetch(C.formEndpoint + C.email, {
+    method:"POST",
+    headers:{"Content-Type":"application/json","Accept":"application/json"},
+    body:JSON.stringify({
+      _subject:"Launch video enquiry: "+form.elements.name.value,
+      _template:"table", _captcha:"false",
+      name:form.elements.name.value, contact:form.elements.contact.value,
+      package:(t ? t.name+" ("+money(t.price)+")" : "Not sure yet"),
+      deadline:form.elements.when.value||"flexible",
+      launching:form.elements.what.value
+    })
+  }).then(function(r){ return r.json(); }).then(function(d){
+    if(d && (d.success === true || d.success === "true")){
+      form.reset(); $("#pkg").value = "launch";
+      msg.classList.add("ok");
+      msg.textContent = "Got it. We'll reply with a fixed price and delivery date soon.";
+    } else { fallback(); }
+  }).catch(fallback).then(function(){ btn.disabled = false; btn.innerHTML = label; });
 });
 
 /* ---------- particle field in the hero ---------- */
