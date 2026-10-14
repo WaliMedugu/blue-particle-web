@@ -43,7 +43,7 @@ tilt.add(helix); scene.add(tilt);
 /* textures: each project contributes its tiles; 90 ribbons cycle through them */
 const loader = new THREE.TextureLoader();
 const items = [];
-C.spiral.forEach(p => { for (let i = 1; i <= p.count; i++) items.push({ id: p.id, label: p.label, src: `media/spiral/${p.id}-${i}.jpg` }); });
+C.spiral.forEach(p => { for (let i = 1; i <= p.count; i++) items.push({ id: p.id, label: p.label, src: `${C.mediaBase || "media/"}spiral/${p.id}-${i}.jpg` }); });
 /* interleave projects so neighbours differ */
 const byProj = C.spiral.map(p => items.filter(x => x.id === p.id));
 const order = [];
