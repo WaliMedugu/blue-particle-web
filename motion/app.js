@@ -136,13 +136,14 @@ form.addEventListener("submit", function(e){
   if(bad.length){ msg.classList.add("err"); msg.textContent = "Please fill in your name, how to reach you, and what you're launching."; bad[0].focus(); return; }
   var t = C.tiers.filter(function(x){return x.id === form.elements.pkg.value})[0];
   var via = (e.submitter && e.submitter.value) || "wa";
-  var text = "Hi Blue Particle Studios, I'd like a launch video."+"\n\nName: "+form.elements.name.value+
+  var org = form.elements.org && form.elements.org.value ? "\nI am a: "+form.elements.org.value : "";
+  var text = (C.waIntro || "Hi Blue Particle Studios, I'd like a launch video.")+"\n\nName: "+form.elements.name.value+org+
     "\nContact: "+form.elements.contact.value+
     "\nPackage: "+(t ? t.name+" ("+money(t.price)+")" : "Not sure yet")+
     "\nDeadline: "+(form.elements.when.value||"flexible")+
     "\n\nWhat I'm launching:\n"+form.elements.what.value;
   if(via === "email"){
-    location.href = "mailto:"+C.email+"?subject="+encodeURIComponent("Launch video enquiry: "+form.elements.name.value)+"&body="+encodeURIComponent(text);
+    location.href = "mailto:"+C.email+"?subject="+encodeURIComponent((C.subject || "Launch video enquiry")+": "+form.elements.name.value)+"&body="+encodeURIComponent(text);
     msg.classList.add("ok"); msg.textContent = "Opening your email app. If nothing opens, write to " + C.email + ".";
   } else {
     window.open("https://wa.me/"+C.whatsapp+"?text="+encodeURIComponent(text), "_blank", "noopener");
