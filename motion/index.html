@@ -29,7 +29,7 @@
 <dialog class="menu" id="menu" aria-label="Site menu">
   <form method="dialog"><button class="menu-close" aria-label="Close menu">[ Close ]</button></form>
   <nav aria-label="Main">
-    <a href="#work">Work</a>
+    <a href="#projects">Projects</a>
     <a href="#why">Why video</a>
     <a href="#process">Process</a>
     <a href="#pricing">Pricing</a>
@@ -61,70 +61,59 @@
   </ul>
 </section>
 
-<!-- WORK -->
-<section class="work" id="work" aria-labelledby="workH">
-  <div class="wrap head">
-    <p class="mono">[ 01 · Selected work ]</p>
-    <h2 id="workH">Real products.<br>Real launches.</h2>
-    <p class="sub">Four of ours. Hover or tap to preview, open for the full cut.</p>
+<!-- PROJECTS -->
+<section class="projects" id="projects" aria-labelledby="projH">
+  <div class="stage" id="stage">
+    <div class="stage-sticky">
+      <div id="spiral" role="img" aria-label="Interactive 3D spiral of frames from our projects. The same projects are listed below."></div>
+      <div class="stage-head">
+        <p class="mono">[ 01 · Projects ]</p>
+        <h2 id="projH">Projects</h2>
+      </div>
+      <p class="stage-hint mono"><span>Scroll to spin</span><span class="hint-hover"> · Hover &amp; click to play</span><span class="hint-touch"> · Tap to play</span></p>
+      <div class="hover-tag" id="spiralTag" hidden><span></span><i></i></div>
+    </div>
   </div>
 
-  <div class="rows">
-    <article class="row" data-video="media/reslz-second-life.mp4" data-title="Reslz · Second Life" data-ratio="3 / 4">
-      <div class="meta">
-        <h3>Second Life</h3>
-        <p class="mono">Reslz · Resale marketplace</p>
-        <p>An auction app for pre-owned finds. We made bidding, outbids and reseller payouts feel like a game you want to play.</p>
-        <p class="mono tags">Vertical 3:4 · 30s · App ad</p>
+  <div class="wrap">
+    <div class="head split">
+      <div>
+        <h2 class="h2-sm">Real products.<br>Real launches.</h2>
+        <p class="sub">Four films for two products. Hover or tap a card to preview, open it for the full cut.</p>
       </div>
-      <button class="tile" type="button" aria-label="Play Reslz Second Life, 30 second app ad">
-        <video muted loop playsinline preload="none" poster="media/reslz-second-life.jpg" src="media/reslz-second-life.mp4" width="720" height="960"></video>
-        <span class="play" aria-hidden="true">[ Play ]</span>
-      </button>
-      <div class="tile-note mono"><span>01</span> Hook in frame one. The product is the star.</div>
-    </article>
+      <a class="btn btn-hot" href="#pricing">Get one like these <span aria-hidden="true">→</span></a>
+    </div>
 
-    <article class="row" data-video="media/reslz-going-going.mp4" data-title="Reslz · Going, Going" data-ratio="3 / 4">
-      <div class="meta">
-        <h3>Going, Going</h3>
-        <p class="mono">Reslz · Live auctions</p>
-        <p>Urgency as a design material: a ticking clock, an outbid warning, a bid button you can't resist.</p>
-        <p class="mono tags">Vertical 3:4 · 30s · App ad</p>
-      </div>
-      <button class="tile" type="button" aria-label="Play Reslz Going Going, 30 second app ad">
-        <video muted loop playsinline preload="none" poster="media/reslz-going-going.jpg" src="media/reslz-going-going.mp4" width="720" height="960"></video>
-        <span class="play" aria-hidden="true">[ Play ]</span>
-      </button>
-      <div class="tile-note mono"><span>02</span> One feeling per scene. Nothing wasted.</div>
-    </article>
-
-    <article class="row wide" data-video="media/arguuu-title-fight.mp4" data-title="Arguuu · Title Fight" data-ratio="16 / 9">
-      <div class="meta">
-        <h3>Title Fight</h3>
-        <p class="mono">Arguuu · Live debate app</p>
-        <p>Debate as a sport. Ring lights, a countdown, a judge's verdict. A whole product idea understood in under a minute.</p>
-        <p class="mono tags">Landscape 16:9 · 42s · Launch film</p>
-      </div>
-      <button class="tile" type="button" aria-label="Play Arguuu Title Fight, 42 second launch film">
-        <video muted loop playsinline preload="none" poster="media/arguuu-title-fight.jpg" src="media/arguuu-title-fight.mp4" width="1280" height="720"></video>
-        <span class="play" aria-hidden="true">[ Play ]</span>
-      </button>
-      <div class="tile-note mono"><span>03</span> Mood sells. We build the whole world.</div>
-    </article>
-
-    <article class="row wide" data-video="media/arguuu-two-halves.mp4" data-title="Arguuu · Two Halves" data-ratio="16 / 9">
-      <div class="meta">
-        <h3>Two Halves</h3>
-        <p class="mono">Arguuu · Live debate app</p>
-        <p>Messi vs Ronaldo, split down the middle. Two sides, one verdict, and a reason to pick a team.</p>
-        <p class="mono tags">Landscape 16:9 · 40s · Launch film</p>
-      </div>
-      <button class="tile" type="button" aria-label="Play Arguuu Two Halves, 40 second launch film">
-        <video muted loop playsinline preload="none" poster="media/arguuu-two-halves.jpg" src="media/arguuu-two-halves.mp4" width="1280" height="720"></video>
-        <span class="play" aria-hidden="true">[ Play ]</span>
-      </button>
-      <div class="tile-note mono"><span>04</span> A clear idea, shown instead of explained.</div>
-    </article>
+    <div class="bento">
+      <article class="pcard portrait a" data-id="second-life" data-video="media/reslz-second-life.mp4" data-title="Reslz · Second Life" data-ratio="3 / 4">
+        <button class="tile" type="button" aria-label="Play Reslz Second Life, 30 second app ad">
+          <video muted loop playsinline preload="none" poster="media/reslz-second-life.jpg" src="media/reslz-second-life.mp4" width="720" height="960"></video>
+          <span class="cap"><span class="mono">Reslz · Resale marketplace</span><strong>Second Life</strong><span class="blurb">An auction app for pre-owned finds. Bidding, outbids and reseller payouts that feel like a game.</span><span class="mono tags">3:4 · 30s · App ad</span></span>
+          <span class="play" aria-hidden="true">[ Play ]</span>
+        </button>
+      </article>
+      <article class="pcard portrait b" data-id="going-going" data-video="media/reslz-going-going.mp4" data-title="Reslz · Going, Going" data-ratio="3 / 4">
+        <button class="tile" type="button" aria-label="Play Reslz Going Going, 30 second app ad">
+          <video muted loop playsinline preload="none" poster="media/reslz-going-going.jpg" src="media/reslz-going-going.mp4" width="720" height="960"></video>
+          <span class="cap"><span class="mono">Reslz · Live auctions</span><strong>Going, Going</strong><span class="blurb">Urgency as a design material: a ticking clock, an outbid warning, a bid button you can't resist.</span><span class="mono tags">3:4 · 30s · App ad</span></span>
+          <span class="play" aria-hidden="true">[ Play ]</span>
+        </button>
+      </article>
+      <article class="pcard land c" data-id="title-fight" data-video="media/arguuu-title-fight.mp4" data-title="Arguuu · Title Fight" data-ratio="16 / 9">
+        <button class="tile" type="button" aria-label="Play Arguuu Title Fight, 42 second launch film">
+          <video muted loop playsinline preload="none" poster="media/arguuu-title-fight.jpg" src="media/arguuu-title-fight.mp4" width="1280" height="720"></video>
+          <span class="cap"><span class="mono">Arguuu · Live debate app</span><strong>Title Fight</strong><span class="blurb">Debate as a sport. Ring lights, a countdown, a judge's verdict.</span><span class="mono tags">16:9 · 42s · Launch film</span></span>
+          <span class="play" aria-hidden="true">[ Play ]</span>
+        </button>
+      </article>
+      <article class="pcard land d" data-id="two-halves" data-video="media/arguuu-two-halves.mp4" data-title="Arguuu · Two Halves" data-ratio="16 / 9">
+        <button class="tile" type="button" aria-label="Play Arguuu Two Halves, 40 second launch film">
+          <video muted loop playsinline preload="none" poster="media/arguuu-two-halves.jpg" src="media/arguuu-two-halves.mp4" width="1280" height="720"></video>
+          <span class="cap"><span class="mono">Arguuu · Live debate app</span><strong>Two Halves</strong><span class="blurb">Messi vs Ronaldo, split down the middle. Two sides, one verdict.</span><span class="mono tags">16:9 · 40s · Launch film</span></span>
+          <span class="play" aria-hidden="true">[ Play ]</span>
+        </button>
+      </article>
+    </div>
   </div>
 </section>
 
@@ -216,6 +205,7 @@
         <textarea name="what" rows="4" required></textarea>
       </label>
       <label>Deadline <span class="opt">(optional)</span><input name="when" placeholder="e.g. end of November"></label>
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
       <button class="btn btn-hot" type="submit">Send my brief <span aria-hidden="true">→</span></button>
       <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
     </form>
@@ -242,5 +232,6 @@
 
 <script src="config.js"></script>
 <script src="app.js"></script>
+<script type="module" src="spiral.js"></script>
 </body>
 </html>

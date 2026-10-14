@@ -3,6 +3,19 @@ window.BPS = {
   // Where the enquiry form sends its email (opens the visitor's mail app, no backend needed).
   email: "blueparticlestudios@gmail.com",
 
+  // The spiral: each project contributes `count` tiles named media/spiral/<id>-1.jpg ... -<count>.jpg.
+  // Clicking a tile opens the card with the same id in the Projects grid.
+  spiral: [
+    { id: "second-life", label: "Reslz · Second Life", count: 6 },
+    { id: "title-fight", label: "Arguuu · Title Fight", count: 6 },
+    { id: "going-going", label: "Reslz · Going, Going", count: 6 },
+    { id: "two-halves", label: "Arguuu · Two Halves", count: 6 },
+  ],
+
+  // Enquiries are delivered by FormSubmit (formsubmit.co) to `email`. If that ever fails,
+  // the form falls back to opening the visitor's own email app.
+  formEndpoint: "https://formsubmit.co/ajax/",
+
   // Shown as "NGN 1 = USD x" only for the toggle. Prices below are set by hand, not converted.
   currency: "NGN",
 
