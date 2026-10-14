@@ -193,7 +193,7 @@
     <div>
       <p class="mono">[ 06 · Start ]</p>
       <h2 id="ctaH">Tell us what<br>you're launching.</h2>
-      <p class="sub">Two minutes to fill in. We reply with a fixed price and a delivery date.</p>
+      <p class="sub">Two minutes to fill in. We reply on WhatsApp or email with a fixed price and a delivery date.</p>
     </div>
     <form id="form" novalidate>
       <label>Your name<input name="name" autocomplete="name" required></label>
@@ -205,8 +205,11 @@
         <textarea name="what" rows="4" required></textarea>
       </label>
       <label>Deadline <span class="opt">(optional)</span><input name="when" placeholder="e.g. end of November"></label>
-      <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
-      <button class="btn btn-hot" type="submit">Send my brief <span aria-hidden="true">→</span></button>
+      <div class="send">
+        <button class="btn btn-wa" type="submit" name="via" value="wa">Send on WhatsApp <span aria-hidden="true">→</span></button>
+        <button class="btn btn-ghost-d" type="submit" name="via" value="email">Email instead</button>
+      </div>
+      <p class="direct mono">Or message us directly: <a id="waDirect" href="https://wa.me/2349061950587">WhatsApp 0906 195 0587</a> · <a id="mailDirect" href="mailto:blueparticlestudios@gmail.com">blueparticlestudios@gmail.com</a></p>
       <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
     </form>
   </div>
