@@ -3,249 +3,183 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Blue Particle Studios | Motion design & launch videos</title>
-<meta name="description" content="Motion-designed launch videos for apps and startups. Scripted, animated and delivered in days, with student and startup rates from ₦25,000.">
-<meta name="theme-color" content="#d3d5d9">
+<title>Work | Blue Particle Studios</title>
+<meta name="description" content="Launch films, app ads and brand films by Blue Particle Studios, built from each product's real UI.">
+<meta name="theme-color" content="#f2f1ec">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Blue Particle Studios">
 <meta property="og:url" content="https://blue-particle-studios.vercel.app/motion/">
-<meta property="og:title" content="Blue Particle Studios | Launch videos for apps & startups">
-<meta property="og:description" content="Motion-designed launch videos, scripted around your real product. Student and startup rates from ₦25,000.">
+<meta property="og:title" content="Work | Blue Particle Studios">
+<meta property="og:description" content="Launch films, app ads and brand films by Blue Particle Studios, built from each product's real UI.">
 <meta property="og:image" content="https://blue-particle-studios.vercel.app/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Blue Particle Studios | Launch videos for apps & startups">
-<meta name="twitter:description" content="Motion-designed launch videos, scripted around your real product. Student and startup rates from ₦25,000.">
+<meta name="twitter:title" content="Work | Blue Particle Studios">
+<meta name="twitter:description" content="Launch films, app ads and brand films by Blue Particle Studios, built from each product's real UI.">
 <meta name="twitter:image" content="https://blue-particle-studios.vercel.app/og.jpg">
 <link rel="canonical" href="https://blue-particle-studios.vercel.app/motion/">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230e1013'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%232342ff'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f2f1ec'/%3E%3Crect x='4.5' y='4.5' width='23' height='23' fill='none' stroke='%23282828'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%232342ff'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/bps.css">
 <script>document.documentElement.classList.add("js")</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 
-<header class="bar" id="top">
-  <a class="logo" href="#top" aria-label="Blue Particle Studios, back to top"><i aria-hidden="true"></i>Blue Particle<span> Studios</span></a>
-  <p class="coords" aria-hidden="true"><span>X :</span> <b id="cx">0</b> <span>Y :</span> <b id="cy">0</b></p>
-  <a class="bar-cta" href="#contact" data-pick="">[ Get a quote ]</a>
-  <button class="menu-btn" id="menuBtn" type="button" aria-haspopup="dialog">[ Menu ]</button>
+<header class="hdr" id="top">
+  <a class="brand" href="/" aria-label="Blue Particle Studios, home">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" fill="none" stroke="currentColor"/><path d="M2.5 2.5l19 19M21.5 2.5l-19 19" stroke="currentColor" stroke-width=".6" opacity=".45"/><circle cx="12" cy="12" r="4.4" fill="var(--accent)"/></svg>
+    Blue Particle
+  </a>
+  <nav aria-label="Main"><ul class="nav">
+    <li><a href="/#work">Work</a></li>
+    <li><a href="/#process">Process</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/#faq">FAQ</a></li>
+    <li><a class="hot" href="/#contact">Contact us</a></li>
+  </ul></nav>
+  <button class="menu-btn" id="menuBtn" type="button" aria-haspopup="dialog">Menu</button>
 </header>
 
-<dialog class="menu" id="menu" aria-label="Site menu">
-  <form method="dialog"><button class="menu-close" aria-label="Close menu">[ Close ]</button></form>
-  <nav aria-label="Main">
-    <a href="#projects">Projects</a>
-    <a href="#why">Why video</a>
-    <a href="#process">Process</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#faq">FAQ</a>
-    <a href="#contact" class="hot">Start a project</a>
+<dialog class="drawer" id="drawer" aria-label="Site menu">
+  <form method="dialog"><button class="close">Close</button></form>
+  <nav aria-label="Mobile">
+    <a href="/#work">Work</a><a href="/#process">Process</a><a href="/#pricing">Pricing</a><a href="/#faq">FAQ</a><a class="hot" href="/#contact">Contact us</a>
   </nav>
   <p class="mono">Abuja, Nigeria · Working worldwide</p>
 </dialog>
 
-<main id="main">
+<main id="main" class="sheet">
 
-<!-- HERO -->
-<section class="hero" aria-labelledby="h1">
-  <canvas id="field" aria-hidden="true"></canvas>
-  <div class="wrap hero-in">
-    <p class="mono kicker">[ Motion design studio · Launch videos for apps &amp; startups ]</p>
-    <h1 id="h1">Launch videos<br>people <em>can't scroll</em> past.</h1>
-    <div class="hero-row">
-      <p class="lede">We turn your app into 30 seconds of motion that makes strangers tap <b>Download</b>. Scripted around your real features, animated frame by frame, delivered in days. <b>Student and startup rates from ₦25,000.</b></p>
-      <div class="hero-actions">
-        <a class="btn btn-hot" href="#contact" data-pick="launch">Get my launch video <span aria-hidden="true">→</span></a>
-        <a class="btn btn-ghost" href="#pricing">See prices</a>
-        <p class="mono slots" id="slots" hidden></p>
-      </div>
-    </div>
-  </div>
-  <ul class="strip mono" aria-label="Highlights">
-    <li>From ₦25,000</li><li>Fixed price in writing</li><li>Student &amp; startup rates</li><li>Delivered in days</li><li>Licensed music &amp; fonts</li>
-  </ul>
+<section class="phead" aria-labelledby="h1">
+  <p class="lbl">All work</p>
+  <h1 id="h1">Launch films, app ads and brand films</h1>
+  <p>Every piece starts from the real product. Hover or tap a film to preview it, open it for the full cut with sound.</p>
+  <div class="acts"><a class="btn hot" href="/#contact"><span>Start a project</span><i aria-hidden="true">→</i></a><a class="btn" href="#pricing"><span>See pricing</span><i aria-hidden="true">↓</i></a></div>
 </section>
 
-<!-- PROJECTS -->
-<section class="projects" id="projects" aria-labelledby="projH">
-  <div class="stage" id="stage">
-    <div class="stage-sticky">
-      <div id="spiral" role="img" aria-label="Interactive 3D spiral of frames from our projects. The same projects are listed below."></div>
-      <div class="stage-head">
-        <p class="mono">[ 01 · Projects ]</p>
-        <h2 id="projH">Projects</h2>
-      </div>
-      <p class="stage-hint mono"><span>Scroll to spin</span><span class="hint-hover"> · Hover &amp; click to play</span><span class="hint-touch"> · Tap to play</span></p>
-      <div class="hover-tag" id="spiralTag" hidden><span></span><i></i></div>
-    </div>
-  </div>
-
-  <div class="wrap">
-    <div class="head split">
-      <div>
-        <h2 class="h2-sm">Real products.<br>Real launches.</h2>
-        <p class="sub">Four films for two products. Hover or tap a card to preview, open it for the full cut.</p>
-      </div>
-      <a class="btn btn-hot" href="#pricing">Get one like these <span aria-hidden="true">→</span></a>
-    </div>
-
-    <div class="bento">
-      <article class="pcard portrait a" data-id="second-life" data-video="media/reslz-second-life.mp4" data-title="Reslz · Second Life" data-ratio="3 / 4">
-        <button class="tile" type="button" aria-label="Play Reslz Second Life, 30 second app ad">
-          <video muted loop playsinline preload="none" poster="media/reslz-second-life.jpg" src="media/reslz-second-life.mp4" width="720" height="960"></video>
-          <span class="cap"><span class="mono">Reslz · Resale marketplace</span><strong>Second Life</strong><span class="blurb">An auction app for pre-owned finds. Bidding, outbids and reseller payouts that feel like a game.</span><span class="mono tags">3:4 · 30s · App ad</span></span>
-          <span class="play" aria-hidden="true">[ Play ]</span>
-        </button>
-      </article>
-      <article class="pcard portrait b" data-id="going-going" data-video="media/reslz-going-going.mp4" data-title="Reslz · Going, Going" data-ratio="3 / 4">
-        <button class="tile" type="button" aria-label="Play Reslz Going Going, 30 second app ad">
-          <video muted loop playsinline preload="none" poster="media/reslz-going-going.jpg" src="media/reslz-going-going.mp4" width="720" height="960"></video>
-          <span class="cap"><span class="mono">Reslz · Live auctions</span><strong>Going, Going</strong><span class="blurb">Urgency as a design material: a ticking clock, an outbid warning, a bid button you can't resist.</span><span class="mono tags">3:4 · 30s · App ad</span></span>
-          <span class="play" aria-hidden="true">[ Play ]</span>
-        </button>
-      </article>
-      <article class="pcard land c" data-id="title-fight" data-video="media/arguuu-title-fight.mp4" data-title="Arguuu · Title Fight" data-ratio="16 / 9">
-        <button class="tile" type="button" aria-label="Play Arguuu Title Fight, 42 second launch film">
-          <video muted loop playsinline preload="none" poster="media/arguuu-title-fight.jpg" src="media/arguuu-title-fight.mp4" width="1280" height="720"></video>
-          <span class="cap"><span class="mono">Arguuu · Live debate app</span><strong>Title Fight</strong><span class="blurb">Debate as a sport. Ring lights, a countdown, a judge's verdict.</span><span class="mono tags">16:9 · 42s · Launch film</span></span>
-          <span class="play" aria-hidden="true">[ Play ]</span>
-        </button>
-      </article>
-      <article class="pcard land d" data-id="two-halves" data-video="media/arguuu-two-halves.mp4" data-title="Arguuu · Two Halves" data-ratio="16 / 9">
-        <button class="tile" type="button" aria-label="Play Arguuu Two Halves, 40 second launch film">
-          <video muted loop playsinline preload="none" poster="media/arguuu-two-halves.jpg" src="media/arguuu-two-halves.mp4" width="1280" height="720"></video>
-          <span class="cap"><span class="mono">Arguuu · Live debate app</span><strong>Two Halves</strong><span class="blurb">Messi vs Ronaldo, split down the middle. Two sides, one verdict.</span><span class="mono tags">16:9 · 40s · Launch film</span></span>
-          <span class="play" aria-hidden="true">[ Play ]</span>
-        </button>
-      </article>
-    </div>
+<section id="work" aria-label="Films">
+  <div class="work">
+    <button class="film lead" type="button" data-video="/motion/media/groville-90s.mp4" data-title="Groville · While You Bake">
+      <p class="top mono"><span>Groville · AI growth agent</span><span class="dim">16:9 · 90s</span></p>
+      <div class="scr r169"><video data-auto muted loop playsinline preload="metadata" poster="/motion/media/groville-90s.jpg" src="/motion/media/groville-preview.mp4" width="1280" height="720"></video><span class="play">Watch</span></div>
+      <div class="info"><p class="mono dim">Launch film</p><h3>While You Bake</h3><p>An AI agent finds the customers a bakery is missing and drafts the campaign to win them. Every screen rebuilt in motion from the live product.</p></div>
+    </button>
+    <button class="film w4" type="button" data-video="/motion/media/veloura-liquid-light.mp4" data-title="Velouras Von · Liquid Light">
+      <p class="top mono"><span>Velouras Von · Luxury candles</span><span class="dim">16:9 · 15s</span></p>
+      <div class="scr r169"><video muted loop playsinline preload="none" poster="/motion/media/veloura-liquid-light.jpg" data-src="/motion/media/veloura-liquid-light.mp4" width="1280" height="720"></video><span class="play">Watch</span></div>
+      <div class="info"><h3>Liquid Light</h3><p>A hand-poured candle line, lit, sculpted and named in fifteen seconds.</p></div>
+    </button>
+    <button class="film w2 end tallfit span2" type="button" data-video="/motion/media/amce-every-pill.mp4" data-title="AMCE · Every Pill Counts">
+      <p class="top mono"><span>AMCE · Hospital</span><span class="dim">9:16 · 20s</span></p>
+      <div class="scr r916"><video muted loop playsinline preload="none" poster="/motion/media/amce-every-pill.jpg" data-src="/motion/media/amce-every-pill.mp4" width="720" height="1280"></video><span class="play">Watch</span></div>
+      <div class="info"><h3>Every Pill Counts</h3><p>A patient-safety message built from 440 animated capsules.</p></div>
+    </button>
+    <button class="film w2" type="button" data-video="/motion/media/arguuu-title-fight.mp4" data-title="Arguuu · Title Fight">
+      <p class="top mono"><span>Arguuu · Live debate app</span><span class="dim">16:9 · 42s</span></p>
+      <div class="scr r169"><video muted loop playsinline preload="none" poster="/motion/media/arguuu-title-fight.jpg" data-src="/motion/media/arguuu-title-fight.mp4" width="1280" height="720"></video><span class="play">Watch</span></div>
+      <div class="info"><h3>Title Fight</h3><p>Debate as a sport. A launch film for a live-argument app.</p></div>
+    </button>
+    <button class="film w2" type="button" data-video="/motion/media/vivacity-the-lens.mp4" data-title="Vivacity · The Lens">
+      <p class="top mono"><span>Vivacity · Sustainable development</span><span class="dim">16:9 · 10s</span></p>
+      <div class="scr r169"><video muted loop playsinline preload="none" poster="/motion/media/vivacity-the-lens.jpg" data-src="/motion/media/vivacity-the-lens.mp4" width="1280" height="720"></video><span class="play">Watch</span></div>
+      <div class="info"><h3>The Lens</h3><p>Seven goals, one organisation, ten seconds.</p></div>
+    </button>
+    <button class="film w3" type="button" data-video="/motion/media/reslz-second-life.mp4" data-title="Reslz · Second Life">
+      <p class="top mono"><span>Reslz · Resale</span><span class="dim">3:4 · 30s</span></p>
+      <div class="scr r34"><video muted loop playsinline preload="none" poster="/motion/media/reslz-second-life.jpg" data-src="/motion/media/reslz-second-life.mp4" width="720" height="960"></video><span class="play">Watch</span></div>
+      <div class="info"><h3>Second Life</h3><p>Bidding, outbids and reseller payouts that feel like a game.</p></div>
+    </button>
+    <button class="film w3 end" type="button" data-video="/motion/media/reslz-going-going.mp4" data-title="Reslz · Going, Going">
+      <p class="top mono"><span>Reslz · Live auctions</span><span class="dim">3:4 · 30s</span></p>
+      <div class="scr r34"><video muted loop playsinline preload="none" poster="/motion/media/reslz-going-going.jpg" data-src="/motion/media/reslz-going-going.mp4" width="720" height="960"></video><span class="play">Watch</span></div>
+      <div class="info"><h3>Going, Going</h3><p>Urgency as a design material: a ticking clock and a bid button you can't resist.</p></div>
+    </button>
+    <button class="film w3" type="button" data-video="/motion/media/arguuu-two-halves.mp4" data-title="Arguuu · Two Halves">
+      <p class="top mono"><span>Arguuu · Live debate app</span><span class="dim">16:9 · 40s</span></p>
+      <div class="scr r169"><video muted loop playsinline preload="none" poster="/motion/media/arguuu-two-halves.jpg" data-src="/motion/media/arguuu-two-halves.mp4" width="1280" height="720"></video><span class="play">Watch</span></div>
+      <div class="info"><h3>Two Halves</h3><p>Two sides, one verdict. The second film in the Arguuu launch.</p></div>
+    </button>
+    <a class="film w3 end ask" href="/#contact">
+      <span class="mono">[ Next up ]</span>
+      <h3>Your<br>launch.</h3>
+      <p>Storyboard by day 3, final by day 10. Fixed scope, in writing.</p>
+      <span class="mono">Get a quote →</span>
+    </a>
   </div>
 </section>
 
-<!-- WHY -->
-<section class="why dark" id="why" aria-labelledby="whyH">
-  <div class="wrap">
-    <p class="mono">[ 02 · Why video ]</p>
-    <h2 id="whyH">Your app store page<br>is doing the talking<br><em>alone.</em></h2>
-    <div class="trio">
-      <div><b class="mono">Hook</b><p>People decide in the first seconds. We open on the single most exciting thing your product does, not a logo.</p></div>
-      <div><b class="mono">Proof</b><p>We animate your real screens and real features, so viewers see exactly what they get. No stock footage. No guessing.</p></div>
-      <div><b class="mono">Ask</b><p>Every video ends on one clear action: download, join, try. Then it's cut down for TikTok, Reels and Stories.</p></div>
+<section class="price" id="pricing" aria-labelledby="priceH">
+  <div class="ptable">
+    <div class="lead">
+      <div><p class="lbl">Pricing</p><h2 id="priceH" style="margin-top:14px">One price.<br>In writing.</h2></div>
+      <p>Seed rounds sit at the low end of each range, Series A and up at the high end. You get a fixed quote within a day of the brief.</p>
     </div>
-    <p class="push">Every day you launch without one is a day strangers scroll past you.</p>
-    <a class="btn btn-hot" href="#pricing">Choose a package <span aria-hidden="true">→</span></a>
+    <article class="plan">
+      <p class="mono">Core launch film</p>
+      <p class="who">The main announcement on X, LinkedIn and Product Hunt.</p>
+      <p class="amt">$1.5–2.5k<small>/ project</small></p>
+      <a class="btn hot" href="/#contact" data-pick="core"><span>Start with Core</span><i aria-hidden="true">→</i></a>
+      <ul><li>One 30–60s launch film, 16:9</li><li>Custom UI recreation and motion</li><li>Sound design</li><li>2 revision rounds</li></ul>
+    </article>
+    <article class="plan pop">
+      <p class="mono badge">Most popular</p>
+      <p class="mono">Growth launch bundle</p>
+      <p class="who">A whole multi-channel campaign without hiring editors.</p>
+      <p class="amt">$3–5k<small>/ project</small></p>
+      <a class="btn hot" href="/#contact" data-pick="growth"><span>Choose Growth</span><i aria-hidden="true">→</i></a>
+      <ul><li>Everything in Core</li><li>Script and storyboard</li><li>Three 9:16 social and ad cut-downs</li><li>Three looping landing-page clips</li></ul>
+    </article>
+    <article class="plan">
+      <p class="mono">Full launch and ad system</p>
+      <p class="who">An outsourced creative department for a Series A launch or rebrand.</p>
+      <p class="amt">$6–10k+<small>/ project</small></p>
+      <a class="btn hot" href="/#contact" data-pick="full"><span>Talk about Full</span><i aria-hidden="true">→</i></a>
+      <ul><li>Everything in Growth</li><li>Three distinct 3-second paid-ad hooks</li><li>Source files or Lottie web animations</li><li>7–10 day priority turnaround</li></ul>
+    </article>
   </div>
+  <div class="terms-row">
+    <div><b>50% to start</b>The rest when you approve the watermarked final, before masters go out.</div>
+    <div><b>Dates in writing</b>Storyboard by day 3, first cut by day 7, final by day 10.</div>
+    <div><b>Two revision rounds</b>One at storyboard, one at animation. Extra rounds quoted first.</div>
+    <div><b>Licensed for ads</b>Music and fonts cleared for commercial and paid use.</div>
+  </div>
+  <a class="alt-link" href="/videos/"><span>Nigerian business, school or student? We have Naira packages for you.</span><span>Naira packages →</span></a>
 </section>
 
-<!-- PROCESS -->
-<section class="process" id="process" aria-labelledby="procH">
-  <div class="wrap">
-    <p class="mono">[ 03 · Process ]</p>
-    <h2 id="procH">Simple. Fast.<br>No surprises.</h2>
-    <ol class="steps">
-      <li><span class="mono">01</span><h3>Brief</h3><p>A short call or form. We write the brief down and you approve it.</p></li>
-      <li><span class="mono">02</span><h3>Script &amp; storyboard</h3><p>You see every scene before a single frame is animated.</p></li>
-      <li><span class="mono">03</span><h3>Animate</h3><p>Motion, type, sound and your real product screens, built to your brand.</p></li>
-      <li><span class="mono">04</span><h3>Deliver</h3><p>Final files in every size you need, plus your agreed revision rounds.</p></li>
-    </ol>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section class="pricing" id="pricing" aria-labelledby="priceH">
-  <div class="wrap">
-    <div class="head split">
-      <div>
-        <p class="mono">[ 04 · Pricing ]</p>
-        <h2 id="priceH">Priced so you<br>can say yes today.</h2>
-        <p class="sub">Student and startup rates are real, not a trial. Same craft, smaller scope.</p>
-      </div>
-      <div class="cur" role="group" aria-label="Currency">
-        <button type="button" data-cur="NGN" aria-pressed="true">₦ NGN</button>
-        <button type="button" data-cur="USD" aria-pressed="false">$ USD</button>
-      </div>
-    </div>
-    <div class="tiers" id="tiers"></div>
-    <noscript><p>Prices need JavaScript to display. Email us for the current price list.</p></noscript>
-
-    <div class="promise" id="promise">
-      <h3 class="mono">[ What you can count on ]</h3>
-      <ul id="promises"></ul>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="faq" id="faq" aria-labelledby="faqH">
-  <div class="wrap">
-    <p class="mono">[ 05 · Questions ]</p>
-    <h2 id="faqH">Before you ask.</h2>
-    <div class="qa">
-      <details><summary>How do I qualify for the student rate?</summary><p>Send a photo of your current student ID with your brief. It's for projects like final-year work, hackathons and campus startups.</p></details>
-      <details><summary>What counts as a startup?</summary><p>Pre-revenue or under two years old. If you're unsure, ask. We'd rather help than turn you away.</p></details>
-      <details><summary>How long does it take?</summary><p>Most single videos take about 5 to 7 days from an approved brief. Launch packs take a little longer. We give you the exact date in writing before you pay.</p></details>
-      <details><summary>How does payment work?</summary><p>50% to start, 50% when you approve the final cut. We accept Nigerian transfers and international payments.</p></details>
-      <details><summary>What do you need from me?</summary><p>A link to your app or site, your logo, and a few lines on who it's for. If you have screen recordings or brand colours, even better.</p></details>
-      <details><summary>What if I want more than two revisions?</summary><p>Extra rounds are available at a stated price. Nothing is billed without your yes.</p></details>
-      <details><summary>Can I use the video in ads?</summary><p>Yes. Music and fonts are licensed for commercial use, and you get every size you need for social and ads.</p></details>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section class="contact dark" id="contact" aria-labelledby="ctaH">
-  <div class="wrap two">
-    <div>
-      <p class="mono">[ 06 · Start ]</p>
-      <h2 id="ctaH">Tell us what<br>you're launching.</h2>
-      <p class="sub">Two minutes to fill in. We reply on WhatsApp or email with a fixed price and a delivery date.</p>
-    </div>
-    <form id="form" novalidate>
-      <label>Your name<input name="name" autocomplete="name" required></label>
-      <label>Email or WhatsApp<input name="contact" autocomplete="email" required></label>
-      <label>Package
-        <select name="pkg" id="pkg"></select>
-      </label>
-      <label>What are you launching? <span class="opt">(link welcome)</span>
-        <textarea name="what" rows="4" required></textarea>
-      </label>
-      <label>Deadline <span class="opt">(optional)</span><input name="when" placeholder="e.g. end of November"></label>
-      <div class="send">
-        <button class="btn btn-wa" type="submit" name="via" value="wa">Send on WhatsApp <span aria-hidden="true">→</span></button>
-        <button class="btn btn-ghost-d" type="submit" name="via" value="email">Email instead</button>
-      </div>
-      <p class="direct mono">Or message us directly: <a id="waDirect" href="https://wa.me/2349061950587">WhatsApp 0906 195 0587</a> · <a id="mailDirect" href="mailto:blueparticlestudios@gmail.com">blueparticlestudios@gmail.com</a></p>
-      <p class="direct mono">By sending, you agree to our <a href="/terms/">Terms &amp; Privacy</a>.</p>
-      <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
-    </form>
-  </div>
+<section class="cta" aria-labelledby="ctaH">
+  <span class="cross tl"></span><span class="cross tr"></span>
+  <h2 id="ctaH" class="rv">Your launch could be next</h2>
+  <p class="rv">Send us a link. Within a day we reply with a concept direction and a fixed quote.</p>
+  <a class="btn hot big rv" href="/#contact"><span>Get a quote</span><i aria-hidden="true">→</i></a>
 </section>
 
 </main>
 
-<footer class="foot">
-  <div class="wrap">
-    <p class="big" aria-hidden="true">Blue Particle<br>Studios</p>
-    <p class="mono">© <span id="yr">2026</span> Blue Particle Studios · Abuja, Nigeria · <a href="/terms/">Terms &amp; Privacy</a> · <a href="#top">Back to top ↑</a></p>
+<footer class="foot sheet">
+  <p class="tag">Launch films for funded startups</p>
+  <div class="fcols">
+    <div><p class="lbl">Studio</p><a href="/#work">Work</a><a href="/#process">Process</a><a href="/#pricing">Pricing</a><a href="/#faq">FAQ</a></div>
+    <div><p class="lbl">Pages</p><a href="/motion/">All work</a><a href="/videos/">Naira packages</a><a href="/terms/">Terms &amp; Privacy</a></div>
+    <div><p class="lbl">Contact</p><a href="mailto:blueparticlestudios@gmail.com">blueparticlestudios@gmail.com</a><a href="https://wa.me/2349061950587">WhatsApp</a></div>
+    <div><p class="lbl">Based</p><span>Abuja, Nigeria</span><span>Working worldwide · GMT+1</span></div>
   </div>
+  <div class="wordmark" aria-hidden="true"><svg viewBox="0 0 1000 118"><text x="0" y="104" font-size="132" textLength="1000" lengthAdjust="spacingAndGlyphs">BLUE PARTICLE</text></svg></div>
+  <p class="legal mono"><span>© <span class="yr">2026</span> Blue Particle Studios. All rights reserved.</span><a href="#top">Back to top ↑</a></p>
 </footer>
 
-<div class="stick" aria-hidden="false"><a class="btn btn-hot" href="#pricing">From ₦25,000 · Get a quote →</a></div>
-
 <dialog class="player" id="player" aria-label="Video player">
-  <form method="dialog"><button class="menu-close" aria-label="Close video">[ Close ]</button></form>
-  <p class="mono" id="playerTitle"></p>
-  <video id="playerVideo" controls playsinline></video>
-  <a class="btn btn-hot" href="#pricing" id="playerCta">I want one like this →</a>
+  <div class="bar"><p class="mono" id="playerTitle"></p><button type="button" data-close>Close</button></div>
+  <div class="pl" id="pl"><video id="playerVideo" playsinline></video><button class="pl-big" type="button" aria-label="Play"><span>▶</span></button><div class="pl-bar mono"><button class="pl-play" type="button" aria-label="Play or pause">Play</button><span class="pl-tc"><b data-cur>00:00:00</b> / <span data-dur>00:00:00</span></span><div class="pl-track" role="slider" aria-label="Seek" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i class="pl-buf"></i><i class="pl-fill"></i><i class="pl-head"></i><span class="pl-hover"></span></div><button class="pl-mute" type="button" aria-label="Mute or unmute">Sound on</button><button class="pl-fs" type="button" aria-label="Full screen">Full</button></div></div>
+  <a class="btn hot" href="/#contact" data-close><span>I want one like this</span><i aria-hidden="true">→</i></a>
 </dialog>
 
-<script src="config.js"></script>
-<script src="app.js"></script>
-<script type="module" src="spiral.js"></script>
+<script>window.BPS={email:"blueparticlestudios@gmail.com",whatsapp:"2349061950587"};</script>
+<script src="https://unpkg.com/lenis@1.1.5/dist/lenis.min.js"></script>
+<script src="/assets/bps.js"></script>
+<script src="/assets/motion.js"></script>
 </body>
 </html>
