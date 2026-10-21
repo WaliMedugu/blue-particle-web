@@ -1,5 +1,148 @@
 [
  {
+  "slug": "arguuu-friends-9x16-1080p30",
+  "file": "arguuu-friends-9x16_1080p30.mp4",
+  "title": "Arguuu Friends",
+  "kind": "client",
+  "shape": "9:16",
+  "w": 1080,
+  "h": 1920,
+  "dur": 16.0,
+  "mb": 4.6,
+  "mtime": 1792573250,
+  "download": null
+ },
+ {
+  "slug": "naijatype-film-v1-1x1-1080p60",
+  "file": "naijatype-film-v1-1x1_1080p60.mp4",
+  "title": "NaijaType Film (v1)",
+  "kind": "client",
+  "shape": "1:1",
+  "w": 1080,
+  "h": 1080,
+  "dur": 30.0,
+  "mb": 12.9,
+  "mtime": 1792573250,
+  "download": null
+ },
+ {
+  "slug": "naijatype-film-v1-9x16-1080p60",
+  "file": "naijatype-film-v1-9x16_1080p60.mp4",
+  "title": "NaijaType Film (v1)",
+  "kind": "client",
+  "shape": "9:16",
+  "w": 1080,
+  "h": 1920,
+  "dur": 30.0,
+  "mb": 17.8,
+  "mtime": 1792573250,
+  "download": null
+ },
+ {
+  "slug": "skyscore-pitch-showreel-16x9-1080p30",
+  "file": "skyscore-pitch-showreel-16x9_1080p30.mp4",
+  "title": "SkyScore Pitch Showreel",
+  "kind": "client",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 136.6,
+  "mb": 23.4,
+  "mtime": 1792573250,
+  "download": null
+ },
+ {
+  "slug": "claude-code-skills-reel-9x16-1080p30",
+  "file": "claude-code-skills-reel-9x16_1080p30.mp4",
+  "title": "Claude Code Skills Reel",
+  "kind": "client",
+  "shape": "9:16",
+  "w": 1080,
+  "h": 1920,
+  "dur": 30.0,
+  "mb": 8.3,
+  "mtime": 1792573249,
+  "download": null
+ },
+ {
+  "slug": "hollywood-websites-for-vibe-coders-9x16-1080p30",
+  "file": "hollywood-websites-for-vibe-coders-9x16_1080p30.mp4",
+  "title": "Hollywood Websites For Vibe Coders",
+  "kind": "client",
+  "shape": "9:16",
+  "w": 1080,
+  "h": 1920,
+  "dur": 10.0,
+  "mb": 6.6,
+  "mtime": 1792573249,
+  "download": null
+ },
+ {
+  "slug": "kilikoro-hackathon-pitch-16x9-1080p30",
+  "file": "kilikoro-hackathon-pitch-16x9_1080p30.mp4",
+  "title": "Kilikoro Hackathon Pitch",
+  "kind": "client",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 179.0,
+  "mb": 16.0,
+  "mtime": 1792573249,
+  "download": null
+ },
+ {
+  "slug": "kilikoro-launch-commercial-16x9-1080p30",
+  "file": "kilikoro-launch-commercial-16x9_1080p30.mp4",
+  "title": "Kilikoro Launch Commercial",
+  "kind": "client",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 30.0,
+  "mb": 4.5,
+  "mtime": 1792573249,
+  "download": null
+ },
+ {
+  "slug": "kilikoro-web-demo-walkthrough-16x9-1080p30",
+  "file": "kilikoro-web-demo-walkthrough-16x9_1080p30.mp4",
+  "title": "Kilikoro Web Demo Walkthrough",
+  "kind": "client",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 150.0,
+  "mb": 14.7,
+  "mtime": 1792573249,
+  "download": null
+ },
+ {
+  "slug": "tdt-freshers-tour-9x16-1080p60",
+  "file": "tdt-freshers-tour-9x16_1080p60.mp4",
+  "title": "TDT Freshers Tour",
+  "kind": "client",
+  "shape": "9:16",
+  "w": 1080,
+  "h": 1920,
+  "dur": 60.3,
+  "mb": 141.1,
+  "mtime": 1792573249,
+  "download": null
+ },
+ {
+  "slug": "vibe-coder-hollywood-9x16-1080p30",
+  "file": "vibe-coder-hollywood-9x16_1080p30.mp4",
+  "title": "Vibe Coder Hollywood",
+  "kind": "client",
+  "shape": "9:16",
+  "w": 1080,
+  "h": 1920,
+  "dur": 10.0,
+  "mb": 7.7,
+  "mtime": 1792573249,
+  "download": null
+ },
+ {
   "slug": "opay-it-entered-9x16-1080p60",
   "file": "opay-it-entered-9x16_1080p60.mp4",
   "title": "OPay It Entered",
@@ -10,7 +153,7 @@
   "dur": 15.0,
   "mb": 30.7,
   "mtime": 1792570446,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/opay-it-entered-9x16_1080p60.mp4"
  },
  {
   "slug": "nile-university-showcase-lights-on-1080p60-bps",
@@ -23,7 +166,7 @@
   "dur": 25.6,
   "mb": 44.5,
   "mtime": 1792567125,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/nile-university-showcase-lights-on_1080p60_bps.mp4"
  },
  {
   "slug": "babcock-seven-9x16-1080p60",
@@ -36,7 +179,7 @@
   "dur": 15.0,
   "mb": 21.7,
   "mtime": 1792564961,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/babcock-seven-9x16_1080p60.mp4"
  },
  {
   "slug": "nile-university-showcase-hex-1080p60-bps",
@@ -49,7 +192,7 @@
   "dur": 24.0,
   "mb": 41.6,
   "mtime": 1792558479,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/nile-university-showcase-hex_1080p60_bps.mp4"
  },
  {
   "slug": "ziks-keep-film-9x16-1080p60",
@@ -62,7 +205,7 @@
   "dur": 27.9,
   "mb": 58.6,
   "mtime": 1792550713,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/ziks-keep-film-9x16_1080p60.mp4"
  },
  {
   "slug": "ziks-extra-film-9x16-1080p60",
@@ -75,7 +218,7 @@
   "dur": 39.1,
   "mb": 80.1,
   "mtime": 1792550712,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/ziks-extra-film-9x16_1080p60.mp4"
  },
  {
   "slug": "ziks-linked-film-9x16-1080p60",
@@ -88,7 +231,7 @@
   "dur": 17.5,
   "mb": 48.8,
   "mtime": 1792550712,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/ziks-linked-film-9x16_1080p60.mp4"
  },
  {
   "slug": "the-mercy-studio-abuja-promo-9x16-1080p60",
@@ -101,7 +244,7 @@
   "dur": 10.0,
   "mb": 21.8,
   "mtime": 1792545448,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/the-mercy-studio-abuja-promo-9x16_1080p60.mp4"
  },
  {
   "slug": "group-therapy-abuja-ii-promo-9x16-1080p60",
@@ -114,7 +257,7 @@
   "dur": 10.0,
   "mb": 29.5,
   "mtime": 1792545381,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/group-therapy-abuja-ii-promo-9x16_1080p60.mp4"
  },
  {
   "slug": "reiz-continental-hotel-abuja-promo-9x16-1080p60",
@@ -127,7 +270,7 @@
   "dur": 10.0,
   "mb": 38.0,
   "mtime": 1792545268,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/reiz-continental-hotel-abuja-promo-9x16_1080p60.mp4"
  },
  {
   "slug": "discovering-talents-academy-promo-9x16-1080p60",
@@ -140,7 +283,7 @@
   "dur": 10.0,
   "mb": 9.3,
   "mtime": 1792545185,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/discovering-talents-academy-promo-9x16_1080p60.mp4"
  },
  {
   "slug": "foa-gifts-and-events-promo-9x16-1080p60",
@@ -153,7 +296,7 @@
   "dur": 10.0,
   "mb": 26.1,
   "mtime": 1792545132,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/foa-gifts-and-events-promo-9x16_1080p60.mp4"
  },
  {
   "slug": "musada-luxury-suites-promo-9x16-1080p60",
@@ -166,7 +309,7 @@
   "dur": 10.0,
   "mb": 31.9,
   "mtime": 1792545059,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/musada-luxury-suites-promo-9x16_1080p60.mp4"
  },
  {
   "slug": "blissful-present-day-retreat-promo-9x16-1080p60",
@@ -179,7 +322,7 @@
   "dur": 10.0,
   "mb": 45.3,
   "mtime": 1792544981,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/blissful-present-day-retreat-promo-9x16_1080p60.mp4"
  },
  {
   "slug": "stranger-s-in-sand-promo-9x16-1080p60",
@@ -192,7 +335,7 @@
   "dur": 10.0,
   "mb": 30.5,
   "mtime": 1792544895,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/stranger-s-in-sand-promo-9x16_1080p60.mp4"
  },
  {
   "slug": "red-blue-cup-halloween-promo-9x16-1080p60",
@@ -205,7 +348,7 @@
   "dur": 10.0,
   "mb": 23.2,
   "mtime": 1792544787,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/red-blue-cup-halloween-promo-9x16_1080p60.mp4"
  },
  {
   "slug": "trivia-night-promo-9x16-1080p60",
@@ -218,7 +361,7 @@
   "dur": 10.0,
   "mb": 14.0,
   "mtime": 1792544716,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/trivia-night-promo-9x16_1080p60.mp4"
  },
  {
   "slug": "the-unlimited-sip-promo-9x16-1080p60",
@@ -231,7 +374,7 @@
   "dur": 10.0,
   "mb": 30.3,
   "mtime": 1792544656,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/the-unlimited-sip-promo-9x16_1080p60.mp4"
  },
  {
   "slug": "movie-in-the-park-promo-9x16-1080p60",
@@ -244,7 +387,7 @@
   "dur": 10.0,
   "mb": 40.1,
   "mtime": 1792544555,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/movie-in-the-park-promo-9x16_1080p60.mp4"
  },
  {
   "slug": "loop-the-mic-promo-9x16-1080p60",
@@ -257,7 +400,7 @@
   "dur": 10.0,
   "mb": 22.2,
   "mtime": 1792544470,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/loop-the-mic-promo-9x16_1080p60.mp4"
  },
  {
   "slug": "the-garage-by-afrocamp-promo-9x16-1080p60",
@@ -270,7 +413,7 @@
   "dur": 10.0,
   "mb": 14.2,
   "mtime": 1792544371,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/the-garage-by-afrocamp-promo-9x16_1080p60.mp4"
  },
  {
   "slug": "theartbar-3-0-promo-9x16-1080p60",
@@ -283,7 +426,7 @@
   "dur": 10.0,
   "mb": 14.4,
   "mtime": 1792544319,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/theartbar-3-0-promo-9x16_1080p60.mp4"
  },
  {
   "slug": "the-noisy-book-club-promo-9x16-1080p60",
@@ -296,7 +439,7 @@
   "dur": 10.0,
   "mb": 14.9,
   "mtime": 1792542564,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/the-noisy-book-club-promo-9x16_1080p60.mp4"
  },
  {
   "slug": "nile-university-colorfest-hex-9x16-1080p60",
@@ -309,7 +452,7 @@
   "dur": 15.0,
   "mb": 29.3,
   "mtime": 1792537968,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/nile-university-colorfest-hex-9x16_1080p60.mp4"
  },
  {
   "slug": "bps-endsars-still-16x9-1080p60",
@@ -322,7 +465,7 @@
   "dur": 17.5,
   "mb": 88.9,
   "mtime": 1792533244,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/bps-endsars-still-16x9_1080p60.mp4"
  },
  {
   "slug": "9jadirectory-film-16x9-1080p60",
@@ -335,7 +478,7 @@
   "dur": 15.0,
   "mb": 32.3,
   "mtime": 1792528772,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/9jadirectory-film-16x9_1080p60.mp4"
  },
  {
   "slug": "nile-university-lights-on-16x9-1080p60",
@@ -348,7 +491,7 @@
   "dur": 17.5,
   "mb": 34.5,
   "mtime": 1792528166,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/nile-university-lights-on-16x9_1080p60.mp4"
  },
  {
   "slug": "antler-nigeria-film-16x9-1080p60",
@@ -361,7 +504,7 @@
   "dur": 15.0,
   "mb": 28.7,
   "mtime": 1792528006,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/antler-nigeria-film-16x9_1080p60.mp4"
  },
  {
   "slug": "varteic-film-16x9-1080p60",
@@ -374,6 +517,110 @@
   "dur": 15.0,
   "mb": 28.8,
   "mtime": 1792527842,
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/varteic-film-16x9_1080p60.mp4"
+ },
+ {
+  "slug": "xrlabs-2026-10-20-17-11-54",
+  "file": "xrlabs_2026-10-20_17-11-54.mp4",
+  "title": "Xrlabs Teaser 20/10",
+  "kind": "teaser",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 5.0,
+  "mb": 1.1,
+  "mtime": 1792512730,
+  "download": null
+ },
+ {
+  "slug": "evos-2026-10-20-17-11-29",
+  "file": "evos_2026-10-20_17-11-29.mp4",
+  "title": "Evos Teaser 20/10",
+  "kind": "teaser",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 5.0,
+  "mb": 1.1,
+  "mtime": 1792512707,
+  "download": null
+ },
+ {
+  "slug": "interfere-2026-10-20-17-11-06",
+  "file": "interfere_2026-10-20_17-11-06.mp4",
+  "title": "Interfere Teaser 20/10",
+  "kind": "teaser",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 5.0,
+  "mb": 1.2,
+  "mtime": 1792512682,
+  "download": null
+ },
+ {
+  "slug": "aerium-2026-10-20-09-19-38",
+  "file": "aerium_2026-10-20_09-19-38.mp4",
+  "title": "Aerium Teaser 20/10",
+  "kind": "teaser",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 5.0,
+  "mb": 1.0,
+  "mtime": 1792484392,
+  "download": null
+ },
+ {
+  "slug": "forgepoint-2026-10-20-09-19-16",
+  "file": "forgepoint_2026-10-20_09-19-16.mp4",
+  "title": "Forgepoint Teaser 20/10",
+  "kind": "teaser",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 5.0,
+  "mb": 1.1,
+  "mtime": 1792484371,
+  "download": null
+ },
+ {
+  "slug": "uvi-2026-10-20-09-18-53",
+  "file": "uvi_2026-10-20_09-18-53.mp4",
+  "title": "Uvi Teaser 20/10",
+  "kind": "teaser",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 5.0,
+  "mb": 1.1,
+  "mtime": 1792484347,
+  "download": null
+ },
+ {
+  "slug": "homa-2026-10-20-09-18-30",
+  "file": "homa_2026-10-20_09-18-30.mp4",
+  "title": "Homa Teaser 20/10",
+  "kind": "teaser",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 5.0,
+  "mb": 1.0,
+  "mtime": 1792484327,
+  "download": null
+ },
+ {
+  "slug": "aisa-2026-10-19-19-16-15",
+  "file": "aisa_2026-10-19_19-16-15.mp4",
+  "title": "Aisa Teaser 19/10",
+  "kind": "teaser",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 5.0,
+  "mb": 1.1,
+  "mtime": 1792433795,
   "download": null
  },
  {
@@ -387,7 +634,7 @@
   "dur": 21.6,
   "mb": 42.1,
   "mtime": 1792411565,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/nile-university-showcase_1080p60_bps.mp4"
  },
  {
   "slug": "vivieme-showcase-1080p60-bps",
@@ -400,7 +647,7 @@
   "dur": 22.8,
   "mb": 11.9,
   "mtime": 1792409738,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/vivieme-showcase_1080p60_bps.mp4"
  },
  {
   "slug": "project-mask-showcase-1080p60-bps",
@@ -413,7 +660,7 @@
   "dur": 22.0,
   "mb": 142.2,
   "mtime": 1792409429,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/project-mask-showcase_1080p60_bps.mp4"
  },
  {
   "slug": "project-mask-film-9x16-1080p60",
@@ -426,7 +673,7 @@
   "dur": 15.0,
   "mb": 90.8,
   "mtime": 1792409428,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/project-mask-film-9x16_1080p60.mp4"
  },
  {
   "slug": "nubwa-medugu-film-16x9-1080p60",
@@ -439,7 +686,7 @@
   "dur": 15.0,
   "mb": 30.4,
   "mtime": 1792403140,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/nubwa-medugu-film-16x9_1080p60.mp4"
  },
  {
   "slug": "jpemi-film-16x9-1080p60",
@@ -452,7 +699,7 @@
   "dur": 15.0,
   "mb": 46.8,
   "mtime": 1792403101,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/jpemi-film-16x9_1080p60.mp4"
  },
  {
   "slug": "techbridge-film-16x9-1080p60",
@@ -465,7 +712,7 @@
   "dur": 15.0,
   "mb": 32.6,
   "mtime": 1792394631,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/techbridge-film-16x9_1080p60.mp4"
  },
  {
   "slug": "codecampus-film-16x9-1080p60",
@@ -478,7 +725,7 @@
   "dur": 15.0,
   "mb": 34.8,
   "mtime": 1792394270,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/codecampus-film-16x9_1080p60.mp4"
  },
  {
   "slug": "vivieme-film-poem-1080p60",
@@ -491,7 +738,7 @@
   "dur": 15.0,
   "mb": 10.7,
   "mtime": 1792392074,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/vivieme-film-poem_1080p60.mp4"
  },
  {
   "slug": "nile-university-film-16x9-1080p60",
@@ -504,7 +751,7 @@
   "dur": 15.0,
   "mb": 116.8,
   "mtime": 1792391763,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/nile-university-film-16x9_1080p60.mp4"
  },
  {
   "slug": "moon-in-phases-1080p60",
@@ -517,7 +764,7 @@
   "dur": 15.0,
   "mb": 134.9,
   "mtime": 1792388041,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/moon-in-phases_1080p60.mp4"
  },
  {
   "slug": "camerazone-film-16x9-1080p60",
@@ -530,7 +777,7 @@
   "dur": 15.0,
   "mb": 24.2,
   "mtime": 1792383914,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/camerazone-film-16x9_1080p60.mp4"
  },
  {
   "slug": "bps-video-goes-here-16x9-1080p60-bps",
@@ -556,7 +803,7 @@
   "dur": 16.9,
   "mb": 40.5,
   "mtime": 1792370410,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/bps-video-goes-here-9x16_1080p60_bps.mp4"
  },
  {
   "slug": "bps-your-ad-goes-here-16x9-1080p60-bps",
@@ -569,7 +816,7 @@
   "dur": 16.9,
   "mb": 40.2,
   "mtime": 1792370410,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/bps-your-ad-goes-here-16x9_1080p60_bps.mp4"
  },
  {
   "slug": "bps-your-ad-goes-here-9x16-1080p60-bps",
@@ -582,7 +829,7 @@
   "dur": 16.9,
   "mb": 40.5,
   "mtime": 1792370410,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/bps-your-ad-goes-here-9x16_1080p60_bps.mp4"
  },
  {
   "slug": "cathscasa-showcase-1080p60-bps",
@@ -595,7 +842,7 @@
   "dur": 22.0,
   "mb": 44.0,
   "mtime": 1792366601,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/cathscasa-showcase_1080p60_bps.mp4"
  },
  {
   "slug": "cathscasa-film-9x16-1080p60",
@@ -608,6 +855,71 @@
   "dur": 15.0,
   "mb": 30.1,
   "mtime": 1792363631,
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/cathscasa-film-9x16_1080p60.mp4"
+ },
+ {
+  "slug": "pancake-2026-10-18-17-23-53",
+  "file": "pancake_2026-10-18_17-23-53.mp4",
+  "title": "Pancake Teaser 18/10",
+  "kind": "teaser",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 5.0,
+  "mb": 1.1,
+  "mtime": 1792340647,
+  "download": null
+ },
+ {
+  "slug": "photon-2026-10-18-17-22-56",
+  "file": "photon_2026-10-18_17-22-56.mp4",
+  "title": "Photon Teaser 18/10",
+  "kind": "teaser",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 5.0,
+  "mb": 1.2,
+  "mtime": 1792340590,
+  "download": null
+ },
+ {
+  "slug": "pancake-2026-10-18-17-22-36",
+  "file": "pancake_2026-10-18_17-22-36.mp4",
+  "title": "Pancake Teaser 18/10",
+  "kind": "teaser",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 5.0,
+  "mb": 1.2,
+  "mtime": 1792340570,
+  "download": null
+ },
+ {
+  "slug": "replicas-2026-10-18-17-22-14",
+  "file": "replicas_2026-10-18_17-22-14.mp4",
+  "title": "Replicas Teaser 18/10",
+  "kind": "teaser",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 5.0,
+  "mb": 1.0,
+  "mtime": 1792340548,
+  "download": null
+ },
+ {
+  "slug": "minicor-2026-10-18-17-21-46",
+  "file": "minicor_2026-10-18_17-21-46.mp4",
+  "title": "Minicor Teaser 18/10",
+  "kind": "teaser",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 5.0,
+  "mb": 1.2,
+  "mtime": 1792340526,
   "download": null
  },
  {
@@ -634,6 +946,45 @@
   "dur": 16.0,
   "mb": 14.3,
   "mtime": 1792316592,
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/amas-hair-film-9x16_1080p60.mp4"
+ },
+ {
+  "slug": "sprout-2026-10-18-09-19-54",
+  "file": "sprout_2026-10-18_09-19-54.mp4",
+  "title": "Sprout Teaser 18/10",
+  "kind": "teaser",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 5.0,
+  "mb": 1.3,
+  "mtime": 1792311615,
+  "download": null
+ },
+ {
+  "slug": "marklo-2026-10-18-09-19-09",
+  "file": "marklo_2026-10-18_09-19-09.mp4",
+  "title": "Marklo Teaser 18/10",
+  "kind": "teaser",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 5.0,
+  "mb": 1.0,
+  "mtime": 1792311567,
+  "download": null
+ },
+ {
+  "slug": "othello-2026-10-18-09-18-24",
+  "file": "othello_2026-10-18_09-18-24.mp4",
+  "title": "Othello Teaser 18/10",
+  "kind": "teaser",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 5.0,
+  "mb": 1.1,
+  "mtime": 1792311524,
   "download": null
  },
  {
@@ -647,7 +998,7 @@
   "dur": 15.0,
   "mb": 10.2,
   "mtime": 1792280066,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/obi2027-pressure-print-16x9_1080p60.mp4"
  },
  {
   "slug": "obi2027-pressure-print-9x16-1080p60",
@@ -660,7 +1011,7 @@
   "dur": 15.0,
   "mb": 10.8,
   "mtime": 1792280066,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/obi2027-pressure-print-9x16_1080p60.mp4"
  },
  {
   "slug": "bps-strata-showreel-1080p60-bps",
@@ -686,7 +1037,7 @@
   "dur": 38.0,
   "mb": 28.3,
   "mtime": 1792273402,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/ocharys-showcase_1080p60_bps.mp4"
  },
  {
   "slug": "ocharys-film-9x16-1080p60",
@@ -699,6 +1050,136 @@
   "dur": 30.0,
   "mb": 26.9,
   "mtime": 1792273402,
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/ocharys-film-9x16_1080p60.mp4"
+ },
+ {
+  "slug": "ocharys-2026-10-17-21-48-33",
+  "file": "ocharys_2026-10-17_21-48-33.mp4",
+  "title": "Ochary's Teaser 17/10",
+  "kind": "teaser",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 5.0,
+  "mb": 1.3,
+  "mtime": 1792270138,
+  "download": null
+ },
+ {
+  "slug": "amichy-2026-10-17-20-58-19",
+  "file": "amichy_2026-10-17_20-58-19.mp4",
+  "title": "Amichy Teaser 17/10",
+  "kind": "teaser",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 5.0,
+  "mb": 1.3,
+  "mtime": 1792267118,
+  "download": null
+ },
+ {
+  "slug": "ourstickerbook-2026-10-17-20-55-54",
+  "file": "ourstickerbook_2026-10-17_20-55-54.mp4",
+  "title": "Ourstickerbook Teaser 17/10",
+  "kind": "teaser",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 5.0,
+  "mb": 1.2,
+  "mtime": 1792266973,
+  "download": null
+ },
+ {
+  "slug": "dearpaper-2026-10-17-20-55-23",
+  "file": "dearpaper_2026-10-17_20-55-23.mp4",
+  "title": "Dearpaper Teaser 17/10",
+  "kind": "teaser",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 5.0,
+  "mb": 1.1,
+  "mtime": 1792266945,
+  "download": null
+ },
+ {
+  "slug": "freshfits-2026-10-17-19-06-40",
+  "file": "freshfits_2026-10-17_19-06-40.mp4",
+  "title": "Freshfits Teaser 17/10",
+  "kind": "teaser",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 5.0,
+  "mb": 1.6,
+  "mtime": 1792260421,
+  "download": null
+ },
+ {
+  "slug": "dapta-2026-10-17-18-39-56",
+  "file": "dapta_2026-10-17_18-39-56.mp4",
+  "title": "Dapta Teaser 17/10",
+  "kind": "teaser",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 5.0,
+  "mb": 1.1,
+  "mtime": 1792258815,
+  "download": null
+ },
+ {
+  "slug": "replika-2026-10-17-18-39-19",
+  "file": "replika_2026-10-17_18-39-19.mp4",
+  "title": "Replika Teaser 17/10",
+  "kind": "teaser",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 5.0,
+  "mb": 0.9,
+  "mtime": 1792258782,
+  "download": null
+ },
+ {
+  "slug": "loops-2026-10-17-18-38-39",
+  "file": "loops_2026-10-17_18-38-39.mp4",
+  "title": "Loops Teaser 17/10",
+  "kind": "teaser",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 5.0,
+  "mb": 0.9,
+  "mtime": 1792258739,
+  "download": null
+ },
+ {
+  "slug": "honeybook-2026-10-17-18-37-28",
+  "file": "honeybook_2026-10-17_18-37-28.mp4",
+  "title": "Honeybook Teaser 17/10",
+  "kind": "teaser",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 5.0,
+  "mb": 1.0,
+  "mtime": 1792258671,
+  "download": null
+ },
+ {
+  "slug": "krea-2026-10-17-18-36-23",
+  "file": "krea_2026-10-17_18-36-23.mp4",
+  "title": "Krea Teaser 17/10",
+  "kind": "teaser",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 5.0,
+  "mb": 0.7,
+  "mtime": 1792258606,
   "download": null
  },
  {
@@ -712,7 +1193,7 @@
   "dur": 40.0,
   "mb": 44.0,
   "mtime": 1792242966,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/amce-ad-40s-9x16_1080p60.mp4"
  },
  {
   "slug": "amce-ad-9x16-1080p60",
@@ -725,7 +1206,7 @@
   "dur": 20.0,
   "mb": 38.4,
   "mtime": 1792237904,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/amce-ad-9x16_1080p60.mp4"
  },
  {
   "slug": "veloura-reel-3x4-1080p60",
@@ -738,7 +1219,7 @@
   "dur": 15.0,
   "mb": 12.3,
   "mtime": 1792169367,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/veloura-reel-3x4_1080p60.mp4"
  },
  {
   "slug": "veloura-showcase-9x16-1080p60-bps",
@@ -751,7 +1232,7 @@
   "dur": 22.0,
   "mb": 25.2,
   "mtime": 1792158617,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/veloura-showcase-9x16_1080p60_bps.mp4"
  },
  {
   "slug": "veloura-film-16x9-1080p60",
@@ -764,7 +1245,7 @@
   "dur": 15.0,
   "mb": 18.2,
   "mtime": 1792158617,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/veloura-film-16x9_1080p60.mp4"
  },
  {
   "slug": "veloura-film-9x16-1080p60",
@@ -777,7 +1258,7 @@
   "dur": 15.0,
   "mb": 21.8,
   "mtime": 1792158617,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/veloura-film-9x16_1080p60.mp4"
  },
  {
   "slug": "vivacity-showcase-9x16-1080p60-bps",
@@ -790,7 +1271,7 @@
   "dur": 17.0,
   "mb": 20.7,
   "mtime": 1792145980,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/vivacity-showcase-9x16_1080p60_bps.mp4"
  },
  {
   "slug": "vivacity-film-16x9-1080p60",
@@ -803,7 +1284,7 @@
   "dur": 10.0,
   "mb": 14.7,
   "mtime": 1792145980,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/vivacity-film-16x9_1080p60.mp4"
  },
  {
   "slug": "vivacity-film-9x16-1080p60",
@@ -816,7 +1297,7 @@
   "dur": 10.0,
   "mb": 14.2,
   "mtime": 1792145980,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/vivacity-film-9x16_1080p60.mp4"
  },
  {
   "slug": "naijatype-showcase-1080p60-bps",
@@ -829,7 +1310,7 @@
   "dur": 38.3,
   "mb": 20.5,
   "mtime": 1792136288,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/naijatype-showcase_1080p60_bps.mp4"
  },
  {
   "slug": "groville-90s-1080p60",
@@ -842,7 +1323,7 @@
   "dur": 89.5,
   "mb": 48.4,
   "mtime": 1792135127,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/groville-90s_1080p60.mp4"
  },
  {
   "slug": "naijatype-film-9x16-1080p60",
@@ -855,7 +1336,7 @@
   "dur": 30.0,
   "mb": 15.6,
   "mtime": 1792135127,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/naijatype-film-9x16_1080p60.mp4"
  },
  {
   "slug": "reslz-showcase-1080p60-bps",
@@ -868,7 +1349,7 @@
   "dur": 38.3,
   "mb": 49.6,
   "mtime": 1792134244,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/reslz-showcase_1080p60_bps.mp4"
  },
  {
   "slug": "qaffy-showcase-order-1080p60-bps",
@@ -881,7 +1362,7 @@
   "dur": 38.3,
   "mb": 16.7,
   "mtime": 1792134243,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/qaffy-showcase-order_1080p60_bps.mp4"
  },
  {
   "slug": "qaffy-showcase-machine-1080p60-bps",
@@ -894,7 +1375,7 @@
   "dur": 38.3,
   "mb": 152.2,
   "mtime": 1792134242,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/qaffy-showcase-machine_1080p60_bps.mp4"
  },
  {
   "slug": "qaffy-showcase-group-1080p60-bps",
@@ -907,7 +1388,7 @@
   "dur": 38.3,
   "mb": 23.7,
   "mtime": 1792134239,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/qaffy-showcase-group_1080p60_bps.mp4"
  },
  {
   "slug": "qaffy-showcase-chat-1080p60-bps",
@@ -920,7 +1401,7 @@
   "dur": 38.3,
   "mb": 24.5,
   "mtime": 1792134238,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/qaffy-showcase-chat_1080p60_bps.mp4"
  },
  {
   "slug": "dough-showcase-1080p60-bps",
@@ -933,7 +1414,7 @@
   "dur": 37.5,
   "mb": 35.1,
   "mtime": 1792134237,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/dough-showcase_1080p60_bps.mp4"
  },
  {
   "slug": "qaffy-film-chat-1080p60",
@@ -946,7 +1427,7 @@
   "dur": 30.0,
   "mb": 20.2,
   "mtime": 1792128363,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/qaffy-film-chat_1080p60.mp4"
  },
  {
   "slug": "qaffy-film-group-1080p60",
@@ -959,7 +1440,7 @@
   "dur": 30.0,
   "mb": 18.4,
   "mtime": 1792128363,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/qaffy-film-group_1080p60.mp4"
  },
  {
   "slug": "qaffy-film-order-1080p60",
@@ -972,7 +1453,7 @@
   "dur": 30.0,
   "mb": 12.1,
   "mtime": 1792128363,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/qaffy-film-order_1080p60.mp4"
  },
  {
   "slug": "qaffy-machine-3d-1080p60",
@@ -985,7 +1466,7 @@
   "dur": 30.0,
   "mb": 208.5,
   "mtime": 1792128363,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/qaffy-machine-3d_1080p60.mp4"
  },
  {
   "slug": "reslz-second-life-3x4-60fps",
@@ -998,7 +1479,7 @@
   "dur": 30.0,
   "mb": 24.5,
   "mtime": 1792073664,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/reslz-second-life-3x4-60fps.mp4"
  },
  {
   "slug": "dough-dm-always-open-1080p60",
@@ -1011,7 +1492,7 @@
   "dur": 30.0,
   "mb": 27.6,
   "mtime": 1792052789,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/dough-dm-always-open_1080p60.mp4"
  },
  {
   "slug": "arguuu-title-fight",
@@ -1024,7 +1505,7 @@
   "dur": 42.0,
   "mb": 3.0,
   "mtime": 1792052587,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/arguuu-title-fight.mp4"
  },
  {
   "slug": "arguuu-two-halves",
@@ -1037,7 +1518,7 @@
   "dur": 40.0,
   "mb": 1.8,
   "mtime": 1792052587,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/arguuu-two-halves.mp4"
  },
  {
   "slug": "reslz-going-going-3x4-60fps",
@@ -1050,7 +1531,7 @@
   "dur": 30.0,
   "mb": 23.4,
   "mtime": 1792052587,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/reslz-going-going-3x4-60fps.mp4"
  },
  {
   "slug": "groville-short-digest-1080p60",
@@ -1063,7 +1544,7 @@
   "dur": 30.0,
   "mb": 17.7,
   "mtime": 1792052516,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/groville-short-digest_1080p60.mp4"
  },
  {
   "slug": "groville-short-walkpast-1080p60",
@@ -1076,7 +1557,7 @@
   "dur": 30.0,
   "mb": 60.8,
   "mtime": 1792052516,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/groville-short-walkpast_1080p60.mp4"
  },
  {
   "slug": "groville-30s-3x4-60fps",
@@ -1089,6 +1570,6 @@
   "dur": 30.0,
   "mb": 14.4,
   "mtime": 1792052515,
-  "download": null
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/groville-30s-3x4-60fps.mp4"
  }
 ]

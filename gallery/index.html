@@ -48,6 +48,7 @@ main{max-width:1200px;margin:0 auto;padding:14px var(--gut) calc(40px + env(safe
 .card:hover .thumb img{transform:scale(1.04)}
 .badge{position:absolute;left:6px;top:6px;background:var(--paper);font-family:var(--mono);font-size:10px;padding:3px 6px;text-transform:uppercase}
 .badge.ad{background:var(--accent);color:#fff}
+.badge.teaser{background:var(--ink);color:var(--paper)}
 .dur{position:absolute;right:6px;bottom:6px;background:rgba(0,0,0,.65);color:#fff;font-family:var(--mono);font-size:11px;padding:2px 6px}
 .card h2{font-size:14px;font-weight:500;margin:8px 0 2px;line-height:1.25;overflow-wrap:anywhere}
 .card p{margin:0}
@@ -89,6 +90,7 @@ dialog::backdrop{background:#111}
     <button class="chip" data-f="all" aria-pressed="true">All</button>
     <button class="chip" data-f="ad" aria-pressed="false">BPS ads</button>
     <button class="chip" data-f="client" aria-pressed="false">Clients</button>
+    <button class="chip" data-f="teaser" aria-pressed="false">Teasers</button>
     <button class="chip" data-f="9:16" aria-pressed="false">9:16</button>
     <button class="chip" data-f="16:9" aria-pressed="false">16:9</button>
     <button class="chip" data-f="3:4" aria-pressed="false">3:4</button>
@@ -125,7 +127,8 @@ dialog::backdrop{background:#111}
 
   const fmtDur = s => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, "0")}`;
   const esc = s => s.replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
-  const hay = v => `${v.title} ${v.file} ${v.kind === "ad" ? "ad ads bps showcase promo" : "client clients film"} ${v.shape}`.toLowerCase();
+  const KIND = {ad: "BPS ad", client: "Client", teaser: "Teaser"};
+  const hay = v => `${v.title} ${v.file} ${{ad: "ad ads bps showcase promo", client: "client clients film", teaser: "teaser teasers pitch outreach"}[v.kind]} ${v.shape}`.toLowerCase();
 
   function render() {
     const words = q.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
@@ -133,7 +136,7 @@ dialog::backdrop{background:#111}
     grid.innerHTML = shown.map((v, i) => `
       <button class="card" data-i="${i}">
         <div class="thumb"><img src="media/${v.slug}.jpg" alt="" loading="lazy" decoding="async">
-          <span class="badge ${v.kind}">${v.kind === "ad" ? "BPS ad" : "Client"}</span><span class="dur">${fmtDur(v.dur)}</span></div>
+          <span class="badge ${v.kind}">${KIND[v.kind]}</span><span class="dur">${fmtDur(v.dur)}</span></div>
         <h2>${esc(v.title)}</h2><p class="mono">${v.shape} · ${v.mb} MB</p>
       </button>`).join("");
     $("empty").hidden = shown.length > 0;
@@ -145,7 +148,7 @@ dialog::backdrop{background:#111}
     const v = shown[i]; if (!v) return;
     cur = i;
     $("plTitle").textContent = v.title;
-    $("plMeta").textContent = `${v.kind === "ad" ? "BPS ad" : "Client"} · ${v.shape} · ${v.w}×${v.h} · ${fmtDur(v.dur)} · ${v.file}`;
+    $("plMeta").textContent = `${KIND[v.kind]} · ${v.shape} · ${v.w}×${v.h} · ${fmtDur(v.dur)} · ${v.file}`;
     vid.poster = `media/${v.slug}.jpg`;
     vid.src = `media/${v.slug}.mp4`;
     const full = v.download;
