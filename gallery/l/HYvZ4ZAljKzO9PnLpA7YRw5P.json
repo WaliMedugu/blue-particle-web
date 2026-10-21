@@ -1,5 +1,18 @@
 [
  {
+  "slug": "lagos-life-showcase-1080p60-bps",
+  "file": "lagos-life-showcase_1080p60_bps.mp4",
+  "title": "Lagos Life Showcase",
+  "kind": "ad",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 24.4,
+  "mb": 47.5,
+  "mtime": 1792613717,
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/lagos-life-showcase_1080p60_bps.mp4"
+ },
+ {
   "slug": "lagos-life-film-16x9-1080p60",
   "file": "lagos-life-film-16x9_1080p60.mp4",
   "title": "Lagos Life Film",
