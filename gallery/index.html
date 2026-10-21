@@ -69,6 +69,10 @@ dialog::backdrop{background:#111}
 .btn.main{background:var(--accent);border-color:var(--accent)}
 .btn svg{width:18px;height:18px}
 .nav2{display:flex;justify-content:space-between}
+body.solo .top .search,body.solo .top .chips,body.solo .top .count,body.solo .nav2{display:none}
+body.solo .grid{display:none}
+body.solo .x{display:none}
+body.solo .brand{pointer-events:none}
 .nav2 button{background:none;border:0;color:#a3a3a0;font-family:var(--mono);font-size:12px;text-transform:uppercase;padding:6px 0;cursor:pointer}
 </style>
 </head>
@@ -159,7 +163,7 @@ dialog::backdrop{background:#111}
     history.replaceState(null, "", `#${v.slug}`);
     vid.play().catch(() => {});
   }
-  function close() { vid.pause(); vid.removeAttribute("src"); vid.load(); if (pl.open) pl.close(); history.replaceState(null, "", location.pathname + location.search); }
+  function close() { if (document.body.classList.contains("solo")) return; vid.pause(); vid.removeAttribute("src"); vid.load(); if (pl.open) pl.close(); history.replaceState(null, "", location.pathname + location.search); }
 
   grid.addEventListener("click", e => { const c = e.target.closest(".card"); if (c) open(+c.dataset.i); });
   $("plClose").onclick = close;
@@ -179,12 +183,29 @@ dialog::backdrop{background:#111}
     render();
   });
 
-  fetch("videos.json", {cache: "no-cache"}).then(r => r.json()).then(list => {
-    all = list.map(v => ({...v, _hay: hay(v)}));
-    render();
-    const slug = location.hash.slice(1);
-    if (slug) open(shown.findIndex(v => v.slug === slug));
-  }).catch(() => { $("count").textContent = "Couldn't load"; });
+  // Owner key (from ?k=) unlocks the full gallery in this browser. Everyone else only ever
+  // loads the single video their link points at, so a shared link can't browse the rest.
+  const store = {get: k => { try { return localStorage.getItem(k); } catch { return null; } },
+                 set: (k, v) => { try { localStorage.setItem(k, v); } catch {} }};
+  const urlKey = new URLSearchParams(location.search).get("k");
+  if (urlKey) { store.set("bpsKey", urlKey); history.replaceState(null, "", location.pathname + location.hash); }
+  const key = store.get("bpsKey");
+  const slug = decodeURIComponent(location.hash.slice(1));
+  const getJSON = u => fetch(u, {cache: "no-cache"}).then(r => { if (!r.ok) throw 0; return r.json(); });
+  const prep = list => all = list.map(v => ({...v, _hay: hay(v)}));
+  const locked = msg => { document.body.classList.add("solo"); $("count").textContent = ""; $("grid").hidden = true; $("empty").hidden = false; $("empty").textContent = msg; };
+
+  const full = key ? getJSON(`l/${encodeURIComponent(key)}.json`).catch(() => null) : Promise.resolve(null);
+  full.then(list => {
+    if (list) {
+      prep(list); render();
+      if (slug) open(shown.findIndex(v => v.slug === slug));
+    } else if (slug) {
+      document.body.classList.add("solo");
+      getJSON(`v/${encodeURIComponent(slug)}.json`).then(v => { prep([v]); render(); open(0); })
+        .catch(() => locked("This video isn't available."));
+    } else locked("This gallery is private.");
+  });
 })();
 </script>
 </body>
