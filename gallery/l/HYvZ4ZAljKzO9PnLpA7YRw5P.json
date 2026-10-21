@@ -1,5 +1,31 @@
 [
  {
+  "slug": "verve-vogue-poured-9x16-1080p60",
+  "file": "verve-vogue-poured-9x16_1080p60.mp4",
+  "title": "Verve Vogue Poured",
+  "kind": "client",
+  "shape": "9:16",
+  "w": 1080,
+  "h": 1920,
+  "dur": 15.0,
+  "mb": 21.8,
+  "mtime": 1792622491,
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/verve-vogue-poured-9x16_1080p60.mp4"
+ },
+ {
+  "slug": "verve-vogue-finer-side-9x16-1080p60",
+  "file": "verve-vogue-finer-side-9x16_1080p60.mp4",
+  "title": "Verve Vogue Finer Side",
+  "kind": "client",
+  "shape": "9:16",
+  "w": 1080,
+  "h": 1920,
+  "dur": 15.0,
+  "mb": 29.4,
+  "mtime": 1792621840,
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/verve-vogue-finer-side-9x16_1080p60.mp4"
+ },
+ {
   "slug": "indrive-minus-50-16x9-1080p60",
   "file": "indrive-minus-50-16x9_1080p60.mp4",
   "title": "Indrive Minus 50",
