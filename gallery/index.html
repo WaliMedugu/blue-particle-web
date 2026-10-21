@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gallery | Blue Particle Studios</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#f2f1ec">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f2f1ec'/%3E%3Crect x='4.5' y='4.5' width='23' height='23' fill='none' stroke='%23282828'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%232342ff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f2f1ec;--paper-2:#e9e8e2;--ink:#282828;--mute:#72726f;--line:#b3b3af;--line-soft:#d4d3cd;--accent:#2342ff;
+  --sans:"Inter Tight","Helvetica Neue",Arial,sans-serif;--mono:"Geist Mono",ui-monospace,Menlo,monospace;--gut:16px}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.4;-webkit-font-smoothing:antialiased}
+img,video{display:block;max-width:100%}
+button,input{font:inherit;color:inherit}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.02em;text-transform:uppercase;color:var(--mute)}
+
+.top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line-soft);padding:calc(10px + env(safe-area-inset-top)) var(--gut) 10px}
+.row{display:flex;align-items:center;gap:10px;max-width:1200px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:8px;text-decoration:none;font-weight:600;text-transform:uppercase;letter-spacing:-.02em;font-size:15px}
+.brand svg{width:22px;height:22px}
+.count{margin-left:auto}
+.search{position:relative;max-width:1200px;margin:10px auto 0}
+.search input{width:100%;height:46px;border:1px solid var(--line);border-radius:0;background:#fff;padding:0 42px 0 40px;font-size:16px;outline:none;-webkit-appearance:none;appearance:none}
+.search input:focus{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.search svg{position:absolute;left:12px;top:13px;width:20px;height:20px;color:var(--mute)}
+.search input::-webkit-search-cancel-button{-webkit-appearance:none;display:none}
+.search .clear{position:absolute;right:4px;top:4px;width:38px;height:38px;border:0;background:none;font-size:22px;color:var(--mute);display:none}
+.search.has .clear{display:block}
+.chips{display:flex;gap:6px;overflow-x:auto;max-width:1200px;margin:10px auto 0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;height:34px;padding:0 14px;border:1px solid var(--line);background:transparent;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.02em;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+main{max-width:1200px;margin:0 auto;padding:14px var(--gut) calc(40px + env(safe-area-inset-bottom))}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (min-width:640px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:980px){.grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}}
+.card{display:block;width:100%;padding:0;border:0;background:none;text-align:left;cursor:pointer}
+.thumb{position:relative;aspect-ratio:4/5;background:var(--ink);overflow:hidden;border:1px solid var(--line-soft)}
+.thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.2,.7,.1,1)}
+.card:hover .thumb img{transform:scale(1.04)}
+.badge{position:absolute;left:6px;top:6px;background:var(--paper);font-family:var(--mono);font-size:10px;padding:3px 6px;text-transform:uppercase}
+.badge.ad{background:var(--accent);color:#fff}
+.dur{position:absolute;right:6px;bottom:6px;background:rgba(0,0,0,.65);color:#fff;font-family:var(--mono);font-size:11px;padding:2px 6px}
+.card h2{font-size:14px;font-weight:500;margin:8px 0 2px;line-height:1.25;overflow-wrap:anywhere}
+.card p{margin:0}
+.empty{padding:60px 0;text-align:center;color:var(--mute)}
+
+dialog{border:0;padding:0;margin:0;width:100%;max-width:100%;height:100%;max-height:100%;background:#111;color:#fff}
+dialog::backdrop{background:#111}
+.pl{display:flex;flex-direction:column;height:100%;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+.pl-top{display:flex;align-items:center;gap:10px;padding:10px var(--gut)}
+.pl-top .t{font-weight:600;font-size:15px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.x{width:40px;height:40px;border:1px solid #444;background:none;color:#fff;font-size:20px;cursor:pointer;flex:none}
+.stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:0 var(--gut)}
+.stage video{max-width:100%;max-height:100%;width:auto;height:auto;background:#000}
+.pl-bot{padding:12px var(--gut) 14px;display:grid;gap:10px;max-width:640px;width:100%;margin:0 auto}
+.pl-bot .mono{color:#a3a3a0}
+.acts{display:grid;grid-template-columns:2fr 1fr;gap:8px}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;height:48px;border:1px solid #fff;background:none;color:#fff;text-decoration:none;font-weight:500;cursor:pointer;font-size:15px}
+.btn.main{background:var(--accent);border-color:var(--accent)}
+.btn svg{width:18px;height:18px}
+.nav2{display:flex;justify-content:space-between}
+.nav2 button{background:none;border:0;color:#a3a3a0;font-family:var(--mono);font-size:12px;text-transform:uppercase;padding:6px 0;cursor:pointer}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="row">
+    <a class="brand" href="/" aria-label="Blue Particle Studios, home">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" fill="none" stroke="currentColor"/><path d="M2.5 2.5l19 19M21.5 2.5l-19 19" stroke="currentColor" stroke-width=".6" opacity=".45"/><circle cx="12" cy="12" r="4.4" fill="var(--accent)"/></svg>
+      Gallery
+    </a>
+    <span class="mono count" id="count">Loading</span>
+  </div>
+  <div class="search" id="searchBox">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+    <input id="q" type="search" placeholder="Search videos, clients, ads" autocomplete="off" enterkeyhint="search" aria-label="Search videos">
+    <button class="clear" id="clear" type="button" aria-label="Clear search">×</button>
+  </div>
+  <div class="chips" role="group" aria-label="Filter">
+    <button class="chip" data-f="all" aria-pressed="true">All</button>
+    <button class="chip" data-f="ad" aria-pressed="false">BPS ads</button>
+    <button class="chip" data-f="client" aria-pressed="false">Clients</button>
+    <button class="chip" data-f="9:16" aria-pressed="false">9:16</button>
+    <button class="chip" data-f="16:9" aria-pressed="false">16:9</button>
+    <button class="chip" data-f="3:4" aria-pressed="false">3:4</button>
+  </div>
+</header>
+
+<main>
+  <div class="grid" id="grid"></div>
+  <p class="empty" id="empty" hidden>Nothing matches that search.</p>
+</main>
+
+<dialog id="pl" aria-label="Video player">
+  <div class="pl">
+    <div class="pl-top"><span class="t" id="plTitle"></span><button class="x" id="plClose" aria-label="Close">×</button></div>
+    <div class="stage"><video id="plVideo" controls playsinline preload="auto"></video></div>
+    <div class="pl-bot">
+      <p class="mono" id="plMeta"></p>
+      <div class="acts">
+        <a class="btn main" id="plDl" href="#" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>
+          <span id="plDlText">Download</span></a>
+        <button class="btn" id="plShare" type="button">Share</button>
+      </div>
+      <div class="nav2"><button id="plPrev" type="button">← Previous</button><button id="plNext" type="button">Next →</button></div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const grid = $("grid"), q = $("q"), pl = $("pl"), vid = $("plVideo");
+  let all = [], shown = [], filter = "all", cur = -1;
+
+  const fmtDur = s => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, "0")}`;
+  const esc = s => s.replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+  const hay = v => `${v.title} ${v.file} ${v.kind === "ad" ? "ad ads bps showcase promo" : "client clients film"} ${v.shape}`.toLowerCase();
+
+  function render() {
+    const words = q.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
+    shown = all.filter(v => (filter === "all" || v.kind === filter || v.shape === filter) && words.every(w => v._hay.includes(w)));
+    grid.innerHTML = shown.map((v, i) => `
+      <button class="card" data-i="${i}">
+        <div class="thumb"><img src="media/${v.slug}.jpg" alt="" loading="lazy" decoding="async">
+          <span class="badge ${v.kind}">${v.kind === "ad" ? "BPS ad" : "Client"}</span><span class="dur">${fmtDur(v.dur)}</span></div>
+        <h2>${esc(v.title)}</h2><p class="mono">${v.shape} · ${v.mb} MB</p>
+      </button>`).join("");
+    $("empty").hidden = shown.length > 0;
+    $("count").textContent = `${shown.length} of ${all.length}`;
+    $("searchBox").classList.toggle("has", q.value.length > 0);
+  }
+
+  function open(i) {
+    const v = shown[i]; if (!v) return;
+    cur = i;
+    $("plTitle").textContent = v.title;
+    $("plMeta").textContent = `${v.kind === "ad" ? "BPS ad" : "Client"} · ${v.shape} · ${v.w}×${v.h} · ${fmtDur(v.dur)} · ${v.file}`;
+    vid.poster = `media/${v.slug}.jpg`;
+    vid.src = `media/${v.slug}.mp4`;
+    const full = v.download;
+    $("plDl").href = full || `media/${v.slug}.mp4`;
+    $("plDl").setAttribute("download", v.file);
+    $("plDlText").textContent = full ? `Download full quality · ${v.mb} MB` : "Download (preview)";
+    if (!pl.open) pl.showModal();
+    history.replaceState(null, "", `#${v.slug}`);
+    vid.play().catch(() => {});
+  }
+  function close() { vid.pause(); vid.removeAttribute("src"); vid.load(); if (pl.open) pl.close(); history.replaceState(null, "", location.pathname + location.search); }
+
+  grid.addEventListener("click", e => { const c = e.target.closest(".card"); if (c) open(+c.dataset.i); });
+  $("plClose").onclick = close;
+  pl.addEventListener("cancel", e => { e.preventDefault(); close(); });
+  $("plPrev").onclick = () => open((cur - 1 + shown.length) % shown.length);
+  $("plNext").onclick = () => open((cur + 1) % shown.length);
+  $("plShare").onclick = async () => {
+    const v = shown[cur], url = v.download || new URL(`media/${v.slug}.mp4`, location.href).href;
+    try { if (navigator.share) await navigator.share({title: v.title, url}); else { await navigator.clipboard.writeText(url); $("plShare").textContent = "Link copied"; setTimeout(() => $("plShare").textContent = "Share", 1500); } } catch {}
+  };
+
+  q.addEventListener("input", render);
+  $("clear").onclick = () => { q.value = ""; render(); q.focus(); };
+  document.querySelectorAll(".chip").forEach(b => b.onclick = () => {
+    filter = b.dataset.f;
+    document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c === b));
+    render();
+  });
+
+  fetch("videos.json", {cache: "no-cache"}).then(r => r.json()).then(list => {
+    all = list.map(v => ({...v, _hay: hay(v)}));
+    render();
+    const slug = location.hash.slice(1);
+    if (slug) open(shown.findIndex(v => v.slug === slug));
+  }).catch(() => { $("count").textContent = "Couldn't load"; });
+})();
+</script>
+</body>
+</html>
