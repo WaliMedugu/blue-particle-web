@@ -1,5 +1,18 @@
 [
  {
+  "slug": "lagos-life-film-16x9-1080p60",
+  "file": "lagos-life-film-16x9_1080p60.mp4",
+  "title": "Lagos Life Film",
+  "kind": "client",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 15.0,
+  "mb": 28.6,
+  "mtime": 1792610280,
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/lagos-life-film-16x9_1080p60.mp4"
+ },
+ {
   "slug": "arguuu-friends-9x16-1080p30",
   "file": "arguuu-friends-9x16_1080p30.mp4",
   "title": "Arguuu Friends",
