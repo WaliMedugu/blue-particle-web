@@ -1,5 +1,31 @@
 [
  {
+  "slug": "nile-university-showcase-hex-1080p60-bps",
+  "file": "nile-university-showcase-hex_1080p60_bps.mp4",
+  "title": "Nile University Showcase Hex",
+  "kind": "ad",
+  "shape": "9:16",
+  "w": 1080,
+  "h": 1920,
+  "dur": 24.0,
+  "mb": 41.2,
+  "mtime": 1792657238,
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/nile-university-showcase-hex_1080p60_bps.mp4"
+ },
+ {
+  "slug": "nile-university-colorfest-hex-9x16-1080p60",
+  "file": "nile-university-colorfest-hex-9x16_1080p60.mp4",
+  "title": "Nile University Colorfest Hex",
+  "kind": "client",
+  "shape": "9:16",
+  "w": 1080,
+  "h": 1920,
+  "dur": 15.0,
+  "mb": 28.8,
+  "mtime": 1792657216,
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/nile-university-colorfest-hex-9x16_1080p60.mp4"
+ },
+ {
   "slug": "chicken-republic-showcase-lit-1080p60-bps",
   "file": "chicken-republic-showcase-lit_1080p60_bps.mp4",
   "title": "Chicken Republic Showcase Lit",
@@ -299,19 +325,6 @@
   "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/babcock-seven-9x16_1080p60.mp4"
  },
  {
-  "slug": "nile-university-showcase-hex-1080p60-bps",
-  "file": "nile-university-showcase-hex_1080p60_bps.mp4",
-  "title": "Nile University Showcase Hex",
-  "kind": "ad",
-  "shape": "9:16",
-  "w": 1080,
-  "h": 1920,
-  "dur": 24.0,
-  "mb": 41.6,
-  "mtime": 1792558479,
-  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/nile-university-showcase-hex_1080p60_bps.mp4"
- },
- {
   "slug": "ziks-keep-film-9x16-1080p60",
   "file": "ziks-keep-film-9x16_1080p60.mp4",
   "title": "Ziks Keep Film",
@@ -557,19 +570,6 @@
   "mb": 14.9,
   "mtime": 1792542564,
   "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/the-noisy-book-club-promo-9x16_1080p60.mp4"
- },
- {
-  "slug": "nile-university-colorfest-hex-9x16-1080p60",
-  "file": "nile-university-colorfest-hex-9x16_1080p60.mp4",
-  "title": "Nile University Colorfest Hex",
-  "kind": "client",
-  "shape": "9:16",
-  "w": 1080,
-  "h": 1920,
-  "dur": 15.0,
-  "mb": 29.3,
-  "mtime": 1792537968,
-  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/nile-university-colorfest-hex-9x16_1080p60.mp4"
  },
  {
   "slug": "bps-endsars-still-16x9-1080p60",
