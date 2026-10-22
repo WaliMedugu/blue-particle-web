@@ -100,14 +100,14 @@ if(form){
     var bad = [];
     ["name","contact","what"].forEach(function(n){ var f = form.elements[n], ok = f.value.trim().length > 1; f.setAttribute("aria-invalid", !ok); if(!ok) bad.push(f); });
     msg.className = "msg";
-    if(bad.length){ msg.classList.add("err"); msg.textContent = "Please add your name, how to reach you, and what you're launching."; bad[0].focus(); return; }
+    if(bad.length){ msg.classList.add("err"); msg.textContent = "Please add your name, how to reach you, and a line about your project."; bad[0].focus(); return; }
     var via = (e.submitter && e.submitter.value) || "email";
     var el = form.elements, pkg = el.pkg.options[el.pkg.selectedIndex].text;
     var text = (C.intro || "Hi Blue Particle Studios, I'd like a launch film.") +
       "\n\nName: " + el.name.value + "\nContact: " + el.contact.value +
       (el.company && el.company.value ? "\nCompany / link: " + el.company.value : "") +
-      "\nPackage: " + pkg + "\nLaunch date: " + (el.when.value || "flexible") +
-      "\n\nWhat we're launching:\n" + el.what.value;
+      "\nPackage: " + pkg + "\n" + (C.whenLabel || "Launch date") + ": " + (el.when.value || "flexible") +
+      "\n\n" + (C.whatLabel || "What we're launching") + ":\n" + el.what.value;
     if(via === "wa"){
       window.open("https://wa.me/" + C.whatsapp + "?text=" + encodeURIComponent(text), "_blank", "noopener");
       msg.classList.add("ok"); msg.textContent = "Opening WhatsApp with your message ready. Just press send.";

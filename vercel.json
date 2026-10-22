@@ -2,9 +2,62 @@
   "trailingSlash": true,
   "cleanUrls": true,
   "headers": [
-    { "source": "/desk/(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }, { "key": "Cache-Control", "value": "no-cache" }] },
-    { "source": "/gallery/(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] },
-    { "source": "/gallery/(l|v)/(.*)", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] },
-    { "source": "/for/(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] }
+    {
+      "source": "/desk/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
+      ]
+    },
+    {
+      "source": "/gallery/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/gallery/(l|v)/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
+      ]
+    },
+    {
+      "source": "/for/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/web",
+      "destination": "/web-design/",
+      "permanent": false
+    },
+    {
+      "source": "/websites",
+      "destination": "/web-design/",
+      "permanent": false
+    },
+    {
+      "source": "/webdesign",
+      "destination": "/web-design/",
+      "permanent": false
+    }
   ]
 }

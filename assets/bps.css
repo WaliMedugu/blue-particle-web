@@ -584,3 +584,29 @@ html.lenis,html.lenis body{height:auto}
 .pl:fullscreen{display:flex;flex-direction:column;justify-content:center}
 .pl:fullscreen video{max-width:100%;max-height:calc(100vh - 38px);margin:auto}
 @media(max-width:600px){.pl-tc span,.pl-fs{display:none}.pl-bar button{min-width:0;padding:0 10px}}
+
+/* ---- Studio hub (/) and web design (/web-design/) ---- */
+.film .scr img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .8s var(--ease)}
+.film:hover .scr img{transform:scale(1.03)}
+a.film{text-decoration:none}
+.film .scr .play.visit::before{content:"↗ "}
+.routes{display:grid;grid-template-columns:1fr;border-bottom:var(--hair) solid var(--line)}
+.route{display:grid;grid-template-rows:auto auto 1fr;text-decoration:none;color:inherit;border-bottom:var(--hair) solid var(--line)}
+.route:last-child{border-bottom:0}
+.route .top{display:flex;justify-content:space-between;padding:10px var(--gut);color:var(--ink-2)}
+.route .scr{position:relative;margin:0 var(--gut);aspect-ratio:16/10;overflow:hidden;background:var(--ink);box-shadow:0 0 0 var(--hair) var(--line)}
+.route .scr video,.route .scr img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .8s var(--ease)}
+.route:hover .scr video,.route:hover .scr img{transform:scale(1.03)}
+.route .info{display:grid;gap:12px;align-content:start;padding:18px var(--gut) 26px}
+.route h2{font-size:clamp(44px,5.4vw,92px)}
+.route p{font-size:14px;color:var(--ink-2);max-width:46ch}
+.route ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+.route li{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;padding:4px 8px;border:var(--hair) solid var(--line)}
+.route .go{display:flex;justify-content:space-between;padding:14px var(--gut);border-top:var(--hair) solid var(--line);color:var(--accent);font-family:var(--mono);font-size:11px;text-transform:uppercase}
+.route:hover .go{background:var(--accent);color:var(--accent-ink)}
+.route .stack{display:grid;grid-template-columns:1fr 1fr;gap:var(--hair);height:100%;background:var(--line)}
+@media(min-width:900px){
+  .routes{grid-template-columns:1fr 1fr}
+  .route{border-bottom:0;border-right:var(--hair) solid var(--line)}
+  .route:last-child{border-right:0}
+}
