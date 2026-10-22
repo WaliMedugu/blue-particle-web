@@ -610,3 +610,5 @@ a.film{text-decoration:none}
   .route{border-bottom:0;border-right:var(--hair) solid var(--line)}
   .route:last-child{border-right:0}
 }
+.ptable+.ptable{border-top:var(--hair) solid var(--line)}
+@media(min-width:1000px){.ptable .lead.wide2{grid-column:span 2;border-right:0}}
