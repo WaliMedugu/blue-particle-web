@@ -45,17 +45,17 @@
   ],
   "redirects": [
     {
-      "source": "/web",
+      "source": "/web/",
       "destination": "/web-design/",
       "permanent": false
     },
     {
-      "source": "/websites",
+      "source": "/websites/",
       "destination": "/web-design/",
       "permanent": false
     },
     {
-      "source": "/webdesign",
+      "source": "/webdesign/",
       "destination": "/web-design/",
       "permanent": false
     }
