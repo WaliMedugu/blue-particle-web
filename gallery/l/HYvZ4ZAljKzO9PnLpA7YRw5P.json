@@ -1,5 +1,18 @@
 [
  {
+  "slug": "glovo-bounce-9x16-1080p60",
+  "file": "glovo-bounce-9x16_1080p60.mp4",
+  "title": "Glovo Bounce",
+  "kind": "client",
+  "shape": "9:16",
+  "w": 1080,
+  "h": 1920,
+  "dur": 15.0,
+  "mb": 29.7,
+  "mtime": 1792832001,
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/glovo-bounce-9x16_1080p60.mp4"
+ },
+ {
   "slug": "pan-atlantic-showcase-we-got-this-1080p60-bps",
   "file": "pan-atlantic-showcase-we-got-this_1080p60_bps.mp4",
   "title": "Pan Atlantic Showcase We Got This",
