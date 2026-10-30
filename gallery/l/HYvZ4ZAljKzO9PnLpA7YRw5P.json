@@ -1,5 +1,18 @@
 [
  {
+  "slug": "daybank-bank-the-day-16x9-1080p60",
+  "file": "daybank-bank-the-day-16x9_1080p60.mp4",
+  "title": "Daybank Bank The Day",
+  "kind": "client",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 29.0,
+  "mb": 64.8,
+  "mtime": 1793389349,
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/daybank-bank-the-day-16x9_1080p60.mp4"
+ },
+ {
   "slug": "kfc-nigeria-louder-than-lagos-9x16-1080p60",
   "file": "kfc-nigeria-louder-than-lagos-9x16_1080p60.mp4",
   "title": "Kfc Nigeria Louder Than Lagos",
