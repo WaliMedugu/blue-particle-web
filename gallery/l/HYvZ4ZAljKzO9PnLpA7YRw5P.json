@@ -1,5 +1,18 @@
 [
  {
+  "slug": "daybank-showcase-16x9-1080p60-bps",
+  "file": "daybank-showcase-16x9_1080p60_bps.mp4",
+  "title": "Daybank Showcase",
+  "kind": "ad",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 38.5,
+  "mb": 79.5,
+  "mtime": 1793443691,
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/daybank-showcase-16x9_1080p60_bps.mp4"
+ },
+ {
   "slug": "napkin-showcase-16x9-1080p60-bps",
   "file": "napkin-showcase-16x9_1080p60_bps.mp4",
   "title": "Napkin Showcase",
