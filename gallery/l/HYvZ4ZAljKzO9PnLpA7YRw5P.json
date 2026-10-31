@@ -1,5 +1,18 @@
 [
  {
+  "slug": "napkin-showcase-16x9-1080p60-bps",
+  "file": "napkin-showcase-16x9_1080p60_bps.mp4",
+  "title": "Napkin Showcase",
+  "kind": "ad",
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 38.5,
+  "mb": 21.8,
+  "mtime": 1793432968,
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/napkin-showcase-16x9_1080p60_bps.mp4"
+ },
+ {
   "slug": "bps-motion-16x9-1080p60-bps",
   "file": "bps-motion-16x9_1080p60_bps.mp4",
   "title": "Motion",
