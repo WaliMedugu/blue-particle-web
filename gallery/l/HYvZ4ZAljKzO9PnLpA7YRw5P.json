@@ -1,5 +1,31 @@
 [
  {
+  "slug": "faaji-walk-the-t-9x16-1080p60",
+  "file": "faaji-walk-the-t-9x16_1080p60.mp4",
+  "title": "Faaji Walk The T",
+  "kind": "client",
+  "shape": "9:16",
+  "w": 1080,
+  "h": 1920,
+  "dur": 23.5,
+  "mb": 46.6,
+  "mtime": 1793525588,
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/faaji-walk-the-t-9x16_1080p60.mp4"
+ },
+ {
+  "slug": "faaji-fit-check-v3-9x16-1080p60",
+  "file": "faaji-fit-check-v3-9x16_1080p60.mp4",
+  "title": "Faaji Fit Check V3",
+  "kind": "client",
+  "shape": "9:16",
+  "w": 1080,
+  "h": 1920,
+  "dur": 26.4,
+  "mb": 51.2,
+  "mtime": 1793525553,
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/faaji-fit-check-v3-9x16_1080p60.mp4"
+ },
+ {
   "slug": "faaji-dec-20th-9x16-1080p60",
   "file": "faaji-dec-20th-9x16_1080p60.mp4",
   "title": "Faaji Dec 20th",
