@@ -45,17 +45,6 @@
   ],
   "redirects": [
     {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "blue-particle-studios.vercel.app"
-        }
-      ],
-      "destination": "https://blueparticlestudios.com/:path*",
-      "permanent": true
-    },
-    {
       "source": "/web/",
       "destination": "/web-design/",
       "permanent": false
