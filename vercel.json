@@ -1,7 +1,22 @@
 {
   "trailingSlash": true,
   "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/teams/:path*",
+      "destination": "https://aeon-neo.vercel.app/teams/:path*"
+    }
+  ],
   "headers": [
+    {
+      "source": "/teams/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
     {
       "source": "/desk/(.*)",
       "headers": [
