@@ -7,6 +7,14 @@
       "destination": "https://aeon-neo.vercel.app/teams/:file"
     },
     {
+      "source": "/teams/",
+      "destination": "https://aeon-neo.vercel.app/teams/index.html"
+    },
+    {
+      "source": "/teams/:path*/",
+      "destination": "https://aeon-neo.vercel.app/teams/index.html"
+    },
+    {
       "source": "/teams/:path*",
       "destination": "https://aeon-neo.vercel.app/teams/index.html"
     }
