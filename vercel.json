@@ -3,8 +3,12 @@
   "cleanUrls": true,
   "rewrites": [
     {
+      "source": "/teams/:file(.+\\.[A-Za-z0-9]+)",
+      "destination": "https://aeon-neo.vercel.app/teams/:file"
+    },
+    {
       "source": "/teams/:path*",
-      "destination": "https://aeon-neo.vercel.app/teams/:path*"
+      "destination": "https://aeon-neo.vercel.app/teams/index.html"
     }
   ],
   "headers": [
