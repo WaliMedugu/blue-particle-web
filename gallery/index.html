@@ -74,6 +74,31 @@ body.solo .grid{display:none}
 body.solo .x{display:none}
 body.solo .brand{pointer-events:none}
 .nav2 button{background:none;border:0;color:#a3a3a0;font-family:var(--mono);font-size:12px;text-transform:uppercase;padding:6px 0;cursor:pointer}
+
+/* folders: a carousel post shows as one tile holding its slides, like a home-screen folder; tapping it opens the folder */
+.fold .thumb{background:var(--paper-2);display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:6px;padding:10px}
+.fold .thumb img{aspect-ratio:auto;height:100%;border:1px solid var(--line-soft)}
+.fold .thumb .more{display:flex;align-items:center;justify-content:center;background:var(--paper);border:1px solid var(--line-soft);font-family:var(--mono);font-size:13px;color:var(--mute)}
+.fold:hover .thumb img{transform:none}
+.fold .thumb .badge{height:auto;width:auto;align-self:start;justify-self:start;top:4px;left:4px}
+.badge.fd{background:var(--ink);color:var(--paper)}
+#fd{background:var(--paper);color:var(--ink)}
+#fd::backdrop{background:rgba(40,40,40,.4)}
+.fd{display:flex;flex-direction:column;height:100%;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+.fd-top{display:flex;align-items:center;gap:10px;padding:10px var(--gut);border-bottom:1px solid var(--line-soft)}
+.fd-top .t{font-weight:600;font-size:17px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fd-top .x{border-color:var(--line);color:var(--ink)}
+.fd-body{flex:1;min-height:0;overflow-y:auto;padding:14px var(--gut) 24px}
+.fd-in{max-width:900px;margin:0 auto;display:grid;gap:14px}
+.fd-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+@media (min-width:640px){.fd-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.fd-grid .card .thumb{aspect-ratio:4/5}
+.fd-grid .card h2{font-size:12px;font-family:var(--mono);font-weight:400;color:var(--mute);margin-top:5px}
+.btn.dark{border-color:var(--ink);color:var(--ink)}
+.cap{border:1px solid var(--line);background:#fff}
+.cap-h{display:flex;align-items:center;justify-content:space-between;padding:8px 10px 8px 12px;border-bottom:1px solid var(--line-soft)}
+.cap-h button{height:36px;padding:0 14px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:12px;text-transform:uppercase;cursor:pointer}
+.cap pre{margin:0;padding:12px;white-space:pre-wrap;font-family:var(--sans);font-size:15px;line-height:1.45;user-select:text;-webkit-user-select:text}
 </style>
 </head>
 <body>
@@ -106,6 +131,21 @@ body.solo .brand{pointer-events:none}
   <p class="empty" id="empty" hidden>Nothing matches that search.</p>
 </main>
 
+<dialog id="fd" aria-label="Folder">
+  <div class="fd">
+    <div class="fd-top"><span class="t" id="fdTitle"></span><button class="x" id="fdClose" aria-label="Close folder">×</button></div>
+    <div class="fd-body"><div class="fd-in">
+      <p class="mono" id="fdMeta"></p>
+      <div class="fd-grid" id="fdGrid"></div>
+      <a class="btn main" id="fdDl" href="#" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>
+        <span id="fdDlText">Download all</span></a>
+      <div class="cap" id="fdCap"><div class="cap-h"><span class="mono">Caption</span><button type="button" id="fdCopy">Copy</button></div><pre id="fdCapText"></pre></div>
+      <button class="btn dark" id="fdShare" type="button">Share folder</button>
+    </div></div>
+  </div>
+</dialog>
+
 <dialog id="pl" aria-label="Video player">
   <div class="pl">
     <div class="pl-top"><span class="t" id="plTitle"></span><button class="x" id="plClose" aria-label="Close">×</button></div>
@@ -126,52 +166,109 @@ body.solo .brand{pointer-events:none}
 <script>
 (() => {
   const $ = id => document.getElementById(id);
-  const grid = $("grid"), q = $("q"), pl = $("pl"), vid = $("plVideo");
-  let all = [], shown = [], filter = "all", cur = -1;
+  const grid = $("grid"), q = $("q"), pl = $("pl"), vid = $("plVideo"), fd = $("fd");
+  // all: top-level entries (videos and folders). ctx: the list the player steps through (the grid, or one folder's slides).
+  let all = [], shown = [], filter = "all", ctx = [], cur = -1, folder = null;
 
   const fmtDur = s => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, "0")}`;
-  const esc = s => s.replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
   const KIND = {ad: "BPS ad", client: "Client", teaser: "Teaser"};
-  const hay = v => `${v.title} ${v.file} ${{ad: "ad ads bps showcase promo", client: "client clients film", teaser: "teaser teasers pitch outreach"}[v.kind]} ${v.shape}`.toLowerCase();
+  const words = {ad: "ad ads bps showcase promo", client: "client clients film", teaser: "teaser teasers pitch outreach"};
+  const hay = v => `${v.title} ${v.file} ${words[v.kind]} ${v.shape} ${v.type === "folder" ? "folder carousel post instagram slides " + (v.caption || "") : ""}`.toLowerCase();
 
-  function render() {
-    const words = q.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
-    shown = all.filter(v => (filter === "all" || v.kind === filter || v.shape === filter) && words.every(w => v._hay.includes(w)));
-    grid.innerHTML = shown.map((v, i) => `
+  const videoCard = (v, i, label) => `
       <button class="card" data-i="${i}">
         <div class="thumb"><img src="media/${v.slug}.jpg" alt="" loading="lazy" decoding="async">
-          <span class="badge ${v.kind}">${KIND[v.kind]}</span><span class="dur">${fmtDur(v.dur)}</span></div>
-        <h2>${esc(v.title)}</h2><p class="mono">${v.shape} · ${v.mb} MB</p>
-      </button>`).join("");
+          ${label ? "" : `<span class="badge ${v.kind}">${KIND[v.kind]}</span>`}<span class="dur">${fmtDur(v.dur)}</span></div>
+        <h2>${esc(label || v.title)}</h2>${label ? "" : `<p class="mono">${v.shape} · ${v.mb} MB</p>`}
+      </button>`;
+  const folderCard = (f, i) => {
+    const show = f.items.slice(0, f.n > 4 ? 3 : 4);
+    return `
+      <button class="card fold" data-i="${i}" aria-label="Open folder ${esc(f.title)}, ${f.n} slides">
+        <div class="thumb">${show.map(v => `<img src="media/${v.slug}.jpg" alt="" loading="lazy" decoding="async">`).join("")}
+          ${f.n > 4 ? `<span class="more">+${f.n - 3}</span>` : ""}
+          <span class="badge fd">Folder · ${f.n}</span></div>
+        <h2>${esc(f.title)}</h2><p class="mono">Carousel · ${f.n} slides · ${f.mb} MB</p>
+      </button>`;
+  };
+
+  function render() {
+    const w = q.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
+    shown = all.filter(v => (filter === "all" || v.kind === filter || v.shape === filter) && w.every(x => v._hay.includes(x)));
+    grid.innerHTML = shown.map((v, i) => v.type === "folder" ? folderCard(v, i) : videoCard(v, i)).join("");
     $("empty").hidden = shown.length > 0;
     $("count").textContent = `${shown.length} of ${all.length}`;
     $("searchBox").classList.toggle("has", q.value.length > 0);
   }
 
-  function open(i) {
-    const v = shown[i]; if (!v) return;
-    cur = i;
-    $("plTitle").textContent = v.title;
+  function openFolder(f) {
+    if (!f) return;
+    folder = f;
+    $("fdTitle").textContent = f.title;
+    $("fdMeta").textContent = `Carousel · ${f.n} slides · ${f.shape} · ${f.mb} MB · tap a slide to play it`;
+    $("fdGrid").innerHTML = f.items.map((v, i) => videoCard(v, i, `Slide ${i + 1}`)).join("");
+    $("fdDl").href = f.download || "#";
+    $("fdDl").setAttribute("download", f.file);
+    $("fdDl").style.display = f.download ? "" : "none";
+    $("fdDlText").textContent = `Download all ${f.n} · ${f.mb} MB (zip)`;
+    $("fdCap").hidden = !f.caption;
+    $("fdCapText").textContent = f.caption || "";
+    $("fdCopy").textContent = "Copy";
+    if (!fd.open) fd.showModal();
+    history.replaceState(null, "", `#${f.slug}`);
+  }
+  function closeFolder() {
+    if (document.body.classList.contains("solo") && !all.some(v => v.type !== "folder")) return;
+    folder = null; if (fd.open) fd.close(); history.replaceState(null, "", location.pathname + location.search);
+  }
+
+  function open(list, i) {
+    const v = list[i]; if (!v) return;
+    ctx = list; cur = i;
+    $("plTitle").textContent = folder && list === folder.items ? `${folder.title} · Slide ${i + 1} of ${list.length}` : v.title;
     $("plMeta").textContent = `${KIND[v.kind]} · ${v.shape} · ${v.w}×${v.h} · ${fmtDur(v.dur)} · ${v.file}`;
     vid.poster = `media/${v.slug}.jpg`;
     vid.src = `media/${v.slug}.mp4`;
-    const full = v.download;
-    $("plDl").href = full || `media/${v.slug}.mp4`;
+    vid.loop = !!(folder && list === folder.items);  // carousel slides are loops: play them as loops
+    $("plDl").href = v.download || `media/${v.slug}.mp4`;
     $("plDl").setAttribute("download", v.file);
-    $("plDlText").textContent = full ? `Download full quality · ${v.mb} MB` : "Download (preview)";
+    $("plDlText").textContent = v.download ? `Download full quality · ${v.mb} MB` : "Download (preview)";
     if (!pl.open) pl.showModal();
     history.replaceState(null, "", `#${v.slug}`);
     vid.play().catch(() => {});
   }
-  function close() { if (document.body.classList.contains("solo")) return; vid.pause(); vid.removeAttribute("src"); vid.load(); if (pl.open) pl.close(); history.replaceState(null, "", location.pathname + location.search); }
+  function close() {
+    vid.pause(); vid.removeAttribute("src"); vid.load(); if (pl.open) pl.close();
+    if (folder && ctx === folder.items) { history.replaceState(null, "", `#${folder.slug}`); return; }  // back into the folder
+    if (document.body.classList.contains("solo")) return;
+    history.replaceState(null, "", location.pathname + location.search);
+  }
 
-  grid.addEventListener("click", e => { const c = e.target.closest(".card"); if (c) open(+c.dataset.i); });
+  grid.addEventListener("click", e => {
+    const c = e.target.closest(".card"); if (!c) return;
+    const v = shown[+c.dataset.i];
+    v.type === "folder" ? openFolder(v) : (folder = null, open(shown.filter(x => x.type !== "folder"), shown.filter(x => x.type !== "folder").indexOf(v)));
+  });
+  $("fdGrid").addEventListener("click", e => { const c = e.target.closest(".card"); if (c && folder) open(folder.items, +c.dataset.i); });
+  $("fdClose").onclick = closeFolder;
+  fd.addEventListener("cancel", e => { e.preventDefault(); closeFolder(); });
+  $("fdCopy").onclick = async () => {
+    const t = folder && folder.caption; if (!t) return;
+    try { await navigator.clipboard.writeText(t); }
+    catch { const r = document.createRange(); r.selectNodeContents($("fdCapText")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); document.execCommand("copy"); }
+    $("fdCopy").textContent = "Copied"; setTimeout(() => $("fdCopy").textContent = "Copy", 1600);
+  };
+  $("fdShare").onclick = async () => {
+    const url = `${location.origin}${location.pathname}#${folder.slug}`;
+    try { if (navigator.share) await navigator.share({title: folder.title, url}); else { await navigator.clipboard.writeText(url); $("fdShare").textContent = "Link copied"; setTimeout(() => $("fdShare").textContent = "Share folder", 1500); } } catch {}
+  };
   $("plClose").onclick = close;
   pl.addEventListener("cancel", e => { e.preventDefault(); close(); });
-  $("plPrev").onclick = () => open((cur - 1 + shown.length) % shown.length);
-  $("plNext").onclick = () => open((cur + 1) % shown.length);
+  $("plPrev").onclick = () => open(ctx, (cur - 1 + ctx.length) % ctx.length);
+  $("plNext").onclick = () => open(ctx, (cur + 1) % ctx.length);
   $("plShare").onclick = async () => {
-    const v = shown[cur], url = v.download || new URL(`media/${v.slug}.mp4`, location.href).href;
+    const v = ctx[cur], url = v.download || new URL(`media/${v.slug}.mp4`, location.href).href;
     try { if (navigator.share) await navigator.share({title: v.title, url}); else { await navigator.clipboard.writeText(url); $("plShare").textContent = "Link copied"; setTimeout(() => $("plShare").textContent = "Share", 1500); } } catch {}
   };
 
@@ -184,7 +281,7 @@ body.solo .brand{pointer-events:none}
   });
 
   // Owner key (from ?k=) unlocks the full gallery in this browser. Everyone else only ever
-  // loads the single video their link points at, so a shared link can't browse the rest.
+  // loads the single video or folder their link points at, so a shared link can't browse the rest.
   const store = {get: k => { try { return localStorage.getItem(k); } catch { return null; } },
                  set: (k, v) => { try { localStorage.setItem(k, v); } catch {} }};
   const urlKey = new URLSearchParams(location.search).get("k");
@@ -194,15 +291,22 @@ body.solo .brand{pointer-events:none}
   const getJSON = u => fetch(u, {cache: "no-cache"}).then(r => { if (!r.ok) throw 0; return r.json(); });
   const prep = list => all = list.map(v => ({...v, _hay: hay(v)}));
   const locked = msg => { document.body.classList.add("solo"); $("count").textContent = ""; $("grid").hidden = true; $("empty").hidden = false; $("empty").textContent = msg; };
+  const route = s => {  // a hash names a folder, a slide inside a folder, or a video
+    const f = all.find(v => v.type === "folder" && v.slug === s);
+    if (f) return openFolder(f);
+    const host = all.find(v => v.type === "folder" && v.items.some(x => x.slug === s));
+    if (host) { openFolder(host); return open(host.items, host.items.findIndex(x => x.slug === s)); }
+    const loose = all.filter(v => v.type !== "folder");
+    const i = loose.findIndex(v => v.slug === s);
+    if (i >= 0) open(loose, i);
+  };
 
   const full = key ? getJSON(`l/${encodeURIComponent(key)}.json`).catch(() => null) : Promise.resolve(null);
   full.then(list => {
-    if (list) {
-      prep(list); render();
-      if (slug) open(shown.findIndex(v => v.slug === slug));
-    } else if (slug) {
+    if (list) { prep(list); render(); if (slug) route(slug); }
+    else if (slug) {
       document.body.classList.add("solo");
-      getJSON(`v/${encodeURIComponent(slug)}.json`).then(v => { prep([v]); render(); open(0); })
+      getJSON(`v/${encodeURIComponent(slug)}.json`).then(v => { prep([v]); render(); route(slug); })
         .catch(() => locked("This video isn't available."));
     } else locked("This gallery is private.");
   });
