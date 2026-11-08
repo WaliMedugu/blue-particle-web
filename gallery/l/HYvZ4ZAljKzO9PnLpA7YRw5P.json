@@ -3,6 +3,11 @@
   "type": "folder",
   "slug": "bps-free-ae",
   "file": "bps-free-ae.zip",
+  "live": {
+   "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/bps-free-ae-live-photos.zip",
+   "n": 7,
+   "mb": 10.4
+  },
   "title": "Free After Effects Alternatives",
   "kind": "ad",
   "shape": "3:4",
@@ -110,6 +115,11 @@
   "type": "folder",
   "slug": "bps-hate-curve",
   "file": "bps-hate-curve.zip",
+  "live": {
+   "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/bps-hate-curve-live-photos.zip",
+   "n": 6,
+   "mb": 8.2
+  },
   "title": "The Hate Curve",
   "kind": "ad",
   "shape": "3:4",

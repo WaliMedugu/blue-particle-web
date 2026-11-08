@@ -140,6 +140,10 @@ body.solo .brand{pointer-events:none}
       <a class="btn main" id="fdDl" href="#" download>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>
         <span id="fdDlText">Download all</span></a>
+      <a class="btn dark" id="fdLive" href="#" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="6.5" stroke-dasharray="2 2.2"/><circle cx="12" cy="12" r="9.5"/></svg>
+        <span id="fdLiveText">Download live photos (TikTok)</span></a>
+      <p class="mono" id="fdLiveHow">Live Photos for TikTok photo mode, posted from an iPhone. Each slide is a JPG + MOV pair: get both into the iPhone's Photos together (AirDrop from a Mac, or iCloud Photos), then pick them in TikTok.</p>
       <div class="cap" id="fdCap"><div class="cap-h"><span class="mono">Caption</span><button type="button" id="fdCopy">Copy</button></div><pre id="fdCapText"></pre></div>
       <button class="btn dark" id="fdShare" type="button">Share folder</button>
     </div></div>
@@ -212,6 +216,10 @@ body.solo .brand{pointer-events:none}
     $("fdDl").setAttribute("download", f.file);
     $("fdDl").style.display = f.download ? "" : "none";
     $("fdDlText").textContent = `Download all ${f.n} · ${f.mb} MB (zip)`;
+    const lv = f.live;
+    $("fdLive").style.display = $("fdLiveHow").style.display = lv ? "" : "none";
+    if (lv) { $("fdLive").href = lv.download; $("fdLive").setAttribute("download", `${f.slug}-live-photos.zip`);
+      $("fdLiveText").textContent = `Download live photos for TikTok · ${lv.n} · ${lv.mb} MB`; }
     $("fdCap").hidden = !f.caption;
     $("fdCapText").textContent = f.caption || "";
     $("fdCopy").textContent = "Copy";
