@@ -142,9 +142,10 @@ body.solo .brand{pointer-events:none}
         <span id="fdDlText">Download all</span></a>
       <a class="btn dark" id="fdLive" href="#" download>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="6.5" stroke-dasharray="2 2.2"/><circle cx="12" cy="12" r="9.5"/></svg>
-        <span id="fdLiveText">Download live photos (TikTok)</span></a>
-      <p class="mono" id="fdLiveHow">Live Photos for TikTok photo mode, posted from an iPhone. Each slide is a JPG + MOV pair: get both into the iPhone's Photos together (AirDrop from a Mac, or iCloud Photos), then pick them in TikTok.</p>
-      <div class="cap" id="fdCap"><div class="cap-h"><span class="mono">Caption</span><button type="button" id="fdCopy">Copy</button></div><pre id="fdCapText"></pre></div>
+        <span id="fdLiveText">Download motion photos (TikTok)</span></a>
+      <p class="mono" id="fdLiveHow">Samsung Motion Photos: one photo per slide with its motion inside. Unzip in My Files, open them in Gallery (tap View motion to check), then pick them in order in TikTok photo mode.</p>
+      <div class="cap" id="fdCap"><div class="cap-h"><span class="mono">Instagram caption</span><button type="button" id="fdCopy">Copy</button></div><pre id="fdCapText"></pre></div>
+      <div class="cap" id="fdTt"><div class="cap-h"><span class="mono">TikTok title + caption</span><button type="button" id="fdTtCopy">Copy</button></div><pre id="fdTtText"></pre></div>
       <button class="btn dark" id="fdShare" type="button">Share folder</button>
     </div></div>
   </div>
@@ -218,11 +219,12 @@ body.solo .brand{pointer-events:none}
     $("fdDlText").textContent = `Download all ${f.n} · ${f.mb} MB (zip)`;
     const lv = f.live;
     $("fdLive").style.display = $("fdLiveHow").style.display = lv ? "" : "none";
-    if (lv) { $("fdLive").href = lv.download; $("fdLive").setAttribute("download", `${f.slug}-live-photos.zip`);
-      $("fdLiveText").textContent = `Download live photos for TikTok · ${lv.n} · ${lv.mb} MB`; }
+    if (lv) { $("fdLive").href = lv.download; $("fdLive").setAttribute("download", `${f.slug}-motion-photos.zip`);
+      $("fdLiveText").textContent = `Download motion photos for TikTok · ${lv.n} · ${lv.mb} MB`; }
     $("fdCap").hidden = !f.caption;
     $("fdCapText").textContent = f.caption || "";
     $("fdCopy").textContent = "Copy";
+    $("fdTt").hidden = !f.tiktok_caption; $("fdTtText").textContent = f.tiktok_caption || ""; $("fdTtCopy").textContent = "Copy";
     if (!fd.open) fd.showModal();
     history.replaceState(null, "", `#${f.slug}`);
   }
@@ -266,6 +268,12 @@ body.solo .brand{pointer-events:none}
     try { await navigator.clipboard.writeText(t); }
     catch { const r = document.createRange(); r.selectNodeContents($("fdCapText")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); document.execCommand("copy"); }
     $("fdCopy").textContent = "Copied"; setTimeout(() => $("fdCopy").textContent = "Copy", 1600);
+  };
+  $("fdTtCopy").onclick = async () => {
+    const t = folder && folder.tiktok_caption; if (!t) return;
+    try { await navigator.clipboard.writeText(t); }
+    catch { const r = document.createRange(); r.selectNodeContents($("fdTtText")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); document.execCommand("copy"); }
+    $("fdTtCopy").textContent = "Copied"; setTimeout(() => $("fdTtCopy").textContent = "Copy", 1600);
   };
   $("fdShare").onclick = async () => {
     const url = `${location.origin}${location.pathname}#${folder.slug}`;
