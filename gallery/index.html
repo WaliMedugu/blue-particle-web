@@ -154,7 +154,7 @@ body.solo .brand{pointer-events:none}
 <dialog id="pl" aria-label="Video player">
   <div class="pl">
     <div class="pl-top"><span class="t" id="plTitle"></span><button class="x" id="plClose" aria-label="Close">×</button></div>
-    <div class="stage"><video id="plVideo" controls playsinline preload="auto"></video></div>
+    <div class="stage"><video id="plVideo" controls playsinline preload="auto"></video><img id="plImg" alt="" hidden style="max-width:100%;max-height:100%;object-fit:contain;display:block;margin:auto"></div>
     <div class="pl-bot">
       <p class="mono" id="plMeta"></p>
       <div class="acts">
@@ -184,7 +184,7 @@ body.solo .brand{pointer-events:none}
   const videoCard = (v, i, label) => `
       <button class="card" data-i="${i}">
         <div class="thumb"><img src="media/${v.slug}.jpg" alt="" loading="lazy" decoding="async">
-          ${label ? "" : `<span class="badge ${v.kind}">${KIND[v.kind]}</span>`}<span class="dur">${fmtDur(v.dur)}</span></div>
+          ${label ? "" : `<span class="badge ${v.kind}">${KIND[v.kind]}</span>`}${v.img ? "" : `<span class="dur">${fmtDur(v.dur)}</span>`}</div>
         <h2>${esc(label || v.title)}</h2>${label ? "" : `<p class="mono">${v.shape} · ${v.mb} MB</p>`}
       </button>`;
   const folderCard = (f, i) => {
@@ -194,7 +194,7 @@ body.solo .brand{pointer-events:none}
         <div class="thumb">${show.map(v => `<img src="media/${v.slug}.jpg" alt="" loading="lazy" decoding="async">`).join("")}
           ${f.n > 4 ? `<span class="more">+${f.n - 3}</span>` : ""}
           <span class="badge fd">Folder · ${f.n}</span></div>
-        <h2>${esc(f.title)}</h2><p class="mono">Carousel · ${f.n} slides · ${f.mb} MB</p>
+        <h2>${esc(f.title)}</h2><p class="mono">${f.items.every(x => x.img) ? "Image carousel" : "Carousel"} · ${f.n} slides · ${f.mb} MB</p>
       </button>`;
   };
 
@@ -211,12 +211,14 @@ body.solo .brand{pointer-events:none}
     if (!f) return;
     folder = f;
     $("fdTitle").textContent = f.title;
-    $("fdMeta").textContent = `Carousel · ${f.n} slides · ${f.shape} · ${f.mb} MB · tap a slide to play it`;
+    $("fdMeta").textContent = `Carousel · ${f.n} slides · ${f.shape} · ${f.mb} MB · tap a slide to ${f.items.every(x => x.img) ? "view" : "play"} it`;
     $("fdGrid").innerHTML = f.items.map((v, i) => videoCard(v, i, `Slide ${i + 1}`)).join("");
     $("fdDl").href = f.download || "#";
     $("fdDl").setAttribute("download", f.file);
     $("fdDl").style.display = f.download ? "" : "none";
-    $("fdDlText").textContent = `Download all ${f.n} · ${f.mb} MB (zip)`;
+    const imgs = f.items.every(x => x.img);
+    if (imgs) { $("fdDl").href = "#"; $("fdDl").removeAttribute("download"); $("fdDl").style.display = ""; }
+    $("fdDlText").textContent = imgs ? `Save all ${f.n} to your gallery` : `Download all ${f.n} · ${f.mb} MB (zip)`;
     const lv = f.live;
     $("fdLive").style.display = $("fdLiveHow").style.display = lv ? "" : "none";
     if (lv) { $("fdLive").href = lv.download; $("fdLive").setAttribute("download", `${f.slug}-motion-photos.zip`);
@@ -237,16 +239,17 @@ body.solo .brand{pointer-events:none}
     const v = list[i]; if (!v) return;
     ctx = list; cur = i;
     $("plTitle").textContent = folder && list === folder.items ? `${folder.title} · Slide ${i + 1} of ${list.length}` : v.title;
-    $("plMeta").textContent = `${KIND[v.kind]} · ${v.shape} · ${v.w}×${v.h} · ${fmtDur(v.dur)} · ${v.file}`;
-    vid.poster = `media/${v.slug}.jpg`;
-    vid.src = `media/${v.slug}.mp4`;
+    $("plMeta").textContent = `${KIND[v.kind]} · ${v.shape} · ${v.w}×${v.h} · ${v.img ? "image" : fmtDur(v.dur)} · ${v.file}`;
+    const im = $("plImg"); im.hidden = !v.img; vid.hidden = !!v.img; im.style.display = v.img ? "block" : "none"; vid.style.display = v.img ? "none" : "";
+    if (v.img) { vid.pause(); vid.removeAttribute("src"); vid.removeAttribute("poster"); im.src = `media/${v.slug}.jpg`; }
+    else { im.removeAttribute("src"); vid.poster = `media/${v.slug}.jpg`; vid.src = `media/${v.slug}.mp4`; }
     vid.loop = !!(folder && list === folder.items);  // carousel slides are loops: play them as loops
-    $("plDl").href = v.download || `media/${v.slug}.mp4`;
+    $("plDl").href = v.download || `media/${v.slug}.${v.img ? "jpg" : "mp4"}`;
     $("plDl").setAttribute("download", v.file);
     $("plDlText").textContent = v.download ? `Download full quality · ${v.mb} MB` : "Download (preview)";
     if (!pl.open) pl.showModal();
     history.replaceState(null, "", `#${v.slug}`);
-    vid.play().catch(() => {});
+    if (!v.img) vid.play().catch(() => {});
   }
   function close() {
     vid.pause(); vid.removeAttribute("src"); vid.load(); if (pl.open) pl.close();
@@ -261,6 +264,29 @@ body.solo .brand{pointer-events:none}
     v.type === "folder" ? openFolder(v) : (folder = null, open(shown.filter(x => x.type !== "folder"), shown.filter(x => x.type !== "folder").indexOf(v)));
   });
   $("fdGrid").addEventListener("click", e => { const c = e.target.closest(".card"); if (c && folder) open(folder.items, +c.dataset.i); });
+  // Image carousels: "Save all" hands the slides to the phone's share sheet (Save N images -> Photos / Gallery),
+  // in slide order, no zip. Where the browser can't share files (most desktops) each image downloads on its own.
+  $("fdDl").addEventListener("click", async e => {
+    if (!folder || !folder.items.every(x => x.img)) return;  // video carousels keep the zip
+    e.preventDefault();
+    const t = $("fdDlText"), was = t.textContent; t.textContent = "Preparing…";
+    try {
+      const files = await Promise.all(folder.items.map(async (v, i) => {
+        const b = await (await fetch(`media/${v.slug}.jpg`)).blob();
+        return new File([b], `${folder.slug}-${String(i + 1).padStart(2, "0")}.jpg`, {type: "image/jpeg"});
+      }));
+      if (navigator.canShare && navigator.canShare({files})) {
+        t.textContent = was; await navigator.share({files});
+      } else {
+        for (const f of files) {
+          const a = document.createElement("a"); a.href = URL.createObjectURL(f); a.download = f.name;
+          document.body.appendChild(a); a.click(); a.remove();
+          await new Promise(r => setTimeout(r, 350));
+        }
+        t.textContent = "Saved"; setTimeout(() => t.textContent = was, 1600);
+      }
+    } catch { t.textContent = was; }
+  });
   $("fdClose").onclick = closeFolder;
   fd.addEventListener("cancel", e => { e.preventDefault(); closeFolder(); });
   $("fdCopy").onclick = async () => {
@@ -284,7 +310,7 @@ body.solo .brand{pointer-events:none}
   $("plPrev").onclick = () => open(ctx, (cur - 1 + ctx.length) % ctx.length);
   $("plNext").onclick = () => open(ctx, (cur + 1) % ctx.length);
   $("plShare").onclick = async () => {
-    const v = ctx[cur], url = v.download || new URL(`media/${v.slug}.mp4`, location.href).href;
+    const v = ctx[cur], url = v.download || new URL(`media/${v.slug}.${v.img ? "jpg" : "mp4"}`, location.href).href;
     try { if (navigator.share) await navigator.share({title: v.title, url}); else { await navigator.clipboard.writeText(url); $("plShare").textContent = "Link copied"; setTimeout(() => $("plShare").textContent = "Share", 1500); } } catch {}
   };
 
