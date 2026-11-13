@@ -1,5 +1,19 @@
 [
  {
+  "slug": "nile-built-different-16x9-1080p24",
+  "file": "nile-built-different-16x9_1080p24.mp4",
+  "title": "Nile Built Different 1080p24",
+  "kind": "client",
+  "img": false,
+  "shape": "16:9",
+  "w": 1920,
+  "h": 1080,
+  "dur": 20.3,
+  "mb": 40.2,
+  "mtime": 1794530156,
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/nile-built-different-16x9_1080p24.mp4"
+ },
+ {
   "type": "folder",
   "slug": "bps-design-styles",
   "file": "bps-design-styles.zip",
