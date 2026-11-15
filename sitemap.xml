@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://blueparticlestudios.com/</loc></url>
-<url><loc>https://blueparticlestudios.com/whatwedo/</loc></url>
-<url><loc>https://blueparticlestudios.com/motion/work/</loc></url>
-<url><loc>https://blueparticlestudios.com/web-design/</loc></url>
-<url><loc>https://blueparticlestudios.com/videos/</loc></url>
-<url><loc>https://blueparticlestudios.com/terms/</loc></url>
+<url><loc>https://blueparticlestudios.com/</loc><lastmod>2026-11-15</lastmod></url>
+<url><loc>https://blueparticlestudios.com/about/</loc><lastmod>2026-11-15</lastmod></url>
+<url><loc>https://blueparticlestudios.com/motion/work/</loc><lastmod>2026-11-15</lastmod></url>
+<url><loc>https://blueparticlestudios.com/videos/</loc><lastmod>2026-11-15</lastmod></url>
+<url><loc>https://blueparticlestudios.com/web-design/</loc><lastmod>2026-11-15</lastmod></url>
+<url><loc>https://blueparticlestudios.com/whatwedo/</loc><lastmod>2026-11-15</lastmod></url>
+<url><loc>https://blueparticlestudios.com/terms/</loc><lastmod>2026-11-15</lastmod></url>
 </urlset>
