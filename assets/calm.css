@@ -118,3 +118,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 
 @media (min-width: 960px) { .film.ask { grid-column: 1 / -1; flex-direction: row; align-items: center; justify-content: space-between; } }
 @media (max-width: 959px) { .film.ask { grid-column: 1 / -1; } }
+
+/* the line under the hero that tells Google and people who we are */
+.kicker { padding: 16px var(--gut) 0; margin: 0; font-size: 15px; font-weight: 600; color: var(--accent); }
