@@ -72,6 +72,11 @@
   ],
   "redirects": [
     {
+      "source": "/motion/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/web/",
       "destination": "/web-design/",
       "permanent": false
