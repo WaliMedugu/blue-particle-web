@@ -1,5 +1,5 @@
-/* Blue Particle Studios: motion layer. Intro loader, cursor, crosshair, hotspots, text reveals,
-   line draws, slider, accordion and smooth scroll. Loads after bps.js. No dependencies except
+/* Blue Particle Studios: motion layer. Intro loader (house drawing), simple reveals,
+   slider, accordion and optional smooth scroll. Cursor, crosshair, hotspots and word-split headings removed 2026-11-15. Loads after bps.js. No dependencies except
    optional Lenis for smooth scrolling. */
 (function(){
 "use strict";
@@ -10,9 +10,6 @@ var body = document.body;
 var clamp = function(v,a,b){ return Math.max(a, Math.min(b, v)); };
 var ease = function(t){ return 1 - Math.pow(1 - t, 3); };
 var easeIO = function(t){ return t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2; };
-
-/* ---------- page frame lines ---------- */
-["frame-l","frame-r"].forEach(function(c){ var d = document.createElement("i"); d.className = c; d.setAttribute("aria-hidden","true"); body.appendChild(d); });
 
 /* ---------- smooth scroll ---------- */
 var lenis = null;
@@ -29,76 +26,11 @@ if(window.Lenis && !reduced){
   });
 }
 
-/* ---------- rolling labels ---------- */
-function roll(el){
-  var t = el.textContent; if(!t.trim() || el.querySelector(".roll")) return;
-  el.innerHTML = '<span class="roll"><span>'+t+'</span><span aria-hidden="true">'+t+'</span></span>';
-}
-$$(".btn>span, .nav a, .btn>i, .hero-bar .go span:first-child, .alt-link span:last-child").forEach(roll);
-
-/* ---------- cursor ---------- */
-var cur = $(".cursor");
-if(!cur){ cur = document.createElement("div"); cur.className = "cursor"; cur.setAttribute("aria-hidden","true"); cur.innerHTML = '<i></i><span class="mono"></span>'; body.appendChild(cur); }
-var lab = $("span", cur), mx = -100, my = -100, cx = -100, cy = -100;
-if(fine){
-  addEventListener("pointermove", function(e){ mx = e.clientX; my = e.clientY; }, {passive:true});
-  (function loop(){
-    cx += (mx - cx) * .22; cy += (my - cy) * .22;
-    cur.style.transform = "translate(" + cx + "px," + cy + "px)";
-    requestAnimationFrame(loop);
-  })();
-  document.addEventListener("pointerover", function(e){
-    var t = e.target;
-    var label = t.closest("[data-cursor-label]") || t.closest(".film[data-video],.spot");
-    var link = t.closest("a,button,summary,label,select,input,textarea");
-    cur.classList.remove("is-link","is-label","is-hidden");
-    if(label){ lab.textContent = label.dataset.cursorLabel || "Play"; cur.classList.add("is-label"); }
-    else if(t.closest(".loader")) cur.classList.add("is-hidden");
-    else if(link) cur.classList.add("is-link");
-  });
-  document.addEventListener("pointerleave", function(){ cur.classList.add("is-hidden"); });
-}
-
-/* ---------- hero: crosshair + coordinates, hotspots, note ---------- */
-var stage = $("#stage");
-if(stage){
-  var hx = $(".hx", stage), hy = $(".hy", stage), hp = $(".xhair p", stage), bx = $("[data-hx]", stage), by = $("[data-hy]", stage);
-  stage.addEventListener("pointermove", function(e){
-    var r = stage.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
-    hx.style.transform = "translateY(" + y + "px)"; hy.style.transform = "translateX(" + x + "px)";
-    hp.style.transform = "translate(" + (x + 12) + "px," + (y - 22) + "px)";
-    bx.textContent = Math.round(x / r.width * 1920); by.textContent = Math.round(y / r.height * 1080);
-  });
-  var spots = $$(".spot", stage);
-  spots.forEach(function(s){
-    s.addEventListener("mouseenter", function(){
-      spots.forEach(function(o){ if(o !== s) o.classList.remove("open"); });
-      var v = $("video", s); if(v && !v.src && v.dataset.src) v.src = v.dataset.src;
-      if(v && !reduced){ var p = v.play(); if(p && p.catch) p.catch(function(){}); }
-    });
-  });
-  var note = $("#heroNote");
-  if(note) addEventListener("scroll", function(){ note.classList.toggle("hide", scrollY > 60); }, {passive:true});
-}
-
 /* hero heading: one mask per line */
 var h1 = $(".hero-bar h1");
 if(h1 && !h1.querySelector(".ln")){
   h1.innerHTML = h1.innerHTML.split(/<br\s*\/?>/i).map(function(l, i){ return '<span class="ln"><span style="transition-delay:' + (i * .12) + 's">' + l.trim() + '</span></span>'; }).join("");
 }
-
-/* ---------- split headings ---------- */
-function splitWords(el){
-  var html = el.innerHTML.split(/(<br\s*\/?>)/i).map(function(part){
-    if(/^<br/i.test(part)) return part;
-    return part.split(/(\s+)/).map(function(w){ return /^\s+$/.test(w) || !w ? w : '<span class="w"><span>' + w + '</span></span>'; }).join("");
-  }).join("");
-  el.innerHTML = html;
-  $$(".w>span", el).forEach(function(s, i){ s.style.transitionDelay = (i * .05) + "s"; });
-  el.classList.add("split"); el.classList.remove("rv");
-}
-var splitEls = $$("main h2, .phead h1").filter(function(h){ return !h.closest(".loader") && !h.querySelector("a,svg"); });
-splitEls.forEach(splitWords);
 
 /* ---------- scrubbed paragraph ---------- */
 var scrubs = $$(".scrub");
@@ -127,7 +59,7 @@ if(scrubs.length){ if(reduced) $$(".scrub .sw").forEach(function(w){ w.classList
 $$(".col .ico svg *").forEach(function(el){ try { el.style.setProperty("--len", Math.ceil(el.getTotalLength()) + 1); } catch(e){} });
 
 /* ---------- things that animate once in view ---------- */
-var once = $$(".shead, .split, .wordmark, .intro .pic, .col");
+var once = $$(".shead, .wordmark, .intro .pic, .col");
 if("IntersectionObserver" in window && !reduced){
   var io = new IntersectionObserver(function(es){ es.forEach(function(x){ if(x.isIntersecting){ x.target.classList.add("in"); io.unobserve(x.target); } }); }, {rootMargin:"0px 0px -10% 0px"});
   once.forEach(function(el){ io.observe(el); });
@@ -201,38 +133,19 @@ document.documentElement.style.overflow = "hidden";
 var house = $(".ld-house", loader), lineSvg = $(".house-line", loader), shade = $(".house-shade", loader);
 var strokes = $$("path,line", lineSvg);
 strokes.forEach(function(p){ var L = Math.ceil(p.getTotalLength()) + 1; p.style.strokeDasharray = L; p.style.strokeDashoffset = L; p.dataset.len = L; });
-var scan = $(".ld-scan", loader), tc = $("[data-tc]", loader), pct = $("[data-pct]", loader);
-var logs = $$(".log p", loader);
-var rx = $(".rx", loader), ry = $(".ry", loader), plus = $(".plus", loader), xy = $(".xy", loader), bxl = $("[data-x]", loader), byl = $("[data-y]", loader);
-var lx = innerWidth / 2, ly = innerHeight / 2, tx = lx, ty = ly;
-loader.addEventListener("pointermove", function(e){ tx = e.clientX - 8; ty = e.clientY - 8; });
+var pct = $("[data-pct]", loader);
 
 var DUR = 3.4, t0 = performance.now(), done = false, skipping = false;
 function frame(now){
   if(done) return;
   var t = (now - t0) / 1000;
-  /* ruler follows the pointer */
-  lx += (tx - lx) * .14; ly += (ty - ly) * .14;
-  rx.style.transform = "translateY(" + ly + "px)"; ry.style.transform = "translateX(" + lx + "px)";
-  plus.style.transform = xy.style.transform = "translate(" + lx + "px," + ly + "px)";
-  xy.style.transform = "translate(" + (lx + 14) + "px," + (ly + 10) + "px)";
-  bxl.textContent = Math.round(lx); byl.textContent = Math.round(ly);
   /* drafting: strokes draw in a staggered wave */
   var N = strokes.length;
   strokes.forEach(function(p, i){
     var st = .1 + (i / N) * 1.2, k = ease(clamp((t - st) / .7, 0, 1));
     p.style.strokeDashoffset = p.dataset.len * (1 - k);
   });
-  /* scan line sweeps down while the timecode runs */
-  var sk = clamp((t - .4) / 2.2, 0, 1);
-  scan.style.opacity = sk > 0 && sk < 1 ? 1 : 0;
-  scan.style.transform = "translateY(" + (easeIO(sk) * (loader.clientHeight - 2)) + "px)";
-  var fr = Math.floor(t * 60), ss = Math.floor(fr / 60);
-  tc.textContent = "00:00:" + String(ss).padStart(2, "0") + ":" + String(fr % 60).padStart(2, "0");
-  /* render log */
-  var li = Math.floor(clamp(t / 2.9, 0, 1) * logs.length);
-  logs.forEach(function(p, i){ p.classList.toggle("on", i < li); p.classList.toggle("now", i === li); });
-  pct.textContent = Math.round(clamp(t / 3, 0, 1) * 100);
+  if(pct) pct.textContent = Math.round(clamp(t / 3, 0, 1) * 100);
   /* render pass: line art becomes the shaded illustration */
   var rk = clamp((t - 2.2) / .8, 0, 1);
   shade.style.opacity = rk; lineSvg.style.opacity = 1 - rk * .85;
@@ -243,9 +156,9 @@ requestAnimationFrame(frame);
 
 function handover(fast){
   if(done) return; done = true;
-  logs.forEach(function(p){ p.classList.add("on"); p.classList.remove("now"); }); pct.textContent = "100";
+  if(pct) pct.textContent = "100";
   strokes.forEach(function(p){ p.style.strokeDashoffset = 0; });
-  shade.style.opacity = 1; lineSvg.style.opacity = .15; scan.style.opacity = 0;
+  shade.style.opacity = 1; lineSvg.style.opacity = .15;
   var target = $("#house"), from = house.getBoundingClientRect(), to = target.getBoundingClientRect();
   var dx = (to.left + to.width / 2) - (from.left + from.width / 2), dy = (to.top + to.height / 2) - (from.top + from.height / 2), sc = to.width / from.width;
   var d = fast ? 380 : 1000;
@@ -263,7 +176,7 @@ function handover(fast){
   };
 }
 function skip(){ if(!done){ skipping = true; handover(true); } }
-$(".ld-skip", loader).addEventListener("click", skip);
+var skipB = $(".ld-skip", loader); if(skipB) skipB.addEventListener("click", skip);
 loader.addEventListener("click", skip);
 addEventListener("keydown", function(e){ if(e.key === "Escape") skip(); });
 })();

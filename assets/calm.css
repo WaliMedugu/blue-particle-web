@@ -1,0 +1,120 @@
+/* Blue Particle Studios: calm layer (2026-11-15). Loaded after bps.css on every page.
+   The user: "remove unnecessary details... improve readability and accessibility... don't give someone a headache."
+   Sentence case instead of ALL CAPS, normal letter spacing, bigger body text, darker small text,
+   no film grain, no decorative rulers, crosses, coordinates, cursor or crosshair. */
+
+/* ---------- decoration off ---------- */
+body::before,
+.cursor,
+.cross,
+.coord,
+.ticks,
+.xhair,
+.spot,
+.hero-note,
+.ticker,
+.frame-l,
+.frame-r {
+  display: none !important;
+}
+.hero-stage { cursor: auto; }
+
+/* ---------- type ---------- */
+body { font-size: 17px; line-height: 1.55; }
+h1, h2, h3, .h,
+.brand,
+.drawer nav a,
+.intro .big,
+.pin .say1, .pin .say2,
+.logos li strong {
+  text-transform: none;
+  letter-spacing: -0.015em;
+}
+h1, h2, h3 { line-height: 1.08; }
+.mono, .lbl,
+.nav a, .menu-btn, .drawer .close,
+.btn, .frames figcaption, .pin .note,
+.film .scr .play, .logos li small,
+.player .bar button, .player .bar .mono {
+  font-family: var(--sans);
+  text-transform: none;
+  letter-spacing: 0;
+}
+.mono, .lbl { font-size: 14px; font-weight: 600; }
+.lbl { color: var(--accent); }
+.nav a { font-size: 14px; font-weight: 500; color: var(--ink); }
+.nav a::after { display: none; }
+.menu-btn, .drawer .close { font-size: 15px; font-weight: 600; }
+.btn { font-size: 15px; font-weight: 600; min-height: 46px; }
+.btn.big { font-size: 16px; min-height: 52px; }
+
+/* small text was 11-14px grey: make it readable */
+.dim, .film .top .dim { color: var(--ink-2); }
+.hero-bar .say,
+.shead p,
+.film p,
+.col p,
+.why .card p,
+.acc p,
+.faq p,
+.plan .who,
+.plan li,
+.contact p,
+.terms-row div,
+.cta p,
+.say {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+.hero-bar .say { font-size: clamp(17px, 1.4vw, 20px); }
+.acc summary { font-size: 18px; font-weight: 600; padding-top: 16px; padding-bottom: 16px; }
+
+/* ---------- hero ---------- */
+.hero-bar h1 { font-size: clamp(44px, 6vw, 92px); }
+.hero-bar .go { display: inline-flex; gap: 10px; align-items: center; padding: 14px var(--gut); font-weight: 600; font-size: 17px; text-decoration: none; }
+.hero-bar .go:hover span:first-child { text-decoration: underline; text-underline-offset: 4px; }
+
+/* ---------- work grid ---------- */
+.film .top { font-size: 15px; font-weight: 600; }
+.film .info { gap: 6px; }
+.film .kind,
+.why .card .kind {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+}
+.film h3 { font-size: clamp(26px, 2.4vw, 38px); }
+.film .scr .play { font-size: 14px; font-weight: 600; padding: 6px 10px; border-radius: 999px; }
+.film.ask { justify-content: center; }
+.film.ask span { font-weight: 600; font-size: 17px; }
+/* phones: vertical films two per row instead of one very long column */
+@media (max-width: 959px) {
+  .work { grid-template-columns: 1fr 1fr; }
+  .film { border-right: var(--hair) solid var(--line); }
+  .film:nth-child(2n+1) { border-right: var(--hair) solid var(--line); }
+  .film.lead, .film.w3 { grid-column: 1 / -1; border-right: 0; }
+  .film.w2 .top { flex-direction: column; gap: 2px; padding: 10px 12px; }
+  .film.w2 .scr { margin: 0 12px; }
+  .film.w2 .info { padding: 12px 12px 18px; }
+  .film.w2 h3 { font-size: 22px; }
+  .film.w2 p { font-size: 15px; }
+  .film.ask h3 { font-size: 34px; }
+}
+
+/* ---------- how it works ---------- */
+.why .l .say { max-width: 40ch; margin-top: 12px; }
+.why .card h3 { font-size: 22px; }
+
+/* ---------- focus, motion ---------- */
+a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .loader { display: none !important; }
+}
+
+@media (min-width: 960px) { .film.ask { grid-column: 1 / -1; flex-direction: row; align-items: center; justify-content: space-between; } }
+@media (max-width: 959px) { .film.ask { grid-column: 1 / -1; } }
