@@ -1,5 +1,19 @@
 [
  {
+  "slug": "dough-town-showcase-1080p30-bps",
+  "file": "dough-town-showcase_1080p30_bps.mp4",
+  "title": "Dough Town Showcase",
+  "kind": "client",
+  "img": false,
+  "shape": "1:1",
+  "w": 1080,
+  "h": 1080,
+  "dur": 26.4,
+  "mb": 22.1,
+  "mtime": 1795172383,
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/dough-town-showcase_1080p30_bps.mp4"
+ },
+ {
   "slug": "dough-town-film-1x1-1080p30",
   "file": "dough-town-film-1x1_1080p30.mp4",
   "title": "Dough Town Film",
@@ -9,8 +23,8 @@
   "w": 1080,
   "h": 1080,
   "dur": 18.3,
-  "mb": 12.0,
-  "mtime": 1795168015,
+  "mb": 11.6,
+  "mtime": 1795172186,
   "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/dough-town-film-1x1_1080p30.mp4"
  },
  {
