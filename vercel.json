@@ -80,7 +80,12 @@
   ],
   "redirects": [
     {
-      "source": "/(ARCHE|Arche)/?",
+      "source": "/ARCHE/",
+      "destination": "/arche/",
+      "permanent": true
+    },
+    {
+      "source": "/Arche/",
       "destination": "/arche/",
       "permanent": true
     },
