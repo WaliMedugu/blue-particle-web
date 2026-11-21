@@ -1,0 +1,937 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ICT 305 Data Communication Systems and Networking: Modules 1–5 Notes | Blue Particle Studios</title>
+<meta name="description" content="Free visual notes for ICT 305 Data Communication Systems and Networking, Modules 1–5: data communication, transmission and synchronisation, protocols, OSI and TCP/IP, errors, parity, checksums and CRC, with worked answers and past-paper topics.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Blue Particle Studios">
+<meta property="og:url" content="https://blueparticlestudios.com/student-notes/ict-305-data-communication-modules-1-5/">
+<meta property="og:title" content="ICT 305 Data Communication Systems and Networking: Modules 1–5 Notes">
+<meta property="og:description" content="Free visual notes for ICT 305 Data Communication Systems and Networking, Modules 1–5: data communication, transmission and synchronisation, protocols, OSI and TCP/IP, errors, parity, checksums and CRC, with worked answers and past-paper topics.">
+<meta property="og:image" content="https://blueparticlestudios.com/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ICT 305 Data Communication Systems and Networking: Modules 1–5 Notes">
+<meta name="twitter:description" content="Free visual notes for ICT 305 Data Communication Systems and Networking, Modules 1–5: data communication, transmission and synchronisation, protocols, OSI and TCP/IP, errors, parity, checksums and CRC, with worked answers and past-paper topics.">
+<meta name="twitter:image" content="https://blueparticlestudios.com/og.jpg">
+<link rel="canonical" href="https://blueparticlestudios.com/student-notes/ict-305-data-communication-modules-1-5/">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Permanent+Marker&family=Inter+Tight:wght@500;600&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.js"></script>
+<style>
+/* Layout: wide whiteboards. Each topic is a 1500-unit canvas scaled to the screen; HTML text sits on a hand-drawn SVG layer of boxes, waves and arrows. */
+:root{
+  --paper:#FCFCF8; --dot:rgba(36,87,184,.14); --ink:#1E2C45; --soft:#5C6A82;
+  --blue:#2457B8; --red:#D2462F; --green:#2B8A4B;
+  --y:#FFEB85; --g:#CDF2D4; --p:#FFD6E5; --b:#D8E8FF; --card:#FFFFFF;
+  --f-hand:"Kalam","Segoe Print","Comic Sans MS",cursive;
+  --f-mark:"Permanent Marker","Kalam","Segoe Print",cursive;
+  --f-mono:ui-monospace,Consolas,"Courier New",monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#141D2B; --dot:rgba(141,184,255,.12); --ink:#E7EDF6; --soft:#A3B1C6;
+  --blue:#8DB8FF; --red:#FF8B74; --green:#7FDB9C;
+  --y:#4A4220; --g:#1F4430; --p:#4A2433; --b:#1E3556; --card:#1B2738; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#141D2B; --dot:rgba(141,184,255,.12); --ink:#E7EDF6; --soft:#A3B1C6;
+  --blue:#8DB8FF; --red:#FF8B74; --green:#7FDB9C;
+  --y:#4A4220; --g:#1F4430; --p:#4A2433; --b:#1E3556; --card:#1B2738; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:18px/1.45 var(--f-hand);
+  background-image:radial-gradient(var(--dot) 1.2px,transparent 1.3px);background-size:24px 24px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 80px}
+main{max-width:1600px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+h1{font:400 clamp(36px,5vw,60px)/1.05 var(--f-mark);margin:0}
+h2{font:400 clamp(28px,3.4vw,40px)/1.1 var(--f-mark);margin:56px 0 0;text-decoration:underline wavy var(--red) 2px;text-underline-offset:10px}
+h3{font:700 24px/1.2 var(--f-hand);color:var(--blue);margin:26px 0 0}
+.sub{color:var(--soft);font-size:17px;margin:0}
+.toc{display:flex;flex-wrap:wrap;gap:10px}
+.toc a{font:700 17px var(--f-hand);color:var(--ink);text-decoration:none;border:2px solid var(--ink);border-radius:18px 14px 20px 12px;padding:3px 14px;background:var(--card)}
+.toc a:hover{background:var(--y)}
+.toc a:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.skip{color:var(--soft);font-size:16px;border-top:2px dashed var(--soft);padding-top:8px;margin:6px 0 0}
+.skip::before{content:"✂ left out: "}
+.board{width:100%;overflow-x:auto;overflow-y:hidden}
+.sizer{position:relative}
+.inner{position:absolute;left:0;top:0;transform-origin:0 0}
+.inner>svg{position:absolute;left:0;top:0;overflow:visible}
+.nd{position:absolute;padding:12px 16px;font:400 18px/1.4 var(--f-hand);color:var(--ink)}
+.nd.s-oval{text-align:center;padding:16px 24px}
+.nd.s-big{font-size:21px;font-weight:700}
+.nd.s-plain{padding:4px 6px}
+.nd.has-ic{padding-right:72px;min-height:66px}
+.nd.s-center{text-align:center}
+.nd.s-sticky{background:var(--y);transform:rotate(-1.6deg);box-shadow:4px 5px 0 rgba(0,0,0,.13);padding:12px 18px}
+.nd.s-sticky::before{content:"🧠 memory trick";display:block;font:400 14px var(--f-mark);color:var(--red);margin-bottom:2px}
+.nd .t{display:block;font-weight:700;font-size:20px;margin-bottom:2px}
+.nd .h{display:block;font:400 24px var(--f-mark)}
+.nd small{font-size:15px;color:var(--soft)}
+.nd ul,.nd ol{margin:4px 0 0;padding-left:22px}
+.nd .q{font-weight:700;font-size:23px;line-height:1.3}
+.nd .bigp{font-weight:700;font-size:22px}
+.nd pre{font:15px/1.5 var(--f-mono);margin:6px 0 0;white-space:pre;overflow-x:auto}
+.nd table.mini{border-collapse:collapse;font:16px var(--f-mono);margin-top:6px}
+.nd table.mini td,.nd table.mini th{border:1.5px solid var(--ink);padding:4px 10px;text-align:center}
+.nd table.mini th{font-family:var(--f-hand);background:var(--b)}
+.nd .bits{font:700 20px var(--f-mono);letter-spacing:.12em}
+.nd .flip{color:var(--red);text-decoration:underline wavy var(--red)}
+.seg{display:inline-block;padding:4px 8px;border:2px solid var(--ink);border-radius:4px;margin:2px 0;font-weight:700;font-size:16px}
+.el{position:absolute;font:700 16px/1.1 var(--f-hand);color:var(--red);background:var(--paper);padding:1px 5px;transform:translate(-50%,-50%);white-space:nowrap;border-radius:4px}
+.el.blue{color:var(--blue)}
+.c{display:inline-block;border:2px solid var(--red);border-radius:52% 46% 55% 44%/58% 50% 48% 52%;padding:0 8px;transform:rotate(-1.5deg);font-weight:700}
+.cb{border-color:var(--blue)}
+.hy{background:linear-gradient(transparent 38%,var(--y) 38%,var(--y) 90%,transparent 90%);padding:0 2px}
+.hg{background:linear-gradient(transparent 38%,var(--g) 38%,var(--g) 90%,transparent 90%);padding:0 2px}
+.hp{background:linear-gradient(transparent 38%,var(--p) 38%,var(--p) 90%,transparent 90%);padding:0 2px}
+.ann{color:var(--blue)}
+.warn{color:var(--red);font-weight:700}
+.week{font:400 20px var(--f-mark);color:var(--paper);background:var(--red);align-self:flex-start;padding:4px 16px;transform:rotate(-2deg);margin-top:36px}
+</style>
+
+
+<style>
+.bps-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;max-width:1600px;margin:0 auto 8px;font:600 15px/1.2 "Inter Tight",system-ui,sans-serif}
+.bps-bar a{color:var(--ink);text-decoration:none}
+.bps-brand{display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:-.02em;font-size:16px}
+.bps-brand svg{width:22px;height:22px}
+.bps-links{display:flex;gap:14px;flex-wrap:wrap}
+.bps-links a{border-bottom:1.5px solid currentColor;padding-bottom:1px}
+.bps-cta{max-width:1600px;margin:56px auto 0;border:2.5px solid var(--ink);border-radius:10px 16px 12px 18px;padding:22px 24px;background:var(--card);display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between}
+.bps-cta p{margin:0;max-width:62ch}
+.bps-cta .k{font:400 22px var(--f-mark);display:block;margin-bottom:4px}
+.bps-cta .btns{display:flex;gap:10px;flex-wrap:wrap}
+.bps-cta .btns a{font:600 15px "Inter Tight",system-ui,sans-serif;text-decoration:none;border:2px solid var(--ink);border-radius:999px;padding:8px 16px;color:var(--ink)}
+.bps-cta .btns a.hot{background:#2342ff;border-color:#2342ff;color:#fff}
+.bps-foot{max-width:1600px;margin:24px auto 0;font:500 13px "Inter Tight",system-ui,sans-serif;color:var(--soft);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.bps-foot a{color:var(--soft)}
+</style>
+</head>
+<body>
+<header class="bps-bar" id="top">
+  <a class="bps-brand" href="/" aria-label="Blue Particle Studios, home"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" fill="none" stroke="currentColor"/><path d="M2.5 2.5l19 19M21.5 2.5l-19 19" stroke="currentColor" stroke-width=".6" opacity=".45"/><circle cx="12" cy="12" r="4.4" fill="#2342ff"/></svg>Blue Particle</a>
+  <nav class="bps-links" aria-label="Notes"><a href="/student-notes/">All student notes</a><a href="/">Our studio</a></nav>
+</header><main>
+  <span class="sub">ICT 305 · Data Communication Systems and Networking · Dr Emmanuel T. Aderemi</span>
+  <h1>ICT 305 Sketch Notes</h1>
+  <p class="sub">Every point from the written notes, drawn out on wide boards. Follow the arrows.</p>
+  <nav class="toc" aria-label="Sections">
+    <a href="#s1">1 · Intro to data comms</a><a href="#s2">2 · Transmission + sync</a><a href="#s3">3 · Protocols, OSI, TCP/IP</a>
+    <a href="#s4">4 · Errors + parity</a><a href="#s5">5 · 2-D parity, checksum, CRC</a><a href="#s6">6 · Past-paper extras</a>
+  </nav>
+
+  <span class="week">MODULES 1–2</span>
+  <h2 id="s1">1 · Introduction to data communication</h2>
+  <p class="sub">Module 1 · Week 1</p>
+  <h3>1.1 What data communication is</h3><div class="board" id="a1"></div>
+  <h3>1.2 Transmission media</h3><div class="board" id="a2"></div>
+  <h3>1.3 Example protocols</h3><div class="board" id="a3"></div>
+  <h3>1.4 The four fundamental characteristics</h3><div class="board" id="a4"></div>
+  <h3>1.5 Objectives</h3><div class="board" id="a5"></div>
+  <h3>1.6 Scope: the 8 areas</h3><div class="board" id="a6"></div>
+  <h3>1.7 Applications</h3><div class="board" id="a7"></div>
+  <h3>1.8 Types + sources of data</h3><div class="board" id="a8"></div>
+  <h3>1.9 The five components</h3><div class="board" id="a9"></div>
+  <h3>1.10 Basic network devices</h3><div class="board" id="a10"></div>
+  <h3>1.11 Modes: simplex, half-duplex, full-duplex</h3><div class="board" id="a11"></div>
+  <p class="skip">lab-1 instructions (Packet Tracer, ping), decorative photos</p>
+
+  <h2 id="s2">2 · Transmission methods, modes + synchronisation</h2>
+  <p class="sub">Module 2 · Week 2</p>
+  <h3>2.0 The three words</h3><div class="board" id="b0"></div>
+  <h3>2.1 Analog vs digital</h3><div class="board" id="b1"></div>
+  <h3>2.2 Parallel vs serial</h3><div class="board" id="b2"></div>
+  <h3>2.3 Transmission codes vs line encoding</h3><div class="board" id="b3"></div>
+  <h3>2.3 Line codes drawn: bits 1 0 1 1 0 0 1</h3><div class="board" id="b4"></div>
+  <h3>2.4 Bit sync vs character sync</h3><div class="board" id="b5"></div>
+  <h3>2.4 Marking character boundaries · the frame</h3><div class="board" id="b6"></div>
+  <h3>2.5 Synchronous vs asynchronous</h3><div class="board" id="b7"></div>
+  <h3>2.6 Speed, throughput, latency, efficiency</h3><div class="board" id="b8"></div>
+
+  <span class="week">MODULES 3–5</span>
+  <h2 id="s3">3 · Protocols, OSI + TCP/IP</h2>
+  <p class="sub">Module 3 · Week 3</p>
+  <h3>3.1 What a protocol is · opening google.com</h3><div class="board" id="c1"></div>
+  <h3>3.1 Purpose + the three key elements</h3><div class="board" id="c2"></div>
+  <h3>3.2 The OSI model (ISO, 7 layers)</h3><div class="board" id="c3"></div>
+  <h3>3.2 TCP vs UDP</h3><div class="board" id="c4"></div>
+  <h3>3.3 TCP/IP (4 layers) mapped onto OSI</h3><div class="board" id="c5"></div>
+  <h3>3.4 Encapsulation ↓ + decapsulation ↑</h3><div class="board" id="c6"></div>
+  <h3>3.4 Lab questions to be ready for</h3><div class="board" id="c7"></div>
+  <p class="skip">Wireshark install steps, assignment wording</p>
+
+  <h2 id="s4">4 · Transmission errors + parity</h2>
+  <p class="sub">Module 4 · Week 5, part 1</p>
+  <h3>4.1 What a transmission error looks like</h3><div class="board" id="d1"></div>
+  <h3>4.2 Causes + consequences</h3><div class="board" id="d2"></div>
+  <h3>4.3 Single-bit vs burst errors</h3><div class="board" id="d3"></div>
+  <h3>4.4 Detection vs correction · ARQ vs FEC</h3><div class="board" id="d4"></div>
+  <h3>4.5 Parity checking</h3><div class="board" id="d5"></div>
+
+  <h2 id="s5">5 · 2-D parity, checksums + CRC</h2>
+  <p class="sub">Module 5 · Week 5, part 2</p>
+  <h3>5.1 Two-dimensional parity</h3><div class="board" id="e1"></div>
+  <h3>5.2 Checksums</h3><div class="board" id="e2"></div>
+  <h3>5.2 Checksum exercises, worked</h3><div class="board" id="e3"></div>
+  <h3>5.3 Cyclic Redundancy Check (CRC)</h3><div class="board" id="e4"></div>
+
+  <span class="week">PAST PAPER</span>
+  <h2 id="s6">6 · Past-paper topics NOT in the modules</h2>
+  <p class="sub">from "ICT 305.pdf" (70 MCQs) · mostly Stallings, Data and Computer Communications, ch. 1–6</p>
+  <h3>6.0 Wrong answers circled on the past-paper copy</h3><div class="board" id="f0"></div>
+  <h3>6.1 Communication model + tasks</h3><div class="board" id="f1"></div>
+  <h3>6.2 Network types + switching</h3><div class="board" id="f2"></div>
+  <h3>6.3 Layers in the Stallings TCP/IP view</h3><div class="board" id="f3"></div>
+  <h3>6.4 Signals + channel capacity</h3><div class="board" id="f4"></div>
+  <h3>6.5 – 6.6 Impairments + media</h3><div class="board" id="f5"></div>
+  <h3>6.7 – 6.8 More line codes, modulation, error control</h3><div class="board" id="f6"></div>
+  <p class="sub" style="margin-top:28px">Drawn from the ICT 305 Modules 1–5 slides and the ICT 305 past paper.</p>
+</main>
+
+<script>
+/* ---------- engine ---------- */
+const W=1500, NS="http://www.w3.org/2000/svg";
+const BOARDS=[];
+const N=(k,x,y,w,s,h)=>({k,x,y,w,s,h});
+const E=(a,b,l,o)=>({a,b,l:l||"",o:o||{}});
+const B=(id,nodes,edges,draw,minH)=>BOARDS.push({id,nodes,edges:edges||[],draw,minH:minH||0});
+const FILL={y:"var(--y)",g:"var(--g)",p:"var(--p)",b:"var(--b)",w:"var(--card)",r:"var(--card)"};
+function fallbackRC(svg){
+  const mk=(d,o)=>{const p=document.createElementNS(NS,"path");p.setAttribute("d",d);p.setAttribute("stroke",o.stroke||"var(--ink)");p.setAttribute("stroke-width",o.strokeWidth||2);p.setAttribute("fill",o.fill||"none");if(o.strokeLineDash)p.setAttribute("stroke-dasharray",o.strokeLineDash.join(" "));const g=document.createElementNS(NS,"g");g.appendChild(p);return g};
+  const pts=a=>a.map((p,i)=>(i?"L":"M")+p[0]+" "+p[1]).join(" ");
+  return{rectangle:(x,y,w,h,o={})=>mk(`M${x} ${y} h${w} v${h} h${-w} Z`,o),
+    ellipse:(cx,cy,w,h,o={})=>mk(`M${cx-w/2} ${cy} a${w/2} ${h/2} 0 1 0 ${w} 0 a${w/2} ${h/2} 0 1 0 ${-w} 0`,o),
+    circle:(cx,cy,d,o={})=>mk(`M${cx-d/2} ${cy} a${d/2} ${d/2} 0 1 0 ${d} 0 a${d/2} ${d/2} 0 1 0 ${-d} 0`,o),
+    line:(x1,y1,x2,y2,o={})=>mk(`M${x1} ${y1} L${x2} ${y2}`,o),
+    linearPath:(a,o={})=>mk(pts(a),o), polygon:(a,o={})=>mk(pts(a)+" Z",o),
+    curve:(a,o={})=>mk(a.length===3?`M${a[0][0]} ${a[0][1]} Q${2*a[1][0]-(a[0][0]+a[2][0])/2} ${2*a[1][1]-(a[0][1]+a[2][1])/2} ${a[2][0]} ${a[2][1]}`:pts(a),o),
+    arc:(x,y,w,h,s,e,closed,o={})=>{const p=t=>[x+w/2*Math.cos(t),y+h/2*Math.sin(t)];const a=p(s),b=p(e);return mk(`M${closed?x+" "+y+" L":""}${a[0]} ${a[1]} A${w/2} ${h/2} 0 ${e-s>Math.PI?1:0} 1 ${b[0]} ${b[1]}${closed?" Z":""}`,o)},
+    path:(d,o={})=>mk(d,o)};
+}
+function add(svg,node){svg.appendChild(node);node.querySelectorAll("path").forEach(p=>{["stroke","fill"].forEach(a=>{const v=p.getAttribute(a);if(v&&v.indexOf("var(")===0){p.style[a]=v;p.removeAttribute(a)}})});return node}
+function T(svg,x,y,str,o={}){const t=document.createElementNS(NS,"text");t.setAttribute("x",x);t.setAttribute("y",y);t.setAttribute("text-anchor",o.anchor||"middle");t.style.fill=o.color||"var(--ink)";t.style.fontFamily=o.mono?"var(--f-mono)":o.mark?"var(--f-mark)":"var(--f-hand)";t.style.fontSize=(o.size||18)+"px";t.style.fontWeight=o.weight||400;if(o.rotate)t.setAttribute("transform",`rotate(${o.rotate} ${x} ${y})`);t.textContent=str;svg.appendChild(t);return t}
+function parseRef(v){const [type,keys,g]=v.split(":");return{type,keys:(keys||"").split(","),g:+(g||0)}}
+function rx(v,R,w){if(typeof v==="number")return v;const p=parseRef(v),r=R[p.keys[0]];
+  if(p.type==="r")return r.x+r.w+p.g; if(p.type==="l")return r.x+p.g; if(p.type==="c")return r.x+r.w/2-w/2+p.g; if(p.type==="lw")return r.x-w-p.g; return 0}
+function ry(v,R,h){if(typeof v==="number")return v;const p=parseRef(v),rs=p.keys.map(k=>R[k]);
+  if(p.type==="b")return Math.max(...rs.map(r=>r.y+r.h))+p.g; if(p.type==="t")return rs[0].y+p.g;
+  if(p.type==="m")return rs[0].y+rs[0].h/2-h/2+p.g; if(p.type==="o")return rs[0].y+p.g;
+  if(p.type==="mo"){const a=rs[0],b=rs[rs.length-1];return (a.y+b.y+b.h)/2-h/2+p.g} if(p.type==="a")return rs[0].y-h-p.g; return 0}
+function boundary(r,tx,ty,pad){const cx=r.x+r.w/2,cy=r.y+r.h/2;let dx=tx-cx,dy=ty-cy;const L=Math.hypot(dx,dy)||1;dx/=L;dy/=L;let t;
+  if(/oval/.test(r.s)){const a=r.w*0.56,b=r.h*0.68;t=1/Math.sqrt((dx/a)**2+(dy/b)**2)}
+  else{const hw=r.w/2,hh=r.h/2;t=Math.min(Math.abs(dx)>1e-6?hw/Math.abs(dx):1e9,Math.abs(dy)>1e-6?hh/Math.abs(dy):1e9)}
+  return[cx+dx*(t+pad),cy+dy*(t+pad)]}
+function side(r,s,pad){const cx=r.x+r.w/2,cy=r.y+r.h/2;return s==="t"?[cx,r.y-pad]:s==="b"?[cx,r.y+r.h+pad]:s==="l"?[r.x-pad,cy]:[r.x+r.w+pad,cy]}
+function head(rc,svg,x,y,fx,fy,col){const a=Math.atan2(y-fy,x-fx),L=15;[0.45,-0.45].forEach(d=>add(svg,rc.line(x,y,x-L*Math.cos(a+d),y-L*Math.sin(a+d),{stroke:col,strokeWidth:2.4,roughness:0.8})))}
+function arrow(rc,svg,p1,p2,o={}){const col=o.color==="blue"?"var(--blue)":o.color==="ink"?"var(--ink)":o.color==="green"?"var(--green)":"var(--red)";
+  const dx=p2[0]-p1[0],dy=p2[1]-p1[1],L=Math.hypot(dx,dy)||1,bend=o.bend==null?0.12:o.bend;
+  const c=[(p1[0]+p2[0])/2+(-dy/L)*bend*L,(p1[1]+p2[1])/2+(dx/L)*bend*L];
+  const opt={stroke:col,strokeWidth:2.4,roughness:1.1,bowing:1};if(o.dash)opt.strokeLineDash=[9,7];
+  add(svg,rc.curve([p1,c,p2],opt));
+  if(!o.nohead)head(rc,svg,p2[0],p2[1],c[0],c[1],col);
+  if(o.both)head(rc,svg,p1[0],p1[1],c[0],c[1],col);
+  return c}
+function render(cfg,rough_){
+  const host=document.getElementById(cfg.id);if(!host)return;host.innerHTML="";
+  const sizer=document.createElement("div");sizer.className="sizer";const inner=document.createElement("div");inner.className="inner";inner.style.width=W+"px";
+  const svg=document.createElementNS(NS,"svg");inner.appendChild(svg);sizer.appendChild(inner);host.appendChild(sizer);
+  const R={};
+  const ready=n=>[n.x,n.y].every(v=>typeof v==="number"||parseRef(v).keys.every(k=>R[k]));
+  const queue=[...cfg.nodes];let guard=0;
+  while(queue.length&&guard<2000){const n=queue.shift();if(!ready(n)){queue.push(n);guard++;continue}
+    const d=document.createElement("div");d.className="nd "+n.s.split(" ").map(t=>"s-"+t).join(" ");d.style.width=n.w+"px";d.innerHTML=n.h;
+    if((ICONS[cfg.id]||{})[n.k]&&/\bbox\b/.test(n.s))d.classList.add("has-ic");inner.appendChild(d);
+    const h=d.offsetHeight,x=rx(n.x,R,n.w),y=ry(n.y,R,h);d.style.left=x+"px";d.style.top=y+"px";R[n.k]={x,y,w:n.w,h,s:n.s}}
+  if(queue.length)console.error(cfg.id,"unresolved",queue.map(n=>n.k));
+  let H=Math.max(cfg.minH,...Object.values(R).map(r=>r.y+r.h))+40;
+  inner.style.height=H+"px";svg.setAttribute("width",W);svg.setAttribute("height",H);svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+  const rc=rough_?rough_.svg(svg):fallbackRC(svg);
+  if(cfg.draw)cfg.draw(rc,svg,R,H);
+  let seed=7;
+  cfg.nodes.forEach(n=>{const r=R[n.k],toks=n.s.split(" "),f=FILL[toks.find(t=>FILL[t])]||"var(--card)";seed+=3;
+    const o={stroke:toks.includes("r")?"var(--red)":"var(--ink)",strokeWidth:2.2,roughness:1.3,fill:f,fillStyle:"solid",seed};if(toks.includes("dash"))o.strokeLineDash=[10,7];
+    if(toks.includes("oval"))add(svg,rc.ellipse(r.x+r.w/2,r.y+r.h/2,r.w*1.1,r.h*1.34,o));
+    else if(toks.includes("box"))add(svg,rc.rectangle(r.x,r.y,r.w,r.h,o));});
+  const icm=ICONS[cfg.id]||{};
+  Object.keys(icm).forEach(k=>{const r=R[k],f=I[icm[k]];if(!r||!f||!/\bbox\b/.test(r.s))return;try{f(rc,svg,r.x+r.w-36,r.y+34)}catch(e){console.error(cfg.id,k,e)}});
+  const labels=[];
+  cfg.edges.forEach(e=>{const A=R[e.a],Bn=R[e.b];if(!A||!Bn)return;const o=e.o;
+    const ca=[A.x+A.w/2,A.y+A.h/2],cb=[Bn.x+Bn.w/2,Bn.y+Bn.h/2];
+    let p1=o.from?side(A,o.from,8):null,p2=o.to?side(Bn,o.to,8):null;
+    const s1=p1||ca,s2=p2||cb,dx=s2[0]-s1[0],dy=s2[1]-s1[1],L=Math.hypot(dx,dy)||1,bend=o.bend==null?0.12:o.bend;
+    const c0=[(s1[0]+s2[0])/2+(-dy/L)*bend*L,(s1[1]+s2[1])/2+(dx/L)*bend*L];
+    if(!p1)p1=boundary(A,c0[0],c0[1],8);if(!p2)p2=boundary(Bn,c0[0],c0[1],10);
+    const c=arrow(rc,svg,p1,p2,o);
+    if(e.l){const d=document.createElement("div");d.className="el"+(o.color==="blue"?" blue":"");d.textContent=e.l;d.style.left=(c[0]+(o.lx||0))+"px";d.style.top=(c[1]+(o.ly||0))+"px";labels.push(d)}});
+  labels.forEach(d=>inner.appendChild(d));
+  cfg._H=H;cfg._host=host;cfg._inner=inner;cfg._sizer=sizer;fit(cfg);
+}
+function fit(cfg){if(!cfg._host)return;const avail=cfg._host.clientWidth||W;let s=Math.min(1,avail/W);if(s<0.6)s=0.6;
+  cfg._inner.style.transform=`scale(${s})`;cfg._sizer.style.width=(W*s)+"px";cfg._sizer.style.height=(cfg._H*s)+"px"}
+window.addEventListener("resize",()=>BOARDS.forEach(fit));
+const sticky=(p,s)=>`<span class="bigp">${p}</span>${s?`<br><small>${s}</small>`:""}`;
+const hub=(c,ks)=>ks.map(k=>E(c,k,"",{bend:0}));
+
+/* draw a waveform: type nrz | man | ami ; bits array ; x0,yMid ; bw bit width ; a amplitude */
+function wave(rc,svg,type,bits,x0,ym,bw,a,col){const pts=[];let pol=1,x=x0;
+  bits.forEach(b=>{if(type==="nrz"){const y=b?ym-a:ym+a;pts.push([x,y],[x+bw,y])}
+    else if(type==="man"){const y1=b?ym+a:ym-a,y2=b?ym-a:ym+a;pts.push([x,y1],[x+bw/2,y1],[x+bw/2,y2],[x+bw,y2])}
+    else{let y=ym;if(b){y=ym-pol*a;pol=-pol}pts.push([x,y],[x+bw,y])}x+=bw});
+  add(svg,rc.line(x0,ym,x,ym,{stroke:"var(--soft)",strokeLineDash:[5,6],strokeWidth:1.2}));
+  bits.forEach((b,i)=>add(svg,rc.line(x0+i*bw,ym-a-14,x0+i*bw,ym+a+10,{stroke:"var(--soft)",strokeLineDash:[3,6],strokeWidth:1})));
+  add(svg,rc.linearPath(pts,{stroke:col,strokeWidth:3.2,roughness:0.6}));}
+
+/* ================= MODULE 1 ================= */
+B("a1",[
+  N("def",430,20,640,"oval b center",`<b>Data communication</b> = transferring data or information between two or more devices through a <span class="c">transmission medium</span>, using agreed rules called <span class="c cb">protocols</span>`),
+  N("sys",40,"b:def:110",400,"box w",`<span class="t">needs a communication SYSTEM</span><b>hardware</b> (physical equipment) + <b>software</b> (programs)<br><small>devices: computers · phones · printers · servers · routers</small>`),
+  N("med",550,"t:sys",400,"box y",`<span class="t">through a MEDIUM</span>a wire cable, fibre, or wireless`),
+  N("pro",1060,"t:sys",400,"box g",`<span class="t">using PROTOCOLS</span>agreed rules both sides follow`),
+  N("alt",40,"b:sys,med,pro:40",1100,"plain",`<span class="ann">alternative wording: "the exchange of data between two devices via some form of transmission medium such as a wire cable"</span>`)
+],[E("def","sys","needs",{bend:0.08}),E("def","med","",{bend:0}),E("def","pro","",{bend:-0.08})]);
+
+B("a2",[
+  N("g1",720,20,480,"box w",`<span class="t">Twisted pair</span>Ethernet networks, telephone systems`),
+  N("g2",720,"b:g1:20",480,"box w",`<span class="t">Coaxial cable</span>cable TV, broadband`),
+  N("g3",720,"b:g2:20",480,"box w",`<span class="t">Fibre-optic</span>uses <b>LIGHT</b>; high speed over long distances`),
+  N("u1",720,"b:g3:60",480,"box w",`<span class="t">Radio waves</span>Wi-Fi, Bluetooth, radio broadcasting`),
+  N("u2",720,"b:u1:20",480,"box w",`<span class="t">Microwaves</span>cellular + satellite links`),
+  N("u3",720,"b:u2:20",480,"box w",`<span class="t">Infrared</span>remote controls, short-range links`),
+  N("gd",380,"mo:g1,g3",250,"box b",`<span class="t">GUIDED (wired)</span>signal travels through a physical cable`),
+  N("ug",380,"mo:u1,u3",250,"box y",`<span class="t">UNGUIDED (wireless)</span>signal travels through air / space`),
+  N("root",40,"mo:gd,ug",240,"oval p big center",`Transmission media`),
+  N("st",1240,"mo:g3,u1",240,"sticky",sticky(`TCF · RMI`,`guided: "The Cable Fits" · unguided: Radio, Micro, Infra`))
+],[E("root","gd"),E("root","ug"),E("gd","g1"),E("gd","g2"),E("gd","g3"),E("ug","u1"),E("ug","u2"),E("ug","u3")]);
+
+B("a3",[
+  N("c",600,"mo:l1,l4",300,"oval y big center",`Protocol examples`),
+  N("l1",40,20,420,"box w",`<b>HTTP / HTTPS</b>: accessing websites (web client ↔ server)`),
+  N("l2",40,"b:l1:24",420,"box w",`<b>TCP</b>: reliable, ordered delivery`),
+  N("l3",40,"b:l2:24",420,"box w",`<b>IP</b>: addressing + routing packets between networks`),
+  N("l4",40,"b:l3:24",420,"box w",`<b>FTP</b>: transferring files`),
+  N("r1",1040,"t:l1",420,"box w",`<b>SMTP</b>: sending email`),
+  N("r2",1040,"b:r1:24",420,"box w",`<b>Ethernet</b>: wired LANs`),
+  N("r3",1040,"b:r2:24",420,"box w",`<b>Wi-Fi (IEEE 802.11)</b>: wireless LANs`)
+],hub("c",["l1","l2","l3","l4","r1","r2","r3"]));
+
+B("a4",[
+  N("top",520,10,460,"oval b big center",`4 fundamental characteristics`),
+  N("d",40,"b:top:100",330,"box g",`<span class="t">① DELIVERY</span>data reaches the <b>correct destination</b><br><small>lecture notes reach the intended student's email</small>`),
+  N("a",405,"t:d",330,"box g",`<span class="t">② ACCURACY</span>arrives <b>without errors</b><br><small>₦50,000 must not arrive as ₦5,000</small>`),
+  N("t",770,"t:d",330,"box g",`<span class="t">③ TIMELINESS</span>arrives <b>in time</b>; late real-time data is useless<br><small>live online lecture audio/video</small>`),
+  N("j",1135,"t:d",330,"box p",`<span class="t">④ JITTER</span>the <span class="c">variation in packet arrival times</span>; matters most for real-time audio/video<br><small>broken speech in a video call</small>`),
+  N("st",40,"b:d,a,t,j:50",420,"sticky",sticky(`"Don't Arrive Too Jumpy"`,`Delivery · Accuracy · Timeliness · Jitter`)),
+  N("jd",780,"b:d,a,t,j:70",680,"plain",`<span class="ann">jitter, drawn: packets sent evenly ↑ arrive unevenly ↓</span>`)
+],[E("top","d","",{bend:0.06}),E("top","a","",{bend:0}),E("top","t","",{bend:0}),E("top","j","",{bend:-0.06})],
+(rc,svg,R)=>{const y1=R.jd.y+R.jd.h+30,y2=y1+70;[0,1,2,3,4,5].forEach(i=>{const x=800+i*100;add(svg,rc.rectangle(x,y1,40,22,{fill:"var(--g)",fillStyle:"solid",stroke:"var(--ink)",seed:i+1}))});
+  [0,1.5,2,3.8,4.2,5.6].forEach((o,i)=>{const x=800+o*100;add(svg,rc.rectangle(x,y2,40,22,{fill:"var(--p)",fillStyle:"solid",stroke:"var(--ink)",seed:i+20}))});
+  T(svg,760,y1+17,"sent",{anchor:"end",size:16});T(svg,760,y2+17,"arrived",{anchor:"end",size:16});},0);
+
+B("a5",[
+  N("c",590,"mo:l1,l4",320,"oval y big center",`Objectives of data communication`),
+  N("l1",40,20,420,"box w",`<span class="t">Information exchange</span>devices + users share information`),
+  N("l2",40,"b:l1:24",420,"box w",`<span class="t">Resource sharing</span>shared printers, storage, databases, apps`),
+  N("l3",40,"b:l2:24",420,"box w",`<span class="t">Remote access</span>reach systems from other locations`),
+  N("l4",40,"b:l3:24",420,"box w",`<span class="t">Communication efficiency</span>less delay, faster exchange`),
+  N("r1",1040,"t:l1",420,"box w",`<span class="t">Reliability</span>accurate delivery + error detection`),
+  N("r2",1040,"b:r1:24",420,"box w",`<span class="t">Cost reduction</span>less physical travel, fewer duplicated resources`),
+  N("r3",1040,"b:r2:24",420,"box w",`<span class="t">Collaboration</span>online meetings, messaging, remote learning, teamwork`)
+],hub("c",["l1","l2","l3","l4","r1","r2","r3"]));
+
+B("a6",[
+  N("c",560,10,380,"oval b big center",`Scope of data communication`),
+  N("s1",40,"b:c:100",330,"box w",`<b>1 · Data representation + encoding</b><br><small>text, numbers, images, audio, video → transmittable formats</small>`),
+  N("s2",405,"t:s1",330,"box w",`<b>2 · Signal transmission + media</b><br><small>cables, fibre, wireless</small>`),
+  N("s3",770,"t:s1",330,"box w",`<b>3 · Devices + topologies</b><br><small>routers, switches · star, bus, ring, mesh</small>`),
+  N("s4",1135,"t:s1",330,"box w",`<b>4 · Protocols + standards</b><br><small>TCP/IP, Ethernet</small>`),
+  N("s5",40,"b:s1,s2,s3,s4:40",330,"box w",`<b>5 · Error detection + correction</b>`),
+  N("s6",405,"t:s5",330,"box w",`<b>6 · Speed, delay + reliability</b>`),
+  N("s7",770,"t:s5",330,"box w",`<b>7 · Wired + wireless</b><br><small>Wi-Fi, Bluetooth, cellular</small>`),
+  N("s8",1135,"t:s5",330,"box w",`<b>8 · Security + access control</b>`)
+],hub("c",["s1","s2","s3","s4"]));
+
+B("a7",[
+  N("c",600,"mo:e,b",300,"oval y big center",`Applications`),
+  N("e",40,20,460,"box b",`<span class="t">🎓 Education</span>online classes, LMSs, digital exams, e-submission`),
+  N("h",1000,"t:e",460,"box p",`<span class="t">🏥 Healthcare</span>electronic health records, remote consultations, medical image transfer, remote monitoring`),
+  N("b",40,"b:e,h:40",460,"box g",`<span class="t">🏦 Banking + finance</span>e-payments, mobile banking, ATMs, interbank communication`),
+  N("i",1000,"t:b",460,"box y",`<span class="t">🏭 Business + industry</span>enterprise networks, cloud, inventory, video conferencing, industrial monitoring`)
+],hub("c",["e","h","b","i"]));
+
+B("a8",[
+  N("def",360,10,780,"oval b center",`<b>Data</b> = raw facts, observations or information a system can represent + transmit. Computers use <b>binary</b> (bits: 0s and 1s).`),
+  N("t1",40,"b:def:100",270,"box w",`<span class="t">📝 Text</span>letters, symbols; <b>ASCII / Unicode</b><br><small>emails, SMS, reports</small>`),
+  N("t2",330,"t:t1",270,"box w",`<span class="t">🔢 Numeric</span>calculation + measurement<br><small>scores, balances, temperatures</small>`),
+  N("t3",620,"t:t1",270,"box w",`<span class="t">🖼 Image</span>pixels + colour values<br><small>photos, scans, medical images</small>`),
+  N("t4",910,"t:t1",270,"box w",`<span class="t">🎙 Audio</span><b>sampling + quantisation</b><br><small>voice notes, calls, podcasts</small>`),
+  N("t5",1200,"t:t1",270,"box w",`<span class="t">🎬 Video</span>images over time + audio<br><small>lectures, meetings, CCTV</small>`),
+  N("src",40,"b:t1,t2,t3,t4,t5:70",1420,"box y",`<span class="t">SOURCES (where data comes from)</span>👤 human-generated: emails, messages, voice recordings · 💻 computer-generated: logs, transaction records · 🎥 multimedia systems: recorders, cameras, streaming · 🌡 sensors / IoT: temperature, humidity, motion, location · 📷 imaging devices: cameras, scanners, medical imaging · 🏢 business systems: banking apps, student info systems, inventory DBs`)
+],[E("def","t1","",{bend:0.05}),E("def","t2","",{bend:0}),E("def","t3","types",{bend:0}),E("def","t4","",{bend:0}),E("def","t5","",{bend:-0.05})]);
+
+B("a9",[
+  N("pr",470,10,560,"box g center",`<span class="t">⑤ PROTOCOL</span>the set of rules both ends follow (HTTP, TCP, IP, Ethernet, Wi-Fi)`),
+  N("snd",40,"b:pr:120",280,"box b center",`<span class="t">① SENDER</span>originates + transmits<br><small>laptop sending email · sensor reporting</small>`),
+  N("msg",590,"b:pr:40",320,"oval y center",`<b>③ MESSAGE</b> 📨<br><small>text, numbers, images, audio, video</small>`),
+  N("med",500,"b:msg:40",500,"box w center",`<span class="t">④ TRANSMISSION MEDIUM</span>the path: guided (cable, fibre) or unguided (radio, microwave, infrared)`),
+  N("rcv",1180,"t:snd",280,"box b center",`<span class="t">② RECEIVER</span>accepts the data<br><small>phone · web server · printer</small>`),
+  N("st",40,"b:med:40",420,"sticky",sticky(`"Send My Message Right, Please"`,`Sender · Message · Medium · Receiver · Protocol`))
+],[E("snd","med","",{bend:-0.1}),E("med","rcv","",{bend:-0.1}),E("msg","med","travels on",{bend:0}),E("pr","snd","follows",{dash:1,color:"green",bend:0.1}),E("pr","rcv","follows",{dash:1,color:"green",bend:-0.1})]);
+
+B("a10",[
+  N("p1",40,40,230,"box b center",`💻 PC<br><small>+ NIC</small>`),
+  N("p2",40,"b:p1:50",230,"box b center",`💻 PC<br><small>+ NIC</small>`),
+  N("sw",380,"mo:p1,p2",280,"box y",`<span class="t">SWITCH</span>connects devices in a <b>LAN</b>; forwards Ethernet <b>frames</b> by destination <b>MAC address</b>`),
+  N("rt",770,"m:sw",300,"box g",`<span class="t">ROUTER</span>forwards <b>packets between different IP networks</b>; a home router often also does NAT, firewall + wireless`),
+  N("net",1180,"m:sw",280,"oval b center",`🌍 other IP networks / Internet`),
+  N("ap",770,"b:rt,sw:80",300,"box p",`<span class="t">Wireless ACCESS POINT</span>lets wireless devices join the network (usually a LAN)`),
+  N("lap",1180,"m:ap",280,"box w center",`📱 wireless devices`),
+  N("nic",40,"b:p2:50",520,"plain",`<span class="ann"><b>NIC</b> (Network Interface Card) = gives a device its wired or wireless network connection, so it can send + receive data</span>`)
+],[E("p1","sw","",{bend:0}),E("p2","sw","",{bend:0}),E("sw","rt","",{bend:0}),E("rt","net","",{bend:0,both:1}),E("rt","ap","",{bend:0}),E("ap","lap","📶",{bend:0,both:1})]);
+
+B("a11",[
+  N("s",40,30,340,"box b",`<span class="t">SIMPLEX</span>data flows in <b>ONE direction only</b>`),
+  N("sa","r:s:60","m:s",130,"oval w center",`A`),
+  N("sb","r:sa:200","m:s",130,"oval w center",`B`),
+  N("sx","r:sb:60","m:s",440,"plain",`📻 radio/TV broadcast, PA announcement<br><span class="hg">+ simple design</span> <span class="hp">− receiver can't reply</span>`),
+  N("h",40,"b:s,sx:70",340,"box y",`<span class="t">HALF-DUPLEX</span>both directions, but <b>NOT at the same time</b>: take turns`),
+  N("ha","r:h:60","m:h",130,"oval w center",`A`),
+  N("hb","r:ha:200","m:h",130,"oval w center",`B`),
+  N("hx","r:hb:60","m:h",440,"plain",`📟 walkie-talkie: one speaks, the other listens, then swap<br><span class="hg">+ two-way without simultaneity</span> <span class="hp">− turn-taking delays</span>`),
+  N("f",40,"b:h,hx:70",340,"box g",`<span class="t">FULL-DUPLEX</span>both directions <b>SIMULTANEOUSLY</b>`),
+  N("fa","r:f:60","m:f",130,"oval w center",`A`),
+  N("fb","r:fa:200","m:f",130,"oval w center",`B`),
+  N("fx","r:fb:60","m:f",440,"plain",`📞 phone call, switched Ethernet<br><span class="hg">+ responsive</span> <span class="hp">− equipment must support it</span>`),
+  N("st",500,"b:f,fx:40",520,"sticky",sticky(`Simplex = Speaker 📻 · Half = Hand-radio 📟 · Full = phone 📞`))
+],[E("sa","sb","→ only",{bend:0}),E("ha","hb","turn 1",{bend:-0.25}),E("hb","ha","turn 2",{bend:-0.25,dash:1}),E("fa","fb","",{bend:-0.2}),E("fb","fa","at the same time",{bend:-0.2})]);
+
+/* ================= MODULE 2 ================= */
+B("b0",[
+  N("ag",450,10,600,"oval b center",`sender + receiver must agree how data is <b>represented, transmitted + interpreted</b>`),
+  N("m1",40,"b:ag:100",440,"box y",`<span class="t">Transmission METHODS</span>HOW data travels between devices (analog/digital, parallel/serial)`),
+  N("m2",530,"t:m1",440,"box g",`<span class="t">Transmission MODES</span>which DIRECTION data flows (simplex, half, full)`),
+  N("m3",1020,"t:m1",440,"box p",`<span class="t">SYNCHRONISATION</span>the receiver correctly finds the <b>timing + boundaries</b> of bits and characters`)
+],hub("ag",["m1","m2","m3"]));
+
+B("b1",[
+  N("al",40,20,660,"plain",`<span class="h">ANALOG: varies continuously</span>`),
+  N("dl",800,20,660,"plain",`<span class="h">DIGITAL: discrete states (0 / 1)</span>`),
+  N("an",40,280,660,"box b",`<ul><li>information carried by changes in <b>amplitude, frequency or phase</b></li><li><b>amplitude</b> = max height from the middle (reference) to the peak</li><li><b>frequency</b> = complete cycles per second (Hz)</li><li>noise + interference distort it; <b>amplifiers boost the noise too</b></li><li>e.g. radio broadcasting, old analog phone, microphone → speaker</li></ul>`),
+  N("dg",800,"t:an",660,"box g",`<ul><li>two voltage levels: <b>0 V = 0</b>, <b>+5 V = 1</b> (square wave)</li><li><b>repeaters regenerate</b> the signal → removes accumulated noise (if still readable)</li><li>error detection + correction improve reliability</li><li>easy to process, store + encrypt</li><li>quality still depends on signal strength, interference, bandwidth, network conditions</li></ul>`)
+],[],(rc,svg,R)=>{const ym=160,a=70,pts=[];for(let x=0;x<=600;x+=6)pts.push([70+x,ym-a*Math.sin(x/600*4*Math.PI)]);
+  add(svg,rc.curve(pts,{stroke:"var(--blue)",strokeWidth:3,roughness:0.6}));add(svg,rc.line(60,ym,690,ym,{stroke:"var(--soft)",strokeLineDash:[5,6]}));
+  arrow(rc,svg,[220,ym],[220,ym-a+4],{bend:0,color:"green"});T(svg,232,ym-30,"amplitude",{anchor:"start",color:"var(--green)",weight:700,size:16});
+  add(svg,rc.line(70,ym+a+22,370,ym+a+22,{stroke:"var(--red)",strokeWidth:2}));T(svg,220,ym+a+44,"one cycle (frequency = cycles per second)",{color:"var(--red)",size:16});
+  const bits=[1,0,1,1,0,1,0,0,1,1],bw=58,x0=840,yh=ym-60,yl=ym+60,p=[];bits.forEach((b,i)=>{const y=b?yh:yl;p.push([x0+i*bw,y],[x0+(i+1)*bw,y])});
+  add(svg,rc.linearPath(p,{stroke:"var(--green)",strokeWidth:3.2,roughness:0.5}));bits.forEach((b,i)=>T(svg,x0+i*bw+bw/2,yh-14,String(b),{mono:1,weight:700,size:18}));
+  T(svg,x0-10,yh+6,"+5V",{anchor:"end",size:15,color:"var(--soft)"});T(svg,x0-10,yl+6,"0V",{anchor:"end",size:15,color:"var(--soft)"});},0);
+
+B("b2",[
+  N("pt",40,10,660,"plain",`<span class="h">PARALLEL: many bits at once</span>`),
+  N("st",800,10,660,"plain",`<span class="h">SERIAL: one bit at a time</span>`),
+  N("ps",40,80,140,"box b center",`Sender`),
+  N("pr",560,80,140,"box b center",`Receiver`),
+  N("ss",800,"m:ps",140,"box b center",`Sender`),
+  N("sr",1320,"m:ps",140,"box b center",`Receiver`),
+  N("pp",40,330,660,"box w",`<b>how:</b> split into bit groups → each bit on its own line → all travel together → receiver reads them together (8-bit value on 8 lines)<br><span class="hg">+ high rate over SHORT distances; used inside computers</span><br><span class="hp">− many wires, bulky, expensive; <b>SKEW</b> (timing differences between lines) causes errors over distance</span>`),
+  N("sp",800,"t:pp",660,"box w",`<b>how:</b> convert to a bit sequence → send in order → receiver detects bits → rebuilds data<br><span class="hg">+ fewer wires, cheaper, LONG distances, high speed with modern signalling</span><br><span class="hp">− bits go one by one; depends on correct timing</span><br><b>e.g. USB, Ethernet, SATA, serial ports</b>`)
+],[],(rc,svg,R)=>{for(let i=0;i<8;i++){const y=R.ps.y-40+i*28+20;arrow(rc,svg,[190,y],[548,y],{bend:0,color:"ink"});T(svg,370,y-5,String([0,1,0,0,0,0,0,1][i]),{mono:1,weight:700,size:16,color:"var(--red)"})}
+  const y=R.ss.y+R.ss.h/2;arrow(rc,svg,[950,y],[1308,y],{bend:0,color:"ink"});T(svg,1130,y-12,"0 1 0 0 0 0 0 1 →",{mono:1,weight:700,size:18,color:"var(--red)"});},300);
+
+B("b3",[
+  N("tc",40,30,560,"box b",`<span class="t">TRANSMISSION CODE</span>defines <b>HOW INFORMATION IS REPRESENTED</b> as binary: letters, numbers, symbols, control info`),
+  N("lc",900,"t:tc",560,"box g",`<span class="t">LINE CODE</span>defines how those <b>BITS BECOME PHYSICAL SIGNAL CHANGES</b>`),
+  N("a1",40,"b:tc:70",170,"oval y big center",`"A"`),
+  N("a2","r:a1:70","m:a1",170,"box w center",`ASCII <b>65</b>`),
+  N("a3","r:a2:70","m:a1",230,"box w center",`<span class="bits">01000001</span>`),
+  N("a4","r:a3:70","m:a1",300,"box g center",`a signal on the wire<br><small>(NRZ, Manchester, AMI…)</small>`),
+  N("ascii",40,"b:a1,a2,a3,a4:50",440,"box w",`<b>ASCII</b>: 7 bits per character (standard)`),
+  N("uni",530,"t:ascii",440,"box w",`<b>Unicode</b>: many writing systems; <b>UTF-8</b> is the common encoding`),
+  N("bcd",1020,"t:ascii",440,"box w",`<b>BCD</b>: each decimal digit as 4 bits`),
+  N("why",40,"b:ascii,uni,bcd:40",1420,"box y",`<span class="t">Why line encoding matters</span>represent bits as physical signals · support <b>clock recovery + timing</b> · manage signal transitions · reduce some distortion · suit the medium`)
+],[E("a1","a2","transmission code",{bend:0}),E("a2","a3","",{bend:0}),E("a3","a4","line code",{bend:0}),E("tc","lc","≠ not the same",{dash:1,bend:0})]);
+
+B("b4",[
+  N("n",40,40,320,"box b",`<span class="t">NRZ (NRZ-L)</span>signal stays at one of two levels per bit (here 1 = high, 0 = low)<br><span class="warn">long runs of the same bit = no transitions → timing lost</span>`),
+  N("m",40,"b:n:60",320,"box g",`<span class="t">MANCHESTER</span>a transition in the <b>MIDDLE of every bit</b>; its direction gives the value (here 1 = up ↑, 0 = down ↓)`),
+  N("a",40,"b:m:60",320,"box y",`<span class="t">AMI</span>0 = <b>no pulse</b> (zero volts) · 1 = a pulse that <b>ALTERNATES + − + −</b>`)
+],[],(rc,svg,R)=>{const bits=[1,0,1,1,0,0,1],bw=130,x0=440;[["n","nrz","var(--blue)"],["m","man","var(--green)"],["a","ami","var(--red)"]].forEach(([k,t,c])=>{const ym=R[k].y+R[k].h/2;wave(rc,svg,t,bits,x0,ym,bw,32,c)});
+  bits.forEach((b,i)=>T(svg,x0+i*bw+bw/2,R.n.y-8,String(b),{mono:1,weight:700,size:22}));},0);
+
+B("b5",[
+  N("bs",40,20,680,"box b",`<span class="t">BIT synchronisation</span>the receiver finds the <b>start, duration + sampling point of each bit</b>: when one bit ends and the next begins.<br><span class="warn">without it: sampled too early or too late → wrong bits</span>`),
+  N("cs",780,"t:bs",680,"box y",`<span class="t">CHARACTER synchronisation</span>the receiver finds <b>where each character (data unit) starts + ends</b>, e.g. the boundaries between A, B and C`),
+  N("m1",40,"b:bs:70",320,"box w",`shared clock signals`),
+  N("m2",40,"b:m1:16",320,"box w",`timing recovered from transitions`),
+  N("m3",40,"b:m2:16",320,"box w",`clock recovery circuits`),
+  N("m4",40,"b:m3:16",320,"box w",`line codes with enough transitions`),
+  N("m5",40,"b:m4:16",320,"box w",`preambles / training sequences`),
+  N("ml",420,"mo:m1,m5",260,"oval b center",`ways to support bit sync`)
+],[E("ml","m1"),E("ml","m2"),E("ml","m3"),E("ml","m4"),E("ml","m5"),E("bs","ml","",{dash:1,bend:0.2})]);
+
+B("b6",[
+  N("k1",40,20,330,"box w",`<span class="t">① Special sync characters</span>an agreed control character marks the start:<br><span class="bits">[START] HELLO</span><br><small>protocol defines it so it isn't mistaken for data</small>`),
+  N("k2",405,"t:k1",330,"box w",`<span class="t">② Delimiters / framing markers</span>a symbol separates units:<br><span class="bits">CAT|DOG|BIRD</span>`),
+  N("k3",770,"t:k1",330,"box w",`<span class="t">③ Fixed-length characters</span>every character is N bits; receiver counts<br><small>bits 1–8 = A (01000001) · 9–16 = B (01000010) · 17–24 = C (01000011)</small>`),
+  N("k4",1135,"t:k1",330,"box w",`<span class="t">④ Frame structures</span>data organised into larger units called <b>frames</b> ↓`),
+  N("fr",300,"b:k1,k2,k3,k4:120",900,"plain center",`<span class="seg" style="background:var(--b);width:26%">HEADER</span><span class="seg" style="background:var(--y);width:46%">PAYLOAD (the data)</span><span class="seg" style="background:var(--g);width:24%">TRAILER</span>`),
+  N("fh",200,"b:fr:60",360,"box b",`<b>header</b>: addressing, frame control, may include a start marker`),
+  N("fp",600,"t:fh",300,"box y",`<b>payload</b>: the transmitted data`),
+  N("ft",940,"t:fh",360,"box g",`<b>trailer</b>: error checking, e.g. frame check sequence (FCS)`)
+],[E("k4","fr","",{bend:-0.15}),E("fh","fr","",{dash:1,color:"ink",bend:0}),E("fp","fr","",{dash:1,color:"ink",bend:0}),E("ft","fr","",{dash:1,color:"ink",bend:0})]);
+
+B("b7",[
+  N("sy",40,20,680,"box b",`<span class="t">SYNCHRONOUS</span>a <b>continuous, coordinated stream</b>, often in blocks/frames. Timing kept by a clock or recovered from the signal. <b>e.g. Ethernet frames</b><br><span class="hg">more efficient: one set of control overhead per BIG block</span>`),
+  N("as",780,"t:sy",680,"box y",`<span class="t">ASYNCHRONOUS</span><b>separate units</b> (characters) sent whenever, no shared continuous clock. Each gets a <b>START bit</b> + data + <b>STOP bit(s)</b>. Like texting a friend at random times.<br><span class="hp">more overhead: start/stop on EVERY character</span>`),
+  N("sp",60,"b:sy,as:40",640,"plain",`<span class="seg" style="background:var(--b)">header</span><span class="seg" style="background:var(--card);width:62%">data data data data data data data …</span><span class="seg" style="background:var(--g)">trailer</span>`),
+  N("ap",800,"t:sp",660,"plain",`<span class="seg" style="background:var(--p)">start</span><span class="seg">8 data bits</span><span class="seg" style="background:var(--p)">stop</span> ··· gap ··· <span class="seg" style="background:var(--p)">start</span><span class="seg">8 data bits</span><span class="seg" style="background:var(--p)">stop</span>`),
+  N("rs",800,"b:ap:40",660,"box p",`<span class="t">receiver re-syncs its clock at the START BIT of each character</span><span class="warn">(the past-paper PDF circled this wrong!)</span>`),
+  N("ef",60,"t:rs",640,"box g",`<span class="t">efficiency of async</span>8 data ÷ (8 + 1 start + 1 stop) = 8/10 = <span class="c">80%</span> → <b>20% overhead</b> (from start + stop bits)`)
+],[E("ap","rs","",{dash:1,bend:0})]);
+
+B("b8",[
+  N("br",40,20,440,"box b",`<span class="t">BIT RATE</span>bits per second (bps)<br><small>1,000 bits each second = 1,000 bps</small>`),
+  N("bd",530,"t:br",440,"box b",`<span class="t">BAUD RATE</span>signal <b>symbols</b> per second<br><small>equal to bit rate only if 1 symbol = 1 bit</small>`),
+  N("th",1020,"t:br",440,"box g",`<span class="t">THROUGHPUT</span>data <b>successfully delivered</b> per unit time (bps, B/s)<br><small>hurt by congestion, retransmissions, overhead, signal quality, capacity</small>`),
+  N("la",40,"b:br,bd,th:80",440,"box y",`<span class="t">LATENCY</span>time from source to destination (ms)<br><small>40 ms one way · there + back = RTT (round-trip time)</small>`),
+  N("l1",560,"b:br,bd,th:60",250,"box w",`transmission delay`),
+  N("l2",560,"b:l1:14",250,"box w",`propagation delay`),
+  N("l3",560,"b:l2:14",250,"box w",`processing delay`),
+  N("l4",560,"b:l3:14",250,"box w",`queuing delay`),
+  N("st",860,"mo:l1,l4",280,"sticky",sticky(`"The Postman Picks Queues"`)),
+  N("ef",1180,"mo:l1,l4",280,"box p",`<span class="t">EFFICIENCY</span>how much of what's sent is <b>useful data</b>`),
+  N("wk",40,"b:la,l4,ef:50",1420,"box g",`<span class="t">Formulas + worked answers</span><pre>Transmission time = data size ÷ bit rate      Exercise 1: 2,000,000 bits ÷ 1,000,000 bps = 2 seconds
+Throughput        = data delivered ÷ time       Slide: 20 megabits in 4 s = 5 Mbps
+Efficiency        = useful bits ÷ total bits × 100%   Async: 8 ÷ 10 = 80%</pre>`)
+],[E("la","l1","",{bend:-0.1}),E("la","l2","",{bend:0}),E("la","l3","",{bend:0}),E("la","l4","",{bend:0.1})]);
+
+/* ================= MODULE 3 ================= */
+B("c1",[
+  N("def",40,20,620,"box b",`<b>Network protocol</b> = a set of established rules + standards that decide how computers and network devices communicate. <span class="c">A common language</span>, like English vs French between people.`),
+  N("u",40,"b:def:90",220,"oval y center",`🧑‍🎓 types<br><b>www.google.com</b>`),
+  N("d","r:u:80","m:u",230,"box w center",`<b>DNS</b><br><small>finds the IP address for the name</small>`),
+  N("t","r:d:80","m:u",230,"box w center",`<b>TCP</b><br><small>sets up the connection</small>`),
+  N("h","r:t:80","m:u",230,"box w center",`<b>HTTP / HTTPS</b><br><small>requests the page</small>`),
+  N("s","r:h:80","m:u",200,"oval g center",`🖥 server sends the page back`),
+  N("n",780,30,680,"plain",`<span class="ann">different protocols work TOGETHER to make one action possible</span>`)
+],[E("u","d","",{bend:0}),E("d","t","",{bend:0}),E("t","h","",{bend:0}),E("h","s","",{bend:0})]);
+
+B("c2",[
+  N("pc",40,"mo:p1,p5",240,"oval y big center",`PURPOSE of protocols`),
+  N("p1",340,20,440,"box w",`<b>Data transmission</b>: how data moves (Ethernet on a wired LAN)`),
+  N("p2",340,"b:p1:18",440,"box w",`<b>Addressing</b>: identify source + destination (IP addresses)`),
+  N("p3",340,"b:p2:18",440,"box w",`<b>Error detection + recovery</b>: TCP acks + retransmission`),
+  N("p4",340,"b:p3:18",440,"box w",`<b>Flow control</b>: don't overwhelm the receiver`),
+  N("p5",340,"b:p4:18",440,"box w",`<b>Security</b>: HTTPS encrypts with TLS`),
+  N("st",60,"b:p5:30",400,"sticky",sticky(`"The Angry Elephant Fears Snakes"`,`Transmission · Addressing · Error · Flow · Security`)),
+  N("ke",1000,20,280,"oval b big center",`3 KEY ELEMENTS`),
+  N("sy",860,"b:ke:70",190,"box b center",`<span class="t">SYNTAX</span><b>structure / format</b><br><small>header, data, control info</small>`),
+  N("se","r:sy:25","t:sy",190,"box g center",`<span class="t">SEMANTICS</span><b>meaning</b> + what action to take<br><small>destination IP = where to deliver · setup + error indications</small>`),
+  N("ti","r:se:25","t:sy",190,"box p center",`<span class="t">TIMING</span><b>when + how fast</b> to send; coordination<br><small>TCP regulating transmission</small>`),
+  N("st2",900,"b:sy,se,ti:40",480,"sticky",sticky(`Syntax = Shape · Semantics = Sense · Timing = Tempo`))
+],[...hub("pc",["p1","p2","p3","p4","p5"]),E("ke","sy","",{bend:0.05}),E("ke","se","",{bend:0}),E("ke","ti","",{bend:-0.05})]);
+
+B("c3",[
+  N("L7",120,20,250,"box p center",`<b>7 · Application</b>`),
+  N("L6",120,"b:L7:12",250,"box p center",`<b>6 · Presentation</b>`),
+  N("L5",120,"b:L6:12",250,"box p center",`<b>5 · Session</b>`),
+  N("L4",120,"b:L5:12",250,"box y center",`<b>4 · Transport</b>`),
+  N("L3",120,"b:L4:12",250,"box g center",`<b>3 · Network</b>`),
+  N("L2",120,"b:L3:12",250,"box b center",`<b>2 · Data Link</b>`),
+  N("L1",120,"b:L2:12",250,"box b center",`<b>1 · Physical</b>`),
+  N("J7",450,"m:L7",640,"plain",`network services users touch: web, email, file transfer, name resolution`),
+  N("J6",450,"m:L6",640,"plain",`<b>translation, encryption/decryption, compression</b> so the receiver can understand`),
+  N("J5",450,"m:L5",640,"plain",`<b>establish, maintain, terminate</b> sessions; manage dialogue; recovery (joining → leaving a meeting)`),
+  N("J4",450,"m:L4",640,"plain",`<b>end-to-end</b> app→app: segment + reassemble, flow control, error recovery, <b>PORT numbers</b>`),
+  N("J3",450,"m:L3",640,"plain",`<b>between networks</b>: logical (IP) addressing, <b>ROUTING</b>, forwarding, fragmentation`),
+  N("J2",450,"m:L2",640,"plain",`<b>same local segment</b>: framing, <b>MAC addresses</b>, error detection, media access`),
+  N("J1",450,"m:L1",640,"plain",`raw <b>bits</b> as electrical / optical / radio signals; cables, connectors, speeds`),
+  N("X7",1130,"m:L7",340,"plain",`<small>HTTP, HTTPS, FTP, DNS, SMTP</small>`),
+  N("X6",1130,"m:L6",340,"plain",`<small>JPEG, PNG, MP3, UTF-8</small>`),
+  N("X5",1130,"m:L5",340,"plain",`<small>online meeting session</small>`),
+  N("X4",1130,"m:L4",340,"plain",`<small>TCP, UDP · unit: <b>segment</b></small>`),
+  N("X3",1130,"m:L3",340,"plain",`<small>IP · unit: <b>packet</b> (Abuja → UK)</small>`),
+  N("X2",1130,"m:L2",340,"plain",`<small>Ethernet, Wi-Fi · unit: <b>frame</b></small>`),
+  N("X1",1130,"m:L1",340,"plain",`<small>unit: <b>bits</b></small>`),
+  N("iso",450,"b:L1:40",500,"plain",`<span class="ann">a 7-layer <b>reference framework</b> by <b>ISO</b> (International Organization for Standardization). Each layer does one job + works with the layers above and below.</span>`),
+  N("st",1000,"b:L1:40",460,"sticky",sticky(`↓ "All People Seem To Need Data Processing"`,`↑ "Please Do Not Throw Sausage Pizza Away"`))
+],[1,2,3,4,5,6,7].map(i=>E("L"+i,"J"+i,"",{nohead:1,dash:1,color:"ink",bend:0})),
+(rc,svg,R)=>{const top=R.L7.y,bot=R.L1.y+R.L1.h;arrow(rc,svg,[70,top],[70,bot],{bend:0,color:"red"});T(svg,55,(top+bot)/2,"sending ↓",{rotate:-90,color:"var(--red)",weight:700,size:16});});
+
+B("c4",[
+  N("tcp",40,20,620,"box b",`<span class="t">TCP · Transmission Control Protocol</span>• <b>connection-oriented</b>: sets up a connection first<br>• <b>reliable + ordered</b> delivery; retransmits<br>• more overhead`),
+  N("vs",705,"m:tcp",90,"oval r big center",`VS`),
+  N("udp",840,20,620,"box y",`<span class="t">UDP · User Datagram Protocol</span>• <b>connectionless</b>: just sends<br>• no guarantee of delivery, order or retransmission<br>• <b>faster, less overhead</b>`)
+]);
+
+B("c5",[
+  N("o7",40,20,260,"box p center",`Application`),
+  N("o6",40,"b:o7:10",260,"box p center",`Presentation`),
+  N("o5",40,"b:o6:10",260,"box p center",`Session`),
+  N("o4",40,"b:o5:30",260,"box y center",`Transport`),
+  N("o3",40,"b:o4:30",260,"box g center",`Network`),
+  N("o2",40,"b:o3:30",260,"box b center",`Data Link`),
+  N("o1",40,"b:o2:10",260,"box b center",`Physical`),
+  N("t4",560,"mo:o7,o5",300,"box p center",`<b>APPLICATION</b>`),
+  N("t3",560,"m:o4",300,"box y center",`<b>TRANSPORT</b>`),
+  N("t2",560,"m:o3",300,"box g center",`<b>INTERNET</b>`),
+  N("t1",560,"mo:o2,o1",300,"box b center",`<b>NETWORK ACCESS</b>`),
+  N("x4",960,"m:t4",500,"plain",`HTTP/HTTPS · <b>DNS</b> (names → IPs) · <b>DHCP</b> (auto IP config) · SMTP · FTP`),
+  N("x3",960,"m:t3",500,"plain",`TCP · UDP`),
+  N("x2",960,"m:t2",500,"plain",`IPv4 · IPv6 · ICMP`),
+  N("x1",960,"m:t1",500,"plain",`Ethernet · Wi-Fi · fibre`),
+  N("hd1",40,"b:o1:30",260,"plain center",`<span class="h">OSI (7)</span>`),
+  N("hd2",560,"t:hd1",300,"plain center",`<span class="h">TCP/IP (4)</span>`),
+  N("st",960,"b:x1:40",500,"sticky",sticky(`TCP/IP ↑ "Never Ignore Trusted Advice"`,`Network access · Internet · Transport · Application`)),
+  N("nt",960,"b:st:24",500,"plain",`<span class="ann">TCP/IP = Transmission Control Protocol / Internet Protocol: the PRACTICAL suite the internet runs on</span>`)
+],[E("o7","t4","",{bend:0}),E("o6","t4","",{bend:0}),E("o5","t4","",{bend:0}),E("o4","t3","",{bend:0}),E("o3","t2","",{bend:0}),E("o2","t1","",{bend:0}),E("o1","t1","",{bend:0}),...[1,2,3,4].map(i=>E("t"+i,"x"+i,"",{nohead:1,dash:1,color:"ink",bend:0}))]);
+
+B("c6",[
+  N("r5",260,20,900,"plain",`<span class="seg" style="background:var(--p)">DATA</span> <small>Application creates it (e.g. a web request)</small>`),
+  N("r4",260,"b:r5:22",900,"plain",`<span class="seg" style="background:var(--y)">TCP/UDP hdr (ports)</span><span class="seg" style="background:var(--p)">DATA</span> <small>= SEGMENT</small>`),
+  N("r3",260,"b:r4:22",900,"plain",`<span class="seg" style="background:var(--g)">IP hdr (src + dst IP)</span><span class="seg" style="background:var(--y)">TCP/UDP</span><span class="seg" style="background:var(--p)">DATA</span> <small>= PACKET</small>`),
+  N("r2",260,"b:r3:22",900,"plain",`<span class="seg" style="background:var(--b)">frame hdr (MAC)</span><span class="seg" style="background:var(--g)">IP</span><span class="seg" style="background:var(--y)">TCP</span><span class="seg" style="background:var(--p)">DATA</span><span class="seg" style="background:var(--b)">trailer (error check)</span> <small>= FRAME</small>`),
+  N("r1",260,"b:r2:22",900,"plain",`<span class="bits">0110100101110010101…</span> <small>= BITS on the medium</small>`),
+  N("e",40,"mo:r5,r1",180,"oval y center",`<b>ENCAPSULATE</b><br><small>sending ↓<br>add headers</small>`),
+  N("d",1220,"mo:r5,r1",240,"oval g center",`<b>DECAPSULATE</b><br><small>receiving ↑<br>strip each layer's info</small>`),
+  N("pa",260,"b:r1:50",620,"box w",`📦 <b>Parcel analogy</b>: put the item in a package → write the address → attach delivery info → courier carries it Abuja → Lagos. Receiver opens it and takes the item out.`),
+  N("st",960,"t:pa",460,"sticky",sticky(`"Do Some People Fear Birthdays"`,`Data → Segment → Packet → Frame → Bits`))
+],[],(rc,svg,R)=>{arrow(rc,svg,[230,R.r5.y+10],[230,R.r1.y+R.r1.h],{bend:0});arrow(rc,svg,[1190,R.r1.y+R.r1.h],[1190,R.r5.y+10],{bend:0,color:"green"});});
+
+B("c7",[
+  N("q1",40,20,440,"box y",`<b>Why do the PCs need ARP?</b><br>to find the <b>MAC address</b> for a known IP on the local network, before the first ping can be framed`),
+  N("q2",530,"t:q1",440,"box y",`<b>What does the switch do?</b><br>forwards frames inside the LAN using MAC addresses`),
+  N("q3",1020,"t:q1",440,"box y",`<b>Which protocol does ping use?</b><br><b>ICMP</b>`),
+  N("q4",280,"b:q1,q2,q3:40",440,"box g center",`MAC addresses → <b>Layer 2 (Data Link)</b>`),
+  N("q5",780,"t:q4",440,"box g center",`IP addresses → <b>Layer 3 (Network)</b>`)
+]);
+
+/* ================= MODULE 4 ================= */
+B("d1",[
+  N("s",40,40,300,"box b center",`<span class="t">sent</span><span class="bits">10110010</span>`),
+  N("ch","r:s:100","m:s",320,"oval p center",`⚡ noisy channel ⚡`),
+  N("r","r:ch:100","m:s",300,"box p center",`<span class="t">received</span><span class="bits">101<span class="flip">0</span>0010</span>`),
+  N("def",200,"b:s,ch,r:60",1100,"box y",`<b>Transmission error</b> = one or more bits <b>changed, lost, duplicated or received incorrectly</b>. The fix: error detection + error control, to identify (and sometimes correct) errors.`)
+],[E("s","ch","",{bend:0}),E("ch","r","",{bend:0})]);
+
+B("d2",[
+  N("c",500,"mo:x1,x4",260,"oval p big center",`CAUSES`),
+  N("x1",40,20,400,"box w",`<b>EMI</b> (electromagnetic interference): motors, power cables, radio transmitters, electronics`),
+  N("x2",40,"b:x1:16",400,"box w",`<b>Noise</b>: unwanted signals mixing in`),
+  N("x3",40,"b:x2:16",400,"box w",`<b>Attenuation</b>: signal weakens until 0 vs 1 is unclear`),
+  N("x4",40,"b:x3:16",400,"box w",`<b>Crosstalk</b>: neighbouring wires leak into each other`),
+  N("y1",820,"t:x1",300,"box w",`<b>Hardware failure</b>: faulty devices, damaged cables, bad NICs`),
+  N("y2",820,"b:y1:16",300,"box w",`<b>Poor synchronisation</b>: timing out of step`),
+  N("y3",820,"b:y2:16",300,"box w",`<b>Wireless interference</b>: other Wi-Fi, Bluetooth, obstacles, microwaves, weather`),
+  N("st",1160,"t:x1",300,"sticky",sticky(`"Every Noisy Attempt Can Hurt Signal Waves"`,`EMI · Noise · Attenuation · Crosstalk · Hardware · Sync · Wireless`)),
+  N("er",40,"b:x4,y3:90",260,"oval y big center",`an error →`),
+  N("k1","r:er:70","t:er",180,"box w center",`data corruption`),
+  N("k2","r:k1:20","t:er",160,"box w center",`packet loss`),
+  N("k3","r:k2:20","t:er",180,"box w center",`retransmission`),
+  N("k4",360,"b:k1,k2,k3:20",200,"box w center",`reduced throughput`),
+  N("k5","r:k4:20","t:k4",200,"box w center",`delay`),
+  N("k6","r:k5:20","t:k4",180,"box w center",`file corruption`),
+  N("k7","r:k3:20","t:er",220,"box w center",`application failure`)
+],[...hub("c",["x1","x2","x3","x4","y1","y2","y3"]),E("er","k1","consequences",{bend:0})]);
+
+B("d3",[
+  N("sb",40,20,660,"box b",`<span class="t">SINGLE-BIT error</span>only <b>ONE</b> bit flips; can be anywhere; easy to detect with parity<br><span class="bits">10110010 → 101<span class="flip">0</span>0010</span>`),
+  N("bu",780,"t:sb",680,"box p",`<span class="t">BURST error</span><b>two or more</b> bits affected; common with interference. <b>CRC is especially good at catching bursts.</b><br><span class="bits">1011001011 01 →<br>10<span class="flip">0011</span>1011 01</span>`),
+  N("bl",780,"b:bu:30",680,"box y",`<b>burst length</b> = from the FIRST corrupted bit to the LAST, <span class="c">counting the unchanged bits in between</span>`)
+],[E("bl","bu","",{dash:1,bend:0})]);
+
+B("d4",[
+  N("ed",40,20,660,"box b",`<span class="t">ERROR DETECTION</span>find out <b>WHETHER</b> data was corrupted, using extra info from the sender. May not know which bit → can ask for retransmission.`),
+  N("ec",780,"t:ed",680,"box g",`<span class="t">ERROR CORRECTION</span>find <b>AND FIX</b> certain errors using redundant bits, without retransmission.`),
+  N("a1",40,"b:ed,ec:80",200,"box w center",`sender transmits a packet`),
+  N("a2","r:a1:60","t:a1",180,"box w center",`receiver checks it`),
+  N("a3","r:a2:90","o:a2:-50",200,"box g center",`✓ correct → send <b>ACK</b>`),
+  N("a4","r:a2:90","o:a2:60",200,"box p center",`✗ corrupted → <b>request retransmission</b>`),
+  N("aq",40,"b:a1,a3,a4:30",780,"plain",`<span class="h">ARQ · Automatic Repeat reQuest</span><small>good when retransmitting is cheap</small>`),
+  N("fec",900,"t:a1",560,"box y",`<span class="t">FEC · Forward Error Correction</span>adds enough redundancy to <b>CORRECT without retransmission</b>.<br>Best when retransmission is <b>difficult or expensive</b>: <span class="c">satellite, real-time</span>`)
+],[E("a1","a2","",{bend:0}),E("a2","a3","",{bend:-0.1}),E("a2","a4","",{bend:0.1}),E("a4","a1","resend",{bend:0.4,dash:1,from:"b",to:"b"})]);
+
+B("d5",[
+  N("dt",40,110,220,"box w center",`data<br><span class="bits">1011001</span>`),
+  N("ct","r:dt:70","m:dt",200,"oval y center",`count the 1s<br><b>= 4</b>`),
+  N("ev","r:ct:90","o:ct:-60",300,"box g",`<b>EVEN parity</b>: 4 is already even → bit <b>0</b><br>send <span class="bits">10110010</span>`),
+  N("od","r:ct:90","o:ct:70",300,"box b",`<b>ODD parity</b>: need odd → bit <b>1</b><br>send <span class="bits">10110011</span>`),
+  N("ex2",1060,"t:dt",400,"box w",`data <span class="bits">1011011</span> has five 1s → even parity bit <b>1</b> → send <span class="bits">10110111</span> (six 1s ✓)`),
+  N("tb",1060,"b:ex2:30",400,"plain",`<table class="mini"><tr><th></th><th>even</th><th>odd</th></tr><tr><td>4 ones</td><td>0</td><td>1</td></tr><tr><td>5 ones</td><td>1</td><td>0</td></tr></table>`),
+  N("lim",40,"b:ev,od,tb:60",1420,"box p",`<span class="t">Limits of parity</span>✓ detects any <b>ODD</b> number of flipped bits · <span class="c">✗ CANNOT detect an EVEN number of flips</span> (parity still looks valid) · ✗ can't say which bit · ✗ a single parity bit cannot correct`),
+  N("rule",40,"b:dt:40",500,"plain",`<span class="ann">rule: the TOTAL number of 1s (including the parity bit) must be even (even parity) or odd (odd parity)</span>`)
+],[E("dt","ct","",{bend:0}),E("ct","ev","",{bend:-0.1}),E("ct","od","",{bend:0.1})]);
+
+/* ================= MODULE 5 ================= */
+B("e1",[
+  N("idea",40,20,560,"box b",`<span class="t">2-D parity</span>put the data in a table; add a parity bit to <b>every ROW</b> (horizontal check) and <b>every COLUMN</b> (vertical check)`),
+  N("tbl",680,20,420,"plain",`<table class="mini"><tr><th></th><th>C1</th><th>C2</th><th>C3</th><th>C4</th><th style="background:var(--y)">row p</th></tr><tr><th>R1</th><td>1</td><td>0</td><td>1</td><td>1</td><td style="background:var(--y)">1</td></tr><tr><th>R2</th><td>0</td><td>1</td><td style="background:var(--p)">1</td><td>0</td><td style="background:var(--y)">0</td></tr><tr><th>R3</th><td>1</td><td>1</td><td>0</td><td>0</td><td style="background:var(--y)">0</td></tr><tr><th>R4</th><td>1</td><td>0</td><td>0</td><td>1</td><td style="background:var(--y)">0</td></tr><tr><th style="background:var(--g)">col p</th><td style="background:var(--g)">1</td><td style="background:var(--g)">0</td><td style="background:var(--g)">0</td><td style="background:var(--g)">0</td><td style="background:var(--b)">1</td></tr></table>`),
+  N("rp",1170,20,290,"box y",`<b>row parity</b>: R1 has three 1s (odd) → add <b>1</b> to make it even`),
+  N("cp",1170,"b:rp:30",290,"box g",`<b>column parity</b>: same rule down each column`),
+  N("cn",1170,"b:cp:30",290,"box b",`<b>corner bit</b> = parity of the parity bits`),
+  N("loc",40,"b:idea:40",560,"box p",`<span class="t">Locating an error</span>if R2 C3 flips → row 2 check fails + column 3 check fails → <span class="c">the intersection is the bad bit</span> → flip it back`),
+  N("pl",40,"b:loc,tbl,cn:40",700,"box g",`<span class="hg">+ detects ALL single-bit errors</span> · <span class="hg">+ can locate + correct one</span> · <span class="hg">+ stronger than 1-D parity</span>`),
+  N("mi",780,"t:pl",680,"box p",`<span class="hp">− some multi-bit errors slip through or mislead</span> · <span class="hp">− extra parity bits = more overhead</span>`)
+],[E("rp","tbl","",{bend:0,dash:1}),E("cp","tbl","",{bend:0.1,dash:1}),E("cn","tbl","",{bend:0.15,dash:1}),E("loc","tbl","R2·C3",{bend:-0.1})]);
+
+B("e2",[
+  N("d1",40,30,220,"box w center",`send <b>10</b> and <b>20</b>`),
+  N("d2","r:d1:70","t:d1",220,"box y center",`checksum = 10 + 20 = <b>30</b>`),
+  N("d3","r:d2:70","t:d1",220,"box w center",`transmit 10, 20, 30`),
+  N("d4","r:d3:70","t:d1",320,"box g center",`receiver: 10 + 20 = 30 → <b>match ✓</b> (no match = possible error)`),
+  N("s1",40,"b:d1,d2,d3,d4:90",320,"box b",`<b>① split</b> data into <b>words</b> (e.g. 8 bits)`),
+  N("s2","r:s1:50","t:s1",320,"box b",`<b>② ADD</b> them in binary; if the sum carries past 8 bits, <b>WRAP</b> the carry around + add it`),
+  N("s3","r:s2:50","t:s1",320,"box y",`<b>③ FLIP</b> every bit (one's complement) = the checksum`),
+  N("s4","r:s3:50","t:s1",270,"box g",`<b>④ receiver</b> adds all words + checksum → all 1s → flip → <b>00000000</b> = accept`),
+  N("st",40,"b:s1,s2,s3,s4:40",300,"sticky",sticky(`"Add, wrap, flip"`)),
+  N("ex",400,"t:st",1060,"box w",`<span class="t">Slide example</span><pre>  00001111
++ 00000011
+= 00010010 (18)  → flip → checksum 11101101
+receiver: 00010010 + 11101101 = 11111111 → flip → 00000000 ✓ accepted</pre>`),
+  N("nb",40,"b:st,ex:30",1420,"plain",`<span class="warn">a checksum DETECTS some accidental changes, but doesn't CORRECT them and can't catch EVERY error</span>`)
+],[E("d1","d2","",{bend:0}),E("d2","d3","",{bend:0}),E("d3","d4","",{bend:0}),E("s1","s2","",{bend:0}),E("s2","s3","",{bend:0}),E("s3","s4","",{bend:0})]);
+
+B("e3",[
+  N("x1",40,20,680,"box g",`<span class="t">Exercise 1</span><pre>  10001100  (140)
++ 00011101  ( 29)  = 169
++ 01010110  ( 86)  = 255 = 11111111  (no carry)
+checksum = flip  →  00000000</pre>`),
+  N("x2",780,20,680,"box g",`<span class="t">Exercise 2</span><pre>  10011001 (153) + 11100010 (226) = 379
+    379 − 256 = 123, + 1 carry = 124  (01111100)
++ 00100100 ( 36)  → 160  (10100000)
++ 10000100 (132)  → 292
+    292 − 256 = 36,  + 1 carry =  37  (00100101)
+checksum = flip  →  11011010</pre>`)
+]);
+
+B("e4",[
+  N("def",40,20,700,"box b",`<b>CRC</b> uses <b>binary polynomial arithmetic</b> (modulo-2 division) with an agreed divisor, the <b>generator polynomial</b>. The remainder is attached to the data. <span class="c">Very good at BURST errors</span>; used in networks, storage, digital comms. The frame sent is <b>exactly divisible</b> by the generator → non-zero remainder at receiver = error.`),
+  N("terms",800,20,660,"plain",`<table class="mini"><tr><th>term</th><th>meaning</th></tr><tr><td>dataword</td><td>original data</td></tr><tr><td>generator</td><td>agreed binary divisor</td></tr><tr><td>remainder</td><td>result of mod-2 division</td></tr><tr><td>CRC bits</td><td>remainder appended</td></tr><tr><td>codeword</td><td>data + CRC bits</td></tr></table>`),
+  N("p1",40,"b:def,terms:70",300,"box y",`<b>① divisor length L</b><br><small>1101 → L = 4</small>`),
+  N("p2","r:p1:60","t:p1",300,"box y",`<b>② append L − 1 zeros</b><br><small>101100 → 101100000</small>`),
+  N("p3","r:p2:60","t:p1",300,"box y",`<b>③ divide with XOR</b><br><small>0⊕0=0 · 0⊕1=1 · 1⊕0=1 · 1⊕1=0</small>`),
+  N("p4","r:p3:60","t:p1",300,"box g",`<b>④ remainder = CRC</b> (L − 1 bits) → replaces the zeros`),
+  N("wk",40,"b:p1,p2,p3,p4:50",760,"box w",`<span class="t">Slide question: data 101100, divisor 1101</span><pre>101100000
+1011 ⊕ 1101 = 0110 → bring down 0 → 1100
+1100 ⊕ 1101 = 0001 → bring down 0 → 0010
+0010 (lead 0, ⊕ 0000) → bring down 0 → 0100
+0100 (lead 0, ⊕ 0000) → bring down 0 → 1000
+1000 ⊕ 1101 = 0101 → bring down 0 → 1010
+1010 ⊕ 1101 = 0111 → remainder 111</pre>`),
+  N("ans",880,"m:wk",420,"oval g big center",`CRC = <b>111</b><br>codeword = 101100<b>111</b>`),
+  N("rcv",880,"b:wk:30",580,"plain",`<span class="ann">receiver divides 101100111 by 1101 → remainder 000 → no error</span>`),
+  N("st",880,"b:rcv:20",400,"sticky",sticky(`"Pad, XOR, keep the leftovers"`,`XOR: same → 0, different → 1`))
+],[E("p1","p2","",{bend:0}),E("p2","p3","",{bend:0}),E("p3","p4","",{bend:0}),E("wk","ans","",{bend:0})]);
+
+/* ================= PAST PAPER ================= */
+B("f0",[
+  N("w",40,20,1420,"box p",`<span class="t">⚠ The answers circled on the ICT 305 past-paper copy going around are mostly right, but not these:</span>`),
+  N("q65",40,"b:w:30",450,"box w",`<b>Q65</b>: async receiver re-syncs…<br>✗ "when a stop bit is zero"<br>✓ <span class="c">at the START BIT of each character</span>`),
+  N("q71",525,"t:q65",450,"box w",`<b>Q71</b>: FEC is preferred over ARQ when…<br>✗ "frames are extremely large"<br>✓ <span class="c">retransmission is costly</span>`),
+  N("q42",1010,"t:q65",450,"box w",`<b>Q42</b> is ambiguous: changing amplitude OR phase alone doesn't alter frequency. Expected: <b>amplitude</b>.`)
+]);
+
+B("f1",[
+  N("sh",40,20,440,"box b",`<b>Shannon</b>: communication reproduces a message "exactly or approximately" → some apps (voice, video) <b>tolerate approximation</b>`),
+  N("ch",530,"t:sh",440,"box b",`<b>Colin Cherry</b>: no "rules in common" = no communication → why we need <b>formal protocol architectures</b>`),
+  N("tr",1020,"t:sh",440,"box b",`<b>traffic growth + new services</b> force <b>scalable architectures</b>, not just faster links · multi-campus LANs → integrate LANs with corporate <b>WAN</b> needs`),
+  N("tk",360,"b:sh,ch,tr:80",780,"oval y center",`<b>Communication tasks</b>: transmission system utilisation · interfacing · signal generation · synchronisation · exchange management · error detection + correction · flow control · addressing · routing · recovery · message formatting · security · network management`),
+  N("em",40,"b:tk:60",440,"box g",`<b>exchange management</b> = controlling the <b>dialogue</b> between the two sides`),
+  N("ef",530,"t:em",440,"box g",`<b>efficiency</b> of costly facilities = <b>utilisation + flow control</b>; facilities stay expensive, so waste costs money`),
+  N("of",1020,"t:em",440,"box g",`office wiring choice = <b>cost vs performance trade-off</b> (under your control)`)
+],[E("tk","em","",{bend:0.05}),E("tk","ef","",{bend:0}),E("tk","of","",{bend:-0.05})]);
+
+B("f2",[
+  N("lan",40,20,440,"box b",`<span class="t">LAN</span>limited area (building/campus), org-owned, high rate. One building + high data needs → <b>switched Ethernet</b>. Multipoint lines are typical in LANs.`),
+  N("man",530,"t:lan",440,"box y",`<span class="t">MAN</span><b>intermediate</b> in BOTH area and data rate`),
+  N("wan",1020,"t:lan",440,"box g",`<span class="t">WAN</span>large area; relies on <b>common-carrier circuits</b>`),
+  N("cs",40,"b:lan,man,wan:80",660,"box p",`<span class="t">Circuit switching</span>a <b>dedicated path reserved for the whole call</b> → wasteful for bursty computer traffic`),
+  N("vs",745,"m:cs",90,"oval r big center",`VS`),
+  N("ps",880,"t:cs",580,"box g",`<span class="t">Packet switching</span><b>statistical multiplexing</b> of many bursty flows on shared links → ideal for computer data`),
+  N("fr",40,"b:cs,ps:80",440,"box w",`<span class="t">Frame Relay</span>cut most <b>link-level error control</b>; pushed error handling to end systems → faster`),
+  N("atm",530,"t:fr",440,"box w",`<span class="t">ATM</span><b>fixed-length cells</b> → fast switching; suits <b>constant-rate services with predictable delay</b>`),
+  N("arp",1020,"t:fr",440,"box w",`<span class="t">ARPANET</span>first operational packet-switched network → drive for interoperability → <b>TCP/IP</b>`),
+  N("rt",530,"b:fr,atm,arp:40",440,"oval b center",`<b>routers</b> interconnect networks + relay packets by <b>network-layer (IP) addresses</b>`)
+],[E("ps","fr","evolved into",{dash:1,bend:0.15}),E("fr","atm","then",{bend:0}),E("arp","rt","",{dash:1,bend:0})]);
+
+B("f3",[
+  N("why",40,20,700,"box b",`<b>why layer?</b> to <b>encapsulate related functions into manageable modules</b>. Peer layers "talk" by following a common protocol while data actually passes down + up through the lower layers.`),
+  N("osi",800,"t:why",660,"box y",`<b>OSI vs TCP/IP</b>: OSI = the more detailed 7-layer reference model · TCP/IP = the <b>de facto standard</b> (practical, informal but accepted layering) · OSI Transport ≈ TCP/UDP`),
+  N("l5",40,"b:why,osi:60",250,"box p center",`<b>Application</b>`),
+  N("l4",40,"b:l5:12",250,"box y center",`<b>Transport</b>`),
+  N("l3",40,"b:l4:12",250,"box g center",`<b>Internet</b>`),
+  N("l2",40,"b:l3:12",250,"box b center",`<b>Network access</b>`),
+  N("l1",40,"b:l2:12",250,"box b center",`<b>Physical</b>`),
+  N("j5",340,"m:l5",1120,"plain",`a separate module per protocol (each has its own semantics + commands) · each app on a host gets a distinct <b>PORT</b>; the IP address identifies the host`),
+  N("j4",340,"m:l4",1120,"plain",`reliable, ordered end-to-end delivery · <b>TCP</b> = reliable connection-oriented byte stream · <b>UDP</b> = minimal overhead`),
+  N("j3",340,"m:l3",1120,"plain",`routes packets across interconnected networks using <b>IP</b> · <b>IPv6</b> header designed to <b>simplify header processing</b>`),
+  N("j2",340,"m:l2",1120,"plain",`<b>hides the details of the specific link</b> from upper layers`),
+  N("j1",340,"m:l1",1120,"plain",`signal levels, medium, data rates (NOT IP addresses)`),
+  N("sp",40,"b:l1:40",700,"box w",`<b>service primitives + parameters</b> = the precise interface between adjacent layers (user requests a service from the provider layer)`),
+  N("el",800,"t:sp",660,"box w",`<b>elastic</b> traffic (email, file transfer) adapts to changing delay + throughput · <b>inelastic</b> (interactive video, voice) has strict delay needs`)
+],[1,2,3,4,5].map(i=>E("l"+i,"j"+i,"",{nohead:1,dash:1,color:"ink",bend:0})));
+
+B("f4",[
+  N("sw",40,20,620,"plain",`<span class="ann">a sine wave: <b>amplitude</b> = height · <b>frequency</b> = cycles/s · <b>phase</b> = position in the cycle. Changing amplitude or phase alone doesn't change frequency.</span>`),
+  N("ny",40,220,620,"box b",`<span class="t">NYQUIST (noise-free)</span><span class="q">C = 2B log₂M</span><br>more signal levels M → higher rate… but a <b>more complex, error-prone receiver</b><br><small>B = 3000 Hz, M = 4 → 2 × 3000 × 2 = 12,000 bps</small>`),
+  N("vs",705,"m:ny",90,"oval r big center",`VS`),
+  N("sn",840,"t:ny",620,"box g",`<span class="t">SHANNON (with noise)</span><span class="q">C = B log₂(1 + SNR)</span><br>theoretical max, assumes ideal coding (white noise) · doubling bandwidth usually beats doubling SNR at moderate SNR<br><small>B = 3000, SNR = 15 → 3000 × 4 = 12,000 bps · SNR(dB) = 10 log₁₀ SNR</small>`),
+  N("k",300,"b:ny,sn:40",900,"plain center",`<span class="c">Nyquist = noise-free channel · Shannon = includes noise</span>`)
+],[],(rc,svg)=>{const pts=[];for(let x=0;x<=560;x+=6)pts.push([760+x,120-55*Math.sin(x/560*4*Math.PI)]);add(svg,rc.curve(pts,{stroke:"var(--blue)",strokeWidth:3}));add(svg,rc.line(750,120,1330,120,{stroke:"var(--soft)",strokeLineDash:[5,6]}));T(svg,1390,126,"amplitude ↕",{size:16,color:"var(--green)",weight:700});},0);
+
+B("f5",[
+  N("at",40,20,440,"box b",`<span class="t">Attenuation</span>signal loses strength with distance → limits how far a signal can go in guided media before regeneration`),
+  N("dd",530,"t:at",440,"box b",`<span class="t">Delay distortion</span><b>different frequency components arrive at different times</b> → <b>intersymbol interference</b> at high data rates`),
+  N("rp",1020,"t:at",440,"box b",`<span class="t">Repeaters</span>restore amplitude, but <b>noise + distortion can still accumulate</b>`),
+  N("nz",40,"mo:n1,n4",240,"oval p big center",`NOISE`),
+  N("n1",340,"b:at,dd,rp:60",520,"box w",`<b>Thermal</b>: electron motion; broadband, always there → the <b>noise floor</b>`),
+  N("n2",340,"b:n1:16",520,"box w",`<b>Intermodulation</b>: signals <b>mix non-linearly</b> → new frequencies`),
+  N("n3",340,"b:n2:16",520,"box w",`<b>Crosstalk</b>: coupling between adjacent wires`),
+  N("n4",340,"b:n3:16",520,"box w",`<b>Impulse</b>: sudden high spikes (worst for digital)`),
+  N("st",920,"mo:n1,n4",260,"sticky",sticky(`"TICI"`,`Thermal · Intermod · Crosstalk · Impulse`)),
+  N("md",40,"b:n4:60",1420,"box y",`<span class="t">Media</span><b>optical fibre</b> = largest repeater spacing · <b>shielded</b> twisted pair (STP) vs UTP = less external interference · wireless: the <b>antenna</b> matters more than the path · <b>antenna gain</b> is measured against an <b>isotropic radiator</b> (radiates equally in all directions) · <b>refraction</b> = atmosphere bends a line-of-sight path`)
+],hub("nz",["n1","n2","n3","n4"]));
+
+B("f6",[
+  N("c1",40,20,340,"box b",`<b>NRZ-L</b>: constant level per bit → no transitions on long runs → loses sync`),
+  N("c2",405,"t:c1",340,"box b",`<b>NRZI</b>: <b>differential</b>: information is in <b>transitions, not levels</b>`),
+  N("c3",770,"t:c1",340,"box b",`<b>Bipolar-AMI</b>: 1s alternate ± → <b>no DC</b> + helps error detection`),
+  N("c4",1135,"t:c1",330,"box b",`<b>Manchester / Diff. Manchester</b>: mid-bit clock, but needs about <b>2× the bandwidth</b>`),
+  N("sc",40,"b:c1,c2,c3,c4:30",700,"box w",`<b>scrambling</b> replaces long constant runs with <b>transition-rich</b> patterns`),
+  N("md",800,"t:sc",660,"box y",`digital → analog: <b>ASK</b> (amplitude) · <b>FSK</b> (frequency) · <b>PSK</b> (phase) → <span class="c">PSK has a lower BER than ASK</span>; ASK is most error-prone`),
+  N("fe",40,"b:sc,md:60",700,"box g",`<b>FEC block codes</b>: receiver picks the <b>valid codeword closest</b> to what arrived · FEC beats ARQ when <b>retransmission is costly</b>`),
+  N("w6",800,"t:fe",660,"box w",`<b>Week 6 (outline)</b>: Stop-and-Wait ARQ = send 1 frame, wait for ACK, resend on timeout · sliding window = several frames in flight · Huffman = shorter codes for frequent symbols (lossless) · compression ratio = original ÷ compressed`)
+]);
+
+/* ---------- sticker doodles (drawn ~46px around x,y) ---------- */
+const P=Math.PI;
+const S=(f,st,w)=>{const o={stroke:st||"var(--ink)",strokeWidth:w||2,roughness:0.9};if(f){o.fill=f;o.fillStyle="solid"}return o};
+const TX=(t,c)=>(rc,s,x,y)=>T(s,x,y+9,t,{size:26,weight:700,color:c||"var(--blue)"});
+const I={
+  twist:(rc,s,x,y)=>{const a=[],b=[];for(let t=-22;t<=22;t+=2){a.push([x+t,y+8*Math.sin(t/4.5)]);b.push([x+t,y-8*Math.sin(t/4.5)])}add(s,rc.curve(a,S(0,"var(--blue)",3)));add(s,rc.curve(b,S(0,"var(--red)",3)))},
+  coax:(rc,s,x,y)=>{add(s,rc.circle(x,y,44,S("var(--soft)")));add(s,rc.circle(x,y,30,S("var(--y)")));add(s,rc.circle(x,y,12,S("var(--red)")))},
+  fibre:(rc,s,x,y)=>{add(s,rc.line(x-22,y+16,x+6,y-4,S(0,"var(--blue)",5)));for(let i=0;i<8;i++){const a=i*P/4;add(s,rc.line(x+12+5*Math.cos(a),y-8+5*Math.sin(a),x+12+14*Math.cos(a),y-8+14*Math.sin(a),S(0,"var(--red)")))}},
+  radio:(rc,s,x,y)=>{add(s,rc.linearPath([[x-10,y+22],[x,y-10],[x+10,y+22]],S()));add(s,rc.line(x-6,y+10,x+6,y+10,S()));add(s,rc.circle(x,y-12,7,S("var(--red)","var(--red)")));[14,26].forEach(r=>{add(s,rc.arc(x,y-12,r,r,P*0.7,P*1.3,false,S(0,"var(--blue)")));add(s,rc.arc(x,y-12,r,r,-P*0.3,P*0.3,false,S(0,"var(--blue)")))})},
+  dish:(rc,s,x,y)=>{add(s,rc.arc(x-4,y-4,38,38,P*0.6,P*1.6,true,S("var(--b)")));add(s,rc.line(x-4,y-4,x+12,y-18,S()));add(s,rc.circle(x+13,y-19,6,S("var(--red)","var(--red)")));add(s,rc.line(x-4,y-4,x-4,y+20,S()));add(s,rc.line(x-14,y+21,x+6,y+21,S(0,0,3)))},
+  remote:(rc,s,x,y)=>{add(s,rc.rectangle(x-8,y-4,16,28,S("var(--card)")));[0,8,16].forEach(d=>add(s,rc.circle(x,y+3+d,5,S("var(--red)","var(--red)"))));[-8,0,8].forEach(d=>add(s,rc.line(x+d*0.4,y-8,x+d*1.6,y-22,{...S(0,"var(--red)"),strokeLineDash:[3,3]})))},
+  globe:(rc,s,x,y)=>{add(s,rc.circle(x,y,40,S("var(--b)")));add(s,rc.ellipse(x,y,18,40,S()));add(s,rc.line(x-20,y,x+20,y,S()));add(s,rc.line(x-16,y-10,x+16,y-10,S()));add(s,rc.line(x-16,y+10,x+16,y+10,S()))},
+  mail:(rc,s,x,y)=>{add(s,rc.rectangle(x-20,y-13,40,26,S("var(--card)")));add(s,rc.linearPath([[x-20,y-13],[x,y+3],[x+20,y-13]],S(0,"var(--red)")))},
+  lock:(rc,s,x,y)=>{add(s,rc.arc(x,y-4,22,28,P,2*P,false,S(0,0,3)));add(s,rc.rectangle(x-14,y-4,28,22,S("var(--y)")));add(s,rc.circle(x,y+6,6,S("var(--ink)","var(--ink)")))},
+  clock:(rc,s,x,y)=>{add(s,rc.circle(x,y,42,S("var(--card)")));add(s,rc.line(x,y,x,y-14,S(0,0,3)));add(s,rc.line(x,y,x+10,y+4,S(0,"var(--red)",3)))},
+  bolt:(rc,s,x,y)=>add(s,rc.polygon([[x+5,y-22],[x-12,y+2],[x-1,y+2],[x-6,y+22],[x+12,y-4],[x+1,y-4]],S("var(--y)"))),
+  pc:(rc,s,x,y)=>{add(s,rc.rectangle(x-20,y-18,40,28,S("var(--b)")));add(s,rc.line(x,y+10,x,y+17,S(0,0,3)));add(s,rc.line(x-11,y+19,x+11,y+19,S(0,0,3)))},
+  phone:(rc,s,x,y)=>{add(s,rc.rectangle(x-11,y-21,22,42,S("var(--card)")));add(s,rc.line(x-4,y-16,x+4,y-16,S()));add(s,rc.circle(x,y+15,5,S()))},
+  server:(rc,s,x,y)=>{[-20,-6,8].forEach(d=>{add(s,rc.rectangle(x-18,y+d,36,12,S("var(--card)")));add(s,rc.circle(x+11,y+d+6,4,S("var(--green)","var(--green)")))})},
+  router:(rc,s,x,y)=>{add(s,rc.line(x-12,y,x-17,y-20,S(0,0,3)));add(s,rc.line(x+12,y,x+17,y-20,S(0,0,3)));add(s,rc.rectangle(x-21,y-2,42,18,S("var(--g)")));[-10,-2,6].forEach(d=>add(s,rc.circle(x+d,y+7,4,S("var(--red)","var(--red)"))))},
+  switch:(rc,s,x,y)=>{add(s,rc.rectangle(x-23,y-9,46,18,S("var(--y)")));[-17,-9,-1,7,15].forEach(d=>add(s,rc.rectangle(x+d-2,y-3,6,6,S("var(--ink)"))))},
+  wifi:(rc,s,x,y)=>{[12,26,40].forEach(r=>add(s,rc.arc(x,y+14,r,r,-P*0.8,-P*0.2,false,S(0,"var(--blue)",3))));add(s,rc.circle(x,y+14,6,S("var(--blue)","var(--blue)")))},
+  megaphone:(rc,s,x,y)=>{add(s,rc.polygon([[x-16,y-6],[x+10,y-18],[x+10,y+18],[x-16,y+6]],S("var(--y)")));add(s,rc.rectangle(x-22,y-5,6,10,S("var(--card)")));add(s,rc.arc(x+12,y,18,26,-P*0.4,P*0.4,false,S(0,"var(--red)")))},
+  walkie:(rc,s,x,y)=>{add(s,rc.line(x+5,y-12,x+5,y-25,S(0,0,3)));add(s,rc.rectangle(x-10,y-12,20,34,S("var(--g)")));[-4,1,6].forEach(d=>add(s,rc.line(x-6,y+d,x+6,y+d,S())))},
+  people:(rc,s,x,y)=>{[-9,9].forEach(d=>{add(s,rc.arc(x+d,y+20,22,26,P,2*P,true,S("var(--b)")));add(s,rc.circle(x+d,y-8,13,S("var(--card)")))})},
+  school:(rc,s,x,y)=>{add(s,rc.rectangle(x-11,y-2,22,12,S("var(--ink)","var(--ink)")));add(s,rc.polygon([[x-23,y-6],[x,y-17],[x+23,y-6],[x,y+4]],S("var(--b)")));add(s,rc.line(x+16,y-3,x+16,y+14,S(0,"var(--red)",2)))},
+  hospital:(rc,s,x,y)=>{add(s,rc.rectangle(x-6,y-18,12,36,S("var(--red)","var(--red)")));add(s,rc.rectangle(x-18,y-6,36,12,S("var(--red)","var(--red)")))},
+  bank:(rc,s,x,y)=>{add(s,rc.polygon([[x-22,y-8],[x,y-21],[x+22,y-8]],S("var(--y)")));[-14,-5,4,13].forEach(d=>add(s,rc.line(x+d,y-6,x+d,y+14,S(0,0,3))));add(s,rc.rectangle(x-22,y+14,44,6,S("var(--card)")))},
+  factory:(rc,s,x,y)=>{add(s,rc.polygon([[x-22,y+18],[x-22,y-2],[x-10,y-10],[x-10,y-2],[x+2,y-10],[x+2,y-2],[x+14,y-10],[x+14,y+18]],S("var(--card)")));add(s,rc.rectangle(x+14,y-20,7,38,S("var(--soft)")));add(s,rc.circle(x+20,y-25,8,S()))},
+  city:(rc,s,x,y)=>{[[-22,-4,12],[-9,-18,12],[4,-10,12],[16,-2,8]].forEach(([dx,dy,w],i)=>add(s,rc.rectangle(x+dx,y+dy,w,20-dy,S(["var(--b)","var(--y)","var(--g)","var(--p)"][i]))))},
+  text:TX("Aa"),numbers:TX("123"),percent:TX("%","var(--red)"),sigma:TX("Σ"),xor:TX("⊕","var(--red)"),plusminus:TX("±","var(--red)"),bits:TX("01"),
+  image:(rc,s,x,y)=>{add(s,rc.rectangle(x-20,y-15,40,30,S("var(--b)")));add(s,rc.linearPath([[x-18,y+13],[x-6,y-2],[x+2,y+8],[x+8,y+2],[x+18,y+13]],S(0,"var(--green)",2.5)));add(s,rc.circle(x+10,y-7,8,S("var(--y)")))},
+  mic:(rc,s,x,y)=>{add(s,rc.ellipse(x,y-9,16,24,S("var(--card)")));add(s,rc.arc(x,y-4,24,24,0,P,false,S()));add(s,rc.line(x,y+8,x,y+18,S()));add(s,rc.line(x-8,y+19,x+8,y+19,S(0,0,3)))},
+  film:(rc,s,x,y)=>{add(s,rc.rectangle(x-21,y-15,42,30,S("var(--card)")));[-15,-5,5,15].forEach(d=>{add(s,rc.rectangle(x+d-2,y-13,4,4,S("var(--ink)","var(--ink)")));add(s,rc.rectangle(x+d-2,y+9,4,4,S("var(--ink)","var(--ink)")))});add(s,rc.polygon([[x-4,y-6],[x+6,y],[x-4,y+6]],S("var(--red)","var(--red)")))},
+  thermo:(rc,s,x,y)=>{add(s,rc.rectangle(x-4,y-21,8,30,S("var(--card)")));add(s,rc.circle(x,y+14,15,S("var(--red)")));add(s,rc.line(x,y-6,x,y+8,S(0,"var(--red)",3)))},
+  camera:(rc,s,x,y)=>{add(s,rc.rectangle(x-20,y-9,40,26,S("var(--card)")));add(s,rc.rectangle(x-8,y-15,14,6,S("var(--card)")));add(s,rc.circle(x,y+4,16,S("var(--b)")))},
+  sine:(rc,s,x,y)=>{const p=[];for(let t=-22;t<=22;t+=2)p.push([x+t,y-12*Math.sin(t/7)]);add(s,rc.curve(p,S(0,"var(--blue)",3)))},
+  square:(rc,s,x,y)=>add(s,rc.linearPath([[x-22,y+10],[x-12,y+10],[x-12,y-10],[x,y-10],[x,y+10],[x+8,y+10],[x+8,y-10],[x+22,y-10]],S(0,"var(--green)",3))),
+  para:(rc,s,x,y)=>[-12,-4,4,12].forEach(d=>{add(s,rc.line(x-20,y+d,x+16,y+d,S()));head(rc,s,x+20,y+d,x,y+d,"var(--red)")}),
+  serial:(rc,s,x,y)=>{add(s,rc.line(x-22,y,x+16,y,S()));head(rc,s,x+20,y,x,y,"var(--red)");[-16,-8,0,8].forEach(d=>add(s,rc.circle(x+d,y-8,5,S("var(--blue)","var(--blue)"))))},
+  check:(rc,s,x,y)=>add(s,rc.linearPath([[x-16,y],[x-4,y+12],[x+18,y-14]],S(0,"var(--green)",4))),
+  cross:(rc,s,x,y)=>{add(s,rc.line(x-14,y-14,x+14,y+14,S(0,"var(--red)",4)));add(s,rc.line(x+14,y-14,x-14,y+14,S(0,"var(--red)",4)))},
+  magnifier:(rc,s,x,y)=>{add(s,rc.circle(x-4,y-4,28,S("var(--b)")));add(s,rc.line(x+6,y+6,x+19,y+19,S(0,0,5)))},
+  gear:(rc,s,x,y)=>{for(let i=0;i<8;i++){const a=i*P/4;add(s,rc.line(x+12*Math.cos(a),y+12*Math.sin(a),x+20*Math.cos(a),y+20*Math.sin(a),S(0,0,4)))}add(s,rc.circle(x,y,26,S("var(--y)")));add(s,rc.circle(x,y,9,S("var(--card)")))},
+  package:(rc,s,x,y)=>{add(s,rc.polygon([[x-18,y-8],[x-6,y-18],[x+20,y-18],[x+8,y-8]],S("var(--y)")));add(s,rc.rectangle(x-18,y-8,26,26,S("var(--y)")));add(s,rc.polygon([[x+8,y-8],[x+20,y-18],[x+20,y+8],[x+8,y+18]],S("var(--p)")))},
+  warn:(rc,s,x,y)=>{add(s,rc.polygon([[x,y-20],[x+21,y+17],[x-21,y+17]],S("var(--y)")));T(s,x,y+13,"!",{size:22,weight:700,color:"var(--red)"})},
+  satellite:(rc,s,x,y)=>{add(s,rc.rectangle(x-22,y-6,14,12,S("var(--b)")));add(s,rc.rectangle(x+8,y-6,14,12,S("var(--b)")));add(s,rc.rectangle(x-6,y-8,12,16,S("var(--y)")));add(s,rc.line(x,y+8,x,y+16,S()));add(s,rc.arc(x,y+20,14,10,P,2*P,false,S(0,"var(--red)")))},
+  stack:(rc,s,x,y)=>[["var(--b)",-16],["var(--g)",-4],["var(--p)",8]].forEach(([f,d])=>add(s,rc.rectangle(x-18+d/2,y+d,34,10,S(f)))),
+  chain:(rc,s,x,y)=>{add(s,rc.ellipse(x-8,y,28,16,S(0,0,3)));add(s,rc.ellipse(x+8,y,28,16,S(0,"var(--blue)",3)))},
+  speedo:(rc,s,x,y)=>{add(s,rc.arc(x,y+10,46,46,P,2*P,true,S("var(--card)")));add(s,rc.line(x,y+10,x+12,y-6,S(0,"var(--red)",3)));add(s,rc.circle(x,y+10,6,S("var(--ink)","var(--ink)")))},
+  hourglass:(rc,s,x,y)=>{add(s,rc.polygon([[x-13,y-20],[x+13,y-20],[x,y]],S("var(--y)")));add(s,rc.polygon([[x,y],[x-13,y+20],[x+13,y+20]],S("var(--y)")))},
+  flag:(rc,s,x,y)=>{add(s,rc.line(x-12,y-20,x-12,y+22,S(0,0,3)));add(s,rc.polygon([[x-12,y-20],[x+16,y-12],[x-12,y-3]],S("var(--red)")))},
+  noise:(rc,s,x,y)=>add(s,rc.linearPath([[x-22,y],[x-17,y-12],[x-12,y+9],[x-8,y-6],[x-3,y+14],[x+2,y-15],[x+7,y+5],[x+11,y-8],[x+16,y+11],[x+22,y-2]],S(0,"var(--red)",2.5))),
+  sun:(rc,s,x,y)=>{for(let i=0;i<8;i++){const a=i*P/4;add(s,rc.line(x+12*Math.cos(a),y+12*Math.sin(a),x+21*Math.cos(a),y+21*Math.sin(a),S(0,"var(--red)",2)))}add(s,rc.circle(x,y,18,S("var(--y)")))},
+  plug:(rc,s,x,y)=>{add(s,rc.line(x-5,y-8,x-5,y-20,S(0,0,3)));add(s,rc.line(x+5,y-8,x+5,y-20,S(0,0,3)));add(s,rc.rectangle(x-11,y-8,22,18,S("var(--card)")));add(s,rc.curve([[x,y+10],[x+8,y+18],[x-4,y+22]],S()))},
+  target:(rc,s,x,y)=>{add(s,rc.circle(x,y,42,S("var(--card)")));add(s,rc.circle(x,y,26,S("var(--p)")));add(s,rc.circle(x,y,10,S("var(--red)","var(--red)")))},
+  truck:(rc,s,x,y)=>{add(s,rc.rectangle(x-22,y-12,28,22,S("var(--y)")));add(s,rc.rectangle(x+6,y-4,15,14,S("var(--card)")));add(s,rc.circle(x-14,y+13,9,S("var(--ink)","var(--ink)")));add(s,rc.circle(x+12,y+13,9,S("var(--ink)","var(--ink)")))},
+  house:(rc,s,x,y)=>{add(s,rc.polygon([[x-18,y-2],[x,y-20],[x+18,y-2],[x+18,y+18],[x-18,y+18]],S("var(--y)")));add(s,rc.rectangle(x-5,y+5,10,13,S("var(--red)")))},
+  folder:(rc,s,x,y)=>add(s,rc.polygon([[x-21,y-14],[x-8,y-14],[x-4,y-9],[x+21,y-9],[x+21,y+15],[x-21,y+15]],S("var(--y)"))),
+  chat:(rc,s,x,y)=>{add(s,rc.polygon([[x-21,y-15],[x+21,y-15],[x+21,y+8],[x-4,y+8],[x-12,y+18],[x-11,y+8],[x-21,y+8]],S("var(--card)")));[-9,0,9].forEach(d=>add(s,rc.circle(x+d,y-4,4,S("var(--blue)","var(--blue)"))))},
+  printer:(rc,s,x,y)=>{add(s,rc.rectangle(x-12,y-20,24,12,S("var(--card)")));add(s,rc.rectangle(x-21,y-8,42,18,S("var(--b)")));add(s,rc.rectangle(x-12,y+6,24,14,S("var(--card)")))},
+  coin:(rc,s,x,y)=>{add(s,rc.circle(x,y,40,S("var(--y)")));T(s,x,y+8,"₦",{size:22,weight:700})},
+  swap:(rc,s,x,y)=>{add(s,rc.line(x-18,y-7,x+16,y-7,S()));head(rc,s,x+20,y-7,x,y-7,"var(--red)");add(s,rc.line(x+18,y+8,x-16,y+8,S()));head(rc,s,x-20,y+8,x,y+8,"var(--blue)")},
+  scissors:(rc,s,x,y)=>{add(s,rc.circle(x-14,y+10,12,S()));add(s,rc.circle(x-14,y-10,12,S()));add(s,rc.line(x-8,y+6,x+20,y-12,S(0,0,2.5)));add(s,rc.line(x-8,y-6,x+20,y+12,S(0,0,2.5)))},
+  ruler:(rc,s,x,y)=>{add(s,rc.rectangle(x-22,y-8,44,16,S("var(--y)")));[-16,-8,0,8,16].forEach((d,i)=>add(s,rc.line(x+d,y-8,x+d,y-8+(i%2?6:10),S())))},
+  queue:(rc,s,x,y)=>{[-16,-4,8].forEach(d=>add(s,rc.circle(x+d,y,11,S("var(--b)"))));head(rc,s,x+22,y,x+12,y,"var(--red)")},
+  fade:(rc,s,x,y)=>[22,16,10,5].forEach((h,i)=>add(s,rc.rectangle(x-20+i*11,y+16-h*1.5,8,h*1.5,S("var(--b)")))),
+  grid:(rc,s,x,y)=>{for(let i=0;i<3;i++)for(let j=0;j<3;j++)add(s,rc.rectangle(x-18+i*12,y-18+j*12,11,11,S(i===1&&j===1?"var(--red)":"var(--card)")))},
+  jitter:(rc,s,x,y)=>{add(s,rc.line(x-24,y+10,x+24,y+10,S(0,"var(--soft)")));[-23,-13,-8,4,17].forEach(d=>add(s,rc.rectangle(x+d,y-6,7,13,S("var(--p)"))))},
+  metronome:(rc,s,x,y)=>{add(s,rc.polygon([[x-13,y+20],[x-5,y-20],[x+5,y-20],[x+13,y+20]],S("var(--y)")));add(s,rc.line(x,y+12,x+13,y-18,S(0,"var(--red)",3)));add(s,rc.circle(x+8,y-6,7,S("var(--red)","var(--red)")))},
+  train:(rc,s,x,y)=>{[-23,-7,9].forEach(d=>{add(s,rc.rectangle(x+d,y-10,14,16,S("var(--b)")));add(s,rc.circle(x+d+4,y+9,5,S("var(--ink)","var(--ink)")));add(s,rc.circle(x+d+11,y+9,5,S("var(--ink)","var(--ink)")))});add(s,rc.line(x-9,y-2,x-7,y-2,S()));add(s,rc.line(x+7,y-2,x+9,y-2,S()))},
+  trafficlight:(rc,s,x,y)=>{add(s,rc.rectangle(x-10,y-22,20,44,S("var(--card)")));add(s,rc.circle(x,y-12,11,S("var(--red)","var(--red)")));add(s,rc.circle(x,y,11,S("var(--y)")));add(s,rc.circle(x,y+12,11,S("var(--green)","var(--green)")))},
+  tap:(rc,s,x,y)=>{add(s,rc.rectangle(x-22,y-14,28,8,S("var(--soft)")));add(s,rc.rectangle(x+2,y-14,8,14,S("var(--soft)")));add(s,rc.line(x-10,y-14,x-10,y-22,S(0,0,3)));add(s,rc.line(x-17,y-22,x-3,y-22,S(0,0,3)));[6,15].forEach(d=>add(s,rc.circle(x+6,y+2+d,6,S("var(--blue)","var(--blue)"))))},
+  plane:(rc,s,x,y)=>{add(s,rc.polygon([[x-20,y+2],[x+20,y-14],[x-3,y+16]],S("var(--card)")));add(s,rc.line(x+20,y-14,x-6,y+6,S()));add(s,rc.line(x-22,y+14,x-12,y+10,{...S(0,"var(--soft)"),strokeLineDash:[3,3]}))},
+  magnet:(rc,s,x,y)=>{add(s,rc.arc(x,y-4,34,34,0,P,false,S(0,"var(--red)",7)));add(s,rc.line(x-17,y-4,x-17,y-16,S(0,"var(--red)",7)));add(s,rc.line(x+17,y-4,x+17,y-16,S(0,"var(--red)",7)));add(s,rc.line(x-17,y-17,x-17,y-22,S(0,"var(--soft)",7)));add(s,rc.line(x+17,y-17,x+17,y-22,S(0,"var(--soft)",7)))},
+  crosstalk:(rc,s,x,y)=>{add(s,rc.line(x-22,y-10,x+22,y-10,S(0,"var(--blue)",3)));add(s,rc.line(x-22,y+10,x+22,y+10,S(0,"var(--green)",3)));add(s,rc.linearPath([[x-4,y-8],[x+3,y-2],[x-3,y+2],[x+4,y+8]],S(0,"var(--red)",2.5)))},
+  burst:(rc,s,x,y)=>{const p=[];for(let i=0;i<16;i++){const a=i*P/8,r=i%2?9:21;p.push([x+r*Math.cos(a),y+r*Math.sin(a)])}add(s,rc.polygon(p,S("var(--y)","var(--red)")))},
+  wrench:(rc,s,x,y)=>{add(s,rc.line(x-18,y+18,x+4,y-4,S(0,"var(--soft)",7)));add(s,rc.arc(x+9,y-9,22,22,P*0.35,P*1.65,false,S(0,0,4)))},
+  dice:(rc,s,x,y)=>{add(s,rc.rectangle(x-18,y-18,36,36,S("var(--card)")));[[-9,-9],[9,-9],[-9,9],[9,9]].forEach(([a,b])=>add(s,rc.circle(x+a,y+b,7,S("var(--ink)","var(--ink)"))))}
+};
+/* which sticker goes on which box: board → node → sticker */
+/* one sticker per idea, never repeated, only where a picture carries the meaning */
+const ICONS={
+  a2:{g1:"twist",g2:"coax",g3:"fibre",u1:"radio",u2:"dish",u3:"remote"},
+  a3:{l3:"house",l4:"folder",r1:"mail"},
+  a4:{d:"truck",a:"target",t:"clock",j:"jitter"},
+  a5:{l2:"printer",r2:"coin",r3:"people"},
+  a7:{e:"school",h:"hospital",b:"bank",i:"factory"},
+  a8:{t1:"text",t2:"numbers",t3:"image",t4:"mic",t5:"film",src:"thermo"},
+  a9:{rcv:"server"},
+  a10:{p1:"pc",sw:"switch",rt:"router",ap:"wifi"},
+  a11:{s:"megaphone",h:"walkie",f:"phone"},
+  b1:{an:"sine",dg:"square"},
+  b2:{pp:"para",sp:"serial"},
+  b3:{uni:"globe"},
+  b4:{a:"plusminus"},
+  b5:{bs:"metronome",m3:"gear"},
+  b6:{k1:"flag",k2:"scissors",k3:"ruler"},
+  b7:{sy:"train",as:"trafficlight",ef:"percent"},
+  b8:{br:"speedo",la:"hourglass",l4:"queue"},
+  c1:{def:"chat",d:"magnifier"},
+  c2:{p4:"tap",p5:"lock"},
+  c4:{tcp:"chain",udp:"plane"},
+  c6:{pa:"package"},
+  d1:{def:"warn"},
+  d2:{x1:"magnet",x2:"noise",x3:"fade",x4:"crosstalk",y1:"plug"},
+  d3:{bu:"burst"},
+  d4:{ec:"wrench",a3:"check",a4:"cross",fec:"satellite"},
+  d5:{ev:"dice"},
+  e1:{idea:"grid"},
+  e2:{s2:"sigma",s3:"swap"},
+  e4:{p3:"xor"},
+  f2:{man:"city"},
+  f3:{why:"stack"},
+  f5:{n1:"sun",n4:"bolt"}
+};
+
+/* ---------- boot ---------- */
+function boot(){const r=window.rough||null;BOARDS.forEach(b=>{try{render(b,r)}catch(e){console.error(b.id,e)}})}
+(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(boot);
+</script>
+<aside class="bps-cta" aria-label="About Blue Particle Studios">
+  <p><span class="k">Made by Blue Particle Studios</span>Free study notes for students. Blue Particle Studios is a motion design studio in Abuja: we make brand films, ads, launch videos and websites. Share these notes with your class.</p>
+  <div class="btns"><a class="hot" href="/">See our work →</a><a href="/student-notes/">More student notes</a><a href="https://wa.me/2349061950587">WhatsApp us</a></div>
+</aside>
+<footer class="bps-foot"><span>© 2026 Blue Particle Studios · CAC BN 9846749</span><a href="#top">Back to top ↑</a></footer>
+</body>
+</html>
