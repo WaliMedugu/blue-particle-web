@@ -17,6 +17,14 @@
     {
       "source": "/teams/:path*",
       "destination": "https://aeon-neo.vercel.app/teams/index.html"
+    },
+    {
+      "source": "/arche/:file(.+\\.[A-Za-z0-9]+)",
+      "destination": "https://arche-study.vercel.app/arche/:file"
+    },
+    {
+      "source": "/arche/",
+      "destination": "https://arche-study.vercel.app/arche/index.html"
     }
   ],
   "headers": [
@@ -71,6 +79,11 @@
     }
   ],
   "redirects": [
+    {
+      "source": "/(ARCHE|Arche)/?",
+      "destination": "/arche/",
+      "permanent": true
+    },
     {
       "source": "/motion/",
       "destination": "/",
