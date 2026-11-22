@@ -536,31 +536,36 @@ B("c2",[
 ],[...hub("pc",["p1","p2","p3","p4","p5"]),E("ke","sy","",{bend:0.05}),E("ke","se","",{bend:0}),E("ke","ti","",{bend:-0.05})]);
 
 B("c3",[
-  N("L7",120,20,250,"box p center",`<b>7 · Application</b>`),
-  N("L6",120,"b:L7:12",250,"box p center",`<b>6 · Presentation</b>`),
-  N("L5",120,"b:L6:12",250,"box p center",`<b>5 · Session</b>`),
-  N("L4",120,"b:L5:12",250,"box y center",`<b>4 · Transport</b>`),
-  N("L3",120,"b:L4:12",250,"box g center",`<b>3 · Network</b>`),
-  N("L2",120,"b:L3:12",250,"box b center",`<b>2 · Data Link</b>`),
-  N("L1",120,"b:L2:12",250,"box b center",`<b>1 · Physical</b>`),
-  N("J7",450,"m:L7",640,"plain",`network services users touch: web, email, file transfer, name resolution`),
-  N("J6",450,"m:L6",640,"plain",`<b>translation, encryption/decryption, compression</b> so the receiver can understand`),
-  N("J5",450,"m:L5",640,"plain",`<b>establish, maintain, terminate</b> sessions; manage dialogue; recovery (joining → leaving a meeting)`),
-  N("J4",450,"m:L4",640,"plain",`<b>end-to-end</b> app→app: segment + reassemble, flow control, error recovery, <b>PORT numbers</b>`),
-  N("J3",450,"m:L3",640,"plain",`<b>between networks</b>: logical (IP) addressing, <b>ROUTING</b>, forwarding, fragmentation`),
-  N("J2",450,"m:L2",640,"plain",`<b>same local segment</b>: framing, <b>MAC addresses</b>, error detection, media access`),
-  N("J1",450,"m:L1",640,"plain",`raw <b>bits</b> as electrical / optical / radio signals; cables, connectors, speeds`),
-  N("X7",1130,"m:L7",340,"plain",`<small>HTTP, HTTPS, FTP, DNS, SMTP</small>`),
-  N("X6",1130,"m:L6",340,"plain",`<small>JPEG, PNG, MP3, UTF-8</small>`),
-  N("X5",1130,"m:L5",340,"plain",`<small>online meeting session</small>`),
-  N("X4",1130,"m:L4",340,"plain",`<small>TCP, UDP · unit: <b>segment</b></small>`),
-  N("X3",1130,"m:L3",340,"plain",`<small>IP · unit: <b>packet</b> (Abuja → UK)</small>`),
-  N("X2",1130,"m:L2",340,"plain",`<small>Ethernet, Wi-Fi · unit: <b>frame</b></small>`),
-  N("X1",1130,"m:L1",340,"plain",`<small>unit: <b>bits</b></small>`),
-  N("iso",450,"b:L1:40",500,"plain",`<span class="ann">a 7-layer <b>reference framework</b> by <b>ISO</b> (International Organization for Standardization). Each layer does one job + works with the layers above and below.</span>`),
-  N("st",1000,"b:L1:40",460,"sticky",sticky(`↓ "All People Seem To Need Data Processing"`,`↑ "Please Do Not Throw Sausage Pizza Away"`))
-],[1,2,3,4,5,6,7].map(i=>E("L"+i,"J"+i,"",{nohead:1,dash:1,color:"ink",bend:0})),
-(rc,svg,R)=>{const top=R.L7.y,bot=R.L1.y+R.L1.h;arrow(rc,svg,[70,top],[70,bot],{bend:0,color:"red"});T(svg,55,(top+bot)/2,"sending ↓",{rotate:-90,color:"var(--red)",weight:700,size:16});});
+  N("mn",40,10,1420,"plain center",`<span class="q">"<span class="c">A</span>sk · <span class="c">P</span>olish · <span class="c">S</span>it · <span class="c">T</span>ruck · <span class="c">N</span>avigate · <span class="c">D</span>oor · <span class="c">P</span>ulse"</span><br><span class="ann">the journey of one message, top to bottom. Each first letter is a layer, and each word is that layer's job.</span>`),
+  N("h1",90,"b:mn:36",290,"plain center",`<span class="h">layer</span>`),
+  N("h2",430,"t:h1",470,"plain center",`<span class="h">the story</span>`),
+  N("h3",950,"t:h1",480,"plain center",`<span class="h">what it really does</span>`),
+  N("L7",90,"b:h1,h2,h3:14",290,"box p",`<b>7 · Application</b><br><span class="bigp">ASK</span>`),
+  N("S7",430,"t:L7",470,"plain",`You <b>ASK</b> for something: open a web page, send an email, download a file.`),
+  N("J7",950,"t:L7",480,"plain",`network services users touch: web, email, file transfer, name lookup<br><small>HTTP, HTTPS, FTP, DNS, SMTP</small>`),
+  N("L6",90,"b:L7,S7,J7:24",290,"box p",`<b>6 · Presentation</b><br><span class="bigp">POLISH</span>`),
+  N("S6",430,"t:L6",470,"plain",`Your message gets <b>POLISHED</b>: put in a format the other side understands, locked (encrypted) and squeezed (compressed).`),
+  N("J6",950,"t:L6",480,"plain",`<b>translation, encryption/decryption, compression</b><br><small>JPEG, PNG, MP3, UTF-8</small>`),
+  N("L5",90,"b:L6,S6,J6:24",290,"box p",`<b>5 · Session</b><br><span class="bigp">SIT</span>`),
+  N("S5",430,"t:L5",470,"plain",`You <b>SIT</b> down for a conversation: it's opened, kept going, then closed, like joining and leaving an online meeting.`),
+  N("J5",950,"t:L5",480,"plain",`<b>establish, maintain, terminate</b> sessions; manage the dialogue; recovery`),
+  N("L4",90,"b:L5,S5,J5:24",290,"box y",`<b>4 · Transport</b><br><span class="bigp">TRUCK</span>`),
+  N("S4",430,"t:L4",470,"plain",`It's packed into <b>numbered boxes</b> and <b>TRUCKED</b> to the right app (its <b>port number</b>). Lost boxes are sent again.`),
+  N("J4",950,"t:L4",480,"plain",`<b>end-to-end</b> app→app: segment + reassemble, flow control, error recovery, <b>ports</b><br><small>TCP, UDP · unit: <b>segment</b></small>`),
+  N("L3",90,"b:L4,S4,J4:24",290,"box g",`<b>3 · Network</b><br><span class="bigp">NAVIGATE</span>`),
+  N("S3",430,"t:L3",470,"plain",`The driver <b>NAVIGATES</b> from city to city using the <b>IP address</b> (Abuja → London).`),
+  N("J3",950,"t:L3",480,"plain",`<b>between networks</b>: logical (IP) addressing, <b>routing</b>, forwarding, fragmentation<br><small>IP · unit: <b>packet</b></small>`),
+  N("L2",90,"b:L3,S3,J3:24",290,"box b",`<b>2 · Data Link</b><br><span class="bigp">DOOR</span>`),
+  N("S2",430,"t:L2",470,"plain",`On the local street, the postman goes <b>DOOR</b> to door using the <b>MAC address</b>.`),
+  N("J2",950,"t:L2",480,"plain",`<b>same local network</b>: framing, <b>MAC addresses</b>, error detection, media access<br><small>Ethernet, Wi-Fi · unit: <b>frame</b></small>`),
+  N("L1",90,"b:L2,S2,J2:24",290,"box b",`<b>1 · Physical</b><br><span class="bigp">PULSE</span>`),
+  N("S1",430,"t:L1",470,"plain",`And all of it travels as <b>PULSES</b>: electric, light or radio.`),
+  N("J1",950,"t:L1",480,"plain",`raw <b>bits</b> as electrical / optical / radio signals; cables, connectors, speeds<br><small>unit: <b>bits</b></small>`),
+  N("st",90,"b:L1,S1,J1:44",560,"sticky",sticky(`"Ask · Polish · Sit · Truck · Navigate · Door · Pulse"`,`A P S T N D P = Application, Presentation, Session, Transport, Network, Data link, Physical`)),
+  N("rv",720,"t:st",740,"plain",`<span class="ann"><b>Receiving?</b> Play the story backwards: the pulses arrive → the postman finds your door → the driver confirms the city → the boxes are unpacked for the right app → the conversation continues → the message is un-polished → you see it.</span><br><small>OSI = a 7-layer reference framework by <b>ISO</b> (International Organization for Standardization). Each layer does one job and works with the layers above and below.</small>`)
+],[1,2,3,4,5,6,7].flatMap(i=>[E("L"+i,"S"+i,"",{nohead:1,dash:1,color:"ink",bend:0}),E("S"+i,"J"+i,"",{bend:0,color:"blue"})]),
+(rc,svg,R)=>{const top=R.L7.y,bot=R.L1.y+R.L1.h;arrow(rc,svg,[60,top],[60,bot],{bend:0,color:"red"});T(svg,45,(top+bot)/2,"sending ↓",{rotate:-90,color:"var(--red)",weight:700,size:16});
+  arrow(rc,svg,[1470,bot],[1470,top],{bend:0,color:"green"});T(svg,1488,(top+bot)/2,"receiving ↑",{rotate:90,color:"var(--green)",weight:700,size:16});});
 
 B("c4",[
   N("tcp",40,20,620,"box b",`<span class="t">TCP · Transmission Control Protocol</span>• <b>connection-oriented</b>: sets up a connection first<br>• <b>reliable + ordered</b> delivery; retransmits<br>• more overhead`),
@@ -885,6 +890,13 @@ const I={
   crosstalk:(rc,s,x,y)=>{add(s,rc.line(x-22,y-10,x+22,y-10,S(0,"var(--blue)",3)));add(s,rc.line(x-22,y+10,x+22,y+10,S(0,"var(--green)",3)));add(s,rc.linearPath([[x-4,y-8],[x+3,y-2],[x-3,y+2],[x+4,y+8]],S(0,"var(--red)",2.5)))},
   burst:(rc,s,x,y)=>{const p=[];for(let i=0;i<16;i++){const a=i*P/8,r=i%2?9:21;p.push([x+r*Math.cos(a),y+r*Math.sin(a)])}add(s,rc.polygon(p,S("var(--y)","var(--red)")))},
   wrench:(rc,s,x,y)=>{add(s,rc.line(x-18,y+18,x+4,y-4,S(0,"var(--soft)",7)));add(s,rc.arc(x+9,y-9,22,22,P*0.35,P*1.65,false,S(0,0,4)))},
+  ask:(rc,s,x,y)=>{add(s,rc.polygon([[x-20,y-16],[x+20,y-16],[x+20,y+8],[x+2,y+8],[x-8,y+18],[x-7,y+8],[x-20,y+8]],S("var(--y)")));T(s,x,y+4,"?",{size:22,weight:700,color:"var(--red)"})},
+  sparkle:(rc,s,x,y)=>{const st=(cx,cy,r,f)=>add(s,rc.polygon([[cx,cy-r],[cx+r*0.25,cy-r*0.25],[cx+r,cy],[cx+r*0.25,cy+r*0.25],[cx,cy+r],[cx-r*0.25,cy+r*0.25],[cx-r,cy],[cx-r*0.25,cy-r*0.25]],S(f)));st(x-4,y+2,18,"var(--y)");st(x+14,y-14,8,"var(--p)")},
+  chair:(rc,s,x,y)=>{add(s,rc.line(x-10,y-20,x-10,y+20,S(0,0,3)));add(s,rc.rectangle(x-10,y-2,22,6,S("var(--b)")));add(s,rc.line(x+12,y+4,x+12,y+20,S(0,0,3)));add(s,rc.line(x-10,y-20,x-10,y-2,S(0,"var(--blue)",5)))},
+  boxes:(rc,s,x,y)=>{[[-20,2,"1"],[0,2,"2"],[-10,-16,"3"]].forEach(([dx,dy,n])=>{add(s,rc.rectangle(x+dx,y+dy,18,16,S("var(--y)")));T(s,x+dx+9,y+dy+13,n,{size:13,weight:700})})},
+  compass:(rc,s,x,y)=>{add(s,rc.circle(x,y,42,S("var(--card)")));add(s,rc.polygon([[x,y-16],[x+5,y],[x-5,y]],S("var(--red)","var(--red)")));add(s,rc.polygon([[x,y+16],[x+5,y],[x-5,y]],S("var(--soft)")))},
+  door:(rc,s,x,y)=>{add(s,rc.rectangle(x-12,y-21,24,42,S("var(--p)")));add(s,rc.circle(x+6,y+2,5,S("var(--ink)","var(--ink)")));add(s,rc.line(x-18,y+21,x+18,y+21,S(0,0,3)))},
+  pulse:(rc,s,x,y)=>add(s,rc.linearPath([[x-23,y],[x-12,y],[x-7,y-16],[x-1,y+14],[x+5,y-8],[x+9,y],[x+23,y]],S(0,"var(--red)",3))),
   dice:(rc,s,x,y)=>{add(s,rc.rectangle(x-18,y-18,36,36,S("var(--card)")));[[-9,-9],[9,-9],[-9,9],[9,9]].forEach(([a,b])=>add(s,rc.circle(x+a,y+b,7,S("var(--ink)","var(--ink)"))))}
 };
 /* which sticker goes on which box: board → node → sticker */
@@ -909,6 +921,7 @@ const ICONS={
   b8:{br:"speedo",la:"hourglass",l4:"queue"},
   c1:{def:"chat",d:"magnifier"},
   c2:{p4:"tap",p5:"lock"},
+  c3:{L7:"ask",L6:"sparkle",L5:"chair",L4:"boxes",L3:"compass",L2:"door",L1:"pulse"},
   c4:{tcp:"chain",udp:"plane"},
   c6:{pa:"package"},
   d1:{def:"warn"},
