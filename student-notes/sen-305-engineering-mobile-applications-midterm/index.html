@@ -219,18 +219,18 @@ h3{font:700 24px/1.2 var(--f-hand);color:var(--blue);margin:26px 0 0}
   <h3>5.3 Grid</h3><div class="board" id="b5c"></div>
   <h3>5.4 FlexLayout</h3><div class="board" id="b5d"></div>
   <h3>5.5 AbsoluteLayout</h3><div class="board" id="b5e"></div>
-  <h3>5.6 BindableLayout (strings + Person objects)</h3><div class="board" id="b5f"></div>
+  <h3>5.6 BindableLayout</h3><div class="board" id="b5f"></div>
   <h3>5.7 ScrollView</h3><div class="board" id="b5g"></div>
   <p class="skip">the repeated xmlns / x:Class header on every example (shown once in §4.4)</p>
 
   <h2 id="s6">6 · Pages + navigation</h2>
   <p class="sub">Lecture 5 §1 · Lecture 7 · Lecture 7.1 FlyoutPage · Lecture 7.2 TabbedPage</p>
   <h3>6.1 The 5 page types</h3><div class="board" id="b6a"></div>
-  <h3>6.2 Choosing the first page + the Lecture 7 examples</h3><div class="board" id="b6b"></div>
+  <h3>6.2 Choosing the first page</h3><div class="board" id="b6b"></div>
   <h3>6.3 NavigationPage: push + pop</h3><div class="board" id="b6c"></div>
   <h3>6.4 Modal pages</h3><div class="board" id="b6d"></div>
-  <h3>6.5 FlyoutPage: the rules</h3><div class="board" id="b6e"></div>
-  <h3>6.6 FlyoutPage: the full example</h3><div class="board" id="b6f"></div>
+  <h3>6.5 FlyoutPage: Popover vs Split + IsPresented</h3><div class="board" id="b6e"></div>
+  <h3>6.6 FlyoutPage: tapping a menu item</h3><div class="board" id="b6f"></div>
   <h3>6.7 FlyoutPage layout behaviour</h3><div class="board" id="b6g"></div>
   <h3>6.8 TabbedPage: the rules</h3><div class="board" id="b6h"></div>
   <h3>6.9 Two ways to fill a TabbedPage</h3><div class="board" id="b6i"></div>
@@ -248,7 +248,7 @@ h3{font:700 24px/1.2 var(--f-hand);color:var(--blue);margin:26px 0 0}
   <h2 id="s8">8 · Controls + events</h2>
   <p class="sub">Lecture 8 · each control's most-used event + its C# handler</p>
   <h3>8.1 How an event is wired</h3><div class="board" id="b8a"></div>
-  <h3>8.2 The event table (all 13 examples)</h3><div class="board" id="b8b"></div>
+  <h3>8.2 Each control's event + what the handler reads</h3><div class="board" id="b8b"></div>
   <h3>8.3 Handler patterns worth knowing</h3><div class="board" id="b8c"></div>
 
   <h2 id="s9">9 · Binding, styles, templates + responsive design</h2>
@@ -410,207 +410,233 @@ function phone(rc,svg,x,y,w,h,seed){const r=14;add(svg,rc.path(`M${x+r} ${y} H${
   add(svg,rc.line(x+w/2-14,y+9,x+w/2+14,y+9,{stroke:"var(--soft)",strokeWidth:3,roughness:0.5}));return{x:x+8,y:y+20,w:w-16,h:h-36}}
 const box=(rc,svg,x,y,w,h,f,seed)=>add(svg,rc.rectangle(x,y,w,h,{stroke:"var(--ink)",strokeWidth:1.8,roughness:1,fill:f||"var(--card)",fillStyle:"solid",seed:seed||3}));
 
+/* §1–3 drawing helpers (z1 prefix = local to this file) */
+function z1tl(svg,x,y,lines,o={}){const lh=o.lh||((o.size||17)+7);lines.forEach((s,i)=>T(svg,x,y+i*lh,s,Object.assign({size:17,anchor:"start"},o)));return y+lines.length*lh}
+function z1pill(rc,svg,cx,cy,s,f,o={}){const sz=o.size||16,w=o.w||Math.round(s.length*sz*0.52+28),h=o.h||34;
+  add(svg,rc.rectangle(cx-w/2,cy-h/2,w,h,{stroke:"var(--ink)",strokeWidth:1.6,roughness:0.8,fill:f||"var(--card)",fillStyle:"solid",seed:o.seed||11}));T(svg,cx,cy+sz*0.36,s,{size:sz,weight:o.weight||400});return w}
+function z1blk(rc,svg,x,y,w,h,f,s,o={}){box(rc,svg,x,y,w,h,f,o.seed||5);T(svg,x+w/2,y+h/2+(o.sub?-2:7),s,{size:o.size||19,weight:700});if(o.sub)T(svg,x+w/2,y+h/2+20,o.sub,{size:15,color:"var(--soft)"})}
+function z1doc(rc,svg,x,y,w,h,f,s,seed){add(svg,rc.path(`M${x} ${y} H${x+w-18} L${x+w} ${y+18} V${y+h} H${x} Z`,{stroke:"var(--ink)",strokeWidth:1.8,roughness:0.8,fill:f||"var(--card)",fillStyle:"solid",seed:seed||8}));
+  add(svg,rc.line(x+w-18,y,x+w-18,y+18,{stroke:"var(--ink)",strokeWidth:1.4,roughness:0.5}));add(svg,rc.line(x+w-18,y+18,x+w,y+18,{stroke:"var(--ink)",strokeWidth:1.4,roughness:0.5}));
+  if(s)T(svg,x+w/2,y+h/2+6,s,{size:15,weight:700})}
+const Z1H=(s,x,y,svg,o={})=>T(svg,x,y,s,Object.assign({size:21,weight:700,anchor:"start",mark:false},o));
+
 /* ===== 1 · mobile development basics ===== */
-B("b1a",[
-  N("def",40,60,400,"oval y big center",`Mobile application development = building software for <b>small handheld devices</b>`),
-  N("dev",80,"b:def:60",320,"plain center",`<span class="ann">mobile phones · personal digital assistants (PDAs) · tablets…</span>`),
-  N("plat",580,20,380,"box b",`<span class="t">Platforms</span>Android · iOS · Windows Mobile · etc.`),
-  N("get",580,"b:plat:50",380,"box w",`<span class="t">How an app reaches a phone</span>① <b>pre-installed</b> by the maker during manufacturing<br>② <b>downloaded</b> by the customer from a software distribution system`),
-  N("st",1060,"m:get",400,"box g",`<span class="t">Distribution systems</span><ul><li><b>App Store</b> → iOS</li><li><b>Google Play Store</b> → Android</li><li><b>Amazon Appstore</b> → Android</li><li><b>Microsoft Store</b> → Windows Mobile</li></ul>`),
-  N("sk",1060,"b:st:40",400,"sticky",sticky(`Android has TWO stores here`,`Google Play <b>and</b> Amazon Appstore. iOS has one: App Store.`))
-],[E("def","plat","runs on",{bend:-0.1}),E("def","get","",{bend:0.1}),E("get","st","②",{bend:0})]);
+B("b1a",[],[],(rc,svg)=>{
+  Z1H("Mobile app development",60,46,svg);z1tl(svg,60,76,["= building software for small handheld devices"],{color:"var(--soft)"});
+  phone(rc,svg,70,110,86,150,5);phone(rc,svg,190,120,150,140,6);phone(rc,svg,370,140,70,120,7);
+  [["phone",113],["tablet",265],["PDA",405]].forEach(([s,x])=>T(svg,x,290,s,{size:17}));
+  Z1H("How an app reaches a phone",560,46,svg);
+  z1blk(rc,svg,560,90,190,58,"var(--y)","🏭 the maker");z1blk(rc,svg,560,210,190,58,"var(--b)","🛒 an app store");
+  const s=phone(rc,svg,880,90,100,180,9);T(svg,930,190,"📱",{size:30});
+  arrow(rc,svg,[756,119],[874,140],{bend:-0.05,color:"green"});T(svg,815,108,"① pre-installed",{size:16,color:"var(--green)"});
+  arrow(rc,svg,[756,239],[874,220],{bend:0.05,color:"red"});T(svg,815,270,"② downloaded",{size:16,color:"var(--red)"});
+  [["App Store → iOS","var(--y)"],["Google Play → Android","var(--g)"],["Amazon Appstore → Android","var(--g)"],["Microsoft Store → Windows Mobile","var(--b)"]].forEach(([t,f],i)=>z1pill(rc,svg,1240,100+i*52,t,f,{w:390,seed:20+i}));
+  add(svg,rc.line(1030,100,1030,256,{stroke:"var(--soft)",strokeWidth:2,roughness:0.6}));arrow(rc,svg,[990,180],[1028,180],{bend:0,color:"ink",nohead:1});
+  T(svg,1240,300,"Android has TWO stores, iOS one",{size:16,color:"var(--soft)"})},330);
 
-B("b1b",[
-  N("k1",40,30,330,"box w",`Smartphones + tablets are becoming <b>the computer of choice</b> for more and more people`),
-  N("k2","r:k1:40","t:k1",330,"box w",`yet many developers still <b>lack the basics</b> of mobile: they're used to <b>desktop / web</b>`),
-  N("k3","r:k2:40","t:k1",330,"box w",`making an app looks easy, but a <span class="hy">good user experience</span> is hard`),
-  N("k4",40,"b:k1,k2,k3:70",500,"box b",`mobile devices have <b>different limitations</b> and <b>different features</b> from desktops · smaller screens force <b>serious adjustments in perspective</b>`),
-  N("np",760,"m:k4",320,"oval y big center",`→ make the transition to a <b>new perspective</b>`),
-  N("sk",1180,40,280,"sticky",sticky(`"Desktop brain ≠ phone brain"`,`the whole lecture is about switching how you think`))
-],[E("k1","k4","",{bend:0}),E("k2","k4","",{bend:0}),E("k3","k4","",{bend:0}),E("k4","np","so",{bend:0})]);
+B("b1b",[],[],(rc,svg)=>{
+  box(rc,svg,80,50,280,170,"var(--b)",4);add(svg,rc.line(220,220,220,250,{stroke:"var(--ink)",strokeWidth:3}));add(svg,rc.line(170,252,270,252,{stroke:"var(--ink)",strokeWidth:3}));
+  T(svg,220,145,"desktop / web habits",{size:19,weight:700});
+  arrow(rc,svg,[390,140],[560,140],{bend:0,color:"red"});T(svg,475,120,"rethink",{size:17,color:"var(--red)"});
+  phone(rc,svg,590,50,110,200,6);T(svg,645,160,"new",{size:18,weight:700});T(svg,645,184,"perspective",{size:16});
+  z1tl(svg,780,80,["✓ phones + tablets = the computer of choice","✗ many developers still think desktop / web","⚠ an app is easy to make, a GOOD user experience is hard","→ different LIMITS + different FEATURES (next two boards)"],{lh:40,size:18})},290);
 
-B("b1c",[
-  N("sc",40,20,440,"box p",`<span class="t">① Smaller screen</span>PC screens: <b>13–27 in</b> wide · phones: <b>4–6 in</b> (Android, iPhone, BlackBerry) → <span class="hy">every pixel counts</span><br>even the iPad (<b>7.3 × 9.5 in</b>) is treated differently: its resolution is still below most desktop monitors`),
-  N("me","r:sc:40","t:sc",470,"box p",`<span class="t">② Less memory + bandwidth</span>a typical PC: <b>8–16 GB</b> RAM · a smartphone might have just <b>512 MB</b><br><span class="ann">e.g. loading 100 images of 10 MB = 1 GB → out of memory fast</span><br>network connectivity limits downloading<br>always budget: <b>memory · space · battery life</b>`),
-  N("ui","r:me:40","t:sc",470,"box p",`<span class="t">③ Different user interaction</span><b>no mouse</b> · physical keyboard much smaller or missing → apps <b>don't respond to double clicks or keyboard shortcuts</b><br>most phones use touch screens / capacitive displays → <span class="c cb">this is also a FEATURE</span>`),
-  N("sk",1040,"b:ui:40",420,"sticky",sticky(`Small screen · Small memory · No mouse`,`"3 S's of shrinking": Screen · Supplies (RAM + network) · Strokes (touch, not clicks)`))
-],[],
-(rc,svg,R,H)=>{const y0=Math.max(R.sc.y+R.sc.h,R.me.y+R.me.h)+70,x0=60,k=36;/* 36px per GB, drawn to scale */
-  T(svg,x0,y0-22,"RAM drawn to scale (36 px = 1 GB)",{anchor:"start",size:17,color:"var(--soft)"});
-  [["PC 16 GB",16,"var(--b)"],["PC 8 GB",8,"var(--b)"],["phone 512 MB",0.5,"var(--p)"],["100 photos × 10 MB = 1 GB",1,"var(--y)"]].forEach(([l,g,f],i)=>{const y=y0+i*46;
-    add(svg,rc.rectangle(x0,y,g*k,30,{fill:f,fillStyle:"solid",stroke:"var(--ink)",strokeWidth:1.8,roughness:0.8,seed:20+i}));T(svg,x0+g*k+14,y+21,l,{anchor:"start",size:18})});
-  T(svg,x0+1*k+270,y0+3*46+21,"← already twice the phone's whole RAM",{anchor:"start",size:17,color:"var(--red)"})},640);
+B("b1c",[],[],(rc,svg)=>{
+  Z1H("① Smaller screen",60,40,svg);
+  box(rc,svg,60,70,270,160,"var(--b)",5);T(svg,195,160,"PC 13–27 in",{size:18,weight:700});
+  phone(rc,svg,360,130,60,100,6);T(svg,390,256,"phone 4–6 in",{size:16});
+  z1tl(svg,60,280,["every pixel counts","iPad (7.3 × 9.5 in) still has less resolution than most monitors"],{size:16,color:"var(--soft)"});
+  Z1H("② Less memory + bandwidth",520,40,svg);const x0=520,k=24;
+  [["PC 16 GB",16,"var(--b)"],["PC 8 GB",8,"var(--b)"],["phone 512 MB",0.5,"var(--p)"],["100 photos × 10 MB = 1 GB",1,"var(--y)"]].forEach(([l,g,f],i)=>{const y=70+i*46;
+    add(svg,rc.rectangle(x0,y,g*k,30,{fill:f,fillStyle:"solid",stroke:"var(--ink)",strokeWidth:1.8,roughness:0.8,seed:20+i}));T(svg,x0+g*k+12,y+21,l,{anchor:"start",size:16})});
+  z1tl(svg,520,280,["budget: memory · space · battery","network limits downloading"],{size:16,color:"var(--soft)"});
+  Z1H("③ No mouse, tiny / no keyboard",1000,40,svg);
+  add(svg,rc.ellipse(1080,140,70,100,{stroke:"var(--ink)",strokeWidth:2,fill:"var(--card)",fillStyle:"solid",roughness:0.8}));add(svg,rc.line(1080,92,1080,130,{stroke:"var(--ink)",strokeWidth:1.6}));
+  add(svg,rc.line(1035,95,1125,185,{stroke:"var(--red)",strokeWidth:3.5}));add(svg,rc.line(1125,95,1035,185,{stroke:"var(--red)",strokeWidth:3.5}));
+  arrow(rc,svg,[1150,140],[1230,140],{bend:0,color:"green"});T(svg,1300,150,"👆 touch",{size:24});
+  z1tl(svg,1000,240,["no double-clicks, no keyboard shortcuts","touch / capacitive screens instead → also a FEATURE"],{size:16,color:"var(--soft)"})},340);
 
-B("b1d",[
-  N("bi",40,20,420,"box g",`<span class="t">① Better user interaction</span>touch screens / <b>capacitive displays</b> allow <b>multi-touch gestures</b> → natural interaction`),
-  N("g1","r:bi:80",10,240,"box w center",`🤏 <b>pinch-open</b> → zoom in`),
-  N("g2","r:bi:80","b:g1:16",240,"box w center",`🤏 <b>pinch-close</b> → zoom out`),
-  N("g3","r:bi:80","b:g2:16",240,"box w center",`👆 <b>swipe</b> → delete`),
-  N("bd",40,"b:g3:60",420,"box g",`<span class="t">② Built-in devices</span>camera · accelerometer · gyroscope · GPS · compass…<br>apps should <b>use these whenever possible</b>`),
-  N("or","r:bd:80","t:bd",330,"box b",`<span class="t">e.g. orientation</span>the <b>accelerometer</b> detects how the phone is held → adjust the display = better UX`),
-  N("ar","r:or:90","m:or",260,"oval y big center",`Augmented reality 🕶`),
-  N("s1","c:ar","b:ar:70",300,"box w center",`needs <b>all four</b>: GPS · compass · camera · accelerometer`),
-  N("sk",1040,20,420,"sticky",sticky(`Limits flip into features`,`no mouse → touch gestures · small device → full of sensors`))
-],[E("bi","g1","",{bend:0}),E("bi","g2","",{bend:0}),E("bi","g3","",{bend:0}),E("bd","or","",{bend:0}),E("s1","ar","",{bend:0})]);
+B("b1d",[],[],(rc,svg)=>{
+  Z1H("① Better interaction: multi-touch gestures",60,40,svg);
+  const g=(x,y,dir,label)=>{add(svg,rc.circle(x,y,14,{fill:"var(--y)",fillStyle:"solid",stroke:"var(--ink)"}));
+    if(dir==="out"){arrow(rc,svg,[x-10,y],[x-60,y],{bend:0,color:"ink"});arrow(rc,svg,[x+10,y],[x+60,y],{bend:0,color:"ink"})}
+    else if(dir==="in"){arrow(rc,svg,[x-70,y],[x-14,y],{bend:0,color:"ink"});arrow(rc,svg,[x+70,y],[x+14,y],{bend:0,color:"ink"})}
+    else arrow(rc,svg,[x-60,y],[x+70,y],{bend:0,color:"red"});T(svg,x,y+46,label,{size:17})};
+  g(140,110,"out","pinch-open → zoom in");g(380,110,"in","pinch-close → zoom out");g(610,110,"swipe","swipe → delete");
+  Z1H("② Built-in devices: use them",60,220,svg);
+  const s=phone(rc,svg,300,250,90,160,7);const cx=345,cy=330;
+  [["📷 camera",160,270],["accelerometer",150,350],["gyroscope",170,420],["📍 GPS",530,270],["🧭 compass",540,350]].forEach(([t,x,y])=>{add(svg,rc.line(x<cx?cx-48:cx+48,cy,x<cx?x+66:x-44,y-6,{stroke:"var(--soft)",strokeWidth:1.4,roughness:0.6}));T(svg,x,y,t,{size:17})});
+  T(svg,150,452,"accelerometer → knows how it's held → rotate the display",{size:16,color:"var(--soft)",anchor:"start"});
+  const ax=1050,ay=300;add(svg,rc.ellipse(ax,ay,280,110,{fill:"var(--p)",fillStyle:"solid",stroke:"var(--ink)",strokeWidth:2.2,roughness:1}));T(svg,ax,ay+8,"🕶 Augmented reality",{size:21,weight:700});
+  [["GPS",820,190],["compass",1260,190],["camera",820,420],["accelerometer",1270,420]].forEach(([t,x,y])=>{z1pill(rc,svg,x,y,t,"var(--y)");arrow(rc,svg,[x+(x<ax?40:-40),y+(y<ay?18:-18)],[ax+(x<ax?-90:90),ay+(y<ay?-40:40)],{bend:0,color:"ink"})});
+  T(svg,ax,490,"needs ALL four",{size:17,color:"var(--red)",weight:700})},510);
 
 B("b1e",[
-  N("a1",40,20,420,"box w",`<span class="t">① Focus on user experience</span>reduce navigation · go with defaults · remember what users did last time`),
-  N("a2","r:a1:40","t:a1",470,"box w",`<span class="t">② Choose carefully: native vs web</span>web-based = <b>less expensive, less complex</b> · but it doesn't deliver the experience users expect`),
-  N("a3","r:a2:40","t:a1",450,"box w",`<span class="t">③ Take advantage of location</span>location services → a more <b>customised</b> experience`),
-  N("a4",40,"b:a1,a2,a3:40",560,"box w",`<span class="t">④ Design + code for touch</span>understand the <b>user flows first</b>, then translate the touch interface into code`),
-  N("a5","r:a4:40","t:a4",820,"box w",`<span class="t">⑤ Expect users to make mistakes</span>they will press the wrong buttons. Small screens + unfamiliar users <b>guarantee</b> input mistakes → apps must be <b>tolerant</b> and <b>recover without extra effort</b>`),
-  N("q",40,"b:a4,a5:50",700,"box y",`<span class="t">Steve Jobs, quoted on the slide</span>"Simple can be harder than complex" · you have to work hard to get your thinking clean enough to make it simple, but once you get there it's worth it`),
-  N("sk",860,"t:q",600,"sticky",sticky(`U · W · L · T · M = "Users Want Location-aware Touch, Mistake-proof"`,`UX · Web-or-native · Location · Touch · Mistakes`))
-],[]);
+  N("sk",40,330,760,"sticky",sticky(`"Users Want Location-aware Touch, Mistake-proof"`,`UX · Web-or-native · Location · Touch · Mistakes`))
+],[],(rc,svg)=>{
+  const it=[["UX","focus on user experience","less navigation · defaults","remember last time"],["Web?","native vs web: choose","web = cheaper, simpler","but worse experience"],["📍","use location","more customised",""],["👆","design + code for touch","map the user flows first",""],["⚠","expect mistakes","wrong buttons will happen","tolerate + recover easily"]];
+  it.forEach(([ic,a,b,c],i)=>{const x=150+i*290;add(svg,rc.circle(x,90,96,{fill:["var(--y)","var(--b)","var(--g)","var(--p)","var(--y)"][i],fillStyle:"solid",stroke:"var(--ink)",strokeWidth:2,seed:30+i}));
+    T(svg,x,100,ic,{size:24,weight:700});T(svg,x-50,52,"①②③④⑤"[i],{size:20,color:"var(--red)"});T(svg,x,170,a,{size:17,weight:700});T(svg,x,196,b,{size:15,color:"var(--soft)"});if(c)T(svg,x,218,c,{size:15,color:"var(--soft)"})});
+  T(svg,60,280,"Steve Jobs: \"Simple can be harder than complex\"",{size:17,anchor:"start",color:"var(--soft)"})},300);
 
-B("b1f",[
-  N("ide",40,20,1420,"box b",`each mobile platform has an <b>IDE</b>: tools to <b>write, test and deploy</b> apps into that platform's environment`),
-  N("an",40,"b:ide:60",440,"box g",`<span class="t">🤖 Android</span>IDE: <b>Android Studio</b><br>languages: <b>Kotlin</b> or <b>Java</b><br>based on a <b>Linux kernel</b>, libraries + APIs written&nbsp;in&nbsp;<b>C</b><br>over 1 million apps · e.g. Google Play Store`),
-  N("wp","r:an:40","t:an",440,"box b",`<span class="t">🪟 Windows Phone</span>IDE: <b>Visual Studio 2010</b><br>language: <b>C#</b><br><b>Windows Mobile</b> is its successor (newer than Android + iOS)<br>apps in the <b>Microsoft Store</b>`),
-  N("io","r:wp:40","t:an",460,"box y",`<span class="t">🍎 iOS</span>IDE: <b>Xcode</b> · needs an <b>Intel-based Mac</b> + the latest macOS<br>language: <b>Swift</b> (open source, modern OOP, more concise than <b>Objective-C</b>)<br>based on a <b>UNIX kernel</b>; libraries in C, Objective-C + Swift`),
-  N("sk",40,"b:an,wp,io:40",560,"sticky",sticky(`Android → Linux · iOS → UNIX`,`🤖 Studio + Kotlin/Java · 🪟 Visual Studio + C# · 🍎 Xcode + Swift`)),
-  N("web","r:sk:60","t:sk",820,"box p",`<span class="t">The alternative: web-based mobile apps</span>cheaper to build · a <span class="hy">trade-off between cost and user experience</span> · can't use all the device's capabilities`)
-],[E("ide","an","",{bend:0,from:"b",to:"t"}),E("ide","wp","",{bend:0,from:"b",to:"t"}),E("ide","io","",{bend:0,from:"b",to:"t"})]);
+B("b1f",[],[],(rc,svg)=>{
+  T(svg,60,40,"every platform has an IDE = tools to write, test + deploy apps",{size:19,anchor:"start",weight:700});
+  const P=[["🤖 Android","Android Studio","Kotlin / Java","Linux kernel","libs + APIs in C","var(--g)"],["🪟 Windows Phone","Visual Studio 2010","C#","successor: Windows Mobile","","var(--b)"],["🍎 iOS","Xcode (Intel Mac)","Swift / Obj-C","UNIX kernel","","var(--y)"]];
+  P.forEach((p,i)=>{const x=60+i*330,s=phone(rc,svg,x,70,280,300,10+i);box(rc,svg,s.x,s.y,s.w,52,p[5],40+i);T(svg,x+140,s.y+34,p[0],{size:20,weight:700});
+    [["IDE",p[1]],["language",p[2]],["",p[3]],["",p[4]]].forEach(([k,v],j)=>{if(!v)return;if(k)T(svg,s.x+14,s.y+92+j*52,k,{size:14,color:"var(--soft)",anchor:"start"});T(svg,s.x+14,s.y+114+j*52-(k?0:22),v,{size:18,anchor:"start",weight:k?700:400})})});
+  const x=1080;add(svg,rc.circle(x+60,150,90,{fill:"var(--p)",fillStyle:"solid",stroke:"var(--ink)",strokeWidth:2}));T(svg,x+60,160,"🌐",{size:34});
+  z1tl(svg,x,240,["web-based app:","✓ cheaper to build","✗ can't use the whole device","= cost vs experience trade-off"],{size:17,lh:28})},390);
 
-B("b1g",[
-  N("q",560,20,380,"oval y big center",`How do we build the app?`),
-  N("me",40,20,440,"box y",`<span class="t">Mobile engineering</span>designing + building software for <b>portable</b> devices with limited <b>screen, memory and battery</b> → the art of designing within those limits`),
-  N("cb",1040,20,420,"box w",`<span class="t">Code base</span>the full set of source code for an app · native needs <b>two</b>, the other approaches need <b>one</b>`),
-  N("na",40,"b:q,me,cb:70",440,"box p",`<span class="t">NATIVE</span>a <b>separate app per OS</b>, in that OS's own language<br>Android → Kotlin / Java · iOS → Swift / Objective&#8209;C<br><span class="hg">✓ full device control · fits the device · best performance</span><br><span class="hp">✗ written twice → slow, expensive, hard to keep 2 code bases in sync</span>`),
-  N("cp","r:na:40","t:na",440,"box b",`<span class="t">CROSS-PLATFORM</span><b>write once</b> → runs on Android <b>and</b> iOS<br>.NET MAUI (language: <b>C#</b>) · Flutter (language: <b>Dart</b>)<br><span class="hg">✓ faster · cheaper · fewer developers</span><br><span class="hp">✗ not native performance · less device depth</span>`),
-  N("hy","r:cp:40","t:na",460,"box g",`<span class="t">HYBRID</span>a <b>web app</b> (HTML, CSS, JavaScript) running inside a <b>web view</b> = a small browser embedded in the app<br><span class="hg">✓ cheapest · easiest if you know web · light</span><br><span class="hp">✗ weak access to core hardware (gyroscope, vibration motor) · some camera features fail</span>`),
-  N("tb",40,"b:na,cp,hy:50",900,"box w",`<table class="tb"><tr><th></th><th>Native</th><th>Cross-platform</th><th>Hybrid</th></tr><tr><td>code bases</td><td>2 (one per OS)</td><td>1</td><td>1 (web)</td></tr><tr><td>performance</td><td>best</td><td>good</td><td>lightest, limited</td></tr><tr><td>device access</td><td>full</td><td>partial</td><td>limited</td></tr><tr><td>speed to build</td><td>slow</td><td>faster</td><td>fastest</td></tr><tr><td>cost</td><td>high</td><td>lower</td><td>lowest</td></tr><tr><td>maintenance</td><td>hard</td><td>easier</td><td>easy</td></tr></table>`),
-  N("dc","r:tb:40","t:tb",480,"box y",`<span class="t">Which one?</span>need best performance + full device → <b>native</b><br>reach both OSes fast + cheaply → <b>cross-platform</b><br>web skills + tight budget → <b>hybrid</b><br><span class="ann">not good / better / best: three answers to "what are you willing to trade?"</span>`),
-  N("sk","c:dc","b:dc:30",420,"sticky",sticky(`Native = Nice but twice · Cross = Code once · Hybrid = HTML in a box`,`the box is the web view`))
-],[E("q","na","",{bend:0,from:"b",to:"t"}),E("q","cp","",{bend:0,from:"b",to:"t"}),E("q","hy","",{bend:0,from:"b",to:"t"})]);
+B("b1g",[],[],(rc,svg)=>{
+  z1tl(svg,60,40,["Mobile engineering = designing within LIMITED screen, memory + battery","Code base = all of an app's source code"],{size:18,lh:30});
+  const col=[60,540,1010],hd=["NATIVE","CROSS-PLATFORM","HYBRID"],f=["var(--p)","var(--b)","var(--g)"];
+  hd.forEach((h,i)=>T(svg,col[i]+200,120,h,{size:22,weight:700,color:"var(--red)"}));
+  const ph=(x,lab,seed)=>{phone(rc,svg,x,250,80,130,seed);T(svg,x+40,320,lab,{size:15,weight:700})};
+  z1doc(rc,svg,90,150,150,60,"var(--y)","Kotlin / Java",3);z1doc(rc,svg,280,150,150,60,"var(--y)","Swift / Obj-C",4);
+  ph(125,"Android",5);ph(315,"iOS",6);arrow(rc,svg,[165,214],[165,246],{bend:0,color:"ink"});arrow(rc,svg,[355,214],[355,246],{bend:0,color:"ink"});
+  z1tl(svg,60,410,["2 code bases, one per OS","✓ full device control, best performance","✗ written twice: slow + expensive"],{size:16,lh:26});
+  z1doc(rc,svg,600,150,280,60,"var(--y)","C# (.NET MAUI) · Dart (Flutter)",5);ph(590,"Android",7);ph(800,"iOS",8);
+  arrow(rc,svg,[700,214],[632,246],{bend:0,color:"ink"});arrow(rc,svg,[780,214],[840,246],{bend:0,color:"ink"});
+  z1tl(svg,560,410,["1 code base: write once, run on both","✓ faster, cheaper, fewer developers","✗ not quite native performance"],{size:16,lh:26});
+  const s=phone(rc,svg,1110,140,200,240,9);box(rc,svg,s.x+14,s.y+40,s.w-28,140,"var(--g)",12);T(svg,s.x+s.w/2,s.y+30,"web view",{size:15,color:"var(--soft)"});T(svg,s.x+s.w/2,s.y+116,"HTML CSS JS",{size:18,weight:700});
+  z1tl(svg,1030,410,["a web app inside a mini browser","✓ cheapest, uses web skills","✗ weak hardware access","(gyroscope, vibration, some camera)"],{size:16,lh:26})},510);
 
 /* ===== 2 · iOS ===== */
-B("b2a",[
-  N("rq",40,20,460,"box w",`<span class="t">Requirements</span>Intel-based Mac, <b>macOS 10.11.5+</b> and <b>Xcode 11.3.1</b><br>devices: iPhone 4+, iPod Touch 4th gen+, iPad 2+<br>textbook: Apple online documentation<br>prerequisite: <b>OOP principles</b>`),
-  N("le",40,"b:rq:40",460,"box b",`<span class="t">What the course promised</span>build iOS apps (even complex ones) · real-life OOP: <b>Cocoa Touch is 100% object-oriented</b>, uses <b>MVC</b> · CS concepts on a commercial platform: databases, graphics, multimedia, multithreading, animation, networking · sell on the App Store`),
-  N("oo",560,20,900,"box y",`<span class="t">7 object-oriented terms</span><table class="tb"><tr><th>term</th><th>meaning</th><th>🍪 cookie picture</th></tr><tr><td>Class</td><td>description / template for an object</td><td>the cookie cutter</td></tr><tr><td>Instance</td><td>a manifestation of a class</td><td>one cookie</td></tr><tr><td>Method</td><td>code invoked on an object</td><td>"decorate this cookie"</td></tr><tr><td>Instance variable</td><td>object-specific storage</td><td>this cookie's own sprinkles</td></tr><tr><td>Inheritance</td><td>code-sharing mechanism</td><td>a new cutter traced from an old one</td></tr><tr><td>Superclass / Subclass</td><td>the inheritance relationship</td><td>parent cutter / child cutter</td></tr><tr><td>Protocol</td><td>method declarations not tied to one class</td><td>a recipe card any baker can follow</td></tr></table>`)
-],[]);
+B("b2a",[],[],(rc,svg)=>{
+  z1tl(svg,60,40,["Needs: Intel Mac · macOS 10.11.5+ · Xcode 11.3.1 · prerequisite: OOP","Cocoa Touch is 100% object-oriented and uses MVC"],{size:18,lh:30});
+  const cut=(x,y,lab,f)=>{add(svg,rc.rectangle(x,y,150,100,{stroke:"var(--ink)",strokeWidth:2.4,strokeLineDash:[8,6],fill:f,fillStyle:"solid",roughness:1.2}));T(svg,x+75,y+58,lab,{size:17,weight:700})};
+  cut(80,130,"CLASS","var(--b)");T(svg,155,258,"template (the cookie cutter)",{size:15,color:"var(--soft)"});
+  [130,210,290].forEach((y,i)=>{const x=440;add(svg,rc.circle(x,y,66,{fill:"var(--y)",fillStyle:"solid",stroke:"var(--ink)",strokeWidth:2,seed:50+i}));arrow(rc,svg,[240,180],[x-38,y],{bend:0,color:"ink"})});
+  [0,1,2,3,4].forEach(j=>add(svg,rc.circle(426+(j%3)*14,282+(j>2?16:0),6,{fill:"var(--red)",fillStyle:"solid",stroke:"var(--red)"})));
+  T(svg,500,136,"INSTANCES (cookies)",{size:17,weight:700,anchor:"start"});
+  T(svg,500,296,"← instance variable = its own data (sprinkles)",{size:15,color:"var(--red)",anchor:"start"});
+  T(svg,500,216,"method = code run on an object: decorate()",{size:16,anchor:"start"});
+  cut(80,350,"SUPERCLASS","var(--b)");cut(380,350,"SUBCLASS","var(--g)");arrow(rc,svg,[236,400],[374,400],{bend:0,color:"red"});T(svg,305,385,"inherits",{size:15,color:"var(--red)"});
+  T(svg,80,480,"inheritance = code sharing (a new cutter traced from an old one)",{size:15,anchor:"start",color:"var(--soft)"});
+  box(rc,svg,900,320,320,110,"var(--card)",60);T(svg,1060,358,"📜 PROTOCOL",{size:18,weight:700});T(svg,1060,388,"method declarations",{size:15});T(svg,1060,410,"not tied to one class",{size:15});
+  T(svg,1060,450,"(a recipe any baker can follow)",{size:15,color:"var(--soft)"})},490);
 
 B("b2b",[
-  N("ov",40,20,520,"box b",`<span class="t">iOS overview</span>the OS + technologies that run apps <b>natively</b> on iPad, iPhone, iPod Touch<br>shares heritage with <b>Mac OS X</b> but designed for mobile users' needs<br>some technologies exist <b>only on iOS</b>: the Multi-Touch interface, accelerometer support`),
-  N("sdk",40,"b:ov:40",520,"box w",`<span class="t">iOS SDK</span>the code, information + tools to <b>develop, test, run, debug and tune</b> iOS apps<br><b>Xcode</b> = launching point for testing on a device <b>and</b> in the <b>iOS Simulator</b><br><b>Simulator</b> = mimics the basic iOS environment, running on your Mac`),
-  N("pc",680,20,300,"oval y big center",`Platform components`),
-  N("c1",620,"b:pc:80",190,"box w",`<span class="t">Tools</span>Xcode · iOS Simulator`),
-  N("c2","r:c1:24","t:c1",250,"box w",`<span class="t">Language</span>Swift / Objective-C<br><code>label.textColor = UIColor.blueColor()</code>`),
-  N("c3","r:c2:24","t:c1",210,"box w",`<span class="t">Frameworks</span>Foundation · UIKit · Core Data · Core Motion · Map Kit`),
-  N("c4","r:c3:24","t:c1",160,"box w",`<span class="t">Design strategies</span>MVC`)
-],[E("pc","c1","",{bend:0,from:"b",to:"t"}),E("pc","c2","",{bend:0,from:"b",to:"t"}),E("pc","c3","",{bend:0,from:"b",to:"t"}),E("pc","c4","",{bend:0,from:"b",to:"t"})]);
+  N("pc",1000,20,300,"oval y big center",`Platform components`),
+  N("c1",860,"b:pc:70",140,"box w center",`<b>Tools</b><br>Xcode · Simulator`),
+  N("c2","r:c1:14","t:c1",140,"box w center",`<b>Language</b><br>Swift / Obj-C`),
+  N("c3","r:c2:14","t:c1",170,"box w center",`<b>Frameworks</b><br>Foundation · UIKit · Core Data · Core Motion · Map Kit`),
+  N("c4","r:c3:14","t:c1",100,"box w center",`<b>Design</b><br>MVC`)
+],[E("pc","c1","",{bend:0,from:"b",to:"t"}),E("pc","c2","",{bend:0,from:"b",to:"t"}),E("pc","c3","",{bend:0,from:"b",to:"t"}),E("pc","c4","",{bend:0,from:"b",to:"t"})],(rc,svg)=>{
+  z1blk(rc,svg,60,40,180,60,"var(--b)","Mac OS X");z1blk(rc,svg,380,40,180,60,"var(--y)","iOS");arrow(rc,svg,[246,70],[374,70],{bend:0,color:"ink"});T(svg,310,58,"heritage",{size:15,color:"var(--soft)"});
+  T(svg,470,130,"iOS-only: Multi-Touch · accelerometer",{size:16,color:"var(--soft)"});
+  box(rc,svg,80,190,200,120,"var(--b)",6);add(svg,rc.line(60,318,300,318,{stroke:"var(--ink)",strokeWidth:3}));T(svg,180,256,"💻 Xcode",{size:19,weight:700});
+  phone(rc,svg,470,140,64,110,7);T(svg,502,272,"device",{size:15});box(rc,svg,600,300,170,90,"var(--card)",8);T(svg,685,340,"iOS Simulator",{size:16,weight:700});T(svg,685,366,"(runs on the Mac)",{size:14,color:"var(--soft)"});
+  arrow(rc,svg,[286,215],[464,195],{bend:-0.1,color:"green"});arrow(rc,svg,[286,300],[594,340],{bend:0.05,color:"green"});
+  T(svg,60,430,"SDK = code + tools to develop, test, run, debug + tune · Xcode = the launch point",{size:16,anchor:"start"})},450);
 
 B("b2c",[
-  N("ct",40,20,560,"box g",`<span class="t">Cocoa Touch</span>alerts · Multi-Touch · Core Motion · view hierarchy · localization · controls · web view · Map Kit · image picker · camera`),
-  N("md",40,"b:ct:14",560,"box y",`<span class="t">Media</span>JPEG, PNG, TIFF · PDF · Core Audio · OpenAL · audio mixing + recording · video playback · Quartz 2D · Core Animation · OpenGL ES`),
-  N("cs",40,"b:md:14",560,"box b",`<span class="t">Core Services</span>collections · Address Book · networking · file access · SQLite · Core Location · net services · threading · preferences · URL utilities`),
-  N("co",40,"b:cs:14",560,"box p",`<span class="t">Core OS</span>OS X kernel · Mach 3.0 · BSD sockets · security · power management · keychain access · certificates · file system · Bonjour + DNS services · POSIX threads`),
-  N("k",40,"b:co:14",560,"box w center",`kernel: a variant of the <b>Mach</b> kernel from Mac OS X (UNIX)`),
-  N("lo",700,"m:cs",360,"box w",`<b>Core OS + Core Services</b> = the fundamental interfaces: low-level data types, network sockets…`),
-  N("hi",700,"m:md",360,"box w",`upper layers = more advanced tech, e.g. <b>Media</b>: 2D + 3D drawing, audio, video`),
-  N("ad",1100,20,360,"box g",`<span class="t">Practical advice</span>start every new project at <b>Cocoa Touch</b>, especially <b>UIKit</b> · prefer <b>higher-level</b> frameworks (standard behaviour, least effort) · fall back to lower layers <b>only for custom behaviour</b>`),
-  N("sk",1100,"b:ad:40",360,"sticky",sticky(`bottom → top: "Old Smart Macs Touch"`,`Core <b>O</b>S · Core <b>S</b>ervices · <b>M</b>edia · Cocoa <b>T</b>ouch`))
-],[E("lo","cs","",{bend:0}),E("hi","md","",{bend:0}),E("ad","ct","start here",{bend:0})]);
+  N("sk",1040,300,420,"sticky",sticky(`bottom → top: "Old Smart Macs Touch"`,`Core <b>O</b>S · Core <b>S</b>ervices · <b>M</b>edia · Cocoa <b>T</b>ouch`))
+],[],(rc,svg)=>{
+  const L=[["Cocoa Touch","UIKit · Multi-Touch · alerts · camera · Map Kit","var(--g)"],["Media","JPEG/PNG · Core Audio · video · Core Animation · OpenGL ES","var(--y)"],["Core Services","SQLite · networking · Core Location · threading","var(--b)"],["Core OS","Mach kernel · security · power mgmt · file system","var(--p)"]];
+  L.forEach(([n,s,f],i)=>{const y=30+i*86;box(rc,svg,60,y,640,74,f,20+i);T(svg,80,y+32,n,{size:21,weight:700,anchor:"start"});T(svg,80,y+58,s,{size:15,anchor:"start",color:"var(--soft)"})});
+  T(svg,380,396,"kernel = a variant of Mach from Mac OS X (UNIX)",{size:15,color:"var(--soft)"});
+  arrow(rc,svg,[740,350],[740,40],{bend:0,color:"ink"});T(svg,760,200,"higher = more advanced,",{size:16,anchor:"start"});T(svg,760,224,"less effort",{size:16,anchor:"start"});
+  arrow(rc,svg,[1000,67],[708,67],{bend:0,color:"red"});T(svg,1010,60,"START HERE (UIKit)",{size:19,anchor:"start",color:"var(--red)",weight:700});
+  T(svg,1010,88,"go lower only for custom behaviour",{size:16,anchor:"start",color:"var(--soft)"})},420);
 
 /* ===== 3 · Android ===== */
-B("b3a",[
-  N("def",40,60,360,"oval g big center",`Android OS`),
-  N("f1",480,20,440,"box w",`a mobile OS developed by <b>Google</b> · <b>based on Linux</b> · <b>open source</b> (source.android.com)`),
-  N("f2",480,"b:f1:24",440,"box w",`designed for smartphones + tablets: <b>little memory</b>, <b>slower processor</b> than a desktop`),
-  N("vi",1000,"m:f1,f2",460,"box b",`<span class="t">Google's vision</span>a <b>robust set of programming APIs</b> + a <b>very responsive UI</b>`),
-  N("ab",1000,"b:vi:60",460,"box y",`→ an <b>abstraction layer</b> so app developers can be <span class="hy">hardware agnostic</span>`)
-],[E("def","f1","",{bend:0}),E("def","f2","",{bend:0}),E("vi","ab","achieved with",{bend:0})]);
+B("b3a",[],[],(rc,svg)=>{
+  box(rc,svg,60,30,560,56,"var(--card)",4);T(svg,340,66,"apps",{size:19,weight:700});
+  box(rc,svg,60,110,560,64,"var(--y)",5);T(svg,340,150,"abstraction layer (robust APIs)",{size:19,weight:700});
+  [["phone A",60],["phone B",250],["tablet",440]].forEach(([s,x],i)=>{box(rc,svg,x,200,180,56,"var(--b)",6+i);T(svg,x+90,236,s,{size:17})});
+  arrow(rc,svg,[340,88],[340,106],{bend:0,color:"ink"});
+  T(svg,340,290,"developers stay HARDWARE AGNOSTIC",{size:18,color:"var(--red)",weight:700});
+  z1tl(svg,720,60,["Android = Google's mobile OS","based on Linux · open source","built for little memory + slower CPUs","vision: robust APIs + a very responsive UI"],{size:19,lh:40})},310);
 
 B("b3b",[
-  N("oha",40,210,520,"box b",`<span class="t">Open Handset Alliance (OHA)</span>established by <b>Google</b> + founded with Android in 2007; the slide says Android was <b>developed by the OHA</b> · members: <b>chip makers · handset makers · app developers · mobile carriers</b>, devoted to open standards for mobile · Android is its <b>flagship software</b>`),
-  N("ver",640,210,820,"box w",`<span class="t">Version share (from the slide)</span>bars drawn to scale · codenames go in <b>alphabetical dessert order</b>`),
-  N("sk",40,"b:oha:40",520,"sticky",sticky(`F G I J K L M = a dessert alphabet`,`(H = Honeycomb, not on the slide) · Froyo · Gingerbread · Ice Cream Sandwich · Jelly Bean · KitKat · Lollipop · Marshmallow`))
-],[],
-(rc,svg,R)=>{const x0=60,y=110,px=110;/* 110 px per year, 2005-2015 */
+  N("sk",40,490,540,"sticky",sticky(`F G I J K L M = a dessert alphabet`,`Froyo · Gingerbread · Ice Cream Sandwich · Jelly Bean · KitKat · Lollipop · Marshmallow`))
+],[],(rc,svg)=>{const x0=60,y=90,px=110;
   add(svg,rc.line(x0,y,x0+10*px,y,{stroke:"var(--ink)",strokeWidth:2.4,roughness:0.6}));
   [[2005,"Google buys Android, Inc."],[2007,"unveiled + OHA founded"],[2008,"Android 1.0"],[2015,"6.0 Marshmallow"]].forEach(([yr,l],i)=>{const x=x0+(yr-2005)*px;
     add(svg,rc.circle(x,y,14,{fill:"var(--red)",fillStyle:"solid",stroke:"var(--red)",roughness:0.6}));const dn=i===1,an=i===0?"start":i===3?"end":"middle",xx=i===0?x-10:i===3?x+10:x;
     T(svg,x,dn?y+40:y-44,String(yr),{size:22,weight:700});T(svg,xx,dn?y+64:y-20,l,{size:16,color:"var(--soft)",anchor:an})});
-  T(svg,x0+10*px+30,y+6,"(to scale)",{anchor:"start",size:15,color:"var(--soft)"});
+  const ox=260,oy=330;add(svg,rc.circle(ox,oy,120,{fill:"var(--b)",fillStyle:"solid",stroke:"var(--ink)",strokeWidth:2.2}));T(svg,ox,oy+8,"OHA",{size:26,weight:700});
+  [["chip makers",ox-150,oy-80],["handset makers",ox+150,oy-80],["app developers",ox-150,oy+80],["mobile carriers",ox+150,oy+80]].forEach(([t,x,yy],i)=>{{const dx=x-ox,dy=yy-oy,L=Math.hypot(dx,dy);add(svg,rc.line(ox+dx/L*62,oy+dy/L*62,x-dx/L*40,yy-dy/L*14,{stroke:"var(--soft)",strokeWidth:1.4}))}z1pill(rc,svg,x,yy,t,"var(--y)",{seed:60+i})});
+  T(svg,ox,460,"Open Handset Alliance · set up by Google · Android = its flagship",{size:15,color:"var(--soft)"});
+  T(svg,880,200,"version share",{size:18,weight:700,anchor:"start"});
   const d=[["Froyo","8",0.1],["Gingerbread","10",2.6],["Ice Cream Sandwich","15",2.2],["Jelly Bean","16–18",21.3],["KitKat","19",33.4],["Lollipop","21–22",35.8],["Marshmallow","23",4.6]];
-  const bx=R.ver.x+250,by=R.ver.y+R.ver.h+18,k=14;
-  d.forEach(([n,api,p],i)=>{const yy=by+i*34;T(svg,bx-12,yy+19,`${n} (API ${api})`,{anchor:"end",size:16});
-    add(svg,rc.rectangle(bx,yy+2,Math.max(2,p*k),24,{fill:i===5?"var(--g)":"var(--b)",fillStyle:"solid",stroke:"var(--ink)",strokeWidth:1.6,roughness:0.7,seed:40+i}));T(svg,bx+p*k+10,yy+20,p+"%",{anchor:"start",size:16,weight:700})})},560);
+  const bx=880,by=220,k=14;d.forEach(([n,api,p],i)=>{const yy=by+i*34;T(svg,bx-12,yy+19,`${n} (API ${api})`,{anchor:"end",size:16});
+    add(svg,rc.rectangle(bx,yy+2,Math.max(2,p*k),24,{fill:i===5?"var(--g)":"var(--b)",fillStyle:"solid",stroke:"var(--ink)",strokeWidth:1.6,roughness:0.7,seed:40+i}));T(svg,bx+p*k+10,yy+20,p+"%",{anchor:"start",size:16,weight:700})})},470);
 
 B("b3c",[
-  N("ap",40,20,560,"box w center",`<b>Applications</b>`),
-  N("fw",40,"b:ap:40",560,"box g center",`<b>Application framework</b> <small>(Activity Manager, Content Providers…)</small>`),
-  N("bi",40,"b:fw:40",560,"box y center",`<b>Binder IPC</b> <small>(inter-process communication)</small>`),
-  N("ss",40,"b:bi:40",560,"box b center",`<b>Android system services</b>`),
-  N("lr",40,"b:ss:40",560,"box w center",`<b>Libraries + Android Runtime (ART)</b>`),
-  N("hal",40,"b:lr:40",560,"box p center",`<b>HAL</b> <small>(hardware abstraction layer)</small>`),
-  N("lk",40,"b:hal:40",560,"box w center",`<b>Linux kernel</b> <small>(drivers, process / memory / power mgmt)</small>`),
-  N("bx",700,"m:bi",470,"box y",`<span class="t">Binder IPC</span>lets the app framework <b>cross process boundaries</b> and call into Android system services → high-level APIs reach system services · <b>hidden</b> from the developer, things "just work"`),
-  N("hx",700,"m:hal",470,"box p",`HAL = a <b>standard interface</b> hardware vendors implement → Android doesn't care about lower-level driver details`),
-  N("mg",700,20,470,"plain",`<span class="ann">merged picture: the AOSP figure (apps → framework → Binder → services → HAL → kernel) + the separate "Libraries and Android Runtime" slide</span>`),
-  N("sk",1230,20,240,"sticky",sticky(`top → bottom: "Apps Find Binders, Services Read Hardware Labels"`,`Apps · Framework · Binder · Services · Runtime+libs · HAL · Linux`))
-],[E("ap","fw","",{bend:0}),E("fw","bi","",{bend:0}),E("bi","ss","",{bend:0}),E("ss","lr","",{bend:0}),E("lr","hal","",{bend:0}),E("hal","lk","",{bend:0}),E("bx","bi","",{bend:0,dash:1,color:"blue"}),E("hx","hal","",{bend:0,dash:1,color:"blue"})]);
+  N("sk",1060,330,400,"sticky",sticky(`top → bottom: "Apps Find Binders, Services Read Hardware Labels"`,`Apps · Framework · Binder · Services · Runtime+libs · HAL · Linux`))
+],[],(rc,svg)=>{
+  const L=[["Applications","var(--card)"],["Application framework","var(--g)"],["Binder IPC","var(--y)"],["Android system services","var(--b)"],["Libraries + Android Runtime (ART)","var(--card)"],["HAL","var(--p)"],["Linux kernel","var(--card)"]];
+  L.forEach(([n,f],i)=>{const y=20+i*66;box(rc,svg,60,y,560,54,f,30+i);T(svg,340,y+35,n,{size:19,weight:700})});
+  arrow(rc,svg,[700,173],[628,173],{bend:0,color:"blue"});z1tl(svg,710,166,["Binder = lets the framework cross process","boundaries to call system services (hidden: it \"just works\")"],{size:16,lh:24});
+  arrow(rc,svg,[700,371],[628,371],{bend:0,color:"blue"});z1tl(svg,710,364,["HAL = a standard interface vendors implement","→ Android ignores driver details"],{size:16,lh:24})},480);
 
-B("b3d",[
-  N("lk",40,30,330,"oval p big center",`Linux kernel (bottom layer)`),
-  N("k1",480,20,450,"box w",`<span class="t">Talks to hardware</span>contains the drivers: camera · audio · keypad · display · Wi-Fi…`),
-  N("k2",480,"b:k1:24",450,"box w",`<span class="t">Core OS services</span><b>preemptive multitasking</b> · process management · memory management · power management · networking (network stack)`),
-  N("k3",480,"b:k2:24",450,"box y",`<span class="t">Extras added for mobile embedded</span><b>wake locks</b> · the <b>Binder IPC driver</b> · power management<br><span class="ann">slide's wording: wake locks = "a memory management system that is more aggressive in preserving memory"</span>`),
-  N("pm",1020,"m:k3",440,"box b",`Android <b>layers its power-management model on top of standard Linux PM</b>`),
-  N("ex",1020,20,440,"plain",`<span class="ann">slide example: Samsung Galaxy 4 on Android 5.0.1 runs Linux kernel 3.4.0</span>`)
-],[E("lk","k1","",{bend:0,from:"r",to:"l"}),E("lk","k2","",{bend:0,from:"r",to:"l"}),E("lk","k3","",{bend:0,from:"r",to:"l"}),E("k3","pm","",{bend:0})]);
+B("b3d",[],[],(rc,svg)=>{
+  box(rc,svg,420,190,560,80,"var(--p)",5);T(svg,700,238,"Linux kernel (bottom layer)",{size:22,weight:700});
+  ["camera","audio","keypad","display","Wi-Fi"].forEach((h,i)=>{const x=470+i*115;add(svg,rc.line(x,272,x,320,{stroke:"var(--ink)",strokeWidth:1.6}));z1pill(rc,svg,x,338,h,"var(--card)",{w:100,seed:70+i})});
+  T(svg,700,390,"↑ drivers: it talks to the hardware",{size:17,color:"var(--soft)"});
+  z1tl(svg,60,50,["core OS services:","preemptive multitasking","process + memory + power management","network stack"],{size:17,lh:28});arrow(rc,svg,[300,170],[414,210],{bend:0.1,color:"ink"});
+  z1tl(svg,1040,50,["➕ added for mobile:","wake locks","Binder IPC driver","power management"],{size:17,lh:28});arrow(rc,svg,[1100,170],[986,210],{bend:-0.1,color:"red"});
+  T(svg,700,30,"Android's power model sits ON TOP of standard Linux PM",{size:16,color:"var(--soft)"})},410);
 
-B("b3e",[
-  N("hal",520,20,460,"oval p big center",`HAL = standard interface between <b>software APIs</b> and <b>hardware drivers</b>`),
-  N("mo",40,"b:hal:80",560,"box y",`<span class="t">① Module</span>the HAL <b>implementation</b> · stored as a <b>shared library (.so file)</b>, <b>dynamically linked</b><br>carries metadata (<b>version, name, author</b>) so Android can find + load it correctly`),
-  N("de",900,"t:mo",560,"box b",`<span class="t">② Device</span><b>abstracts the actual hardware</b> · represented by the <code>hw_device_t</code> struct, each type adds <b>function pointers</b> for its features<br><span class="ann">e.g. an audio module can hold a primary audio device, a USB audio device, a Bluetooth A2DP device</span>`),
-  N("wy",40,"b:mo,de:50",700,"box g",`<span class="t">Why?</span>vendors implement the interface → new hardware works <b>without modifying higher levels</b> · Android stays <b>agnostic</b> about drivers`),
-  N("no","r:wy:40","t:wy",680,"box w",`<span class="warn">✗ storage devices are NOT managed by HAL</span> (hotplug)`),
-  N("sk","c:hal","b:wy,no:30",460,"sticky",sticky(`Module = the .so FILE · Device = the GADGET`,`one module can hold several devices`))
-],[E("hal","mo","",{bend:0.1}),E("hal","de","",{bend:-0.1}),E("mo","de","contains",{bend:0,color:"blue"})]);
+B("b3e",[],[],(rc,svg)=>{
+  z1blk(rc,svg,60,30,300,60,"var(--g)","software APIs");z1blk(rc,svg,60,150,300,70,"var(--p)","HAL",{sub:"standard interface"});z1blk(rc,svg,60,280,300,60,"var(--b)","hardware drivers");
+  arrow(rc,svg,[210,94],[210,144],{bend:0,color:"ink"});arrow(rc,svg,[210,224],[210,274],{bend:0,color:"ink"});
+  z1doc(rc,svg,520,60,440,300,"var(--y)","",9);T(svg,740,96,"MODULE  (an audio.so file)",{size:19,weight:700});
+  ["primary audio","USB audio","Bluetooth A2DP"].forEach((d,i)=>z1pill(rc,svg,740,150+i*60,"🔌 "+d,"var(--b)",{w:260,seed:80+i}));
+  T(svg,740,340,"DEVICES inside it",{size:16,color:"var(--soft)"});arrow(rc,svg,[366,185],[514,185],{bend:0,color:"blue"});T(svg,440,172,"implemented by",{size:14,color:"var(--blue)"});
+  z1tl(svg,1010,70,["module = HAL implementation","shared library (.so)","dynamically linked","metadata: version, name, author"],{size:16,lh:26});
+  z1tl(svg,1010,210,["device = abstracts real hardware","hw_device_t struct","+ function pointers"],{size:16,lh:26});
+  T(svg,60,400,"why: new hardware works without changing the higher levels",{size:17,anchor:"start"});
+  T(svg,760,400,"✗ storage devices are NOT managed by HAL (hotplug)",{size:17,anchor:"start",color:"var(--red)"})},420);
 
-B("b3f",[
-  N("lib",40,20,520,"box w",`<span class="t">Native libraries</span><b>WebKit</b> → web browser · <b>SQLite</b> → database · <b>multimedia</b> · <b>libc</b>`),
-  N("cl",40,"b:lib:40",520,"box b",`<span class="t">Core libraries</span>Dalvik-VM-specific · Java interoperability · Android libraries`),
-  N("art",680,20,500,"box g",`<span class="t">Android Runtime (ART)</span>the <b>managed runtime</b> used by apps + some system services<br>predecessor: <b>Dalvik</b><br>executes the <b>Dalvik Executable (DEX)</b> format / Dex bytecode`),
-  N("a1",680,"b:art:40",160,"box y center",`<b>Ahead-of-time</b> (AOT) compiled`),
-  N("a2","r:a1:20","t:a1",160,"box y center",`modern <b>garbage collection</b>`),
-  N("a3","r:a2:20","t:a1",200,"box y",`better <b>debugging</b>: sampling profiler, more detail in exceptions + crash reports`),
-  N("sk",1240,20,220,"sticky",sticky(`ART = "Ahead, Recycles, Traces"`,`AOT · garbage collection · debugging`))
-],[E("art","a1","",{bend:0}),E("art","a2","",{bend:0}),E("art","a3","",{bend:0})]);
+B("b3f",[],[],(rc,svg)=>{
+  Z1H("Native libraries",60,40,svg);[["WebKit → browser","var(--b)"],["SQLite → database","var(--b)"],["multimedia","var(--b)"],["libc","var(--b)"]].forEach(([t,f],i)=>z1pill(rc,svg,60+(i%2)*230+105,80+Math.floor(i/2)*48,t,f,{w:210,seed:90+i}));
+  Z1H("Core libraries",60,200,svg);z1pill(rc,svg,250,240,"Java interoperability · Android libraries","var(--card)",{w:380});
+  Z1H("Android Runtime (ART)",620,40,svg);T(svg,620,66,"the managed runtime for apps + some system services",{size:15,anchor:"start",color:"var(--soft)"});
+  z1blk(rc,svg,620,90,150,56,"var(--card)","Dalvik");arrow(rc,svg,[774,118],[860,118],{bend:0,color:"ink"});T(svg,816,104,"replaced by",{size:13,color:"var(--soft)"});z1blk(rc,svg,866,90,120,56,"var(--g)","ART");
+  z1doc(rc,svg,620,180,170,60,"var(--y)","DEX bytecode",11);arrow(rc,svg,[796,210],[870,210],{bend:0,color:"green"});z1pill(rc,svg,960,210,"AOT compiled","var(--g)",{w:170});
+  T(svg,1060,200,"ahead of time",{size:14,anchor:"start",color:"var(--soft)"});
+  z1pill(rc,svg,720,280,"♻ modern garbage collection","var(--b)",{w:280});z1pill(rc,svg,1070,280,"🐞 better debugging + crash reports","var(--p)",{w:340})},310);
 
 B("b3g",[
-  N("fw",560,40,380,"oval g big center",`Android framework = the services apps run + are managed in (a toolkit for apps)`),
-  N("h1",40,"b:fw:90",340,"box y",`<span class="t">📱 manages APPS</span><b>Activity Manager</b>: app lifecycle + activity stack<br><b>Package Manager</b>: info on installed apps`),
-  N("h2","r:h1:30","t:h1",340,"box b",`<span class="t">🗂 manages DATA</span><b>Content Providers</b>: apps publish + share data<br><b>Resource Manager</b>: non-code resources (strings, layouts)`),
-  N("h3","r:h2:30","t:h1",340,"box g",`<span class="t">👀 manages the SCREEN</span><b>View System</b>: views to build UIs<br><b>Window Manager</b>: window management<br><b>Notifications Manager</b>: alerts + notifications`),
-  N("h4","r:h3:30","t:h1",340,"box p",`<span class="t">🌍 talks to the WORLD</span><b>Telephony Manager</b>: telephony services available<br><b>Location Manager</b>: GPS + Android network provider`),
-  N("sk",500,"b:h1,h2,h3,h4:40",500,"sticky",sticky(`9 managers = Apps 2 · Data 2 · Screen 3 · World 2`,`group them by WHAT they manage and you can't forget one`))
-],[E("fw","h1","",{bend:0,from:"b",to:"t"}),E("fw","h2","",{bend:0,from:"b",to:"t"}),E("fw","h3","",{bend:0,from:"b",to:"t"}),E("fw","h4","",{bend:0,from:"b",to:"t"})]);
+  N("sk",500,410,500,"sticky",sticky(`9 managers = Apps 2 · Data 2 · Screen 3 · World 2`,`group them by WHAT they manage`))
+],[],(rc,svg)=>{
+  add(svg,rc.ellipse(750,60,620,80,{fill:"var(--g)",fillStyle:"solid",stroke:"var(--ink)",strokeWidth:2.2}));T(svg,750,68,"Android framework = the toolkit apps run in",{size:20,weight:700});
+  const G=[["📱 APPS",["Activity Manager","Package Manager"],"var(--y)"],["🗂 DATA",["Content Providers","Resource Manager"],"var(--b)"],["👀 SCREEN",["View System","Window Manager","Notifications Manager"],"var(--g)"],["🌍 WORLD",["Telephony Manager","Location Manager"],"var(--p)"]];
+  G.forEach(([h,ms,f],i)=>{const x=60+i*355;add(svg,rc.line(750,100,x+160,150,{stroke:"var(--soft)",strokeWidth:1.6}));T(svg,x+160,174,h,{size:20,weight:700});
+    ms.forEach((m,j)=>z1pill(rc,svg,x+160,216+j*50,m,f,{w:300,seed:100+i*4+j}))});
+  T(svg,750,390,"Activity Mgr = app lifecycle + activity stack · Content Providers = apps share data · Location Mgr = GPS + network",{size:15,color:"var(--soft)"})},400);
 
-B("b3h",[
-  N("q",40,20,420,"oval y big center",`Is Android a Linux distribution?`),
-  N("no",560,30,400,"box p",`<span class="t">No.</span>it is <b>based on</b> the Linux kernel but isn't "purely" a distribution`),
-  N("ld",1040,30,420,"box w",`a standard Linux distro has a <b>native windowing system</b>, <b>glibc</b> + standard utilities, and <b>no abstraction layer</b> between user apps and libraries`),
-  N("ta",40,"b:q,no,ld:60",660,"box g",`<span class="t">Taken from Linux</span>device drivers · network stack · power management · other core OS features`),
-  N("ad","r:ta:60","t:ta",700,"box b",`<span class="t">Added by Google</span>libraries that let apps control the hardware more efficiently · a <b>different Java runtime</b> designed for limited resources`)
-],[E("q","no","",{bend:0}),E("no","ld","because",{bend:0})]);
+B("b3h",[],[],(rc,svg)=>{
+  T(svg,60,40,"Is Android a Linux distribution?  NO: built on the Linux kernel, not a distro",{size:20,anchor:"start",weight:700});
+  add(svg,rc.ellipse(430,260,560,320,{fill:"var(--b)",fillStyle:"solid",stroke:"var(--ink)",strokeWidth:2.2,seed:5}));
+  add(svg,rc.ellipse(780,260,560,320,{stroke:"var(--green)",strokeWidth:2.6,seed:6}));
+  T(svg,360,170,"LINUX",{size:22,weight:700});T(svg,860,170,"ANDROID",{size:22,weight:700,color:"var(--green)"});
+  z1tl(svg,200,228,["windowing system","glibc + utilities","no abstraction layer"],{size:16,lh:28});
+  z1tl(svg,605,228,["drivers","network stack","power mgmt"],{size:17,lh:28,weight:700,anchor:"middle"});
+  z1tl(svg,730,228,["+ hardware-control libraries","+ its own Java runtime","  (for limited resources)"],{size:16,lh:28,color:"var(--green)"});
+  T(svg,605,450,"shared (taken from Linux)",{size:15,color:"var(--soft)",anchor:"middle"})},440);
 
 B("b3i",[
-  N("tb",40,20,880,"box w",`<table class="tb"><tr><th></th><th>Android</th><th>Linux</th></tr><tr><td><b>A</b>rchitecture</td><td>mobile devices (<b>ARM</b> ISA)</td><td>general-purpose processors (<b>x86</b> ISA)</td></tr><tr><td><b>K</b>ernel changes</td><td>adds alarm driver, power-management wrapper, IPC interface, low memory killer, kernel debugger + logger</td><td>standard kernel</td></tr><tr><td><b>C</b> library</td><td>its <b>own custom C library</b>, suited to low memory</td><td>glibc</td></tr><tr><td><b>D</b>alvik VM</td><td>a custom, simplified Java VM</td><td>the default JVM</td></tr><tr><td><b>F</b>ile system</td><td><b>YAFFS</b> (Yet Another Flash File System)</td><td>Ext, FAT, NTFS</td></tr><tr><td><b>P</b>ower</td><td>designed to <b>save battery</b>, more aggressive</td><td>standard Linux PM</td></tr></table>`),
-  N("sk",980,20,480,"sticky",sticky(`"Android Keeps Cheap Devices Frugal on Power"`,`Architecture · Kernel · C library · Dalvik · File system · Power`)),
-  N("km",980,"b:sk:40",480,"box y",`<span class="t">the 5 kernel additions</span>"<b>A</b> <b>P</b>hone <b>B</b>inds, <b>K</b>ills, <b>L</b>ogs"<br><b>A</b>larm driver · <b>P</b>ower-management wrapper · <b>B</b>inder IPC interface · low memory <b>K</b>iller · kernel debugger + <b>L</b>ogger`)
-],[]);
+  N("sk",1060,20,400,"sticky",sticky(`"Android Keeps Cheap Devices Frugal on Power"`,`Architecture · Kernel · C library · Dalvik · File system · Power`)),
+  N("km",1060,"b:sk:30",400,"sticky",sticky(`kernel extras: "A Phone Binds, Kills, Logs"`,`Alarm driver · Power-mgmt wrapper · Binder IPC · low-memory Killer · debugger + Logger`))
+],[],(rc,svg)=>{
+  T(svg,240,40,"📱 Android",{size:22,weight:700,color:"var(--green)"});T(svg,800,40,"💻 Linux",{size:22,weight:700,color:"var(--blue)"});
+  const R=[["Architecture","ARM","x86"],["Kernel","+ 5 extras","standard"],["C library","own custom (low memory)","glibc"],["VM","Dalvik (simplified)","standard JVM"],["File system","YAFFS (flash)","Ext · FAT · NTFS"],["Power","aggressive: saves battery","standard Linux PM"]];
+  R.forEach(([k,a,b],i)=>{const y=90+i*58;z1pill(rc,svg,240,y,a,"var(--g)",{w:300,seed:120+i});T(svg,520,y+6,k,{size:16,weight:700,color:"var(--red)"});z1pill(rc,svg,800,y,b,"var(--b)",{w:300,seed:130+i})})},440);
 
 B("b3j",[
-  N("pcb",40,20,420,"box y",`<span class="t">Process Control Block (PCB)</span>process state · process number · program counter · registers · memory limits · list of open files…<br><span class="ann">at base level Android's PCB is the same; managed by standard process management</span>`),
   N("nw",560,110,130,"oval w center",`New`),
   N("rd","r:nw:90","t:nw",130,"oval b center",`Ready`),
   N("rn","r:rd:110","t:nw",140,"oval g center",`Running`),
   N("ex","r:rn:90","t:nw",120,"oval p center",`Exit`),
   N("bl",890,"b:rd:130",150,"oval y center",`Blocked`)
-],[E("nw","rd","admitted",{bend:0}),E("rd","rn","scheduled",{bend:0}),E("rn","rd","interrupted",{bend:0.4,free:1}),E("rn","ex","",{bend:0}),E("rn","bl","waits for input/output",{bend:0.15}),E("bl","rd","event done",{bend:0})],null,0);
+],[E("nw","rd","admitted",{bend:0}),E("rd","rn","scheduled",{bend:0}),E("rn","rd","interrupted",{bend:0.4,free:1}),E("rn","ex","",{bend:0}),E("rn","bl","waits for input/output",{bend:0.15}),E("bl","rd","event done",{bend:0})],
+(rc,svg)=>{T(svg,60,40,"Process Control Block (PCB)",{size:19,weight:700,anchor:"start"});
+  ["process state","process number","program counter","registers","memory limits","open files"].forEach((f,i)=>{box(rc,svg,60,60+i*44,340,40,i%2?"var(--card)":"var(--y)",140+i);T(svg,230,86+i*44,f,{size:17})});
+  T(svg,230,350,"Android's PCB = the standard one",{size:15,color:"var(--soft)"})},370);
 
 B("b3k",[
   N("in",40,60,170,"box w center",`<b>init</b> at boot`),
@@ -618,121 +644,105 @@ B("b3k",[
   N("a1","r:zy:120",10,200,"box w center",`app process 1`),
   N("a2","r:zy:120","b:a1:20",200,"box w center",`app process 2`),
   N("a3","r:zy:120","b:a2:20",200,"box w center",`app process 3`),
-  N("sh",1060,10,400,"box b",`all apps <b>share VM memory + framework resources</b> → better performance than creating a VM separately for every app`),
-  N("me",40,"b:a3:40",460,"box y",`<span class="t">🧬 "the first cell of a new organism"</span>a <b>daemon service</b> · the <b>parent of all app processes</b> · started by <b>init</b> when Android starts · has the core libraries linked · <b>preloads</b> frequently-used libraries`),
-  N("wy","r:me:40","t:me",420,"box g",`<b>why?</b> improves app <b>launch time</b>: a new app is just a <b>fork</b> of an already-warm process`),
-  N("sk","r:wy:40","t:me",400,"sticky",sticky(`Zygote = the mother cell`,`every app is cloned (forked) from her, so they're born fast`))
+  N("me",40,"b:a3:40",640,"plain",`<b>Zygote</b> = a daemon, the <b>parent of all app processes</b> · has core libraries <b>preloaded</b><br>a new app = a <b>fork</b> of this warm process → <b>faster launch</b> · apps <b>share VM memory + framework resources</b>`)
 ],[E("in","zy","starts",{bend:0}),E("zy","a1","fork",{bend:0}),E("zy","a2","fork",{bend:0}),E("zy","a3","fork",{bend:0})]);
 
-B("b3l",[
-  N("p1",40,20,460,"box g",`<span class="t">Principle 1</span>Android tries to <b>keep an app's process alive as long as possible</b>`),
-  N("p2",40,"b:p1:24",460,"box p",`<span class="t">Principle 2</span>it <b>only kills a process when out of memory</b>, to reclaim memory for more important / new processes · which one dies depends on its <b>priority</b> in the "importance hierarchy"`),
-  N("lc",620,"mo:p1,p2",360,"oval y big center",`the Process Life Cycle model`),
-  N("lf",1080,20,380,"box b",`a process's lifetime is <b>not directly controlled by the app</b>, but by these principles`),
-  N("mt",1080,"b:lf:24",380,"box w",`→ the user gets a <b>multi-task experience</b>: easy to run several apps, easy to switch between them`)
-],[E("p1","lc","",{bend:0}),E("p2","lc","",{bend:0}),E("lc","lf","",{bend:0}),E("lc","mt","",{bend:0})]);
+B("b3l",[],[],(rc,svg)=>{
+  z1tl(svg,60,40,["① keep an app's process alive AS LONG AS POSSIBLE","② kill one ONLY when memory runs out, lowest importance first"],{size:19,lh:34,weight:700});
+  const x0=60,y=130,w=900;box(rc,svg,x0,y,w,70,"var(--card)",5);T(svg,x0+w+20,y+42,"RAM",{size:18,anchor:"start",weight:700});
+  [["app A",200,"var(--g)"],["app B",200,"var(--b)"],["app C",220,"var(--y)"],["old empty",180,"var(--p)"]].forEach(([s,ww,f],i,a)=>{const x=x0+a.slice(0,i).reduce((t,q)=>t+q[1],0);box(rc,svg,x+4,y+6,ww-8,58,f,10+i);T(svg,x+ww/2,y+42,s,{size:17,weight:700})});
+  add(svg,rc.rectangle(x0+616,y-4,188,78,{stroke:"var(--red)",strokeWidth:3,strokeLineDash:[8,6],roughness:0.8}));T(svg,x0+710,y-14,"✗ killed",{size:16,color:"var(--red)",weight:700});
+  arrow(rc,svg,[x0+880,y+110],[x0+800,y+76],{bend:0.2,color:"red"});T(svg,x0+880,y+130,"new app needs room → this one goes",{size:16,color:"var(--red)"});
+  T(svg,60,310,"the app does NOT directly control its own lifetime → users get easy multitasking + switching",{size:17,anchor:"start"})},330);
 
 B("b3m",[
-  N("l1",40,20,560,"box g",`<span class="t">① Foreground</span>needed for what the user is <b>doing right now</b>`),
-  N("l2",40,"b:l1:12",560,"box b",`<span class="t">② Visible</span>no foreground components, but still <b>affects what's on screen</b>`),
-  N("l3",40,"b:l2:12",560,"box y",`<span class="t">③ Service</span>running a service started with <code>startService()</code>`),
-  N("l4",40,"b:l3:12",560,"box w",`<span class="t">④ Background</span>holds an activity the user <b>can't see</b> (its <code>onStop()</code> has been called)`),
-  N("l5",40,"b:l4:12",560,"box p",`<span class="t">⑤ Empty</span>no active components · kept <b>only for caching</b>`),
-  N("ks",700,"m:l1",190,"oval g center",`killed LAST`),
-  N("ko",700,"m:l5",190,"oval p center",`killed FIRST`),
-  N("ru",980,20,480,"box y",`<span class="t">Rank the HIGHEST level it can</span>a process hosting a <b>service</b> AND a <b>visible activity</b> is ranked <b>visible</b>, not service`),
-  N("li",980,"b:ru:30",480,"box w",`Linux reclaims memory by <b>removing the lowest-priority process</b> first`),
-  N("sk",980,"b:li:40",480,"sticky",sticky(`🍽 the restaurant table`,`① the dish you're eating · ② the dish you can see on the table · ③ the waiter still cooking · ④ a plate pushed aside · ⑤ a clean plate kept "just in case". Cleared first: ⑤`))
-],[E("ko","l5","",{bend:0}),E("ks","l1","",{bend:0})]);
+  N("sk",980,250,480,"sticky",sticky(`🍽 the restaurant table`,`dish you're eating · dish you can see · waiter still cooking · plate pushed aside · clean spare plate (cleared first)`))
+],[],(rc,svg)=>{
+  const L=[["① Foreground","what the user is doing now","var(--g)"],["② Visible","still affects the screen","var(--b)"],["③ Service","startService() running","var(--y)"],["④ Background","activity hidden (onStop)","var(--card)"],["⑤ Empty","only kept as a cache","var(--p)"]];
+  L.forEach(([n,s,f],i)=>{const w=360+i*110,x=560-w/2,y=30+i*72;box(rc,svg,x,y,w,60,f,150+i);T(svg,560,y+28,n,{size:19,weight:700});T(svg,560,y+50,s,{size:14,color:"var(--soft)"})});
+  arrow(rc,svg,[90,350],[90,70],{bend:0,color:"green"});T(svg,90,56,"killed LAST",{size:15,color:"var(--green)"});T(svg,90,380,"killed FIRST",{size:15,color:"var(--red)"});
+  z1tl(svg,980,60,["rank = the HIGHEST level it qualifies for:","service + visible activity → VISIBLE","","memory is reclaimed from the","lowest-priority process first"],{size:17,lh:30})},400);
 
-B("b3n",[
-  N("pm",40,40,380,"oval g big center",`Android power management`),
-  N("x1",520,20,440,"box w",`<b>extends</b> Linux PM with a <b>more aggressive</b> policy`),
-  N("x2",520,"b:x1:24",440,"box b",`<span class="t">PM Application Framework</span>a <b>Java application</b> on top of the Linux kernel's PM · <b>acts like a driver</b> that apps use for power management · apps reach it through <b>JNI</b>`),
-  N("x3",520,"b:x2:24",440,"box y",`power states are critical for devices: <b>screen, keyboard, Wi-Fi</b>…`),
-  N("ac",1060,"m:x2",400,"box w",`kernel PM follows <b>ACPI</b>: a specification for power management in the OS, with different power states`)
-],[E("pm","x1","",{bend:0}),E("pm","x2","",{bend:0}),E("pm","x3","",{bend:0}),E("x2","ac","built on",{bend:0})]);
+B("b3n",[],[],(rc,svg)=>{
+  z1blk(rc,svg,60,30,420,56,"var(--card)","apps");z1blk(rc,svg,60,140,420,74,"var(--g)","PM Application Framework",{sub:"Java · acts like a driver"});z1blk(rc,svg,60,270,420,74,"var(--b)","Linux kernel PM",{sub:"follows ACPI power states"});
+  arrow(rc,svg,[270,90],[270,134],{bend:0,color:"ink"});T(svg,290,118,"via JNI",{size:15,anchor:"start",color:"var(--soft)"});arrow(rc,svg,[270,218],[270,264],{bend:0,color:"ink"});
+  z1tl(svg,560,70,["Android PM EXTENDS Linux PM","with a MORE AGGRESSIVE policy","","power states matter for:","screen · keyboard · Wi-Fi"],{size:19,lh:34})},360);
 
-B("b3o",[
-  N("ps",40,20,620,"box g",`<span class="t">P-states = Performance (while the CPU is ACTIVE)</span><b>P0</b> = highest frequency + highest power use · higher P number = <b>lower performance, lower power</b><br>P0 = the max <b>sustainable</b> performance under the <b>thermal design power (TDP)</b> limit<br><span class="ann">turbo (T) states: cores run <b>above</b> P0 while they stay below max power, current + temperature specs</span>`),
-  N("cs",760,20,700,"box b",`<span class="t">C-states = Chill (IDLE states)</span>as on the slide: <b>C0</b> idle · <b>C1</b> halt (clock gated) · <b>C3</b> sleep · <b>C6</b> off<br>deeper C = <b>less power</b> but <b>longer wake-up</b> (bigger performance penalty)<br><span class="ann">strictly, ACPI calls C0 the running state; write what your lecture says</span>`),
-  N("sk",500,"b:ps,cs:40",500,"sticky",sticky(`P = Performance · C = Chill`,`bigger number = slower (P) or sleepier (C)`))
-],[]);
+B("b3o",[],[],(rc,svg)=>{
+  Z1H("P-states = Performance (CPU active)",60,40,svg);
+  T(svg,100,80,"turbo ⚡ above P0 (within power/temp limits)",{size:15,anchor:"start",color:"var(--red)"});
+  ["P0  max sustainable (TDP limit)","P1","P2","…  Pn  slowest, least power"].forEach((s,i)=>{box(rc,svg,60,96+i*52,520,44,["var(--p)","var(--y)","var(--b)","var(--card)"][i],160+i);T(svg,80,124+i*52,s,{size:17,anchor:"start",weight:700})});
+  arrow(rc,svg,[610,110],[610,290],{bend:0,color:"ink"});T(svg,624,200,"higher P = slower, cooler",{size:15,anchor:"start"});
+  Z1H("C-states = Chill (CPU idle)",820,40,svg);
+  [["C0","idle"],["C1","halt (clock gated)"],["C3","sleep 😴"],["C6","off"]].forEach(([c,s],i)=>{box(rc,svg,820,96+i*52,440,44,["var(--g)","var(--b)","var(--y)","var(--card)"][i],170+i);T(svg,840,124+i*52,c+"  "+s,{size:17,anchor:"start",weight:700})});
+  arrow(rc,svg,[1290,110],[1290,290],{bend:0,color:"ink"});T(svg,1304,180,"deeper =",{size:15,anchor:"start"});T(svg,1304,202,"less power,",{size:15,anchor:"start"});T(svg,1304,224,"slower wake-up",{size:15,anchor:"start"})},320);
 
-B("b3p",[
-  N("ap",40,20,300,"box w center",`Application`),
-  N("pm",40,"b:ap:60",300,"box g center",`App framework: <b>PowerManager</b>`),
-  N("lk",40,"b:pm:60",300,"box b center",`Linux kernel → <b>creates the wakelock</b>`),
-  N("sl",440,20,520,"box p",`by default the device <b>goes to sleep on timeout</b> · suspend mode powers down all hardware <b>except memory</b> · one approach: <b>suspend whenever idle</b>`),
-  N("wl",440,"b:sl:30",520,"box y",`a process must <b>obtain a wakelock</b> to keep the device awake · wakelocks are how the system knows it is <b>in use</b>`),
-  N("t1",1040,20,420,"box w",`<b>Partial_wake_lock</b> → CPU only`),
-  N("t2",1040,"b:t1:12",420,"box w",`<b>Screen_dim_wake_lock</b> → CPU + dim screen`),
-  N("t3",1040,"b:t2:12",420,"box w",`<b>Screen_bright_wake_lock</b> → CPU + bright screen`),
-  N("t4",1040,"b:t3:12",420,"box w",`<b>Full_wake_lock</b> → CPU + bright screen + keyboard`),
-  N("ru",440,"b:wl:40",520,"box g",`<span class="t">Rule</span>obtain the <b>lightest</b> wakelock that does the job → maximum power saving`),
-  N("sk",1040,"b:t4:40",420,"sticky",sticky(`a dimmer switch: Partial → Dim → Bright → Full`,`turn it up only as far as you need`))
-],[E("ap","pm","requests wakelock",{bend:0}),E("pm","lk","",{bend:0})]);
-
+B("b3p",[],[],(rc,svg)=>{
+  z1blk(rc,svg,60,30,280,52,"var(--card)","Application");z1blk(rc,svg,60,130,280,52,"var(--g)","PowerManager");z1blk(rc,svg,60,230,280,60,"var(--b)","Linux kernel",{sub:"creates the wakelock"});
+  arrow(rc,svg,[200,86],[200,124],{bend:0,color:"ink"});T(svg,214,112,"requests a wakelock",{size:14,anchor:"start",color:"var(--soft)"});arrow(rc,svg,[200,186],[200,224],{bend:0,color:"ink"});
+  z1tl(svg,400,50,["default: sleep on timeout","suspend = everything off","except memory","need to stay awake?","→ hold a WAKELOCK"],{size:17,lh:30});
+  const W=[["Partial","CPU"],["Screen dim","CPU + dim screen"],["Screen bright","CPU + bright screen"],["Full","CPU + bright + keyboard"]];
+  W.forEach(([n,s],i)=>{const h=60+i*55,x=760+i*175,y=300-h;box(rc,svg,x,y,150,h,["var(--card)","var(--b)","var(--y)","var(--p)"][i],180+i);T(svg,x+75,y+28,n,{size:16,weight:700});T(svg,x+75,320,s,{size:13,color:"var(--soft)"})});
+  T(svg,1060,360,"take the LIGHTEST one that does the job → most power saved",{size:17,color:"var(--red)",weight:700})},380);
 /* ===== 4 · MAUI + XAML basics ===== */
+const rw4_rect=(rc,svg,x,y,w,h,o)=>add(svg,rc.rectangle(x,y,w,h,Object.assign({stroke:"var(--ink)",strokeWidth:2,roughness:0.9,seed:5},o||{})));
 B("b4a",[
-  N("cs",40,90,300,"box y center",`ONE code base in <b>C#</b>`),
-  N("mu","r:cs:90","m:cs",300,"oval g big center",`.NET MAUI`),
-  N("p1","r:mu:110",10,180,"box w center",`🤖 Android`),
-  N("p2","r:mu:110","b:p1:12",180,"box w center",`🍎 iOS`),
-  N("p3","r:mu:110","b:p2:12",180,"box w center",`💻 macOS`),
-  N("p4","r:mu:110","b:p3:12",180,"box w center",`🪟 Windows`),
-  N("nm",1170,10,290,"box b",`<b>M</b>ulti-platform <b>A</b>pp <b>UI</b> · designed by <b>Microsoft</b>, part of the <b>.NET</b> family · this course uses <b>.NET 10</b> · written in <b>C#</b>: easy, versatile, quick to pick up`),
-  N("tr",40,"b:p4:40",560,"box w",`you write once; MAUI <b>translates under the hood</b> into what each OS expects · your controls map to <b>native</b> platform controls (so they look a bit different on each)`),
-  N("ide","r:tr:40","t:tr",520,"box g",`<span class="t">IDE = Integrated Development Environment</span>one app to write, run + fix code<br>Windows → <b>Visual Studio</b> (the purple one, <span class="warn">NOT VS Code</span>) · macOS → <b>Rider</b>`)
-],[E("cs","mu","",{bend:0}),E("mu","p1","",{bend:0}),E("mu","p2","",{bend:0}),E("mu","p3","",{bend:0}),E("mu","p4","",{bend:0})]);
+  N("cs",40,110,260,"box y center",`ONE code base<br>in <b>C#</b>`),
+  N("mu","r:cs:90","m:cs",260,"oval g big center",`.NET MAUI`),
+  N("p1","r:mu:110",20,180,"box w center",`🤖 Android`),
+  N("p2","r:mu:110","b:p1:14",180,"box w center",`🍎 iOS`),
+  N("p3","r:mu:110","b:p2:14",180,"box w center",`💻 macOS`),
+  N("p4","r:mu:110","b:p3:14",180,"box w center",`🪟 Windows`),
+  N("nt","r:p1:80","t:p1",420,"box w",`each control becomes the platform's <b>native</b> control → looks slightly different per OS`),
+  N("nm",40,"b:p4:40",680,"box b",`<b>M</b>ulti-platform <b>A</b>pp <b>UI</b> · by <b>Microsoft</b> · part of <b>.NET</b> · course uses <b>.NET 10</b>`),
+  N("ide","r:nm:40","t:nm",560,"box g",`<b>IDE</b>: Windows → <b>Visual Studio</b> (<span class="warn">not VS Code</span>) · macOS → <b>Rider</b>`)
+],[E("cs","mu","write once",{bend:0}),E("mu","p1","",{bend:0}),E("mu","p2","",{bend:0}),E("mu","p3","",{bend:0}),E("mu","p4","",{bend:0}),E("p1","nt","",{bend:0,dash:1,color:"blue"})]);
 
 B("b4b",[
-  N("app",40,20,460,"box y",`<span class="t">App.xaml + App.xaml.cs</span>the application frame: <b>every page lives inside the App</b>; it's the starting point`),
-  N("xa",40,"b:app:60",220,"box b",`<span class="t">Page.xaml</span>the <b>UI</b>: what the user sees`),
-  N("cs","r:xa:70","t:xa",220,"box g",`<span class="t">Page.xaml.cs</span>the <b>logic</b>: what the app does = <b>code-behind</b>`),
-  N("an",580,20,880,"box w",`<span class="t">Web analogy</span><b>XAML</b> (eXtensible Application Markup Language) ≈ <b>HTML</b>: tags build the screen (<code>&lt;Button&gt;</code>, <code>&lt;Entry&gt;</code> for typing, <code>&lt;Label&gt;</code> for text)<br><b>C# code-behind</b> ≈ <b>JavaScript</b>: <code>document.getElementById</code> ↔ an element's <code>x:Name</code> reached from C#`),
-  N("mo",580,"b:an:40",280,"box w",`📦 <b>Models</b> folder → data`),
-  N("vw","r:mo:30","t:mo",280,"box w",`📄 <b>Views</b> folder → pages`),
-  N("wy",580,"b:mo,vw:40",600,"box b",`<b>why separate?</b> business logic + data stay independent of the UI → easier to understand, maintain and change · patterns built on this: <b>MVVM</b>, <b>MVC</b>`),
-  N("sk",40,"b:xa,cs:50",460,"sticky",sticky(`XAML = the Look · C# = the Brain`,`every page is a PAIR of files`))
-],[E("app","xa","",{bend:0}),E("app","cs","",{bend:0}),E("xa","cs","pair",{both:1,bend:0,color:"blue"}),E("mo","wy","",{bend:0}),E("vw","wy","",{bend:0})]);
+  N("x1",90,100,230,"box b center",`<b>MainPage.xaml</b><br>the LOOK (UI)`),
+  N("c1","r:x1:80","t:x1",250,"box g center",`<b>MainPage.xaml.cs</b><br>the LOGIC (code-behind)`),
+  N("x2",90,"b:x1:40",230,"box b center",`<b>Page2.xaml</b>`),
+  N("c2","r:x2:80","t:x2",250,"box g center",`<b>Page2.xaml.cs</b>`),
+  N("an",760,40,380,"box w",`<b>XAML</b> ≈ HTML: tags build the screen<br><b>C#</b> ≈ JavaScript: does the work<br><b>x:Name</b> ≈ <code>getElementById</code>`),
+  N("mo",760,"b:an:40",180,"box w center",`📦 <b>Models</b><br>data`),
+  N("vw","r:mo:20","t:mo",180,"box w center",`📄 <b>Views</b><br>pages`),
+  N("wy",1200,40,260,"box y",`keep UI apart from logic + data → easy to change · <b>MVVM</b> / <b>MVC</b>`)
+],[E("x1","c1","pair",{both:1,bend:0,color:"blue"}),E("x2","c2","",{both:1,bend:0,color:"blue"})],
+(rc,svg,R)=>{const x0=60,y0=40,x1=R.c1.x+R.c1.w+30,y1=R.x2.y+R.x2.h+30;rw4_rect(rc,svg,x0,y0,x1-x0,y1-y0,{strokeWidth:2.4,seed:61});
+  T(svg,x0+16,y0+34,"App.xaml + App.xaml.cs = the frame (the app starts here)",{anchor:"start",size:17,weight:700,color:"var(--red)"})},340);
 
 B("b4c",[
   N("s1",40,40,260,"box y center",`① <b>sketch</b> the UI on paper`),
-  N("s2","r:s1:80","t:s1",260,"box b center",`② write the <b>XAML</b> (the look)`),
-  N("s3","r:s2:80","t:s1",300,"box g center",`③ write the <b>C#</b> (event handlers: what each button does)`),
-  N("s4","r:s3:80","t:s1",300,"box w center",`④ run on the emulator / device · fix · repeat`),
-  N("no",40,"b:s1,s2,s3,s4:40",900,"plain",`<span class="ann">the order taught in class (17 Nov, from a classmate's notes): design first, then markup, then code. It's the same order lectures 5 → 8 follow: layouts, pages, controls, then events.</span>`)
+  N("s2","r:s1:80","t:s1",260,"box b center",`② write the <b>XAML</b><br>(the look)`),
+  N("s3","r:s2:80","t:s1",300,"box g center",`③ write the <b>C#</b><br>(what each button does)`),
+  N("s4","r:s3:80","t:s1",300,"box w center",`④ <b>run</b> on emulator / device · fix · repeat`)
 ],[E("s1","s2","",{bend:0}),E("s2","s3","",{bend:0}),E("s3","s4","",{bend:0})]);
 
 B("b4d",[
-  N("code",40,20,760,"box w",`<span class="t">the base page every example starts from</span>`+X(`<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage [[① xmlns]]="http://schemas.microsoft.com/dotnet/2021/maui"
+  N("code",40,20,760,"box w",X(`<ContentPage [[① xmlns]]="http://schemas.microsoft.com/dotnet/2021/maui"
              [[② xmlns:x]]="http://schemas.microsoft.com/winfx/2009/xaml"
              [[③ x:Class]]="MauiNotes.MainPage"
              [[④ Title]]="Demo">
-    <Grid Padding="24">
-        <!-- one child: the page's Content -->
-    </Grid>
+    <Grid> ... </Grid>      <!-- exactly ONE content child -->
 </ContentPage>`)),
-  N("c1",900,20,560,"box b",`① <b>xmlns</b> = the MAUI namespace: makes <code>Grid</code>, <code>Label</code>… known`),
-  N("c2",900,"b:c1:16",560,"box b",`② <b>xmlns:x</b> = the XAML language namespace: gives you <code>x:Name</code>, <code>x:Class</code>, <code>x:Key</code>…`),
-  N("c3",900,"b:c2:16",560,"box g",`③ <b>x:Class</b> = the C# code-behind class this XAML belongs to (namespace.ClassName)`),
-  N("c4",900,"b:c3:16",560,"box y",`④ <b>Title</b> = shown in the nav bar / tab · a ContentPage hosts <b>exactly one</b> Content child`)
+  N("c1",880,20,580,"box b",`① <b>xmlns</b> → MAUI controls (Grid, Label…)`),
+  N("c2",880,"b:c1:14",580,"box b",`② <b>xmlns:x</b> → XAML keywords (x:Name, x:Class, x:Key)`),
+  N("c3",880,"b:c2:14",580,"box g",`③ <b>x:Class</b> → its C# code-behind class`),
+  N("c4",880,"b:c3:14",580,"box y",`④ <b>Title</b> → text in the nav bar / tab`)
 ],[]);
 
 B("b4e",[
-  N("e1",40,20,440,"box w",`<span class="t"><code>x:Name</code></span>names an element so code (or <code>x:Reference</code>) can reach it`),
-  N("e2","r:e1:30","t:e1",440,"box w",`<span class="t"><code>{Binding PropertyName}</code></span>MVVM data binding · <code>Command</code> for actions`),
-  N("e3","r:e2:30","t:e1",500,"box w",`<span class="t"><code>StaticResource</code></span>reuse colours, styles, templates, converters`),
-  N("e4",40,"b:e1,e2,e3:30",600,"box w",`<span class="t"><code>OnPlatform</code> / <code>OnIdiom</code></span>per-platform or per-device values · only when one shared adaptive layout isn't enough`),
-  N("e5","r:e4:30","t:e4",780,"box w",`<span class="t"><code>AutomationProperties.Name</code></span>accessibility: a description for screen readers where visible text isn't enough`),
-  N("sk",500,"b:e4,e5:40",500,"sticky",sticky(`Name · Bind · Reuse · Adapt · Describe`,`the 5 XAML essentials`))
+  N("e1",40,40,260,"box w center",`<code>x:Name</code><br>name it so C# can reach it`),
+  N("e2","r:e1:30","t:e1",260,"box w center",`<code>{Binding Prop}</code><br>data binding (MVVM)`),
+  N("e3","r:e2:30","t:e1",260,"box w center",`<code>StaticResource</code><br>reuse colours + styles`),
+  N("e4","r:e3:30","t:e1",260,"box w center",`<code>OnPlatform</code> / <code>OnIdiom</code><br>a value per OS / device`),
+  N("e5","r:e4:30","t:e1",260,"box w center",`<code>AutomationProperties.Name</code><br>screen-reader text`),
+  N("sk",400,"b:e1,e2,e3,e4,e5:40",700,"sticky",sticky(`Name · Bind · Reuse · Adapt · Describe`,`the 5 XAML essentials, left to right`))
 ],[]);
 
 /* ===== 5 · layouts ===== */
 B("b5a",[
-  N("q",40,20,1420,"plain",`<span class="h">Which layout? one picture each</span> <span class="ann">(each drawn the way the lecture's example renders · StackLayout = either stack, see 5.2)</span>`)
+  N("q",40,20,1420,"plain",`<span class="h">Which layout? one picture each</span>`)
 ],[],(rc,svg,R)=>{const y=R.q.y+R.q.h+30,w=200,h=330,gap=40;const L=["VerticalStackLayout","HorizontalStackLayout","Grid","FlexLayout","AbsoluteLayout","BindableLayout"];
   L.forEach((n,i)=>{const x=40+i*(w+gap),s=phone(rc,svg,x,y,w,h,60+i);T(svg,x+w/2,y+h+30,n,{size:17,weight:700});
     if(i===0)[0,1,2,3].forEach(j=>box(rc,svg,s.x+10,s.y+12+j*58,s.w-20,44,j?"var(--b)":"var(--y)",70+j));
@@ -744,412 +754,458 @@ B("b5a",[
   const hint=["top → bottom","left → right","rows × columns","wraps when full","pinned by coords","repeats a template"];hint.forEach((t,i)=>T(svg,40+i*(w+gap)+w/2,y+h+54,t,{size:16,color:"var(--soft)"}))},470);
 
 B("b5b",[
-  N("v",40,20,450,"box b",`<span class="t">VerticalStackLayout</span>children <b>top → bottom</b> · ideal for forms + short sections<br>members: <b>Spacing</b>, Padding, HorizontalOptions, VerticalOptions`),
-  N("h","r:v:40","t:v",450,"box b",`<span class="t">HorizontalStackLayout</span>children <b>left → right</b> · prefer it over a horizontal StackLayout<br>e.g. avatar Image + a VerticalStackLayout of name + "Online"`),
-  N("s","r:h:40","t:v",480,"box w",`<span class="t">StackLayout (legacy / general)</span>one direction set by <b>Orientation</b> = Vertical or Horizontal · the two above are <b>clearer and faster</b>`),
-  N("ex",40,"b:v,h,s:40",700,"box w",`<span class="t">Lecture 6 · StackLayout "Student Registration"</span>`+X(`<StackLayout [[Orientation="Vertical"]] Padding="20" [[Spacing="10"]]>
-    <Label Text="Student Registration" FontSize="24" FontAttributes="Bold" />
-    <Entry Placeholder="Enter your name" />
-    <Entry Placeholder="Enter your email" />
-    <Button Text="Register" />
+  N("code",40,20,520,"box w",X(`<StackLayout [[Orientation="Vertical"]]
+             Padding="20" Spacing="10">
+  <Label  Text="Student Registration" />
+  <Entry  Placeholder="Enter your name" />
+  <Button Text="Register" />
 </StackLayout>`)),
-  N("pd","r:ex:40","t:ex",680,"box y",`<span class="t">Padding vs Spacing vs Margin</span><b>Padding</b> = space <b>inside</b> the layout's edge<br><b>Spacing</b> = gap <b>between</b> children<br><b>Margin</b> = space <b>outside</b> one element (e.g. FlexLayout buttons <code>Margin="5"</code>)`),
-  N("sk",780,"b:pd:30",680,"sticky",sticky(`V-stack falls down, H-stack walks across`,`StackLayout needs to be TOLD which way (Orientation)`))
-],[]);
+  N("pf",40,"b:code:24",520,"box y",`<b>StackLayout</b> must be told which way (<b>Orientation</b>) · prefer <b>VerticalStackLayout</b> / <b>HorizontalStackLayout</b>: clearer + faster`)
+],[],(rc,svg,R)=>{const y=40,h=300;
+  const v=phone(rc,svg,620,y,190,h,21);["Label","Entry","Entry","Button"].forEach((t,j)=>{box(rc,svg,v.x+12,v.y+14+j*56,v.w-24,42,j===3?"var(--g)":"var(--b)",22+j);T(svg,v.x+v.w/2,v.y+14+j*56+27,t,{size:16})});
+  arrow(rc,svg,[v.x+v.w+16,v.y+20],[v.x+v.w+16,v.y+220],{bend:0,color:"red"});T(svg,620+95,y+h+28,"VerticalStackLayout",{size:16,weight:700});
+  const hz=phone(rc,svg,870,y,190,h,31);["😀","Ada","Online"].forEach((t,j)=>{box(rc,svg,hz.x+8+j*58,hz.y+110,52,44,"var(--b)",32+j);T(svg,hz.x+8+j*58+26,hz.y+138,t,{size:14})});
+  arrow(rc,svg,[hz.x+10,hz.y+180],[hz.x+hz.w-10,hz.y+180],{bend:0,color:"red"});T(svg,870+95,y+h+28,"HorizontalStackLayout",{size:16,weight:700});
+  /* padding · spacing · margin */
+  const ox=1110,oy=y,ow=340,oh=h;box(rc,svg,ox,oy,ow,oh,"var(--card)",41);
+  box(rc,svg,ox+40,oy+50,ow-80,70,"var(--b)",42);T(svg,ox+ow/2,oy+92,"child 1",{size:16});
+  box(rc,svg,ox+52,oy+172,ow-104,62,"var(--b)",43);T(svg,ox+ow/2,oy+210,"child 2",{size:16});
+  rw4_rect(rc,svg,ox+40,oy+160,ow-80,86,{stroke:"var(--green)",strokeLineDash:[6,5],seed:44});
+  arrow(rc,svg,[ox+20,oy+4],[ox+20,oy+48],{bend:0,color:"red",both:1});
+  arrow(rc,svg,[ox+ow/2,oy+122],[ox+ow/2,oy+158],{bend:0,color:"blue",both:1});
+  T(svg,ox+30,oy+30,"Padding",{anchor:"start",size:16,color:"var(--red)",weight:700});
+  T(svg,ox+ow/2+12,oy+146,"Spacing",{anchor:"start",size:16,color:"var(--blue)",weight:700});
+  T(svg,ox+ow-46,oy+272,"Margin",{anchor:"end",size:16,color:"var(--green)",weight:700});
+  T(svg,ox+ow/2,y+h+28,"Padding = inside the edge · Spacing = between children",{size:15});
+  T(svg,ox+ow/2,y+h+50,"Margin = outside ONE element",{size:15})},420);
 
 B("b5c",[
-  N("code",40,20,760,"box w",`<span class="t">Lecture 6 · Grid form</span>`+X(`<Grid Padding="20" RowSpacing="10" ColumnSpacing="10"
-      [[RowDefinitions="Auto,Auto,Auto"]] [[ColumnDefinitions="Auto,*"]]>
+  N("code",40,20,760,"box w",X(`<Grid [[RowDefinitions="Auto,Auto,Auto"]] [[ColumnDefinitions="Auto,*"]]>
   <Label  Grid.Row="0" Grid.Column="0" Text="Name:" />
-  <Entry  Grid.Row="0" Grid.Column="1" Placeholder="Enter your name" />
+  <Entry  Grid.Row="0" Grid.Column="1" />
   <Label  Grid.Row="1" Grid.Column="0" Text="Email:" />
-  <Entry  Grid.Row="1" Grid.Column="1" Placeholder="Enter your email" />
-  <Button Grid.Row="2" Grid.Column="0" [[Grid.ColumnSpan="2"]] Text="Submit" />
+  <Entry  Grid.Row="1" Grid.Column="1" />
+  <Button Grid.Row="2" [[Grid.ColumnSpan="2"]] Text="Submit" />
 </Grid>`)),
-  N("sz",40,"b:code:40",760,"box y",`<span class="t">3 kinds of size</span><b>Auto</b> = as big as the content · <b>absolute</b> (e.g. <code>60</code>) = fixed units · <b>*</b> (star) = share of the <b>leftover</b> space <span class="ann">(<code>2*</code> = twice a <code>*</code>)</span><br>members: RowDefinitions, ColumnDefinitions, Row, Column, <b>RowSpan</b>, <b>ColumnSpan</b> · rows + columns <b>count from 0</b>`),
-  N("sk",40,"b:sz:30",760,"sticky",sticky(`Auto hugs · number fixes · star shares`,`<span class="ann">un-placed children default to Row 0, Column 0</span>`))
+  N("sz",40,"b:code:30",240,"box y center",`<b>Auto</b><br>as big as its content`),
+  N("s2","r:sz:20","t:sz",240,"box w center",`<b>60</b><br>fixed size`),
+  N("s3","r:s2:20","t:sz",240,"box g center",`<b>*</b> (star)<br>shares the leftover · 2* = double`),
+  N("ix",40,"b:sz,s2,s3:24",760,"box b",`rows + columns <b>count from 0</b> · no Row/Column given → cell <b>0, 0</b> · <b>RowSpan / ColumnSpan</b> stretch across cells`)
 ],[],(rc,svg,R)=>{const s=phone(rc,svg,900,30,520,500,9),x0=s.x+20,y0=s.y+30,c0=110,c1=s.w-40-c0-10-60,rh=56;
   ["Name:","Email:"].forEach((t,r)=>{box(rc,svg,x0,y0+r*(rh+10),c0,rh,"var(--y)",200+r);T(svg,x0+c0/2,y0+r*(rh+10)+35,t,{size:18});box(rc,svg,x0+c0+10,y0+r*(rh+10),c1,rh,"var(--card)",210+r);T(svg,x0+c0+30,y0+r*(rh+10)+35,r?"Enter your email":"Enter your name",{size:17,color:"var(--soft)",anchor:"start"})});
   box(rc,svg,x0,y0+2*(rh+10),c0+10+c1,rh,"var(--g)",220);T(svg,x0+(c0+10+c1)/2,y0+2*(rh+10)+35,"Submit  (ColumnSpan = 2)",{size:18,weight:700});
   T(svg,x0+c0/2,y0-12,"col 0: Auto",{size:16,color:"var(--red)"});T(svg,x0+c0+10+c1/2,y0-12,"col 1: *  (the rest)",{size:16,color:"var(--red)"});
-  [0,1,2].forEach(r=>T(svg,s.x+s.w-6,y0+r*(rh+10)+35,"row "+r,{size:15,color:"var(--blue)",anchor:"end"}));
-  T(svg,s.x+s.w/2,y0+3*(rh+10)+60,"RowDefinitions = Auto, Auto, Auto",{size:16,color:"var(--soft)"})});
+  [0,1,2].forEach(r=>T(svg,s.x+s.w-6,y0+r*(rh+10)+35,"row "+r,{size:15,color:"var(--blue)",anchor:"end"}))},560);
 
 B("b5d",[
-  N("fl",40,20,560,"box b",`<span class="t">FlexLayout</span>arranges children in a row or column and <b>wraps</b> them when space runs out (like CSS flexbox)<br>members: <b>Direction</b> · <b>Wrap</b> · <b>JustifyContent</b> · <b>AlignItems</b> · <b>Basis</b> · <b>Grow</b> (+ shrink rules)`),
-  N("code",40,"b:fl:30",560,"box w",X(`<FlexLayout Padding="20" [[Direction="Row"]] [[Wrap="Wrap"]]
-     [[JustifyContent="SpaceAround"]] [[AlignItems="Center"]]>
-  <Button Text="One"   Margin="5" />
-  ...  <Button Text="Five" Margin="5" />
+  N("code",40,20,520,"box w",X(`<FlexLayout [[Direction="Row"]] [[Wrap="Wrap"]]
+     [[JustifyContent="SpaceAround"]]
+     [[AlignItems="Center"]]>
+  <Button Text="One" Margin="5" />
+  ...
 </FlexLayout>`)),
-  N("d1",680,20,380,"box w",`<b>Direction</b> = main axis: Row / Column`),
-  N("d2",680,"b:d1:12",380,"box w",`<b>Wrap</b> = start a new line when full`),
-  N("d3",680,"b:d2:12",380,"box w",`<b>JustifyContent</b> = spacing <b>along</b> the main axis (SpaceAround…)`),
-  N("d4",680,"b:d3:12",380,"box w",`<b>AlignItems</b> = alignment <b>across</b> it (Center…)`),
-  N("d5",680,"b:d4:12",380,"box w",`<b>Basis</b> = starting size · <b>Grow</b> = share of extra space · <b>shrink</b> = give up space when tight`),
-  N("sk",680,"b:d5:30",380,"sticky",sticky(`Flex = words in a paragraph`,`they flow along the line and wrap to the next`))
-],[],(rc,svg,R)=>{const s=phone(rc,svg,1120,30,330,420,11);const bw=86,bh=48,gx=(s.w-3*bw)/4;
+  N("bg",40,"b:code:24",520,"box y",`per child: <b>Basis</b> = starting size · <b>Grow</b> = takes extra space · <b>Shrink</b> = gives space up when tight`)
+],[],(rc,svg,R)=>{const bx=[640,760,880],by=120;
+  bx.forEach((x,j)=>{box(rc,svg,x,by,100,50,"var(--b)",150+j);T(svg,x+50,by+31,["One","Two","Three"][j],{size:16})});
+  [0,1].forEach(j=>{box(rc,svg,[640,760][j],by+150,100,50,"var(--b)",155+j);T(svg,[640,760][j]+50,by+181,["Four","Five"][j],{size:16})});
+  arrow(rc,svg,[630,by+68],[1030,by+68],{bend:0,color:"red"});T(svg,640,by+94,"Direction = Row → the main axis",{anchor:"start",size:16,color:"var(--red)",weight:700});
+  add(svg,rc.linearPath([[1008,by+25],[1050,by+25],[1050,by+118],[690,by+118]],{stroke:"var(--green)",strokeWidth:2.4,roughness:0.8}));arrow(rc,svg,[690,by+118],[690,by+146],{bend:0,color:"green"});T(svg,900,by+150,"Wrap → next line",{anchor:"start",size:16,color:"var(--green)",weight:700});
+  arrow(rc,svg,[742,by-18],[758,by-18],{bend:0,color:"blue",both:1});arrow(rc,svg,[862,by-18],[878,by-18],{bend:0,color:"blue",both:1});T(svg,820,by-38,"JustifyContent = spread ALONG",{size:16,color:"var(--blue)",weight:700});
+  arrow(rc,svg,[612,by-4],[612,by+54],{bend:0,color:"blue",both:1});T(svg,640,by+250,"AlignItems = line up ACROSS (↕ on the left)",{anchor:"start",size:16,color:"var(--blue)",weight:700});
+  const s=phone(rc,svg,1120,30,330,420,11);const bw=86,bh=48;
   ["One","Two","Three","Four","Five"].forEach((t,j)=>{const r=Math.floor(j/3),n=r?2:3,g=(s.w-n*bw)/(n+1),x=s.x+g+(j%3)*(bw+g),y=s.y+40+r*80;box(rc,svg,x,y,bw,bh,"var(--b)",120+j);T(svg,x+bw/2,y+31,t,{size:17})});
-  T(svg,s.x+s.w/2,s.y+250,"5 buttons: 3 fit, then wrap",{size:16,color:"var(--red)"});T(svg,s.x+s.w/2,s.y+276,"SpaceAround = equal space",{size:16,color:"var(--soft)"});T(svg,s.x+s.w/2,s.y+298,"around each item",{size:16,color:"var(--soft)"})});
+  T(svg,s.x+s.w/2,s.y+250,"3 fit, then wrap",{size:16,color:"var(--red)"});T(svg,s.x+s.w/2,s.y+276,"SpaceAround = equal space",{size:16,color:"var(--soft)"});T(svg,s.x+s.w/2,s.y+298,"around each item",{size:16,color:"var(--soft)"})},470);
 
 B("b5e",[
-  N("ab",40,20,560,"box b",`<span class="t">AbsoluteLayout</span>positions each child with <code>AbsoluteLayout.LayoutBounds="x, y, width, height"</code> · best for <b>overlays</b> + anchored <b>badges</b><br>members: <b>LayoutBounds</b>, <b>LayoutFlags</b>, Padding`),
-  N("e1",40,"b:ab:30",560,"box w",`<span class="t">① explicit (device units)</span>`+X(`<BoxView Color="LightBlue" LayoutBounds="20,20,250,150" />
-<Label  Text="Inside the Box"  LayoutBounds="60,70,200,50" />
-<Button Text="Click Me"        LayoutBounds="80,120,120,50" />`)+`<small>(each really written AbsoluteLayout.LayoutBounds)</small>`),
-  N("e2",40,"b:e1:30",560,"box y",`<span class="t">② proportional (0 → 1)</span>`+X(`<Button Text="Centre Button"
-   AbsoluteLayout.LayoutBounds="[[0.5,0.5]],150,50"
-   AbsoluteLayout.LayoutFlags="[[PositionProportional]]" />`)+`0.5, 0.5 = the <b>centre</b> · flags say which values are proportions<br><span class="ann">handbook: <code>WidthProportional</code> + width 1 = full width · <code>1,.1,AutoSize,AutoSize</code> = a "NEW" badge pinned top-right</span>`),
-  N("sk",700,490,360,"sticky",sticky(`LayoutBounds = X, Y, W, H`,`"eXactly whY Width Height" · flags turn numbers into 0–1 fractions`))
-],[],(rc,svg,R)=>{const s=phone(rc,svg,700,30,360,420,13);const k=1;box(rc,svg,s.x+20,s.y+20,250,150,"var(--b)",130);T(svg,s.x+60+100,s.y+70+22,"Inside the Box",{size:18,weight:700});box(rc,svg,s.x+80,s.y+120,120,50,"var(--card)",131);T(svg,s.x+140,s.y+151,"Click Me",{size:16});
-  T(svg,s.x+20,s.y+12,"(20,20)",{size:14,color:"var(--red)",anchor:"start"});
+  N("ab",40,20,560,"box b",`<b>AbsoluteLayout</b>: place each child at <code>LayoutBounds="x, y, width, height"</code> · for <b>overlays</b> + <b>badges</b>`),
+  N("e1",40,"b:ab:24",560,"box w",`<span class="t">① exact units</span>`+X(`<BoxView LayoutBounds="20,20,250,150" />
+<Button  LayoutBounds="80,120,120,50" Text="Click Me" />`)),
+  N("e2",40,"b:e1:24",560,"box y",`<span class="t">② proportional (0 → 1)</span>`+X(`<Button LayoutBounds="[[0.5,0.5]],150,50"
+        LayoutFlags="[[PositionProportional]]" />`)+`0.5, 0.5 = the <b>centre</b> · the flag makes x, y fractions`)
+],[],(rc,svg,R)=>{const s=phone(rc,svg,700,30,360,420,13);box(rc,svg,s.x+20,s.y+20,250,150,"var(--b)",130);T(svg,s.x+145,s.y+70,"BoxView",{size:18,weight:700});box(rc,svg,s.x+80,s.y+120,120,50,"var(--card)",131);T(svg,s.x+140,s.y+151,"Click Me",{size:16});
+  T(svg,s.x+20,s.y+12,"(20,20)",{size:14,color:"var(--red)",anchor:"start"});T(svg,700+180,30+455,"① x = 20, y = 20, w = 250, h = 150",{size:16,color:"var(--red)"});
   const p=phone(rc,svg,1110,30,340,420,14);box(rc,svg,p.x+p.w/2-75,p.y+p.h/2-25,150,50,"var(--y)",132);T(svg,p.x+p.w/2,p.y+p.h/2+6,"Centre Button",{size:17});
   const dl=(a,b,c,d)=>add(svg,rc.line(a,b,c,d,{stroke:"var(--red)",strokeWidth:1.2,strokeLineDash:[6,6],roughness:0.4}));const cx=p.x+p.w/2,cy=p.y+p.h/2;dl(p.x,cy,cx-80,cy);dl(cx+80,cy,p.x+p.w,cy);dl(cx,p.y,cx,cy-30);dl(cx,cy+30,cx,p.y+p.h);
-  T(svg,p.x+p.w-8,p.y+p.h/2-10,"0.5",{size:15,color:"var(--red)",anchor:"end"});T(svg,p.x+p.w/2+8,p.y+18,"0.5",{size:15,color:"var(--red)",anchor:"start"})});
+  T(svg,p.x+p.w-8,p.y+p.h/2-10,"0.5",{size:15,color:"var(--red)",anchor:"end"});T(svg,p.x+p.w/2+8,p.y+18,"0.5",{size:15,color:"var(--red)",anchor:"start"});T(svg,1110+170,30+455,"② halfway across, halfway down",{size:16,color:"var(--red)"})},500);
 
 B("b5f",[
-  N("bl",40,20,520,"box b",`<span class="t">BindableLayout</span>fills <b>any</b> layout from a collection: one copy of <b>ItemTemplate</b> per item in <b>ItemsSource</b> · for <b>small, non-scrolling</b> lists<br>members: <code>BindableLayout.ItemsSource</code>, <code>ItemTemplate</code>, <code>EmptyView</code>`),
-  N("cs",40,"b:bl:40",520,"box g",`<span class="t">MainPage.xaml.cs</span>`+X(`public List<string> Languages { get; set; }
-public MainPage() {
-  InitializeComponent();
-  Languages = new List<string>
-    { "C#", "Python", "Java", "JavaScript" };
-  [[BindingContext = this;]]
-}`)),
-  N("xa",660,20,560,"box w",`<span class="t">MainPage.xaml</span>`+X(`<VerticalStackLayout
+  N("src",40,80,250,"box y center",`<b>ItemsSource</b><br>"C#", "Python", "Java", "JavaScript"`),
+  N("tpl","r:src:80","t:src",250,"box b center",`<b>ItemTemplate</b><br>[ Label {Binding .} ]`),
+  N("dot",1040,60,420,"box y",`<code>{Binding .}</code> = the item itself (each string)<br><code>{Binding Name}</code> = a property of each object`),
+  N("bc",1040,"b:dot:24",420,"box p",`forget <code>BindingContext = this;</code> → the list shows <b>nothing</b>`),
+  N("xa",40,430,620,"box w",X(`<VerticalStackLayout
     [[BindableLayout.ItemsSource="{Binding Languages}"]]>
   <BindableLayout.ItemTemplate>
     <DataTemplate>
-      <Border Padding="10" Margin="0,5" Stroke="Blue">
-        <Label Text="[[{Binding .}]]" />
-      </Border>
+      <Label Text="[[{Binding .}]]" />
     </DataTemplate>
   </BindableLayout.ItemTemplate>
 </VerticalStackLayout>`)),
-  N("dot",660,"b:xa:30",270,"box y",`<code>{Binding .}</code> = "the item itself" (each <b>string</b>)`),
-  N("pn","r:dot:20","t:dot",270,"box y",`with <code>List&lt;Person&gt;</code>: <code>{Binding Name}</code> = that object's <b>Name</b> property`),
-  N("pc",660,"b:dot,pn:30",560,"box w",`<span class="t">Person.cs (sample 2)</span><code>public string Name { get; set; } = string.Empty;</code> · same for <code>Department</code> · people: Ada, Bala, Chidinma`),
-  N("bc",40,"b:cs:30",520,"box p",`<b>BindingContext = this</b> lets the XAML see the page's own properties. Forget it → the list shows <b>nothing</b>.`),
-  N("sk",1260,20,200,"sticky",sticky(`Source → Template → Copies`,`a cookie cutter run once per item`))
-],[E("cs","xa","Languages",{bend:-0.1})]);
+  N("cs","r:xa:40","t:xa",460,"box g",X(`Languages = new List<string>
+  { "C#", "Python", "Java", "JavaScript" };
+[[BindingContext = this;]]`)),
+  N("us",40,"b:src:30",540,"box w",`fills <b>any</b> layout from a collection: one copy per item · for <b>small, non-scrolling</b> lists`)
+],[E("src","tpl","× each item",{bend:0})],
+(rc,svg,R)=>{const s=phone(rc,svg,720,30,260,330,17);["C#","Python","Java","JavaScript"].forEach((t,j)=>{box(rc,svg,s.x+14,s.y+16+j*62,s.w-28,48,"var(--g)",170+j);T(svg,s.x+s.w/2,s.y+16+j*62+31,t,{size:17,weight:700})});
+  arrow(rc,svg,[R.tpl.x+R.tpl.w+8,R.tpl.y+R.tpl.h/2],[s.x-14,R.tpl.y+R.tpl.h/2],{bend:0,color:"red"});T(svg,s.x+s.w/2,30+360,"4 copies",{size:16,color:"var(--red)"})});
 
 B("b5g",[
-  N("sv",40,20,520,"box b",`<span class="t">ScrollView</span>scrolls <b>one child</b> when content is taller (or wider) than the screen<br>members: <b>Orientation</b>, Content, Horizontal/VerticalScrollBarVisibility`),
-  N("ex",40,"b:sv:30",520,"box w",X(`<ScrollView>
-  <VerticalStackLayout Padding="20" Spacing="15">
-    <Label Text="Scrollable Page" FontSize="24" />
+  N("sv",40,20,560,"box b",`<b>ScrollView</b>: scrolls <b>ONE child</b> when the content is taller (or wider) than the screen → put a stack inside it`),
+  N("ex",40,"b:sv:24",560,"box w",X(`<ScrollView>
+  <VerticalStackLayout>
     <Button Text="Button 1" />
     ...
     <Button Text="Button 12" />
   </VerticalStackLayout>
 </ScrollView>`)),
-  N("no",660,20,440,"box p",`<span class="warn">✗ don't wrap a CollectionView or ListView in a ScrollView</span> (same direction): they already scroll + virtualise`),
-  N("sk",660,"b:no:40",440,"sticky",sticky(`ScrollView = a window onto a tall page`,`one child only, so put a stack inside it`))
-],[],(rc,svg,R)=>{const s=phone(rc,svg,1170,20,260,400,15);for(let j=0;j<7;j++){const y=s.y+10+j*52-(j>5?0:0);box(rc,svg,s.x+12,y,s.w-24,40,j?"var(--b)":"var(--y)",140+j)}
+  N("no",660,20,440,"box p",`<span class="warn">✗ never put a CollectionView / ListView inside a ScrollView</span>: they already scroll`)
+],[],(rc,svg,R)=>{const s=phone(rc,svg,1170,20,260,400,15);for(let j=0;j<7;j++){const y=s.y+10+j*52;box(rc,svg,s.x+12,y,s.w-24,40,j?"var(--b)":"var(--y)",140+j)}
   T(svg,s.x+s.w/2,s.y+40,"Scrollable Page",{size:16,weight:700});for(let j=1;j<7;j++)T(svg,s.x+s.w/2,s.y+10+j*52+26,"Button "+j,{size:15});
   arrow(rc,svg,[s.x+s.w+16,s.y+60],[s.x+s.w+16,s.y+s.h-20],{bend:0,color:"blue",both:1});T(svg,s.x+s.w/2,s.y+s.h+50,"buttons 7–12 are below: scroll",{size:16,color:"var(--red)"})},520);
 
 /* ===== 6 · pages + navigation ===== */
+/* §6 helpers (rw6_ prefix) */
+const rw6_dash=(rc,svg,x,y,w,h)=>add(svg,rc.rectangle(x,y,w,h,{stroke:"var(--soft)",strokeLineDash:[8,6],roughness:0.6}));
+function rw6_tabs(rc,svg,s,where,labels,active,seed,o={}){const h=o.h||44,y=where==="top"?s.y:s.y+s.h-h;box(rc,svg,s.x,y,s.w,h,"var(--y)",seed||300);
+  const n=labels.length,w=s.w/n;labels.forEach((l,i)=>{const cx=s.x+w*i+w/2;
+    if(o.icons){add(svg,rc.rectangle(cx-8,y+6,16,14,{fill:i===active?"var(--blue)":"var(--soft)",fillStyle:"solid",stroke:"none",roughness:0.5}));T(svg,cx,y+h-7,l,{size:13,weight:i===active?700:400})}
+    else T(svg,cx,y+h/2+6,l,{size:14,weight:i===active?700:400,color:i===active?"var(--blue)":"var(--ink)"})});
+  return where==="top"?{x:s.x,y:s.y+h,w:s.w,h:s.h-h}:{x:s.x,y:s.y,w:s.w,h:s.h-h}}
+function rw6_bar(rc,svg,s,title,o={}){box(rc,svg,s.x,s.y,s.w,40,o.fill||"var(--b)",o.seed||310);
+  if(o.back)T(svg,s.x+10,s.y+26,"‹ Back",{size:14,anchor:"start"});if(o.burger)T(svg,s.x+12,s.y+27,"☰",{size:18,anchor:"start"});
+  T(svg,s.x+s.w/2+(o.back?22:0),s.y+26,title,{size:15,weight:700});return{x:s.x,y:s.y+40,w:s.w,h:s.h-40}}
+function rw6_btn(rc,svg,cx,cy,t,seed){box(rc,svg,cx-62,cy-18,124,36,"var(--card)",seed||320);T(svg,cx,cy+6,t,{size:14})}
+function rw6_menu(rc,svg,x,y,w,h,items,hi,seed){box(rc,svg,x,y,w,h,"var(--g)",seed||330);
+  items.forEach((t,i)=>{if(i===hi)box(rc,svg,x+6,y+22+i*42,w-12,32,"var(--y)",(seed||330)+1+i);T(svg,x+14,y+44+i*42,t,{size:14,anchor:"start",weight:i===hi?700:400})})}
+function rw6_frame(rc,svg,x,y,w,h,seed){box(rc,svg,x,y,w,h,"var(--card)",seed||340,{strokeWidth:2.4});return{x:x+10,y:y+10,w:w-20,h:h-20}}
+const rw6_lab=(svg,x,y,a,b,o={})=>{T(svg,x,y,a,{size:o.size||18,weight:700,color:o.color||"var(--ink)"});if(b)T(svg,x,y+24,b,{size:15,color:"var(--soft)"})};
+
 B("b6a",[
-  N("q",40,20,1420,"plain",`<span class="h">5 page types</span> <span class="ann">(the picture strip from the Microsoft docs in lectures 7.1 + 7.2, plus Shell)</span>`),
-  N("d1",40,"b:q:440",260,"box w",`<span class="t">ContentPage</span>the <b>most common</b> page: <b>one screen</b>, hosts <b>one</b> Content child`),
-  N("d2","r:d1:30","t:d1",260,"box b",`<span class="t">NavigationPage</span><b>stack</b> navigation: push/pop pages + a <b>navigation bar</b> with back`),
-  N("d3","r:d2:30","t:d1",260,"box y",`<span class="t">TabbedPage</span>several pages, picked by <b>tabs</b>; one fully visible at a time`),
-  N("d4","r:d3:30","t:d1",260,"box g",`<span class="t">FlyoutPage</span>a side <b>menu</b> (flyout) + a <b>detail</b> page`),
-  N("d5","r:d4:30","t:d1",260,"box p",`<span class="t">Shell</span>app-level container: <b>routes</b>, flyout, tabs, <b>URI navigation</b>, search`),
-  N("sk",40,"b:d1,d2,d3,d4,d5:40",760,"sticky",sticky(`One screen · a Stack · Tabs · a Drawer · the whole House`,`Content · Navigation · Tabbed · Flyout · Shell`)),
-  N("pr",860,"t:sk",600,"box w",`<span class="ann">handbook: <b>Shell tabs</b> + <b>Shell flyout</b> are preferred in many new apps over TabbedPage / FlyoutPage</span>`)
-],[],(rc,svg,R)=>{const y=R.q.y+R.q.h+30,w=200,h=360;[0,1,2,3,4].forEach(i=>{const x=R["d"+(i+1)].x+30,s=phone(rc,svg,x,y,w,h,160+i);
-  if(i===0)add(svg,rc.rectangle(s.x+12,s.y+12,s.w-24,s.h-24,{stroke:"var(--soft)",strokeLineDash:[8,6],roughness:0.6}));
-  if(i===1){box(rc,svg,s.x,s.y,s.w,40,"var(--b)",170);T(svg,s.x+16,s.y+27,"‹ Back",{size:16,anchor:"start"});add(svg,rc.rectangle(s.x+12,s.y+56,s.w-24,s.h-70,{stroke:"var(--soft)",strokeLineDash:[8,6],roughness:0.6}))}
-  if(i===2){add(svg,rc.rectangle(s.x+12,s.y+12,s.w-24,s.h-76,{stroke:"var(--soft)",strokeLineDash:[8,6],roughness:0.6}));box(rc,svg,s.x,s.y+s.h-52,s.w,52,"var(--y)",171);[0,1,2,3].forEach(j=>add(svg,rc.rectangle(s.x+22+j*40,s.y+s.h-34,18,18,{fill:j?"var(--soft)":"var(--blue)",fillStyle:"solid",roughness:0.5,stroke:"none"})))}
-  if(i===3){box(rc,svg,s.x,s.y,s.w*0.7,s.h,"var(--g)",172);[0,1,2,3].forEach(j=>add(svg,rc.line(s.x+14,s.y+30+j*34,s.x+s.w*0.6,s.y+30+j*34,{stroke:"var(--ink)",strokeWidth:5,roughness:0.6})));add(svg,rc.rectangle(s.x+s.w*0.74,s.y+12,s.w*0.22,s.h-24,{stroke:"var(--soft)",strokeLineDash:[8,6],roughness:0.6}))}
-  if(i===4){box(rc,svg,s.x,s.y,s.w,36,"var(--p)",173);T(svg,s.x+14,s.y+25,"☰  //route",{size:15,anchor:"start"});add(svg,rc.rectangle(s.x+12,s.y+50,s.w-24,s.h-112,{stroke:"var(--soft)",strokeLineDash:[8,6],roughness:0.6}));box(rc,svg,s.x,s.y+s.h-48,s.w,48,"var(--p)",174);T(svg,s.x+s.w/2,s.y+s.h-18,"tabs",{size:15})}})},0);
+  N("sk",40,470,760,"sticky",sticky(`One screen · a Stack · Tabs · a Drawer · the whole House`,`Content · Navigation · Tabbed · Flyout · Shell`))
+],[],(rc,svg,R)=>{const y=30,w=200,h=340;
+  const names=[["ContentPage","one screen (most common)"],["NavigationPage","a stack + Back"],["TabbedPage","tabs pick a page"],["FlyoutPage","side menu + detail"],["Shell","routes · flyout · tabs"]];
+  names.forEach(([n,d],i)=>{const x=60+i*285,s=phone(rc,svg,x,y,w,h,160+i);
+    if(i===0){rw6_dash(rc,svg,s.x+12,s.y+12,s.w-24,s.h-24);T(svg,s.x+s.w/2,s.y+s.h/2,"one Content",{size:15,color:"var(--soft)"})}
+    if(i===1){const c=rw6_bar(rc,svg,s,"Page 2",{back:true,seed:170});rw6_dash(rc,svg,c.x+12,c.y+12,c.w-24,c.h-24)}
+    if(i===2){const c=rw6_tabs(rc,svg,s,"bottom",["A","B","C"],0,171);rw6_dash(rc,svg,c.x+12,c.y+12,c.w-24,c.h-24)}
+    if(i===3){rw6_dash(rc,svg,s.x+s.w*0.66,s.y+12,s.w*0.3,s.h-24);rw6_menu(rc,svg,s.x,s.y,s.w*0.64,s.h,["Home","Profile","About"],0,172)}
+    if(i===4){const c=rw6_bar(rc,svg,s,"//route",{burger:true,fill:"var(--p)",seed:173});const d=rw6_tabs(rc,svg,c,"bottom",["tab","tab"],0,174);rw6_dash(rc,svg,d.x+12,d.y+12,d.w-24,d.h-24)}
+    rw6_lab(svg,x+w/2,y+h+34,n,d)})},500);
 
 B("b6b",[
-  N("ap",40,20,560,"box y",`<span class="t">App.xaml.cs decides the FIRST page</span>`+X(`public App() {
+  N("cd",40,60,560,"box y",`<span class="t">App.xaml.cs: the first page</span>`+X(`public App() {
   InitializeComponent();
-  [[MainPage]] = new HomePage();                  // a ContentPage
-  [[MainPage]] = new NavigationPage(new HomePage()); // + stack
-  [[MainPage]] = new AppShell();                  // Shell
-}`)+`<small>(pick one line)</small>`),
-  N("cp",700,20,360,"box w",`<span class="t">ContentPage example</span>HomePage: a VerticalStackLayout with "Welcome to the Home Page" (centred) + a "Click Me" button`),
-  N("tp",700,"b:cp:24",360,"box w",`<span class="t">TabbedPage example</span>two child ContentPages: <b>Title="Home"</b> + <b>Title="Profile"</b>, each one Label`),
-  N("fp",1100,20,360,"box w",`<span class="t">FlyoutPage example</span>Flyout = ContentPage "Menu" (Home + Profile buttons) · Detail = <b>NavigationPage</b> wrapping the "Main Content" page`),
-  N("sh",1100,"b:fp:24",360,"box w",`<span class="t">Shell example</span>AppShell.xaml: a <b>TabBar</b> with two <b>ShellContent</b> (Home, About), each <code>ContentTemplate="{DataTemplate local:HomePage}"</code> · handbook version: <code>&lt;FlyoutItem Title="Home"&gt;&lt;ShellContent …/&gt;&lt;/FlyoutItem&gt;</code> for a flyout menu`)
-],[]);
+  [[MainPage]] = new NavigationPage(new HomePage());
+}`)+`<b>MainPage</b> = the page the app opens on`)
+],[],(rc,svg,R)=>{const y=60,w=220,h=300,xs=[660,930,1200];T(svg,1040,36,"MainPage = one of these",{size:18,weight:700,color:"var(--red)"});
+  const c=R.cd;arrow(rc,svg,[c.x+c.w+8,c.y+c.h/2],[xs[0]-8,y+h/2],{bend:-0.1,color:"red"});
+  xs.forEach((x,i)=>{const s=phone(rc,svg,x,y,w,h,180+i);
+    if(i===0){rw6_dash(rc,svg,s.x+12,s.y+12,s.w-24,s.h-24);T(svg,s.x+s.w/2,s.y+s.h/2,"HomePage",{size:15})}
+    if(i===1){const k=rw6_bar(rc,svg,s,"Home",{seed:185});rw6_dash(rc,svg,k.x+12,k.y+12,k.w-24,k.h-24);T(svg,k.x+k.w/2,k.y+k.h/2,"HomePage",{size:15})}
+    if(i===2){const k=rw6_bar(rc,svg,s,"//home",{burger:true,fill:"var(--p)",seed:186});const d=rw6_tabs(rc,svg,k,"bottom",["Home","About"],0,187);rw6_dash(rc,svg,d.x+12,d.y+12,d.w-24,d.h-24)}
+    if(i<2)T(svg,x+w+25,y+h/2+6,"or",{size:17,color:"var(--soft)"})});
+  rw6_lab(svg,xs[0]+w/2,y+h+32,"new HomePage()","plain ContentPage");rw6_lab(svg,xs[1]+w/2,y+h+32,"new NavigationPage(…)","adds the stack + Back");rw6_lab(svg,xs[2]+w/2,y+h+32,"new AppShell()","Shell app")},440);
 
 B("b6c",[
-  N("hx",40,20,560,"box w",`<span class="t">HomePage.xaml</span>`+X(`<Button Text="Open About Page"
-        [[Clicked="OnOpenAboutClicked"]] />`)),
-  N("hc",40,"b:hx:60",560,"box g",`<span class="t">HomePage.xaml.cs</span>`+X(`private [[async]] void OnOpenAboutClicked(object sender, EventArgs e)
+  N("cd",40,20,540,"box w",`<span class="t">HomePage: button → push</span>`+X(`<Button Text="Open About"
+        Clicked="OnOpenAboutClicked" />
+
+async void OnOpenAboutClicked(object s, EventArgs e)
 {
-    [[await Navigation.PushAsync(new AboutPage());]]
+    await Navigation.[[PushAsync]](new AboutPage());
 }`)),
-  N("nt",40,"b:hc:30",560,"box y",`<b>async</b> + <b>await</b>: navigation is asynchronous · <code>Navigation</code> is a property every page has · needs the page to be inside a <b>NavigationPage</b>`),
-  N("sk",700,430,440,"sticky",sticky(`Push = put a plate on the stack · Pop = take the top one off`,`<span class="ann">the nav bar's Back does the pop for you</span>`))
-],[E("hx","hc","calls",{bend:0})],(rc,svg,R)=>{const x=700,y=40,w=260,h=56;
-  [["HomePage","var(--card)"],["AboutPage","var(--g)"]].forEach(([t,f],i)=>{const yy=y+210-i*(h+8);box(rc,svg,x,yy,w,h,f,180+i);T(svg,x+w/2,yy+35,t,{size:18,weight:i?700:400})});
-  T(svg,x+w/2,y+300,"the navigation stack",{size:17,color:"var(--soft)"});
-  arrow(rc,svg,[x+w+24,y+265],[x+w+24,y+170],{bend:0,color:"green"});T(svg,x+w+36,y+222,"PushAsync",{size:17,color:"var(--green)",anchor:"start"});
-  arrow(rc,svg,[x+w+150,y+175],[x+w+150,y+270],{bend:0,color:"red"});T(svg,x+w+164,y+222,"PopAsync / Back",{size:17,color:"var(--red)",anchor:"start"})},330);
+  N("nt",40,"b:cd:24",540,"box p",`only works inside a <b>NavigationPage</b> · <b>async + await</b>: navigation takes time`)
+],[],(rc,svg,R)=>{const y=40,w=210,h=330,x1=630,x2=950;
+  const a=phone(rc,svg,x1,y,w,h,190);const ka=rw6_bar(rc,svg,a,"Home",{seed:191});rw6_btn(rc,svg,ka.x+ka.w/2,ka.y+120,"Open About",192);
+  const b=phone(rc,svg,x2,y,w,h,193);const kb=rw6_bar(rc,svg,b,"About",{back:true,seed:194});rw6_dash(rc,svg,kb.x+12,kb.y+12,kb.w-24,kb.h-24);T(svg,kb.x+kb.w/2,kb.y+kb.h/2,"AboutPage",{size:15});
+  arrow(rc,svg,[x1+w+8,y+120],[x2-8,y+120],{bend:-0.2,color:"green"});T(svg,(x1+w+x2)/2,y+92,"PushAsync",{size:16,color:"var(--green)",weight:700});
+  arrow(rc,svg,[x2-8,y+250],[x1+w+8,y+250],{bend:-0.2,color:"red"});T(svg,(x1+w+x2)/2,y+300,"PopAsync",{size:16,color:"var(--red)",weight:700});T(svg,(x1+w+x2)/2,y+322,"or Back",{size:15,color:"var(--red)"});
+  const sx=1220,sw=220;[["HomePage","var(--card)"],["AboutPage","var(--g)"]].forEach(([t,f],i)=>{const yy=y+250-i*62;box(rc,svg,sx,yy,sw,54,f,196+i);T(svg,sx+sw/2,yy+34,t,{size:17,weight:i?700:400})});
+  T(svg,sx+sw/2,y+160,"top = on screen ↓",{size:15,color:"var(--soft)"});T(svg,sx+sw/2,y+340,"the navigation stack",{size:16,color:"var(--soft)"})},420);
 
 B("b6d",[
-  N("hc",40,20,620,"box w",`<span class="t">HomePage.xaml.cs</span>`+X(`await Navigation.[[PushModalAsync]](new ModalPage());`)),
-  N("mc",40,"b:hc:60",620,"box w",`<span class="t">ModalPage.xaml.cs (its "Close" button)</span>`+X(`await Navigation.[[PopModalAsync]]();`)),
-  N("df",40,"b:mc:30",620,"box y",`<span class="t">Modal vs normal push</span>a modal page <b>temporarily appears above</b> the current page · the user must <b>close it</b> before returning · <span class="ann">so the example gives it a Close button</span>`),
-  N("sk",760,"b:df:-60",380,"sticky",sticky(`Modal = a pop-up you must dismiss`,`PushModalAsync ↔ PopModalAsync (always in pairs)`))
-],[E("hc","mc","then",{bend:0})],(rc,svg,R)=>{const s=phone(rc,svg,1180,20,260,400,17);T(svg,s.x+s.w/2,s.y+40,"Home",{size:17,color:"var(--soft)"});
-  box(rc,svg,s.x+14,s.y+70,s.w-28,s.h-110,"var(--y)",190);T(svg,s.x+s.w/2,s.y+130,"This is a Modal Page",{size:16,weight:700});box(rc,svg,s.x+s.w/2-50,s.y+170,100,40,"var(--card)",191);T(svg,s.x+s.w/2,s.y+196,"Close",{size:16})},0);
+  N("cd",40,20,580,"box w",`<span class="t">Open + close a modal</span>`+X(`await Navigation.[[PushModalAsync]](new ModalPage());
+
+// ModalPage's Close button:
+await Navigation.[[PopModalAsync]]();`)),
+  N("nt",40,"b:cd:24",580,"box p",`a modal page <b>appears above</b> the current page · the user <b>must close it</b> to go back · no Back arrow → give it a <b>Close</b> button`)
+],[],(rc,svg,R)=>{const y=40,w=220,h=340,x1=700,x2=1080;
+  const a=phone(rc,svg,x1,y,w,h,200);const ka=rw6_bar(rc,svg,a,"Home",{seed:201});rw6_btn(rc,svg,ka.x+ka.w/2,ka.y+110,"Open",202);
+  const b=phone(rc,svg,x2,y,w,h,203);const kb=rw6_bar(rc,svg,b,"Home",{seed:204});
+  box(rc,svg,kb.x+8,kb.y+30,kb.w-16,kb.h-38,"var(--y)",205,{strokeWidth:2.4});T(svg,kb.x+kb.w/2,kb.y+90,"ModalPage",{size:17,weight:700});rw6_btn(rc,svg,kb.x+kb.w/2,kb.y+160,"Close",206);
+  arrow(rc,svg,[kb.x+kb.w-20,kb.y+kb.h-20],[kb.x+kb.w-20,kb.y+44],{bend:0,color:"blue"});T(svg,kb.x+kb.w-30,kb.y+kb.h-30,"slides up",{size:13,anchor:"end",color:"var(--blue)"});
+  arrow(rc,svg,[x1+w+8,y+130],[x2-8,y+130],{bend:-0.15,color:"green"});T(svg,(x1+w+x2)/2,y+98,"PushModalAsync",{size:16,color:"var(--green)",weight:700});
+  arrow(rc,svg,[x2-8,y+270],[x1+w+8,y+270],{bend:-0.15,color:"red"});T(svg,(x1+w+x2)/2,y+318,"PopModalAsync",{size:16,color:"var(--red)",weight:700})},420);
 
 B("b6e",[
-  N("fp",40,20,520,"oval g big center",`FlyoutPage manages 2 related pages`),
-  N("fl",40,"b:fp:70",250,"box g",`<span class="t">Flyout</span>presents <b>items</b> (a menu) · should be a <b>ContentPage</b> · <span class="warn">must have Title set</span>, or an exception`),
-  N("dt","r:fl:20","t:fl",250,"box w",`<span class="t">Detail</span>details of the selected item · should be a <b>TabbedPage, NavigationPage or ContentPage</b>`),
-  N("pp",640,20,400,"box b",`<span class="t">Popover layout</span>the detail <b>covers</b> (or partly covers) the flyout <small>(7.1's enum list words it the other way, "flyout covers the detail"; both are in the doc)</small> · selecting an item navigates to its detail · <b>phones always</b> use this`),
-  N("sp",640,"b:pp:20",400,"box b",`<span class="t">Split layout</span>flyout on the <b>left</b>, detail on the <b>right</b> · tablets + desktop can use it · <b>Windows by default</b>`),
-  N("pr",1100,20,360,"box w",`<span class="t">Properties</span><b>Detail</b> (Page) · <b>Flyout</b> (Page) · <b>FlyoutLayoutBehavior</b> · <b>IsGestureEnabled</b> (bool, default <b>true</b>: swipe switches pages) · <b>IsPresented</b> (bool, default <b>false</b> = detail shown; true = show flyout)<br><span class="ann">IsGestureEnabled, IsPresented + FlyoutLayoutBehavior are backed by BindableProperty → can be data-bound + styled</span><br>event: <b>IsPresentedChanged</b>`),
-  N("w1",640,"b:sp:30",400,"box p",`<span class="warn">⚠ incompatible with Shell apps</span> → exception · designed to be the <b>root page</b>; as a child page it behaves unpredictably`),
-  N("sk",40,"b:fl,dt:40",520,"sticky",sticky(`IsPresented = "is the menu out?"`,`false (default) → you see the detail`))
-],[E("fp","fl","",{bend:0}),E("fp","dt","",{bend:0})]);
+  N("fl",40,500,440,"box g",`<span class="t">Flyout</span>the <b>menu</b> · a ContentPage · <span class="warn">must set Title</span> (or exception)`),
+  N("dt",500,500,440,"box w",`<span class="t">Detail</span>the selected item's page · TabbedPage, NavigationPage or ContentPage`),
+  N("rl",960,500,500,"box p",`<span class="warn">⚠ not allowed in Shell apps</span> (exception) · use it as the <b>root page</b> · <b>IsGestureEnabled</b> (default true): swipe opens the menu`)
+],[],(rc,svg,R)=>{
+  const p=phone(rc,svg,60,40,220,360,210);const d=rw6_bar(rc,svg,p,"Detail",{seed:211});rw6_dash(rc,svg,d.x+12,d.y+12,d.w-24,d.h-24);rw6_menu(rc,svg,p.x,p.y,p.w*0.66,p.h,["Home","Profile","About"],0,212);
+  rw6_lab(svg,170,440,"Popover","menu slides OVER the detail · phones");
+  const f=rw6_frame(rc,svg,340,80,440,280,213);rw6_menu(rc,svg,f.x,f.y,f.w*0.36,f.h,["Home","Profile","About"],1,214);const dd={x:f.x+f.w*0.38,y:f.y,w:f.w*0.62,h:f.h};const k=rw6_bar(rc,svg,dd,"Detail",{seed:215});rw6_dash(rc,svg,k.x+10,k.y+10,k.w-20,k.h-20);
+  rw6_lab(svg,560,400,"Split","menu LEFT, detail RIGHT · tablet/desktop");
+  [[860,false],[1100,true]].forEach(([x,open],i)=>{const s=phone(rc,svg,x,60,200,320,216+i);const c=rw6_bar(rc,svg,s,"Detail",{burger:true,seed:218+i});rw6_dash(rc,svg,c.x+12,c.y+12,c.w-24,c.h-24);
+    if(open)rw6_menu(rc,svg,s.x,s.y,s.w*0.66,s.h,["Home","Profile"],-1,220);
+    rw6_lab(svg,x+100,420,"IsPresented = "+open,open?"menu out":"default: detail shown",{color:open?"var(--green)":"var(--ink)"})})},0);
 
 B("b6f",[
-  N("x",40,20,660,"box w",`<span class="t">MainPage.xaml (lecture 7.1)</span>`+X(`<FlyoutPage ... x:Class="FlyoutPageNavigation.MainPage">
-  <FlyoutPage.Flyout>
-    <local:FlyoutMenuPage [[x:Name="flyoutPage"]] />
+  N("xm",40,20,600,"box w",`<span class="t">MainPage.xaml</span>`+X(`<FlyoutPage ...>
+  <FlyoutPage.[[Flyout]]>
+    <local:FlyoutMenuPage x:Name="flyoutPage" />
   </FlyoutPage.Flyout>
-  <FlyoutPage.Detail>
-    <NavigationPage><x:Arguments>
-      <local:ContactsPage />
-    </x:Arguments></NavigationPage>
+  <FlyoutPage.[[Detail]]>
+    <NavigationPage> … ContactsPage … </NavigationPage>
   </FlyoutPage.Detail>
 </FlyoutPage>`)),
-  N("mn",40,"b:x:30",660,"box g",`<span class="t">FlyoutMenuPage</span>a ContentPage (Title "Personal Organiser", <code>IconImageSource="hamburger.png"</code>) holding a <b>CollectionView</b> (<code>x:FieldModifier="public"</code>, SelectionMode Single) of <b>FlyoutPageItem</b>s: Contacts · TodoList · Reminders · ItemTemplate = Grid of Image (IconSource) + Label (Title)<br>→ MainPage listens to that CollectionView's <b>SelectionChanged</b>`),
-  N("it",40,"b:mn:30",660,"box y",`<span class="t">FlyoutPageItem.cs</span><code>string Title</code> · <code>string IconSource</code> · <code>Type TargetType</code> <span class="ann">(which page to open)</span>`),
-  N("cs",780,20,680,"box w",`<span class="t">MainPage.xaml.cs</span>`+X(`flyoutPage.collectionView.SelectionChanged += OnSelectionChanged;
-
-void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-{
-  var item = e.CurrentSelection.FirstOrDefault() as FlyoutPageItem;
-  if (item != null)
-  {
-    [[Detail = new NavigationPage(
-      (Page)Activator.CreateInstance(item.TargetType));]]
-    if (!((IFlyoutPageController)this).ShouldShowSplitMode)
-      [[IsPresented = false;]]
-  }
-}`)),
-  N("f1",780,"b:cs:30",200,"box b center",`① tap "TodoList"`),
-  N("f2","r:f1:40","t:f1",200,"box b center",`② new page from <b>TargetType</b> → Detail`),
-  N("f3","r:f2:40","t:f1",200,"box b center",`③ close the menu (unless split)`),
-  N("ic",780,"b:f1,f2,f3:30",680,"plain",`<span class="ann">the flyout's icon shows on the detail page only if the detail has a title bar · in split mode both pages show, so no need to set IsPresented</span>`)
-],[E("mn","cs","",{bend:-0.15}),E("f1","f2","",{bend:0}),E("f2","f3","",{bend:0})]);
+  N("cs",40,"b:xm:24",600,"box g",`<span class="t">menu item tapped (SelectionChanged)</span>`+X(`var item = e.CurrentSelection.FirstOrDefault()
+               as FlyoutPageItem;
+[[Detail]] = new NavigationPage(
+    (Page)Activator.CreateInstance(item.TargetType));
+[[IsPresented = false;]]   // close the menu`)),
+  N("it",40,"b:cs:24",600,"box y",`each menu item = <b>FlyoutPageItem</b>: Title · IconSource · <b>TargetType</b> (the page to open)`)
+],[],(rc,svg,R)=>{const y=40,w=230,h=380,x1=720,x2=1210;
+  const a=phone(rc,svg,x1,y,w,h,230);rw6_menu(rc,svg,a.x,a.y,a.w,a.h,["Contacts","TodoList","Reminders"],1,231);T(svg,a.x+a.w-14,a.y+86,"① tap",{size:15,anchor:"end",color:"var(--red)",weight:700});
+  const b=phone(rc,svg,x2,y,w,h,235);const k=rw6_bar(rc,svg,b,"TodoList",{burger:true,seed:236});rw6_dash(rc,svg,k.x+12,k.y+12,k.w-24,k.h-24);T(svg,k.x+k.w/2,k.y+k.h/2,"TodoList page",{size:15});
+  arrow(rc,svg,[x1+w+8,y+130],[x2-8,y+130],{bend:-0.1,color:"green"});
+  const mx=(x1+w+x2)/2;T(svg,mx,y+190,"② Detail = new page",{size:15,color:"var(--green)",weight:700});T(svg,mx,y+212,"from TargetType",{size:14,color:"var(--soft)"});T(svg,mx,y+262,"③ IsPresented = false",{size:15,color:"var(--red)",weight:700});T(svg,mx,y+284,"menu closes",{size:14,color:"var(--soft)"});
+  rw6_lab(svg,x1+w/2,y+h+34,"Flyout (menu)");rw6_lab(svg,x2+w/2,y+h+34,"Detail")},470);
 
 B("b6g",[
-  N("t",40,20,620,"box w",`<span class="t">FlyoutLayoutBehavior (enum)</span>depends on form factor, orientation + this value`),
-  N("v1",40,"b:t:20",300,"box w",`<b>Default</b> → platform default`),
-  N("v2","r:v1:20","t:v1",300,"box w",`<b>Popover</b> → flyout covers the detail`),
-  N("v3",40,"b:v1:14",300,"box w",`<b>Split</b> → flyout left, detail right`),
-  N("v4","r:v3:20","t:v3",300,"box w",`<b>SplitOnLandscape</b> → split only in landscape`),
-  N("v5",40,"b:v3:14",300,"box w",`<b>SplitOnPortrait</b> → split only in portrait`),
-  N("x",760,20,420,"box w",X(`<FlyoutPage ...
-    [[FlyoutLayoutBehavior="Split"]]>
-  ...
-</FlyoutPage>`)),
-  N("im",760,"b:x:30",420,"box p",`<span class="warn">only affects tablets + desktop.</span> Phones are <b>always Popover</b>`),
-  N("sk",1220,20,240,"sticky",sticky(`"Do Phones Split? Sometimes Landscape, Sometimes Portrait"`,`Default · Popover · Split · SplitOnLandscape · SplitOnPortrait — phones never split`))
-],[]);
+  N("cd",40,400,520,"box w",X(`<FlyoutPage [[FlyoutLayoutBehavior="Split"]]> … </FlyoutPage>`)),
+  N("ph","r:cd:30","t:cd",380,"box p",`<b>phones are always Popover</b> · this only changes tablets + desktop`),
+  N("sk","r:ph:30","t:cd",440,"sticky",sticky(`"Do Phones Split? Sometimes Landscape, Sometimes Portrait"`,`Default · Popover · Split · SplitOnLandscape · SplitOnPortrait`))
+],[],(rc,svg,R)=>{const y=60;
+  const tiles=[["Default","the platform decides"],["Popover","menu over detail"],["Split","menu left, detail right"],["SplitOnLandscape","split only when wide"],["SplitOnPortrait","split only when tall"]];
+  tiles.forEach(([n,d],i)=>{const cx=180+i*285,port=i===4,fw=port?150:240,fh=port?230:160,f=rw6_frame(rc,svg,cx-fw/2,y,fw,fh,240+i);
+    if(i===0){rw6_dash(rc,svg,f.x+8,f.y+8,f.w-16,f.h-16);T(svg,cx,f.y+f.h/2+10,"?",{size:34,weight:700,color:"var(--soft)"})}
+    if(i===1){rw6_dash(rc,svg,f.x+8,f.y+8,f.w-16,f.h-16);T(svg,f.x+f.w*0.78,f.y+f.h/2,"detail",{size:14,color:"var(--soft)"});add(svg,rc.rectangle(f.x+6,f.y+6,f.w*0.5,f.h,{fill:"rgba(0,0,0,.35)",fillStyle:"solid",stroke:"none",roughness:0.4}));rw6_menu(rc,svg,f.x,f.y,f.w*0.5,f.h,["Home"],0,250)}
+    if(i>=2){const m=port?0.5:0.38;rw6_menu(rc,svg,f.x,f.y,f.w*m,f.h,["Home"],0,252+i);rw6_dash(rc,svg,f.x+f.w*(m+0.04),f.y+8,f.w*(0.96-m-0.04),f.h-16)}
+    rw6_lab(svg,cx,y+275,n,d,{size:17})})},380);
 
 B("b6h",[
-  N("tp",40,20,560,"box y",`<span class="t">TabbedPage</span>a collection of <b>child pages</b> (usually ContentPages), <b>one fully visible at a time</b>, picked by tabs at the top or bottom`),
-  N("pr",40,"b:tp:30",560,"box w",`<span class="t">Tab-bar properties</span><b>BarBackground</b> (Brush) · <b>BarBackgroundColor</b> · <b>BarTextColor</b> · <b>SelectedTabColor</b> · <b>UnselectedTabColor</b> (Colors) · BindableProperty-backed`),
-  N("ti",40,"b:pr:30",560,"box b",`tab <b>title</b> = the child's <code>Page.Title</code> · tab <b>icon</b> = the child's <code>Page.IconImageSource</code>`),
-  N("ux",700,20,380,"box p",`<span class="warn">every child page is created when the TabbedPage is constructed</span> → can feel slow, especially as the app's root page`),
-  N("sh",700,"b:ux:60",380,"box g",`<b>Shell</b> creates tab pages <b>on demand</b>, when you navigate to them`),
-  N("w1",1140,20,320,"box p",`<span class="warn">⚠ incompatible with Shell apps</span> → exception`),
-  N("w2",1140,"b:w1:20",320,"box y",`only put <b>NavigationPage</b> and <b>ContentPage</b> objects inside a TabbedPage`),
-  N("sk",700,"b:sh:40",760,"sticky",sticky(`Tabbed builds ALL rooms at once · Shell builds a room when you walk in`,`that's why the docs push Shell`))
-],[E("ux","sh","fix",{bend:0})]);
+  N("r1",40,460,440,"box p",`<span class="warn">⚠ not allowed in Shell apps</span> (exception)`),
+  N("r2",500,460,440,"box y",`only <b>NavigationPage</b> + <b>ContentPage</b> go inside`),
+  N("r3",960,460,500,"box w",`bar colours: BarBackgroundColor · BarTextColor · SelectedTabColor · UnselectedTabColor`)
+],[],(rc,svg,R)=>{
+  const s=phone(rc,svg,80,40,230,380,260);const c=rw6_tabs(rc,svg,s,"bottom",["Home","Schedule","Settings"],0,261,{icons:true,h:50});rw6_dash(rc,svg,c.x+12,c.y+12,c.w-24,c.h-24);T(svg,c.x+c.w/2,c.y+c.h/2,"Home page",{size:15});
+  arrow(rc,svg,[440,250],[s.x+s.w/2-40,s.y+s.h-36],{bend:0.15,color:"blue"});T(svg,340,232,"tab title = Page.Title",{size:16,anchor:"start",color:"var(--blue)"});T(svg,340,206,"tab icon = Page.IconImageSource",{size:16,anchor:"start",color:"var(--blue)"});
+  T(svg,340,110,"one child page fully",{size:16,anchor:"start"});T(svg,340,132,"visible at a time",{size:16,anchor:"start"});
+  const cw=130,ch=80,x0=920;[["TabbedPage","builds ALL tabs at start → slow",[1,1,1]],["Shell","builds a tab when you tap it",[1,0,0]]].forEach(([n,d,on],r)=>{const y=70+r*170;
+    T(svg,760,y+44,n,{size:19,weight:700,anchor:"start"});["Home","Schedule","Settings"].forEach((t,j)=>{const x=x0+j*(cw+16);if(on[j]){box(rc,svg,x,y,cw,ch,"var(--g)",270+r*3+j);T(svg,x+cw/2,y+ch/2+6,t,{size:15})}else{rw6_dash(rc,svg,x,y,cw,ch);T(svg,x+cw/2,y+ch/2+6,t,{size:15,color:"var(--soft)"})}});
+    T(svg,x0,y+ch+26,d,{size:15,anchor:"start",color:r?"var(--green)":"var(--red)"})})},0);
 
 B("b6i",[
-  N("a",40,20,680,"box w",`<span class="t">① a collection of child pages</span>`+X(`<TabbedPage ... x:Class="TabbedPageWithNavigationPage.MainPage">
+  N("a",40,20,600,"box w",`<span class="t">① list the child pages</span>`+X(`<TabbedPage ...>
     <local:TodayPage />
     <local:SchedulePage />
     <local:SettingsPage />
-</TabbedPage>`)+`children go into the <b>Children</b> collection: it's the <b>ContentProperty</b> of <code>MultiPage&lt;T&gt;</code> (TabbedPage's base), so you don't write <code>&lt;TabbedPage.Children&gt;</code>`),
-  N("b",780,20,680,"box w",`<span class="t">② ItemsSource + ItemTemplate (a DataTemplate)</span>`+X(`<TabbedPage ... [[ItemsSource="{x:Static local:MonkeyDataModel.All}"]]>
-  <TabbedPage.ItemTemplate>
+</TabbedPage>`)+`they go straight in (no &lt;TabbedPage.Children&gt; needed)`),
+  N("b",720,20,740,"box w",`<span class="t">② one tab per data item</span>`+X(`<TabbedPage [[ItemsSource]]="{x:Static local:MonkeyDataModel.All}">
+  <TabbedPage.[[ItemTemplate]]>
     <DataTemplate>
-      <ContentPage Title="{Binding Name}"
-                   IconImageSource="monkeyicon.png">
-        ... Label Name · Image PhotoUrl · Family ...
-      </ContentPage>
+      <ContentPage Title="{Binding Name}" />
     </DataTemplate>
   </TabbedPage.ItemTemplate>
-</TabbedPage>`)+`generates one tab per object (Chimpanzee · Orangutan · Tamarin) · ItemsSource, ItemTemplate, SelectedItem are inherited from <code>MultiPage&lt;T&gt;</code> · ItemsSource = any <b>IEnumerable</b> · the DataTemplate needs a <b>page type as its root</b> · the example also sets <code>x:DataType="local:Monkey"</code>`),
-  N("sk",40,"b:a:30",680,"sticky",sticky(`hand-written tabs vs tabs stamped from data`,`same two ideas as a Grid of buttons vs a BindableLayout`))
-],[]);
+</TabbedPage>`)),
+  N("dg",40,"b:a,b:20",1420,"plain",`<div style="height:180px"></div>`)
+],[],(rc,svg,R)=>{const d=R.dg,y=d.y+10;
+  ["Today","Schedule","Settings"].forEach((t,i)=>{box(rc,svg,60,y+i*54,160,44,"var(--b)",280+i);T(svg,140,y+i*54+28,t+"Page",{size:15})});
+  arrow(rc,svg,[234,y+76],[300,y+76],{bend:0,color:"green"});rw6_tabs(rc,svg,{x:316,y:y+54,w:320,h:44},"top",["Today","Schedule","Settings"],0,284);T(svg,476,y+128,"3 tabs",{size:15,color:"var(--soft)"});
+  ["Chimpanzee","Orangutan","Tamarin"].forEach((t,i)=>{box(rc,svg,740,y+i*54,150,44,"var(--p)",290+i);T(svg,815,y+i*54+28,t,{size:15})});T(svg,815,y+176,"the data (ItemsSource)",{size:14,color:"var(--soft)"});
+  arrow(rc,svg,[902,y+76],[952,y+76],{bend:0,color:"green"});box(rc,svg,964,y+40,190,72,"var(--y)",294);T(svg,1059,y+68,"ContentPage",{size:15,weight:700});T(svg,1059,y+92,"Title={Binding Name}",{size:13});T(svg,1059,y+134,"the stamp (ItemTemplate)",{size:14,color:"var(--soft)"});
+  arrow(rc,svg,[1166,y+76],[1210,y+76],{bend:0,color:"green"});rw6_tabs(rc,svg,{x:1222,y:y+54,w:238,h:44},"top",["Chimp","Orang","Tamarin"],0,296)},0);
 
 B("b6j",[
-  N("io",40,20,440,"box y",`<span class="t">🍎 iOS</span>tabs at the <b>bottom</b>, content above · title + icon · portrait: icon <b>above</b> title · landscape: <b>side by side</b> · regular or compact bar · <b>more than 5 tabs → a "More" tab</b>`),
-  N("an","r:io:40","t:io",440,"box g",`<span class="t">🤖 Android</span>tabs at the <b>top</b>, content below · title + icon · can move to the bottom with a platform-specific property · bottom + more than 5 → a <b>"More"</b> tab`),
-  N("wi","r:an:40","t:io",440,"box b",`<span class="t">🪟 Windows</span>tabs at the <b>top</b>, content below · each tab is a <b>title only</b>`),
-  N("nv",40,"b:io,an,wi:50",680,"box w",`<span class="t">Navigate within a tab</span>wrap that tab's ContentPage in a <b>NavigationPage</b>:`+X(`<TabbedPage ...>
+  N("cd",40,460,760,"box w",`<span class="t">navigate inside one tab: wrap it in a NavigationPage</span>`+X(`<TabbedPage ...>
   <local:TodayPage />
-  <NavigationPage Title="Schedule" IconImageSource="schedule.png">
+  <NavigationPage Title="Schedule">
     <x:Arguments><local:SchedulePage /></x:Arguments>
   </NavigationPage>
-</TabbedPage>`)+`then <code>await Navigation.PushAsync(new UpcomingAppointmentsPage());</code>`),
-  N("wn","r:nv:40","t:nv",400,"box p",`<span class="warn">⚠ a NavigationPage INSIDE a TabbedPage: fine.<br>a TabbedPage INSIDE a NavigationPage: not recommended.</span>`),
-  N("sk","r:nv:40","b:wn:30",400,"sticky",sticky(`iOS sits, Android & Windows hang`,`bottom on iOS · top on the other two`))
-],[]);
+</TabbedPage>`)+`then <code>await Navigation.PushAsync(…)</code> works in that tab`)
+],[],(rc,svg,R)=>{const y=40,w=220,h=330;
+  [[60,"iOS","bottom · >5 tabs → More"],[320,"Android","top (can move to bottom)"],[580,"Windows","top · titles only"]].forEach(([x,n,d],i)=>{const s=phone(rc,svg,x,y,w,h,300+i);
+    const c=rw6_tabs(rc,svg,s,i===0?"bottom":"top",["Home","Info","More"],0,304+i,{icons:i<2,h:i<2?50:44});rw6_dash(rc,svg,c.x+12,c.y+12,c.w-24,c.h-24);
+    rw6_lab(svg,x+w/2,y+h+32,n,d)});
+  const s=phone(rc,svg,900,y,230,h,310);const k=rw6_bar(rc,svg,s,"Upcoming",{back:true,seed:311});const c=rw6_tabs(rc,svg,k,"bottom",["Today","Schedule"],1,312);rw6_dash(rc,svg,c.x+12,c.y+12,c.w-24,c.h-24);
+  T(svg,1150,140,"✓ NavigationPage",{size:16,anchor:"start",color:"var(--green)",weight:700});T(svg,1150,162,"inside a tab",{size:16,anchor:"start",color:"var(--green)"});
+  T(svg,1150,240,"✗ TabbedPage inside",{size:16,anchor:"start",color:"var(--red)",weight:700});T(svg,1150,262,"a NavigationPage",{size:16,anchor:"start",color:"var(--red)"});T(svg,1150,284,"(not recommended)",{size:14,anchor:"start",color:"var(--soft)"})},440);
+/* ===== 7 · controls (drawn) ===== */
+const rw7_gap=h=>`<div style="height:${h}px"></div>`;
+const rw7_ln=(rc,svg,pts,c,w)=>add(svg,rc.linearPath(pts,{stroke:c||"var(--ink)",strokeWidth:w||2,roughness:0.6}));
+const rw7_dot=(rc,svg,x,y,d,f)=>add(svg,rc.circle(x,y,d,{fill:f||"var(--ink)",fillStyle:"solid",stroke:"var(--ink)",strokeWidth:1.6,roughness:0.4}));
+const rw7_pill=(rc,svg,x,y,w,h,f,seed)=>add(svg,rc.path(`M${x+h/2} ${y} H${x+w-h/2} A${h/2} ${h/2} 0 0 1 ${x+w-h/2} ${y+h} H${x+h/2} A${h/2} ${h/2} 0 0 1 ${x+h/2} ${y} Z`,{fill:f||"var(--card)",fillStyle:"solid",stroke:"var(--ink)",strokeWidth:1.8,roughness:0.6,seed:seed||9}));
+/* one little control sketch, at (x,y), about 260 × 44 */
+function rw7_w(rc,svg,k,x,y){const S={size:16,anchor:"start"};
+  switch(k){
+  case"entry":box(rc,svg,x,y,250,36,"var(--card)",501);T(svg,x+10,y+24,"ada@mail.com",S);rw7_ln(rc,svg,[[x+124,y+7],[x+124,y+29]],"var(--blue)",2.4);break;
+  case"editor":box(rc,svg,x,y-4,250,50,"var(--card)",502);T(svg,x+10,y+14,"Line one of my note,",S);T(svg,x+10,y+36,"and line two…",S);break;
+  case"search":rw7_pill(rc,svg,x,y,250,36,"var(--card)",503);T(svg,x+16,y+24,"🔍 Search…",S);break;
+  case"check":box(rc,svg,x,y+6,26,26,"var(--g)",504);rw7_ln(rc,svg,[[x+5,y+19],[x+11,y+27],[x+22,y+10]],"var(--ink)",2.6);T(svg,x+38,y+26,"I agree",S);break;
+  case"radio":rw7_dot(rc,svg,x+12,y+19,24,"var(--card)");rw7_dot(rc,svg,x+12,y+19,10);T(svg,x+30,y+25,"Male",S);rw7_dot(rc,svg,x+122,y+19,24,"var(--card)");T(svg,x+140,y+25,"Female",S);break;
+  case"switch":rw7_pill(rc,svg,x,y+4,70,32,"var(--green)",505);rw7_dot(rc,svg,x+52,y+20,24,"var(--card)");T(svg,x+86,y+26,"On",S);break;
+  case"picker":box(rc,svg,x,y,250,36,"var(--card)",506);T(svg,x+10,y+24,"Computer Science  ▾",S);break;
+  case"slider":rw7_ln(rc,svg,[[x,y+20],[x+150,y+20]],"var(--blue)",4);rw7_ln(rc,svg,[[x+150,y+20],[x+250,y+20]],"var(--soft)",3);rw7_dot(rc,svg,x+150,y+20,22,"var(--card)");T(svg,x+262,y+26,"7",S);break;
+  case"stepper":box(rc,svg,x,y+2,40,34,"var(--card)",507);T(svg,x+20,y+26,"−",{size:20});box(rc,svg,x+40,y+2,40,34,"var(--card)",508);T(svg,x+60,y+26,"+",{size:20});T(svg,x+96,y+26,"Quantity: 2",S);break;
+  case"date":box(rc,svg,x,y,250,36,"var(--card)",509);T(svg,x+10,y+24,"23 November 2026   📅",S);break;
+  case"time":box(rc,svg,x,y,250,36,"var(--card)",510);T(svg,x+10,y+24,"12:00 PM   🕒",S);break;
+  case"label":T(svg,x,y+26,"Hello",{size:20,anchor:"start"});T(svg,x+58,y+26,"World",{size:20,anchor:"start",weight:700,color:"var(--red)"});T(svg,x+130,y+26,"(two Spans)",{size:14,anchor:"start",color:"var(--soft)"});break;
+  case"image":box(rc,svg,x,y-4,90,48,"var(--b)",511);add(svg,rc.polygon([[x+8,y+40],[x+34,y+10],[x+56,y+40]],{fill:"var(--g)",fillStyle:"solid",stroke:"var(--ink)",strokeWidth:1.4,roughness:0.6}));rw7_dot(rc,svg,x+70,y+10,14,"var(--y)");T(svg,x+104,y+26,"Aspect = AspectFit",S);break;
+  case"boxview":box(rc,svg,x,y+4,90,30,"var(--p)",512);T(svg,x+104,y+26,"a coloured rectangle",S);break;
+  case"spin":for(let i=0;i<8;i++){const a=i*Math.PI/4;rw7_dot(rc,svg,x+22+16*Math.cos(a),y+20+16*Math.sin(a),i<3?9:6,i<3?"var(--blue)":"var(--soft)")}T(svg,x+56,y+26,"busy… (no %)",S);break;
+  case"progress":box(rc,svg,x,y+12,250,16,"var(--card)",513);box(rc,svg,x,y+12,162,16,"var(--green)",514);T(svg,x+262,y+26,"0.65",S);break;
+  case"dots":[0,1,2,3].forEach(i=>rw7_dot(rc,svg,x+12+i*26,y+20,12,i===1?"var(--ink)":"var(--soft)"));T(svg,x+120,y+26,"page 2 of 4",S);break;
+  case"button":rw7_pill(rc,svg,x,y,150,38,"var(--p)",515);T(svg,x+75,y+25,"Click Me",{size:16,weight:700});break;
+  case"imgbtn":box(rc,svg,x,y,44,40,"var(--y)",516);T(svg,x+22,y+28,"★",{size:22});T(svg,x+58,y+26,"a tappable image",S);break;
+  case"swipe":box(rc,svg,x,y,190,38,"var(--card)",517);T(svg,x+10,y+25,"Email from Ada",S);box(rc,svg,x+190,y,80,38,"var(--red)",518);T(svg,x+230,y+25,"Delete",{size:15,weight:700});arrow(rc,svg,[x+150,y+52],[x+60,y+52],{bend:0,color:"ink"});break;
+  case"refresh":add(svg,rc.arc(x+22,y+16,28,28,0.3,5.6,false,{stroke:"var(--blue)",strokeWidth:2.6,roughness:0.5}));arrow(rc,svg,[x+22,y+34],[x+22,y+52],{bend:0,color:"blue"});T(svg,x+50,y+26,"pull down ↓ to reload",S);break;
+  case"cv":[0,1,2].forEach(i=>{box(rc,svg,x,y-6+i*18,250,18,i===1?"var(--y)":"var(--card)",519+i,{roughness:0.5});T(svg,x+8,y+8+i*18,["Monkey 1","Monkey 2 (selected)","Monkey 3"][i],{size:13,anchor:"start"})});break;
+  case"lv":[0,1].forEach(i=>{box(rc,svg,x,y-6+i*26,250,26,"var(--card)",523+i,{roughness:0.5});T(svg,x+8,y+12+i*26,["Ada","Bola"][i],{size:15,anchor:"start",weight:700});T(svg,x+60,y+12+i*26,"detail text",{size:13,anchor:"start",color:"var(--soft)"})});break;
+  case"carousel":box(rc,svg,x,y,30,40,"var(--b)",525);box(rc,svg,x+40,y-6,170,52,"var(--g)",526);T(svg,x+125,y+26,"card 2",{size:16,weight:700});box(rc,svg,x+220,y,30,40,"var(--b)",527);break;
+  case"table":box(rc,svg,x,y+4,250,20,"var(--card)",528,{roughness:0.5});T(svg,x+8,y+19,"Profile  ›",{size:13,anchor:"start"});box(rc,svg,x,y+24,250,20,"var(--card)",529,{roughness:0.5});T(svg,x+8,y+39,"Notifications",{size:13,anchor:"start"});rw7_pill(rc,svg,x+200,y+27,40,14,"var(--green)",530);break;
+  case"border":add(svg,rc.path(`M${x+16} ${y} H${x+234} Q${x+250} ${y} ${x+250} ${y+16} V${y+24} Q${x+250} ${y+40} ${x+234} ${y+40} H${x+16} Q${x} ${y+40} ${x} ${y+24} V${y+16} Q${x} ${y} ${x+16} ${y} Z`,{stroke:"var(--blue)",strokeWidth:2.6,roughness:0.6}));T(svg,x+125,y+26,"one child inside",{size:15});break;
+  case"content":box(rc,svg,x,y,250,40,"var(--card)",531,{strokeLineDash:[7,5]});T(svg,x+125,y+26,"my reusable piece",{size:15});break;
+  case"scroll":box(rc,svg,x,y-4,250,48,"var(--card)",532);box(rc,svg,x+236,y,8,22,"var(--soft)",533,{roughness:0.3});T(svg,x+10,y+14,"long content…",S);T(svg,x+10,y+36,"…keeps going",S);break;
+  case"graphics":add(svg,rc.path(`M${x} ${y+36} Q ${x+60} ${y-10} ${x+120} ${y+30} T ${x+240} ${y+10}`,{stroke:"var(--green)",strokeWidth:3,roughness:1.2}));T(svg,x+262,y+30,"IDrawable",{size:14,anchor:"start",color:"var(--soft)"});break;
+  case"map":box(rc,svg,x,y-4,250,48,"var(--g)",534);rw7_ln(rc,svg,[[x,y+30],[x+250,y+10]],"var(--card)",4);T(svg,x+150,y+22,"📍",{size:22});T(svg,x+170,y+38,"Pin",{size:14,anchor:"start"});break;
+  case"web":box(rc,svg,x,y-4,250,48,"var(--card)",535);box(rc,svg,x,y-4,250,16,"var(--b)",536);T(svg,x+8,y+8,"https://…",{size:12,anchor:"start"});T(svg,x+10,y+34,"a web page",S);break;
+  }}
+/* phone of control rows: rows = [[name, key bit, widget]] */
+function rw7_phone(rc,svg,x,y,title,rows,seed){const rh=104,h=rows.length*rh+70;const s=phone(rc,svg,x,y,440,h,seed);
+  T(svg,x+220,y-12,title,{size:21,mark:1});
+  rows.forEach(([n,p,k],i)=>{const y0=s.y+14+i*rh;T(svg,s.x+14,y0+18,n,{size:19,weight:700,anchor:"start"});T(svg,s.x+14+n.length*10.5+14,y0+18,p,{size:15,anchor:"start",color:"var(--blue)"});rw7_w(rc,svg,k,s.x+24,y0+34)})}
+const rw7_ph=(rows)=>rows*104+70+40;
 
-/* ===== 7 · controls ===== */
-B("b7a",[
-  N("in",40,20,450,"box b",`<span class="t">⌨ Text input</span><b>Entry</b>: single line · Text, Placeholder, <b>Keyboard</b> (e.g. Email), <b>IsPassword</b>, MaxLength, ReturnType<br><b>Editor</b>: <b>multi-line</b> · Text, Placeholder, <b>AutoSize</b> (TextChanges), MaxLength, Keyboard<br><b>SearchBar</b>: platform search field · Text, Placeholder, <b>SearchCommand</b>, SearchCommandParameter`),
-  N("ch","r:in:40","t:in",450,"box y",`<span class="t">☑ Choices</span><b>CheckBox</b>: independent true/false · IsChecked, Color · pair with a Label<br><b>RadioButton</b>: one of a group · Content, <b>GroupName</b>, Value, IsChecked<br><b>Switch</b>: on/off · <b>IsToggled</b>, OnColor, ThumbColor<br><b>Picker</b>: one item from a <b>short list</b> · ItemsSource, SelectedItem, SelectedIndex, Title, ItemDisplayBinding`),
-  N("nu","r:ch:40","t:in",480,"box g",`<span class="t">🔢 Numbers, dates, times</span><b>Slider</b>: <b>continuous</b> value · Minimum, Maximum, Value, MinimumTrackColor, ThumbColor<br><b>Stepper</b>: <b>discrete</b> steps (+/−) · Minimum, Maximum, <b>Increment</b>, Value<br><b>DatePicker</b>: Date, MinimumDate, MaximumDate, <b>Format</b> (e.g. dd MMM yyyy)<br><b>TimePicker</b>: Time, Format (e.g. hh:mm tt)`),
-  N("sk",40,"b:in,ch,nu:40",700,"sticky",sticky(`CheckBox = many may · Radio = only one · Switch = a light`,`Slider glides (continuous) · Stepper steps (discrete)`))
-],[]);
+B("b7a",[N("ph",40,20,1420,"plain",rw7_gap(rw7_ph(4)))],[],(rc,svg,R)=>{const y=R.ph.y+40;
+  rw7_phone(rc,svg,40,y,"⌨ Text input",[["Entry","one line · IsPassword","entry"],["Editor","many lines","editor"],["SearchBar","SearchCommand","search"]],11);
+  rw7_phone(rc,svg,530,y,"☑ Choices",[["CheckBox","IsChecked · many may","check"],["RadioButton","GroupName · only one","radio"],["Switch","IsToggled","switch"],["Picker","pick from a short list","picker"]],12);
+  rw7_phone(rc,svg,1020,y,"🔢 Numbers + dates",[["Slider","continuous · Value","slider"],["Stepper","steps · Increment","stepper"],["DatePicker","Date · Format","date"],["TimePicker","Time","time"]],13)});
 
-B("b7b",[
-  N("di",40,20,450,"box w",`<span class="t">👁 Display</span><b>Label</b>: text, line breaks, text decorations, <b>FormattedText</b> with <b>Span</b>s (mixed styles), LineBreakMode, MaxLines, FontFamily/Size<br><b>Image</b>: bitmap, GIF, SVG, font image, file, URI or stream · Source, <b>Aspect</b> (AspectFit…), IsAnimationPlaying, IsOpaque<br><b>BoxView</b>: a coloured rectangle → separators, swatches · Color, CornerRadius`),
-  N("st","r:di:40","t:di",450,"box p",`<span class="t">⏳ Status</span><b>ActivityIndicator</b>: "working…" spinner · <b>IsRunning</b>, Color<br><b>ProgressBar</b>: <b>determinate</b> progress from <b>0 to 1</b> · Progress (0.65 = 65%), ProgressColor<br><b>IndicatorView</b>: position dots, linked to a <b>CarouselView</b> · Count, Position, IndicatorColor, SelectedIndicatorColor`),
-  N("ac","r:st:40","t:di",480,"box y",`<span class="t">👆 Actions</span><b>Button</b>: Text, <b>Clicked</b> or <b>Command</b>, ImageSource, CornerRadius, IsEnabled<br><b>ImageButton</b>: a tappable <b>image</b> · Source, Clicked/Command<br><b>SwipeView</b>: swipe to reveal actions · Left/Right/Top/BottomItems (e.g. a red "Delete" SwipeItem), SwipeStarted, SwipeEnded<br><b>RefreshView</b>: <b>pull-to-refresh</b> around one scrollable child · IsRefreshing, Command, RefreshColor<br><b>MenuBarItem / MenuFlyoutItem</b>: desktop menu bar + contextual flyout commands ("File → New / Save") · Text, Command, Clicked, KeyboardAccelerators`),
-  N("sk",40,"b:di,st,ac:40",700,"sticky",sticky(`ActivityIndicator = "don't know how long" · ProgressBar = "65% done"`,`indeterminate spinner vs determinate bar`))
-],[]);
+B("b7b",[N("ph",40,20,1420,"plain",rw7_gap(rw7_ph(4)))],[],(rc,svg,R)=>{const y=R.ph.y+40;
+  rw7_phone(rc,svg,40,y,"👁 Display",[["Label","Text · FormattedText","label"],["Image","Source · Aspect","image"],["BoxView","Color","boxview"]],14);
+  rw7_phone(rc,svg,530,y,"⏳ Status",[["ActivityIndicator","IsRunning","spin"],["ProgressBar","Progress 0 → 1","progress"],["IndicatorView","dots for a carousel","dots"]],15);
+  rw7_phone(rc,svg,1020,y,"👆 Actions",[["Button","Clicked / Command","button"],["ImageButton","Source + Clicked","imgbtn"],["SwipeView","swipe → actions","swipe"],["RefreshView","IsRefreshing","refresh"]],16)});
 
-B("b7c",[
-  N("cv",40,20,460,"box g",`<span class="t">CollectionView ⭐</span>the <b>modern</b>, flexible <b>scrolling list or grid</b>: selection, templates, grouping, empty views · <b>virtualised</b> → for large lists<br>ItemsSource, ItemTemplate, <b>ItemsLayout</b>, <b>SelectionMode</b>, SelectedItem, <b>RemainingItemsThreshold</b> (load more)`),
-  N("lv","r:cv:40","t:cv",440,"box w",`<span class="t">ListView (legacy)</span>list with <b>cells</b> (e.g. <code>TextCell Text + Detail</code>), templates, grouping, selection · HasUnevenRows, IsGroupingEnabled<br><span class="warn">prefer CollectionView for new lists</span>`),
-  N("ca","r:lv:40","t:cv",480,"box b",`<span class="t">CarouselView</span><b>swipeable</b> sequence, usually one item at a time · ItemsSource, ItemTemplate, <b>Position</b>, <b>Loop</b>, <b>PeekAreaInsets</b> · pairs with IndicatorView`),
-  N("tv",40,"b:cv,lv,ca:40",460,"box w",`<span class="t">TableView</span><b>settings / form-like</b> rows in sections, built from cells<br>Root, <b>Intent</b> (e.g. Settings), HasUnevenRows · TableRoot → TableSection "Account" → TextCell "Profile" + SwitchCell "Notifications"`),
-  N("cn","r:tv:40","t:tv",440,"box y",`<span class="t">Containers (one child)</span><b>Border</b>: background + stroke around ONE child · Stroke, StrokeThickness, <b>StrokeShape</b>, Background (e.g. RoundRectangle CornerRadius 16), Padding<br><b>ContentView</b>: <b>reusable</b> content, root of a custom view · Content, ControlTemplate<br><b>ScrollView</b>: scrolls one child`),
-  N("sk","r:cn:40","t:tv",480,"sticky",sticky(`big list → CollectionView · tiny list → BindableLayout · swipe cards → Carousel · settings → TableView`,`ListView is the old one`))
-],[]);
+B("b7c",[N("ph",40,20,960,"plain",rw7_gap(rw7_ph(4))),
+  N("pk",1040,80,420,"box y",`<span class="t">Which list?</span><b>big list</b> → CollectionView ⭐ (virtualised)<br><b>swipe cards</b> → CarouselView<br><b>settings rows</b> → TableView<br><b>tiny list</b> → BindableLayout<br><span class="warn">ListView = legacy → use CollectionView</span>`)
+],[],(rc,svg,R)=>{const y=R.ph.y+40;
+  rw7_phone(rc,svg,40,y,"📜 Lists",[["CollectionView","ItemsSource · ItemTemplate","cv"],["ListView","old · TextCell","lv"],["CarouselView","Position · Loop","carousel"]],17);
+  rw7_phone(rc,svg,530,y,"📦 Containers",[["TableView","Intent=Settings","table"],["Border","Stroke · StrokeShape","border"],["ContentView","reusable view","content"],["ScrollView","scrolls ONE child","scroll"]],18)});
 
-B("b7d",[
-  N("sh",40,20,620,"box b",`<span class="t">Shapes</span><b>Ellipse</b>: ellipse / circle · Fill, Stroke, StrokeThickness, Aspect<br><b>Line</b>: from (X1,Y1) to (X2,Y2)<br><b>Rectangle</b>: RadiusX / RadiusY rounds corners<br><b>RoundRectangle</b>: CornerRadius (can be 4 values) · often a Border's StrokeShape<br><b>Polygon</b>: <b>closed</b> shape from Points · <b>Polyline</b>: <b>open</b> connected segments (StrokeLineJoin)<br><b>Path</b>: vector geometry from markup, e.g. <code>Data="M 10,100 C 40,10 150,10 190,100"</code> · Fill, Stroke, Stretch`),
-  N("gv","r:sh:40","t:sh",360,"box y",`<span class="t">GraphicsView</span><b>custom 2D drawing</b> through an <code>IDrawable</code> · Drawable, Start/Drag/EndInteraction`),
-  N("mp","r:gv:40","t:sh",360,"box g",`<span class="t">Map</span>native map with <b>pins</b> + shapes · add the <b>Microsoft.Maui.Controls.Maps</b> package + initialise maps · Pins, MapElements, IsShowingUser, MapType (Street…)`),
-  N("wv","r:sh:40","b:gv:30",360,"box w",`<span class="t">WebView</span>web content from a <b>URL or HTML string</b> · Source, Navigating, Navigated, Cookies`),
-  N("pe","r:wv:40","t:wv",360,"box p",`Map + WebView: check platform <b>permissions</b> + initialisation`),
-  N("sk",40,"b:sh:40",620,"sticky",sticky(`PolyGON = GONE all the way round (closed) · PolyLINE = just a LINE (open)`,`a polygon closes back to its start; a polyline stops at its last point`))
-],[],(rc,svg,R)=>{const y=R.sk.y+20,x=760;add(svg,rc.polygon([[x,y+90],[x+45,y],[x+90,y+90]],{fill:"var(--p)",fillStyle:"solid",stroke:"var(--ink)",strokeWidth:2,roughness:0.8}));T(svg,x+45,y+120,"Polygon",{size:16});
-  add(svg,rc.linearPath([[x+140,y+70],[x+170,y+10],[x+200,y+80],[x+230,y+20],[x+260,y+60]],{stroke:"var(--blue)",strokeWidth:3,roughness:0.8}));T(svg,x+200,y+120,"Polyline",{size:16});
-  add(svg,rc.ellipse(x+340,y+45,90,90,{fill:"var(--y)",fillStyle:"solid",stroke:"var(--ink)",strokeWidth:2,roughness:0.8}));T(svg,x+340,y+120,"Ellipse",{size:16});
-  add(svg,rc.path(`M ${x+420} ${y+90} C ${x+450} ${y} ${x+560} ${y} ${x+600} ${y+90}`,{stroke:"var(--red)",strokeWidth:3,roughness:0.8}));T(svg,x+510,y+120,"Path (a curve)",{size:16})},0);
+B("b7d",[N("ph",40,20,960,"plain",rw7_gap(540)),
+  N("sk",1040,60,420,"sticky",sticky(`PolyGON = GONE all the way round (closed) · PolyLINE = just a LINE (open)`,``))
+],[],(rc,svg,R)=>{const y=R.ph.y+40;
+  rw7_phone(rc,svg,40,y,"🗺 Drawing, maps + web",[["GraphicsView","custom 2-D drawing","graphics"],["Map","Pins (Maps package)","map"],["WebView","Source = URL or HTML","web"]],19);
+  const x=560,yy=y+30;T(svg,x+200,y-12,"⬟ Shapes",{size:21,mark:1});
+  add(svg,rc.polygon([[x,yy+90],[x+45,yy],[x+90,yy+90]],{fill:"var(--p)",fillStyle:"solid",stroke:"var(--ink)",strokeWidth:2,roughness:0.8}));T(svg,x+45,yy+120,"Polygon (closed)",{size:16});
+  add(svg,rc.linearPath([[x+200,yy+70],[x+230,yy+10],[x+260,yy+80],[x+290,yy+20],[x+320,yy+60]],{stroke:"var(--blue)",strokeWidth:3,roughness:0.8}));T(svg,x+260,yy+120,"Polyline (open)",{size:16});
+  add(svg,rc.ellipse(x+45,yy+220,90,90,{fill:"var(--y)",fillStyle:"solid",stroke:"var(--ink)",strokeWidth:2,roughness:0.8}));T(svg,x+45,yy+290,"Ellipse",{size:16});
+  add(svg,rc.line(x+200,yy+260,x+320,yy+180,{stroke:"var(--ink)",strokeWidth:3,roughness:0.8}));T(svg,x+260,yy+290,"Line (X1,Y1 → X2,Y2)",{size:16});
+  add(svg,rc.rectangle(x,yy+330,90,60,{fill:"var(--b)",fillStyle:"solid",stroke:"var(--ink)",strokeWidth:2,roughness:0.8}));T(svg,x+45,yy+420,"Rectangle",{size:16});
+  add(svg,rc.path(`M ${x+200} ${yy+390} C ${x+230} ${yy+320} ${x+300} ${yy+320} ${x+330} ${yy+390}`,{stroke:"var(--red)",strokeWidth:3,roughness:0.8}));T(svg,x+265,yy+420,"Path (Data=\"M … C …\")",{size:16})});
 
 /* ===== 8 · events ===== */
 B("b8a",[
-  N("xa",40,20,560,"box w",`<span class="t">MainPage.xaml</span>`+X(`<VerticalStackLayout Padding="20" Spacing="10">
-  <Button Text="Click Me" [[Clicked="OnButtonClicked"]] />
-  <Label [[x:Name="MessageLabel"]] />
-</VerticalStackLayout>`)),
-  N("cs",900,20,560,"box g",`<span class="t">MainPage.xaml.cs</span>`+X(`public partial class MainPage : ContentPage {
-  public MainPage() { [[InitializeComponent();]] }
-
-  private void [[OnButtonClicked]](object [[sender]], EventArgs [[e]])
-  {
-      [[MessageLabel]].Text = "Button clicked";
-  }
+  N("xa",40,40,560,"box w",`<span class="t">MainPage.xaml</span>`+X(`<Button Text="Click Me"
+        [[Clicked="OnButtonClicked"]] />
+<Label [[x:Name="MessageLabel"]] />`)),
+  N("cs",900,40,560,"box g",`<span class="t">MainPage.xaml.cs</span>`+X(`void [[OnButtonClicked]](object sender, EventArgs e)
+{
+    [[MessageLabel]].Text = "Button clicked";
 }`)),
-  N("l1",40,"b:xa:40",360,"box y",`① the XAML attribute <b>names the handler</b>: <code>Clicked="OnButtonClicked"</code>`),
-  N("l2",440,"b:xa:40",360,"box y",`② <b>x:Name</b> <span class="ann">(becomes a field)</span> so C# can say <code>MessageLabel.Text = …</code>`),
-  N("l3",840,"b:cs:40",300,"box b",`<b>sender</b> = the control that fired · <b>e</b> = event data`),
-  N("l4","r:l3:20","t:l3",300,"box b",`<b>InitializeComponent()</b> loads the XAML: call it first`),
-  N("sk",40,"b:l1,l2,l3,l4:40",700,"sticky",sticky(`XAML says WHEN · C# says WHAT`,`handler signature is always (object sender, SomethingEventArgs e)`))
-],[E("xa","cs","same name",{bend:-0.12}),E("l2","cs","",{bend:0.1,dash:1,color:"blue"})]);
+  N("s1",900,"b:cs:30",270,"box b center",`<b>sender</b> = the control that fired`),
+  N("s2","r:s1:20","t:s1",270,"box b center",`<b>e</b> = the event data`),
+  N("ph",40,"b:xa:40",560,"plain",rw7_gap(260))
+],[E("xa","cs","handler name must match",{bend:-0.15})],(rc,svg,R)=>{const p=R.ph;const s=phone(rc,svg,p.x+150,p.y+10,240,250,31);
+  rw7_pill(rc,svg,s.x+40,s.y+40,150,38,"var(--p)",532);T(svg,s.x+115,s.y+65,"Click Me",{size:16,weight:700});
+  T(svg,s.x+112,s.y+140,"Button clicked",{size:17,color:"var(--green)",weight:700});
+  arrow(rc,svg,[s.x+200,s.y+50],[R.xa.x+300,R.xa.y+R.xa.h+6],{bend:0.2,color:"red"});T(svg,R.xa.x+10,R.xa.y+R.xa.h+34,"① tap fires Clicked",{size:16,color:"var(--red)",anchor:"start"});
+  arrow(rc,svg,[R.cs.x-8,R.cs.y+R.cs.h-30],[s.x+200,s.y+136],{bend:-0.15,color:"green"});T(svg,s.x+330,s.y+200,"② handler sets the Label",{size:16,color:"var(--green)",anchor:"start"})});
 
-B("b8b",[
-  N("tb",40,20,1000,"box w",`<table class="tb"><tr><th>control</th><th>event (most used)</th><th>EventArgs</th><th>what the lecture reads</th></tr>
-<tr><td>Button · ImageButton</td><td><b>Clicked</b></td><td>EventArgs</td><td>nothing: just reacts</td></tr>
-<tr><td>Entry · Editor</td><td><b>TextChanged</b> · <b>Completed</b></td><td>TextChangedEventArgs · EventArgs</td><td><code>e.NewTextValue</code> (Editor: <code>.Length</code>)</td></tr>
-<tr><td>SearchBar</td><td><b>TextChanged</b> · <b>SearchButtonPressed</b></td><td>TextChangedEventArgs · EventArgs</td><td><code>e.NewTextValue</code> · <code>((SearchBar)sender).Text</code></td></tr>
-<tr><td>CheckBox · RadioButton</td><td><b>CheckedChanged</b></td><td>CheckedChangedEventArgs</td><td><code>e.Value</code> (true/false)</td></tr>
-<tr><td>Switch</td><td><b>Toggled</b></td><td>ToggledEventArgs</td><td><code>e.Value</code></td></tr>
-<tr><td>Slider · Stepper</td><td><b>ValueChanged</b></td><td>ValueChangedEventArgs</td><td><code>e.NewValue</code> (Slider: <code>.ToString("F0")</code>)</td></tr>
-<tr><td>Picker</td><td><b>SelectedIndexChanged</b></td><td>EventArgs</td><td><code>((Picker)sender).SelectedItem</code></td></tr>
-<tr><td>DatePicker</td><td><b>DateSelected</b></td><td>DateChangedEventArgs</td><td><code>e.NewDate.ToString("dd MMMM yyyy")</code></td></tr>
-<tr><td>CollectionView</td><td><b>SelectionChanged</b></td><td>SelectionChangedEventArgs</td><td><code>e.CurrentSelection.FirstOrDefault() as string</code></td></tr></table>`),
-  N("sk",1100,20,360,"sticky",sticky(`the event name SAYS what happened`,`Click·ed · Text·Changed · Checked·Changed · Toggled · Value·Changed · SelectedIndex·Changed · Date·Selected · Selection·Changed`)),
-  N("od",1100,"b:sk:40",360,"box p",`<span class="t">the odd ones out</span><b>Switch</b> uses <b>Toggled</b>, not CheckedChanged · <b>Picker</b> gets plain <b>EventArgs</b> → read the <b>sender</b> · <b>DatePicker</b> is "Selected" but its args are <b>DateChanged</b>EventArgs`)
-],[]);
+B("b8b",(()=>{const rows=[["Button · ImageButton","Clicked","just react"],["Entry · Editor","TextChanged · Completed","e.NewTextValue"],["SearchBar","SearchButtonPressed","((SearchBar)sender).Text"],["CheckBox · RadioButton","CheckedChanged","e.Value  (true/false)"],["Switch","Toggled ⚠","e.Value"],["Slider · Stepper","ValueChanged","e.NewValue"],["Picker","SelectedIndexChanged","((Picker)sender).SelectedItem ⚠"],["DatePicker","DateSelected ⚠","e.NewDate"],["CollectionView","SelectionChanged","e.CurrentSelection"]];
+  const n=[];rows.forEach((r,i)=>{const y=i===0?60:`b:c${i-1}:22`;n.push(N("c"+i,40,y,320,"box b center",`<b>${r[0]}</b>`),N("e"+i,500,`m:c${i}`,380,"box y center",`<b>${r[1]}</b>`),N("r"+i,1020,`m:c${i}`,440,"plain",`<code>${r[2]}</code>`))});
+  n.push(N("h1",40,10,320,"plain center",`<span class="ann">control</span>`),N("h2",500,10,380,"plain center",`<span class="ann">event</span>`),N("h3",1020,10,440,"plain",`<span class="ann">what the handler reads</span>`));
+  n.push(N("od",40,"b:c8:40",1420,"box p",`⚠ traps: <b>Switch</b> fires <b>Toggled</b> (not CheckedChanged) · <b>Picker</b> gives plain EventArgs → read the <b>sender</b> · <b>DatePicker</b> event is Date<b>Selected</b>`));
+  return n})(),rows9().map(i=>[E("c"+i,"e"+i,"",{bend:0}),E("e"+i,"r"+i,"",{bend:0})]).flat());
+function rows9(){return [0,1,2,3,4,5,6,7,8]}
 
 B("b8c",[
-  N("tc",40,20,450,"box b",`<span class="t">TextChanged vs Completed</span><b>TextChanged</b> fires on <b>every keystroke</b> while typing (<code>"Typing: " + e.NewTextValue</code>)<br><b>Completed</b> fires once when the user presses <b>Enter</b> / Return`),
-  N("sv","r:tc:40","t:tc",450,"box g",`<span class="t">Slider vs Stepper</span>both <b>ValueChanged</b> · Slider fires <b>continuously</b> as you drag · Stepper fires on each <b>+ / −</b> press (Minimum 1, Maximum 10, Increment 1 → "Quantity: 2")`),
-  N("rb","r:sv:40","t:tc",480,"box y",`<span class="t">RadioButton handler</span>`+X(`private void OnRadioChanged(object sender,
-                            CheckedChangedEventArgs e)
+  N("ph",40,20,1420,"plain",rw7_gap(200)),
+  N("rb",40,"b:ph:30",640,"box y",`<span class="t">RadioButton: check e.Value</span>`+X(`void OnRadioChanged(object sender,
+                    CheckedChangedEventArgs e)
 {
-  [[if (e.Value)]]   // only the one just selected
-  {
-    RadioButton option = [[(RadioButton)sender]];
-    RadioLabel.Text = "Selected: " + option.Content;
-  }
-}`)+`<span class="ann">fires for the button turned ON <b>and</b> the one turned OFF → check e.Value · GroupName="Gender" groups Male / Female</span>`),
-  N("ck",40,"b:tc,sv:40",450,"box w",`<span class="t">CheckBox one-liner</span><code>CheckLabel.Text = e.Value ? "Accepted" : "Not accepted";</code><br><span class="ann">the ternary <code>?:</code> also writes the Switch's "On" / "Off"</span>`),
-  N("cv","r:ck:40","t:ck",450,"box w",`<span class="t">casting the sender</span><code>(Picker)sender</code>, <code>(SearchBar)sender</code>, <code>(RadioButton)sender</code>: one handler can serve many controls · <code>as string</code> = a safe cast (null if it isn't one)`),
-  N("pk",40,"b:ck,cv:40",940,"box w",`<span class="t">Picker items written in XAML</span><code>&lt;Picker.Items&gt;&lt;x:String&gt;Computer Science&lt;/x:String&gt;…&lt;/Picker.Items&gt;</code> · CollectionView inline list: <code>&lt;x:Array Type="{x:Type x:String}"&gt;</code> C#, Python, Java · ImageButton needs <b>icon.png</b> in <b>Resources/Images</b>`)
-],[]);
+  if ([[e.Value]])          // only the one switched ON
+    RadioLabel.Text = "Selected: " +
+        [[((RadioButton)sender)]].Content;
+}`)),
+  N("ck","r:rb:60","t:rb",720,"box w",`<span class="t">CheckBox / Switch in one line</span><code>CheckLabel.Text = e.Value ? "Accepted" : "Not accepted";</code>`)
+],[],(rc,svg,R)=>{const p=R.ph,y=p.y+30;
+  T(svg,p.x,y,"TextChanged vs Completed",{size:20,weight:700,anchor:"start"});
+  ["h","e","l","l","o"].forEach((c,i)=>{box(rc,svg,p.x+i*58,y+22,48,44,"var(--card)",540+i);T(svg,p.x+24+i*58,y+52,c,{size:20});T(svg,p.x+24+i*58,y+92,"⚡",{size:18})});
+  box(rc,svg,p.x+5*58+20,y+22,70,44,"var(--y)",546);T(svg,p.x+5*58+55,y+52,"⏎",{size:22});T(svg,p.x+5*58+55,y+92,"⚡",{size:18,color:"var(--red)"});
+  T(svg,p.x,y+130,"TextChanged fires on EVERY key",{size:16,anchor:"start",color:"var(--blue)"});T(svg,p.x+5*58+20,y+130,"Completed: once, on Enter",{size:16,anchor:"start",color:"var(--red)"});
+  const x2=p.x+760;T(svg,x2,y,"Slider vs Stepper (both ValueChanged)",{size:20,weight:700,anchor:"start"});
+  rw7_ln(rc,svg,[[x2,y+50],[x2+300,y+50]],"var(--blue)",4);for(let i=0;i<=20;i++)rw7_ln(rc,svg,[[x2+i*15,y+60],[x2+i*15,y+68]],"var(--blue)",1.6);rw7_dot(rc,svg,x2+180,y+50,22,"var(--card)");
+  T(svg,x2+320,y+56,"fires all the way while you drag",{size:15,anchor:"start"});
+  box(rc,svg,x2,y+90,40,34,"var(--card)",547);T(svg,x2+20,y+114,"−",{size:20});box(rc,svg,x2+40,y+90,40,34,"var(--card)",548);T(svg,x2+60,y+114,"+",{size:20});
+  T(svg,x2+100,y+114,"fires once per press (Increment 1)",{size:15,anchor:"start"})});
 
 /* ===== 9 · binding, styles, templates ===== */
 B("b9a",[
-  N("v",40,90,240,"box b center",`<b>View</b><br>(XAML page)`),
-  N("vm","r:v:200","m:v",280,"box y center",`<b>ViewModel</b><br>properties + commands`),
-  N("m","r:vm:200","m:v",240,"box g center",`<b>Model</b><br>data`),
-  N("bc",40,"b:v:70",560,"box w",`the page's <b>BindingContext</b> = the ViewModel (or <code>this</code>) → every <code>{Binding X}</code> on the page reads property <b>X</b> from it`),
-  N("cx",660,"b:v:70",800,"box w",X(`<ContentPage [[x:DataType="vm:LoginViewModel"]]>
-  <Entry  Text="{Binding Email}" />
-  <Button Text="Sign in" [[Command="{Binding SignInCommand}"]] />
-</ContentPage>`)),
-  N("cb",40,"b:bc,cx:40",700,"box g",`<b>compiled bindings</b>: set <code>x:DataType</code> → checked at <b>compile time</b> + <b>faster</b> · <b>Command</b> = MVVM's version of a Clicked handler`),
-  N("sk","r:cb:40","t:cb",680,"sticky",sticky(`MVVM: the View only TALKS to the ViewModel`,`View ⇄ ViewModel through bindings · ViewModel ⇄ Model in code`))
-],[E("v","vm","{Binding}",{both:1,bend:0}),E("vm","m","",{both:1,bend:0})]);
+  N("v",40,40,260,"box b center",`<b>View</b><br>XAML page`),
+  N("vm","r:v:220","m:v",300,"box y center",`<b>ViewModel</b><br>properties + commands`),
+  N("m","r:vm:220","m:v",260,"box g center",`<b>Model</b><br>the data`),
+  N("sr",40,"b:v:110",300,"box y center",`source: <code>vm.Email</code>`),
+  N("tg","r:sr:300","t:sr",320,"box b center",`target: <code>Entry.Text</code>`),
+  N("s2",40,"b:sr:50",300,"box y center",`source: <code>vm.Name</code>`),
+  N("t2","r:s2:300","t:s2",320,"box b center",`target: <code>Label.Text</code>`),
+  N("cx",1080,"b:m:110",380,"box w",X(`<Entry Text="{Binding Email}" />
+<Button [[Command="{Binding SignInCommand}"]] />`)+`<b>BindingContext</b> = the ViewModel · <b>Command</b> = MVVM's Clicked · <code>x:DataType</code> = compiled (faster)`)
+],[E("v","vm","{Binding}",{both:1,bend:0}),E("vm","m","code",{both:1,bend:0}),E("sr","tg","TwoWay ⇄",{both:1,bend:0}),E("s2","t2","OneWay →",{bend:0})]);
 
 B("b9b",[
-  N("rs",40,20,700,"box w",`<span class="t">Resources + styles</span>reusable values live in a <b>ResourceDictionary</b>: on the <b>page</b>, the <b>app</b>, or <b>merged</b> ones`+X(`<ContentPage.Resources>
-  <Color [[x:Key="Primary"]]>#6750A4</Color>
-  <Style [[TargetType="Button"]]>
-    <Setter Property="BackgroundColor"
-            Value="[[{StaticResource Primary}]]" />
-    <Setter Property="CornerRadius" Value="12" />
-  </Style>
-</ContentPage.Resources>`)+`<span class="ann">a Style with only a TargetType (no x:Key) applies to every Button on the page</span>`),
-  N("dt",800,20,660,"box b",`<span class="t">DataTemplate</span>describes how ONE <b>repeated data item</b> looks (lists, BindableLayout, tabs)`+X(`<DataTemplate x:Key="ProductTemplate"
-              x:DataType="model:Product">
-  <Grid ColumnDefinitions="64,*" Padding="12">
-    <Image Source="{Binding Image}" />
-    <Label Grid.Column="1" Text="{Binding Name}" />
-  </Grid>
-</DataTemplate>`)),
-  N("ct",800,"b:dt:30",660,"box y",`<span class="t">ControlTemplate</span><b>replaces the visual tree</b> of a templated control (re-skins the control itself)`),
-  N("sk",40,"b:rs:40",700,"sticky",sticky(`DataTemplate dresses the DATA · ControlTemplate dresses the CONTROL`,`StaticResource = "look it up by its x:Key"`))
-],[]);
+  N("st",40,40,520,"box w",`<span class="t">One Style → every Button</span>`+X(`<Style [[TargetType="Button"]]>
+  <Setter Property="BackgroundColor"
+          Value="[[{StaticResource Primary}]]" />
+</Style>`)+`<span class="ann">no x:Key → applies to all Buttons · lives in a <b>ResourceDictionary</b></span>`),
+  N("ph",640,40,820,"plain",rw7_gap(200)),
+  N("dt",40,"b:st,ph:50",680,"box b",`<span class="t">DataTemplate</span>how ONE <b>data item</b> looks in a list`),
+  N("ct","r:dt:60","t:dt",680,"box y",`<span class="t">ControlTemplate</span><b>re-skins the control itself</b> (replaces its visual tree)`),
+  N("ph2",40,"b:dt,ct:20",1420,"plain",rw7_gap(150))
+],[],(rc,svg,R)=>{const p=R.ph;box(rc,svg,p.x,p.y+20,170,60,"var(--p)",560);T(svg,p.x+85,p.y+46,"Primary",{size:17,weight:700});T(svg,p.x+85,p.y+68,"#6750A4",{size:14});T(svg,p.x+85,p.y+106,"x:Key=\"Primary\"",{size:14,color:"var(--soft)"});
+  [0,1,2].forEach(i=>{rw7_pill(rc,svg,p.x+420,p.y+10+i*60,170,40,"var(--p)",561+i);T(svg,p.x+505,p.y+36+i*60,["Save","Cancel","Next"][i],{size:16,weight:700});arrow(rc,svg,[p.x+180,p.y+50],[p.x+412,p.y+30+i*60],{bend:0,color:"red"})});
+  T(svg,p.x+300,p.y+190,"StaticResource looks it up by x:Key",{size:15,color:"var(--red)"});
+  const q=R.ph2,y=q.y+30;box(rc,svg,q.x,y,220,70,"var(--card)",565);T(svg,q.x+110,y+30,"{ Name: \"Ada\",",{size:15});T(svg,q.x+110,y+54,"  Image: ada.png }",{size:15});
+  arrow(rc,svg,[q.x+230,y+35],[q.x+320,y+35],{bend:0,color:"blue"});T(svg,q.x+275,y+24,"template",{size:13,color:"var(--blue)"});
+  box(rc,svg,q.x+330,y+10,340,50,"var(--b)",566);rw7_dot(rc,svg,q.x+360,y+35,30,"var(--y)");T(svg,q.x+390,y+42,"Ada",{size:18,anchor:"start",weight:700});
+  const x2=q.x+740;rw7_pill(rc,svg,x2,y+15,150,40,"var(--p)",567);T(svg,x2+75,y+41,"Button",{size:16});arrow(rc,svg,[x2+160,y+35],[x2+260,y+35],{bend:0,color:"blue"});
+  add(svg,rc.polygon([[x2+280,y+35],[x2+340,y+5],[x2+400,y+35],[x2+340,y+65]],{fill:"var(--y)",fillStyle:"solid",stroke:"var(--ink)",strokeWidth:2,roughness:0.8}));T(svg,x2+340,y+41,"Button",{size:15});T(svg,x2+340,y+92,"same control, new look",{size:14,color:"var(--soft)"})});
 
 B("b9c",[
-  N("vs",40,20,700,"box w",`<span class="t">VisualStateManager</span>states such as <b>Normal</b>, <b>Disabled</b>, <b>Focused</b>, <b>PointerOver</b>, or your own`+X(`<VisualStateManager.VisualStateGroups>
-  <VisualStateGroup Name="CommonStates">
-    <VisualState Name="Normal" />
-    <VisualState Name="Disabled">
-      <VisualState.Setters>
-        <Setter Property="Opacity" Value="0.45" />
-      </VisualState.Setters>
-    </VisualState>
-  </VisualStateGroup>
-</VisualStateManager.VisualStateGroups>`)),
-  N("rp",800,20,660,"box g",`<span class="t">Responsive layout</span>adapt to width + device with: <b>Grid star sizing</b> · VSM <b>adaptive triggers</b> · idiom / platform resources`+X(`<VisualState.StateTriggers>
-  <AdaptiveTrigger [[MinWindowWidth="900"]] />
-</VisualState.StateTriggers>`)+`<span class="ann">→ that state switches on once the window is at least 900 wide</span>`),
-  N("sk",800,"b:rp:40",660,"sticky",sticky(`VSM = a mood ring for controls`,`the control changes look with its state (disabled → 45% opacity)`))
-],[]);
+  N("n",420,60,220,"oval g center",`<b>Normal</b>`),
+  N("po",40,"b:n:90",240,"oval b center",`PointerOver`),
+  N("fo","r:po:70","t:po",220,"oval b center",`Focused`),
+  N("di","r:fo:70","t:po",320,"oval p center",`Disabled → Opacity 0.45`),
+  N("cd",1040,40,420,"box w",X(`<VisualState Name="Disabled">
+  <VisualState.Setters>
+    <Setter Property="Opacity"
+            Value="0.45" />`)),
+  N("ph",40,"b:po,fo,di,cd:60",1420,"plain",rw7_gap(170))
+],[E("n","po","",{both:1}),E("n","fo","",{both:1,bend:0}),E("n","di","IsEnabled=false",{both:1})],(rc,svg,R)=>{const p=R.ph,y=p.y+20;
+  T(svg,p.x,y,"Responsive: AdaptiveTrigger MinWindowWidth=\"900\"",{size:19,weight:700,anchor:"start"});
+  box(rc,svg,p.x,y+24,180,120,"var(--card)",570);[0,1].forEach(i=>box(rc,svg,p.x+20,y+40+i*50,140,40,"var(--b)",571+i));T(svg,p.x+90,y+162,"< 900 wide: stacked",{size:15});
+  arrow(rc,svg,[p.x+200,y+84],[p.x+300,y+84],{bend:0,color:"green"});
+  box(rc,svg,p.x+320,y+24,420,120,"var(--card)",573);[0,1].forEach(i=>box(rc,svg,p.x+340+i*200,y+44,180,80,"var(--g)",574+i));T(svg,p.x+530,y+162,"≥ 900 wide: side by side",{size:15})});
 
 B("b9d",[
-  N("g1",40,20,700,"box g",`<span class="t">✓ Selection guide</span><ul><li><b>Grid</b> for forms + 2-D alignment</li><li><b>Vertical/HorizontalStackLayout</b> for simple 1-D groups</li><li><b>CollectionView</b> for large / virtualised lists · <b>BindableLayout</b> only for small ones</li></ul>`),
-  N("g2","r:g1:40","t:g1",680,"box p",`<span class="t">⚡ Performance checklist</span><ul><li>don't put CollectionView / ListView inside a <b>same-direction</b> ScrollView</li><li>avoid <b>deeply nested</b> layouts + needless StackLayout combos</li><li>give images <b>explicit sizes</b> + suitable assets</li><li>prefer <b>compiled bindings</b> (x:DataType)</li><li>keep item templates <b>light</b>; no expensive converters in repeated templates</li></ul>`),
-  N("g3",40,"b:g1,g2:40",700,"box b",`<span class="t">🧪 Test</span>keyboard · screen reader · text scaling · dark theme · right-to-left · rotation · narrow desktop windows`),
-  N("g4","r:g3:40","t:g3",680,"box y",`<span class="t">🔐 Map + WebView</span>verify platform-specific <b>permissions</b> + initialisation`)
-],[]);
+  N("q",40,40,300,"oval y center",`Which layout / list?`),
+  N("a1",500,20,420,"box w",`form · 2-D alignment → <b>Grid</b>`),
+  N("a2",500,"b:a1:18",420,"box w",`simple row / column → <b>Stack</b> layout`),
+  N("a3",500,"b:a2:18",420,"box w",`big list → <b>CollectionView</b>`),
+  N("a4",500,"b:a3:18",420,"box w",`small list → <b>BindableLayout</b>`),
+  N("pf",1000,20,460,"box p",`<span class="t">⚡ Performance</span><ul><li>no CollectionView inside a <b>same-direction</b> ScrollView</li><li>avoid <b>deep nesting</b></li><li>give images <b>explicit sizes</b></li><li><b>compiled bindings</b> (x:DataType)</li><li>keep item templates <b>light</b></li></ul>`)
+],[E("q","a1","",{bend:0}),E("q","a2","",{bend:0}),E("q","a3","",{bend:0}),E("q","a4","",{bend:0})]);
 /* ---------- sticker doodles (drawn ~46px around x,y) ---------- */
 const P=Math.PI;
 const S=(f,st,w)=>{const o={stroke:st||"var(--ink)",strokeWidth:w||2,roughness:0.9};if(f){o.fill=f;o.fillStyle="solid"}return o};
