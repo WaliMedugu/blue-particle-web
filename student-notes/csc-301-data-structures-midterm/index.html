@@ -1,0 +1,1430 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CSC 301 Data Structures: Midterm Notes | Blue Particle Studios</title>
+<meta name="description" content="Free visual notes for CSC 301 Data Structures: data structure basics, primitive types and memory, IEEE 754, arrays, structures and strings, basic operations, pointers and dynamic memory, linked lists, stacks, queues and a past-paper drill.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Blue Particle Studios">
+<meta property="og:url" content="https://blueparticlestudios.com/student-notes/csc-301-data-structures-midterm/">
+<meta property="og:title" content="CSC 301 Data Structures: Midterm Notes">
+<meta property="og:description" content="Free visual notes for CSC 301 Data Structures: data structure basics, primitive types and memory, IEEE 754, arrays, structures and strings, basic operations, pointers and dynamic memory, linked lists, stacks, queues and a past-paper drill.">
+<meta property="og:image" content="https://blueparticlestudios.com/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CSC 301 Data Structures: Midterm Notes">
+<meta name="twitter:description" content="Free visual notes for CSC 301 Data Structures: data structure basics, primitive types and memory, IEEE 754, arrays, structures and strings, basic operations, pointers and dynamic memory, linked lists, stacks, queues and a past-paper drill.">
+<meta name="twitter:image" content="https://blueparticlestudios.com/og.jpg">
+<link rel="canonical" href="https://blueparticlestudios.com/student-notes/csc-301-data-structures-midterm/">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Permanent+Marker&family=Inter+Tight:wght@500;600&display=swap">
+<!-- Kalam + Permanent Marker draw "Z" like a "2": (and "1" like an "I"): this loads ONLY those glyphs from Patrick Hand, which is first in the font stacks -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Patrick+Hand&text=1&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&text=Z&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.js"></script>
+<style>
+/* Layout: wide whiteboards. Each topic is a 1500-unit canvas scaled to the screen; HTML text sits on a hand-drawn SVG layer of boxes, circles and arrows. */
+:root{
+  --paper:#FCFCF8; --dot:rgba(36,87,184,.14); --ink:#1E2C45; --soft:#5C6A82;
+  --blue:#2457B8; --red:#D2462F; --green:#2B8A4B;
+  --y:#FFEB85; --g:#CDF2D4; --p:#FFD6E5; --b:#D8E8FF; --card:#FFFFFF;
+  --f-hand:"Comic Neue","Patrick Hand","Kalam","Segoe Print","Comic Sans MS",cursive;
+  --f-mark:"Comic Neue","Patrick Hand","Permanent Marker","Kalam","Segoe Print",cursive;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#141D2B; --dot:rgba(141,184,255,.12); --ink:#E7EDF6; --soft:#A3B1C6;
+  --blue:#8DB8FF; --red:#FF8B74; --green:#7FDB9C;
+  --y:#4A4220; --g:#1F4430; --p:#4A2433; --b:#1E3556; --card:#1B2738; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#141D2B; --dot:rgba(141,184,255,.12); --ink:#E7EDF6; --soft:#A3B1C6;
+  --blue:#8DB8FF; --red:#FF8B74; --green:#7FDB9C;
+  --y:#4A4220; --g:#1F4430; --p:#4A2433; --b:#1E3556; --card:#1B2738; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:18px/1.45 var(--f-hand);
+  background-image:radial-gradient(var(--dot) 1.2px,transparent 1.3px);background-size:24px 24px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 80px}
+main{max-width:1600px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+h1{font:400 clamp(36px,5vw,60px)/1.05 var(--f-mark);margin:0}
+h2{font:400 clamp(28px,3.4vw,40px)/1.1 var(--f-mark);margin:56px 0 0;text-decoration:underline wavy var(--red) 2px;text-underline-offset:10px}
+h3{font:700 24px/1.2 var(--f-hand);color:var(--blue);margin:26px 0 0}
+.sub{color:var(--soft);font-size:17px;margin:0}
+.toc{display:flex;flex-wrap:wrap;gap:10px}
+.toc a{font:700 17px var(--f-hand);color:var(--ink);text-decoration:none;border:2px solid var(--ink);border-radius:18px 14px 20px 12px;padding:3px 14px;background:var(--card)}
+.toc a:hover{background:var(--y)}
+.toc a:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.week{font:400 20px var(--f-mark);color:var(--paper);background:var(--red);align-self:flex-start;padding:4px 16px;transform:rotate(-2deg);margin-top:36px}
+.skip{color:var(--soft);font-size:16px;border-top:2px dashed var(--soft);padding-top:8px;margin:6px 0 0}
+.skip::before{content:"✂ left out: "}
+
+/* boards */
+.board{width:100%;overflow-x:auto;overflow-y:hidden}
+.sizer{position:relative}
+.inner{position:absolute;left:0;top:0;transform-origin:0 0}
+.inner>svg{position:absolute;left:0;top:0;overflow:visible}
+.nd{position:absolute;padding:12px 16px;font:400 18px/1.4 var(--f-hand);color:var(--ink)}
+.nd.s-oval{text-align:center;padding:16px 24px}
+.nd.s-big{font-size:21px;font-weight:700}
+.nd.s-plain{padding:4px 6px}
+.nd.has-ic{padding-right:72px;min-height:66px}
+.nd.s-center{text-align:center}
+.nd.s-sticky{background:var(--y);transform:rotate(-1.6deg);box-shadow:4px 5px 0 rgba(0,0,0,.13);padding:12px 18px}
+.nd.s-sticky::before{content:"🧠 memory trick";display:block;font:400 14px var(--f-mark);color:var(--red);margin-bottom:2px}
+.nd .t{display:block;font-weight:700;font-size:20px;margin-bottom:2px}
+.nd .h{display:block;font:400 24px var(--f-mark)}
+.nd small{font-size:15px;color:var(--soft)}
+.nd ul,.nd ol{margin:4px 0 0;padding-left:22px}
+.nd .who{display:block;color:var(--blue);margin-bottom:4px}
+.nd .q{font-weight:700;font-size:23px;line-height:1.3}
+.nd .bigp{font-weight:700;font-size:22px}
+.el{position:absolute;font:700 16px/1.1 var(--f-hand);color:var(--red);background:var(--paper);padding:1px 5px;transform:translate(-50%,-50%);white-space:nowrap;border-radius:4px}
+.el.blue{color:var(--blue)}
+.c{display:inline-block;border:2px solid var(--red);border-radius:52% 46% 55% 44%/58% 50% 48% 52%;padding:0 8px;transform:rotate(-1.5deg);font-weight:700}
+.cb{border-color:var(--blue)}
+.hy{background:linear-gradient(transparent 38%,var(--y) 38%,var(--y) 90%,transparent 90%);padding:0 2px}
+.hg{background:linear-gradient(transparent 38%,var(--g) 38%,var(--g) 90%,transparent 90%);padding:0 2px}
+.hp{background:linear-gradient(transparent 38%,var(--p) 38%,var(--p) 90%,transparent 90%);padding:0 2px}
+.ann{color:var(--blue)}
+.warn{color:var(--red);font-weight:700}
+.blank{display:inline-block;min-width:90px;border-bottom:2px solid var(--red);margin:0 4px}
+.lc{display:grid;grid-template-columns:repeat(5,1fr);border:2.5px solid var(--ink);font-weight:700}
+.lc>div{border:1.5px solid var(--ink);padding:10px;min-height:90px}
+.lc .tall{grid-row:span 2}
+.lc .wide{grid-column:1 / span 5;min-height:56px}
+.nd code{font:14.5px/1.35 Consolas,"Cascadia Mono",monospace;background:rgba(36,87,184,.09);padding:0 3px;border-radius:3px}
+.nd pre{font:14px/1.42 Consolas,"Cascadia Mono",monospace;margin:6px 0 2px;white-space:pre;background:rgba(36,87,184,.07);padding:8px 10px;border-radius:6px}
+.nd pre b{color:var(--red)}
+.nd table.tb{border-collapse:collapse;width:100%;font-size:17px;margin-top:4px}
+.nd table.tb th,.nd table.tb td{border:1.5px solid var(--soft);padding:4px 8px;text-align:left;vertical-align:top}
+.nd table.tb th{background:var(--y)}
+/* coverage panel */
+.cov{border:2.5px solid var(--ink);border-radius:14px 10px 16px 9px;background:var(--card);padding:16px 18px;box-shadow:4px 5px 0 rgba(0,0,0,.1)}
+.cov .covh{margin:0 0 6px;text-decoration:none;font-size:clamp(24px,3vw,32px)}
+.cov p{margin:6px 0}
+.cov table{width:100%;border-collapse:collapse;font-size:17px;margin:8px 0}
+.cov th,.cov td{border:1.5px solid var(--soft);padding:6px 10px;text-align:left;vertical-align:top}
+.cov th{background:var(--y)}
+.cov a{color:var(--blue);font-weight:700}
+.cov .covn{color:var(--soft);font-size:16px}
+@media (max-width:700px){.cov table,.cov thead,.cov tbody,.cov tr,.cov th,.cov td{display:block}.cov thead{display:none}.cov td{border:none;border-bottom:1px dashed var(--soft);padding:4px 0}.cov tr{border-top:2px solid var(--ink);padding:6px 0}.cov td:first-child{font:400 20px var(--f-mark)}}
+</style>
+
+<style>
+.bps-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;max-width:1600px;margin:0 auto 8px;font:600 15px/1.2 "Inter Tight",system-ui,sans-serif}
+.bps-bar a{color:var(--ink);text-decoration:none}
+.bps-brand{display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:-.02em;font-size:16px}
+.bps-brand svg{width:22px;height:22px}
+.bps-links{display:flex;gap:14px;flex-wrap:wrap}
+.bps-links a{border-bottom:1.5px solid currentColor;padding-bottom:1px}
+.bps-cta{max-width:1600px;margin:56px auto 0;border:2.5px solid var(--ink);border-radius:10px 16px 12px 18px;padding:22px 24px;background:var(--card);display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between}
+.bps-cta p{margin:0;max-width:62ch}
+.bps-cta .k{font:400 22px var(--f-mark);display:block;margin-bottom:4px}
+.bps-cta .btns{display:flex;gap:10px;flex-wrap:wrap}
+.bps-cta .btns a{font:600 15px "Inter Tight",system-ui,sans-serif;text-decoration:none;border:2px solid var(--ink);border-radius:999px;padding:8px 16px;color:var(--ink)}
+.bps-cta .btns a.hot{background:#2342ff;border-color:#2342ff;color:#fff}
+.bps-foot{max-width:1600px;margin:24px auto 0;font:500 13px "Inter Tight",system-ui,sans-serif;color:var(--soft);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.bps-foot a{color:var(--soft)}
+</style>
+</head>
+<body>
+<header class="bps-bar" id="top">
+  <a class="bps-brand" href="/" aria-label="Blue Particle Studios, home"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" fill="none" stroke="currentColor"/><path d="M2.5 2.5l19 19M21.5 2.5l-19 19" stroke="currentColor" stroke-width=".6" opacity=".45"/><circle cx="12" cy="12" r="4.4" fill="#2342ff"/></svg>Blue Particle</a>
+  <nav class="bps-links" aria-label="Notes"><a href="/student-notes/">All student notes</a><a href="/">Our studio</a></nav>
+</header>
+<main>
+  <span class="sub">CSC 301 · Data Structures · midterm notes</span>
+  <h1>CSC 301 Sketch Notes</h1>
+  <p class="sub">Every point from the course material, drawn out on wide boards. Follow the arrows.</p>
+  <section class="cov" aria-labelledby="covH">
+    <h2 id="covH" class="covh">What this covers</h2>
+    <p>Every CSC 301 file shared with the class as of <b>23 Nov 2026</b> (both class Drive folders), plus last session's papers.</p>
+    <table>
+      <thead><tr><th>Source</th><th>What it is</th><th>Where</th></tr></thead>
+      <tbody>
+        <tr><td>Lecture note 1</td><td>Course introduction: data structures, classification, ADTs, operations, efficiency (written notes + slides)</td><td><a href="#s1">§1</a></td></tr>
+        <tr><td>Lecture note 2</td><td>Primitive types, variables, addresses, binary, IEEE 754, memory layout (written notes + slides)</td><td><a href="#s2">§2</a></td></tr>
+        <tr><td>Assignment 1</td><td>IEEE 754 for 10.25</td><td><a href="#s2">§2.6</a></td></tr>
+        <tr><td>Lecture note 3</td><td>Arrays, multidimensional arrays, structures, strings, basic operations (written notes + slides)</td><td><a href="#s3">§3</a> · <a href="#s4">§4</a></td></tr>
+        <tr><td>Lecture note 5</td><td>Linked lists: singly, doubly, circular (slides)</td><td><a href="#s6">§6</a></td></tr>
+        <tr><td>Course outline, weeks 4–6</td><td>Pointers + dynamic memory · stacks · queues</td><td><a href="#s5">§5</a> · <a href="#s7">§7</a> · <a href="#s8">§8</a></td></tr>
+        <tr><td>Past papers</td><td>Last session's midterm (multiple choice) + final exam</td><td><a href="#s9">§9</a></td></tr>
+      </tbody>
+    </table>
+    <p class="covn">No lecture note 4 has been shared (week 4: pointers + dynamic memory), and no notes on stacks or queues (weeks 5–6). Those sections are built from the course outline, the stack/queue parts of notes 1–3 and last session's midterm, and each one is marked <span class="ann">from the outline</span>. Not here: trees, heaps, hash tables + graphs (weeks 10–12, after the midterm; no notes yet). Each section's ✂ line says what small print was left out.</p>
+  </section>
+  <nav class="toc" aria-label="Sections">
+    <a href="#s1">1 · What data structures are</a><a href="#s2">2 · Types + memory</a><a href="#s3">3 · Arrays, structs + strings</a>
+    <a href="#s4">4 · Basic operations</a><a href="#s5">5 · Pointers + dynamic memory</a><a href="#s6">6 · Linked lists</a>
+    <a href="#s7">7 · Stacks</a><a href="#s8">8 · Queues</a><a href="#s9">9 · Exam drill</a>
+  </nav>
+
+  <span class="week">PART 1 · FOUNDATIONS</span>
+  <h2 id="s1">1 · What data structures are</h2>
+  <p class="sub">Lecture note 1 · course introduction</p>
+  <h3>1.1 Data → information → data structure</h3><div class="board" id="b1a"></div>
+  <h3>1.2 Why data structures matter</h3><div class="board" id="b1b"></div>
+  <h3>1.3 Linear vs non-linear</h3><div class="board" id="b1c"></div>
+  <h3>1.4 Static vs dynamic allocation</h3><div class="board" id="b1d"></div>
+  <h3>1.5 Contiguous vs linked storage</h3><div class="board" id="b1e"></div>
+  <h3>1.6 The two classifications are different things</h3><div class="board" id="b1f"></div>
+  <h3>1.7 Abstract data types (ADTs)</h3><div class="board" id="b1g"></div>
+  <h3>1.8 Common operations + efficiency</h3><div class="board" id="b1h"></div>
+  <h3>1.9 The course map</h3><div class="board" id="b1i"></div>
+  <p class="skip">the class activity + "home fun" scenario (its answers are the same picks as 1.3 and §9), the key-terms table (every term is on a board)</p>
+
+  <h2 id="s2">2 · Primitive types, variables + memory</h2>
+  <p class="sub">Lecture note 2 + Assignment 1</p>
+  <h3>2.1 Primitive data types</h3><div class="board" id="b2a"></div>
+  <h3>2.2 A variable: name, value, address</h3><div class="board" id="b2b"></div>
+  <h3>2.3 Addresses + a first look at pointers</h3><div class="board" id="b2c"></div>
+  <h3>2.4 Bits, bytes, integers + characters</h3><div class="board" id="b2d"></div>
+  <h3>2.5 IEEE 754: storing 12.5</h3><div class="board" id="b2e"></div>
+  <h3>2.6 Assignment 1 worked: 10.25</h3><div class="board" id="b2f"></div>
+  <h3>2.7 How a running program's memory is laid out</h3><div class="board" id="b2g"></div>
+  <p class="skip">the practical exercise (print each variable's value, address + sizeof), the output-buffer figure</p>
+
+  <h2 id="s3">3 · Arrays, structures + strings</h2>
+  <p class="sub">Lecture note 3 §1–5</p>
+  <h3>3.1 What an array is</h3><div class="board" id="b3a"></div>
+  <h3>3.2 Declaring, initialising + accessing</h3><div class="board" id="b3b"></div>
+  <h3>3.3 Arrays in memory: the address formula</h3><div class="board" id="b3c"></div>
+  <h3>3.4 Static vs dynamic arrays · strengths + limits</h3><div class="board" id="b3d"></div>
+  <h3>3.5 Multidimensional arrays</h3><div class="board" id="b3e"></div>
+  <h3>3.6 Row-major order</h3><div class="board" id="b3f"></div>
+  <h3>3.7 Records + structures</h3><div class="board" id="b3g"></div>
+  <h3>3.8 Arrays of structs, nesting, pointers + padding</h3><div class="board" id="b3h"></div>
+  <h3>3.9 C strings + the null character</h3><div class="board" id="b3i"></div>
+  <h3>3.10 The string functions</h3><div class="board" id="b3j"></div>
+  <h3>3.11 Substrings, searching + comparing in C, C++ + Python</h3><div class="board" id="b3k"></div>
+  <h3>3.12 String mistakes + the big comparison</h3><div class="board" id="b3l"></div>
+  <p class="skip">lab exercises 1–5 + the slides' practice list (reverse, matrix multiply, vowel count)</p>
+
+  <h2 id="s4">4 · Basic operations</h2>
+  <p class="sub">Lecture note 3 §6</p>
+  <h3>4.1 Traversal, access + updating</h3><div class="board" id="b4a"></div>
+  <h3>4.2 Inserting into an array (shift right)</h3><div class="board" id="b4b"></div>
+  <h3>4.3 Deleting from an array (shift left)</h3><div class="board" id="b4c"></div>
+  <h3>4.4 Linear vs binary search</h3><div class="board" id="b4d"></div>
+  <h3>4.5 Sorting + merging</h3><div class="board" id="b4e"></div>
+  <h3>4.6 The operation cost table</h3><div class="board" id="b4f"></div>
+
+  <span class="week">PART 2 · LINKED + LINEAR STRUCTURES</span>
+  <h2 id="s5">5 · Pointers + dynamic memory</h2>
+  <p class="sub">Week 4 in the outline · no lecture note shared, so this gathers the pointer + malloc parts of notes 1–3 <span class="ann">(from the outline)</span></p>
+  <h3>5.1 Pointers: &amp;, * and -&gt;</h3><div class="board" id="b5a"></div>
+  <h3>5.2 malloc, free + memory leaks</h3><div class="board" id="b5b"></div>
+  <h3>5.3 How a dynamic array grows</h3><div class="board" id="b5c"></div>
+
+  <h2 id="s6">6 · Linked lists</h2>
+  <p class="sub">Lecture note 5 · singly, doubly + circular</p>
+  <h3>6.1 What a linked list is · vs arrays</h3><div class="board" id="b6a"></div>
+  <h3>6.2 Singly linked list: building 3 nodes</h3><div class="board" id="b6b"></div>
+  <h3>6.3 Insertion: front, end, position</h3><div class="board" id="b6c"></div>
+  <h3>6.4 Deletion: front, end, position</h3><div class="board" id="b6d"></div>
+  <h3>6.5 Searching + the singly list's pros and cons</h3><div class="board" id="b6e"></div>
+  <h3>6.6 Doubly linked list</h3><div class="board" id="b6f"></div>
+  <h3>6.7 Doubly: insert + delete</h3><div class="board" id="b6g"></div>
+  <h3>6.8 Circular linked lists</h3><div class="board" id="b6h"></div>
+  <h3>6.9 Where linked lists are used</h3><div class="board" id="b6i"></div>
+
+  <h2 id="s7">7 · Stacks</h2>
+  <p class="sub">Week 5 in the outline · stack ADT from note 1 + last session's midterm <span class="ann">(from the outline)</span></p>
+  <h3>7.1 LIFO + the stack operations</h3><div class="board" id="b7a"></div>
+  <h3>7.2 Array stack: top, overflow, underflow</h3><div class="board" id="b7b"></div>
+  <h3>7.3 Linked stack, growing stacks + two stacks in one array</h3><div class="board" id="b7c"></div>
+
+  <h2 id="s8">8 · Queues</h2>
+  <p class="sub">Week 6 in the outline · queue ADT from note 1 + last session's midterm <span class="ann">(from the outline)</span></p>
+  <h3>8.1 FIFO + the linear array queue</h3><div class="board" id="b8a"></div>
+  <h3>8.2 Circular queue: wrap-around, full, empty, count</h3><div class="board" id="b8b"></div>
+  <h3>8.3 Linked queue · circular buffer · deque</h3><div class="board" id="b8c"></div>
+  <h3>8.4 Priority queue + a queue built from two stacks</h3><div class="board" id="b8d"></div>
+
+  <span class="week">PART 3 · EXAM</span>
+  <h2 id="s9">9 · Exam drill</h2>
+  <p class="sub">Last session's midterm was 100 multiple-choice questions like these; the final had written pseudocode questions</p>
+  <h3>9.1 "Which structure?" decision map</h3><div class="board" id="b9a"></div>
+  <h3>9.2 The big Big-O table</h3><div class="board" id="b9b"></div>
+  <h3>9.3 Past midterm questions, answered</h3><div class="board" id="b9c"></div>
+  <h3>9.4 Past written questions: what a full answer needs</h3><div class="board" id="b9d"></div>
+  <p class="skip">the final paper's tree, heap + graph questions (after the midterm: heap sort, AVL insertion, adjacency list/matrix)</p>
+  <p class="sub" style="margin-top:28px">Covers everything shared for CSC 301 up to 23 Nov 2026. Lecture note 4 gets drawn in if it appears.</p>
+</main>
+
+
+<script>
+/* ---------- engine ---------- */
+const W=1500, NS="http://www.w3.org/2000/svg";
+const BOARDS=[];
+const N=(k,x,y,w,s,h)=>({k,x,y,w,s,h});
+const E=(a,b,l,o)=>({a,b,l:l||"",o:o||{}});
+const B=(id,nodes,edges,draw,minH)=>BOARDS.push({id,nodes,edges:edges||[],draw,minH:minH||0});
+const FILL={y:"var(--y)",g:"var(--g)",p:"var(--p)",b:"var(--b)",w:"var(--card)",r:"var(--card)"};
+
+function fallbackRC(svg){
+  const mk=(d,o)=>{const p=document.createElementNS(NS,"path");p.setAttribute("d",d);p.setAttribute("stroke",o.stroke||"var(--ink)");p.setAttribute("stroke-width",o.strokeWidth||2);p.setAttribute("fill",o.fill||"none");if(o.strokeLineDash)p.setAttribute("stroke-dasharray",o.strokeLineDash.join(" "));const g=document.createElementNS(NS,"g");g.appendChild(p);return g};
+  const pts=a=>a.map((p,i)=>(i?"L":"M")+p[0]+" "+p[1]).join(" ");
+  return{rectangle:(x,y,w,h,o={})=>mk(`M${x} ${y} h${w} v${h} h${-w} Z`,o),
+    ellipse:(cx,cy,w,h,o={})=>mk(`M${cx-w/2} ${cy} a${w/2} ${h/2} 0 1 0 ${w} 0 a${w/2} ${h/2} 0 1 0 ${-w} 0`,o),
+    circle:(cx,cy,d,o={})=>mk(`M${cx-d/2} ${cy} a${d/2} ${d/2} 0 1 0 ${d} 0 a${d/2} ${d/2} 0 1 0 ${-d} 0`,o),
+    line:(x1,y1,x2,y2,o={})=>mk(`M${x1} ${y1} L${x2} ${y2}`,o),
+    linearPath:(a,o={})=>mk(pts(a),o), polygon:(a,o={})=>mk(pts(a)+" Z",o),
+    curve:(a,o={})=>mk(a.length===3?`M${a[0][0]} ${a[0][1]} Q${2*a[1][0]-(a[0][0]+a[2][0])/2} ${2*a[1][1]-(a[0][1]+a[2][1])/2} ${a[2][0]} ${a[2][1]}`:pts(a),o),
+    arc:(x,y,w,h,s,e,closed,o={})=>{const p=t=>[x+w/2*Math.cos(t),y+h/2*Math.sin(t)];const a=p(s),b=p(e);return mk(`M${closed?x+" "+y+" L":""}${a[0]} ${a[1]} A${w/2} ${h/2} 0 ${e-s>Math.PI?1:0} 1 ${b[0]} ${b[1]}${closed?" Z":""}`,o)},
+    path:(d,o={})=>mk(d,o)};
+}
+function add(svg,node){svg.appendChild(node);node.querySelectorAll("path").forEach(p=>{["stroke","fill"].forEach(a=>{const v=p.getAttribute(a);if(v&&v.indexOf("var(")===0){p.style[a]=v;p.removeAttribute(a)}})});return node}
+function T(svg,x,y,str,o={}){const t=document.createElementNS(NS,"text");t.setAttribute("x",x);t.setAttribute("y",y);t.setAttribute("text-anchor",o.anchor||"middle");t.style.fill=o.color||"var(--ink)";t.style.fontFamily=o.mark?"var(--f-mark)":"var(--f-hand)";t.style.fontSize=(o.size||18)+"px";t.style.fontWeight=o.weight||400;if(o.rotate)t.setAttribute("transform",`rotate(${o.rotate} ${x} ${y})`);t.textContent=str;svg.appendChild(t);return t}
+
+function parseRef(v){const [type,keys,g]=v.split(":");return{type,keys:(keys||"").split(","),g:+(g||0)}}
+function rx(v,R,w){if(typeof v==="number")return v;const p=parseRef(v),r=R[p.keys[0]];
+  if(p.type==="r")return r.x+r.w+p.g; if(p.type==="l")return r.x+p.g; if(p.type==="c")return r.x+r.w/2-w/2+p.g; if(p.type==="lw")return r.x-w-p.g; return 0}
+function ry(v,R,h){if(typeof v==="number")return v;const p=parseRef(v),rs=p.keys.map(k=>R[k]);
+  if(p.type==="b")return Math.max(...rs.map(r=>r.y+r.h))+p.g; if(p.type==="t")return rs[0].y+p.g;
+  if(p.type==="m")return rs[0].y+rs[0].h/2-h/2+p.g; if(p.type==="o")return rs[0].y+p.g;
+  if(p.type==="mo"){const a=rs[0],b=rs[rs.length-1];return (a.y+b.y+b.h)/2-h/2+p.g} if(p.type==="a")return rs[0].y-h-p.g; return 0}
+
+function boundary(r,tx,ty,pad){const cx=r.x+r.w/2,cy=r.y+r.h/2;let dx=tx-cx,dy=ty-cy;const L=Math.hypot(dx,dy)||1;dx/=L;dy/=L;let t;
+  if(/oval/.test(r.s)){const a=r.w*0.55,b=r.h*0.67;t=1/Math.sqrt((dx/a)**2+(dy/b)**2);pad=Math.min(pad,4)}
+  else{const hw=r.w/2,hh=r.h/2;t=Math.min(Math.abs(dx)>1e-6?hw/Math.abs(dx):1e9,Math.abs(dy)>1e-6?hh/Math.abs(dy):1e9)}
+  return[cx+dx*(t+pad),cy+dy*(t+pad)]}
+/* drawn extent of a node: ovals are drawn 1.1w x 1.34h around their text */
+function ext(r){return /oval/.test(r.s)?{x:r.x-r.w*0.05,y:r.y-r.h*0.17,w:r.w*1.1,h:r.h*1.34}:r}
+/* a point on the bottom (dir=1) or top (dir=-1) edge of a node, as close as possible to x=tx */
+function edgeAt(r0,tx,dir,pad){const e=ext(r0),x=Math.max(e.x+0.18*e.w,Math.min(e.x+0.82*e.w,tx));
+  if(/oval/.test(r0.s)){const a=e.w/2,b=e.h/2,cx=e.x+a,cy=e.y+b;return[x,cy+dir*(b*Math.sqrt(Math.max(0,1-((x-cx)/a)**2))+pad)]}
+  return[x,dir>0?e.y+e.h+pad:e.y-pad]}
+/* a port on side s (l/r/t/b) of a node, slid along that side toward v (a y for l/r, an x for t/b); hugs ovals */
+function port(r0,s,v,pad){const e=ext(r0),oval=/oval/.test(r0.s);if(oval)pad=Math.min(pad,4);
+  if(s==="l"||s==="r"){const y=Math.max(e.y+e.h*0.25,Math.min(e.y+e.h*0.75,v)),dir=s==="r"?1:-1;
+    if(oval){const a=e.w/2,b=e.h/2,cy=e.y+b;return[e.x+a+dir*(a*Math.sqrt(Math.max(0,1-((y-cy)/b)**2))+pad),y]}
+    return[s==="r"?e.x+e.w+pad:e.x-pad,y]}
+  const x=Math.max(e.x+e.w*0.2,Math.min(e.x+e.w*0.8,v));return edgeAt(r0,x,s==="b"?1:-1,pad)}
+function side(r0,s,pad){const r=ext(r0),cx=r.x+r.w/2,cy=r.y+r.h/2;return s==="t"?[cx,r.y-pad]:s==="b"?[cx,r.y+r.h+pad]:s==="l"?[r.x-pad,cy]:[r.x+r.w+pad,cy]}
+function head(rc,svg,x,y,fx,fy,col){const a=Math.atan2(y-fy,x-fx),L=15;[0.45,-0.45].forEach(d=>add(svg,rc.line(x,y,x-L*Math.cos(a+d),y-L*Math.sin(a+d),{stroke:col,strokeWidth:2.4,roughness:0.8})))}
+function arrow(rc,svg,p1,p2,o={}){const col=o.color==="blue"?"var(--blue)":o.color==="ink"?"var(--ink)":o.color==="green"?"var(--green)":"var(--red)";
+  const dx=p2[0]-p1[0],dy=p2[1]-p1[1],L=Math.hypot(dx,dy)||1,bend=o.bend==null?0.12:o.bend;
+  const c=[(p1[0]+p2[0])/2+(-dy/L)*bend*L,(p1[1]+p2[1])/2+(dx/L)*bend*L];
+  const opt={stroke:col,strokeWidth:2.4,roughness:1.1,bowing:1};if(o.dash)opt.strokeLineDash=[9,7];
+  add(svg,rc.curve([p1,c,p2],opt));
+  if(!o.nohead)head(rc,svg,p2[0],p2[1],c[0],c[1],col);
+  if(o.both)head(rc,svg,p1[0],p1[1],c[0],c[1],col);
+  return c}
+
+function render(cfg,rough_){
+  const host=document.getElementById(cfg.id);if(!host)return;host.innerHTML="";
+  const sizer=document.createElement("div");sizer.className="sizer";const inner=document.createElement("div");inner.className="inner";inner.style.width=W+"px";
+  const svg=document.createElementNS(NS,"svg");inner.appendChild(svg);sizer.appendChild(inner);host.appendChild(sizer);
+  const R={};
+  const ready=n=>[n.x,n.y].every(v=>typeof v==="number"||parseRef(v).keys.every(k=>R[k]));
+  const queue=[...cfg.nodes];let guard=0;
+  while(queue.length&&guard<2000){const n=queue.shift();if(!ready(n)){queue.push(n);guard++;continue}
+    const d=document.createElement("div");d.className="nd "+n.s.split(" ").map(t=>"s-"+t).join(" ");d.style.width=n.w+"px";d.innerHTML=n.h;
+    if((ICONS[cfg.id]||{})[n.k]&&/\bbox\b/.test(n.s))d.classList.add("has-ic");inner.appendChild(d);
+    const h=d.offsetHeight,x=rx(n.x,R,n.w),y=ry(n.y,R,h);d.style.left=x+"px";d.style.top=y+"px";R[n.k]={x,y,w:n.w,h,s:n.s}}
+  if(queue.length)console.error(cfg.id,"unresolved",queue.map(n=>n.k));
+  /* edge geometry first, so curves + labels count toward the board height */
+  const geo=cfg.edges.map(e=>{const A=R[e.a],Bn=R[e.b];if(!A||!Bn)return null;const o=e.o,bend=o.bend==null?0.12:o.bend;
+    const mid=(p1,p2)=>{const ex=p2[0]-p1[0],ey=p2[1]-p1[1],EL=Math.hypot(ex,ey)||1;return[(p1[0]+p2[0])/2+(-ey/EL)*bend*EL,(p1[1]+p2[1])/2+(ex/EL)*bend*EL]};
+    /* the old way: aim at the other box's centre, clip at the outline */
+    const centre=()=>{const ca=[A.x+A.w/2,A.y+A.h/2],cb=[Bn.x+Bn.w/2,Bn.y+Bn.h/2];
+      let p1=o.from?side(A,o.from,8):null,p2=o.to?side(Bn,o.to,8):null;
+      const s1=p1||ca,s2=p2||cb,dx=s2[0]-s1[0],dy=s2[1]-s1[1],L=Math.hypot(dx,dy)||1;
+      const c0=[(s1[0]+s2[0])/2+(-dy/L)*bend*L,(s1[1]+s2[1])/2+(dx/L)*bend*L];
+      if(!p1)p1=boundary(A,c0[0],c0[1],8);if(!p2)p2=boundary(Bn,c0[0],c0[1],10);return[p1,p2]};
+    let cands=[];
+    const tow=(r,sd)=>{const e=ext(r);return sd==="l"||sd==="r"?e.y+e.h/2:e.x+e.w/2};
+    if(o.free||(!!o.from!==!!o.to))cands=[{p:centre(),s:null}];
+    else if(o.from&&o.to)cands=[{p:[port(A,o.from,tow(Bn,o.from),4),port(Bn,o.to,tow(A,o.to),6)],s:[o.from,o.to]}];
+    else{/* port anchoring: candidate routes between the sides that face each other.
+        Rows of boxes share one y (straight arrows); otherwise each end leans toward the other box. */
+      const ea=ext(A),eb=ext(Bn),ov=(a0,a1,b0,b1)=>{const lo=Math.max(a0,b0),hi=Math.min(a1,b1);return hi-lo>12?(lo+hi)/2:null};
+      const yAl=ov(ea.y,ea.y+ea.h,eb.y,eb.y+eb.h),xAl=ov(ea.x,ea.x+ea.w,eb.x,eb.x+eb.w);
+      const ca=[ea.x+ea.w/2,ea.y+ea.h/2],cb=[eb.x+eb.w/2,eb.y+eb.h/2];
+      if(eb.x-(ea.x+ea.w)>16)cands.push({p:[port(A,"r",yAl??cb[1],4),port(Bn,"l",yAl??ca[1],6)],s:["r","l"]});
+      if(ea.x-(eb.x+eb.w)>16)cands.push({p:[port(A,"l",yAl??cb[1],4),port(Bn,"r",yAl??ca[1],6)],s:["l","r"]});
+      if(eb.y-(ea.y+ea.h)>10)cands.push({p:[port(A,"b",xAl??cb[0],4),port(Bn,"t",xAl??ca[0],6)],s:["b","t"]});
+      if(ea.y-(eb.y+eb.h)>10)cands.push({p:[port(A,"t",xAl??cb[0],4),port(Bn,"b",xAl??ca[0],6)],s:["t","b"]});
+      cands.push({p:centre(),s:null})}
+    /* score each route: boxes it cuts (worst) · tips landing next to some other box · arriving almost parallel to the edge it enters */
+    const score=({p:[p1,p2],s})=>{const c=mid(p1,p2),q=[2*c[0]-(p1[0]+p2[0])/2,2*c[1]-(p1[1]+p2[1])/2];let n=0,near=0;
+      Object.entries(R).forEach(([k,r])=>{const own=k===e.a||k===e.b,x0=ext(r),pd=/oval/.test(r.s)?0:(own?6:1);
+        for(let t=own?0.2:0.04;t<=(own?0.8:0.96);t+=0.04){const u=1-t,x=u*u*p1[0]+2*u*t*q[0]+t*t*p2[0],y=u*u*p1[1]+2*u*t*q[1]+t*t*p2[1];
+          const inn=/oval/.test(r.s)?(((x-(x0.x+x0.w/2))/(x0.w/2))**2+((y-(x0.y+x0.h/2))/(x0.h/2))**2<1):(x>x0.x+pd&&x<x0.x+x0.w-pd&&y>x0.y+pd&&y<x0.y+x0.h-pd);if(inn)n++}
+        if(!own)[p1,p2].forEach(p=>{if(p[0]>x0.x-14&&p[0]<x0.x+x0.w+14&&p[1]>x0.y-14&&p[1]<x0.y+x0.h+14)near++})});
+      let ang=s?0:0.6;if(s){const d1=[q[0]-p1[0],q[1]-p1[1]],d2=[p2[0]-q[0],p2[1]-q[1]];
+        [[d1,s[0]],[d2,s[1]]].forEach(([d,sd])=>{const L=Math.hypot(...d)||1,along=(sd==="l"||sd==="r")?Math.abs(d[1])/L:Math.abs(d[0])/L;if(along>0.72)ang+=1})}
+      return n*100+near*40+ang*25};
+    let best=cands[0],bs=score(best);for(let i=1;i<cands.length;i++){const sc=score(cands[i]);if(sc<bs-0.01){best=cands[i];bs=sc}}
+    const [p1,p2]=best.p,c=mid(p1,p2);
+    return{e,p1,p2,c,s:best.s,mid,lab:e.l?[c[0]+(o.lx||0),c[1]+(o.ly||0)]:null}});
+  /* endpoints sharing one side of one box: if any two are crowded, re-space the whole group evenly along that side
+     (in the order of the boxes they lead to) and snap them back onto the outline, so arrowheads never merge */
+  {const grp={};geo.forEach(g=>{if(!g||!g.s)return;[[0,g.e.a,g.s[0],g.e.b],[1,g.e.b,g.s[1],g.e.a]].forEach(([i,k,sd,other])=>{(grp[k+"|"+sd]=grp[k+"|"+sd]||[]).push({g,i,k,sd,other})})});
+    Object.values(grp).forEach(list=>{if(list.length<2)return;const h=list[0].sd==="l"||list[0].sd==="r",cv=a=>(a.i?a.g.p2:a.g.p1)[h?1:0];
+      const vals=list.map(cv).sort((a,b)=>a-b);if(!vals.some((v,j)=>j&&v-vals[j-1]<30))return;
+      const ok=list.map(a=>{const r=ext(R[a.other]);return h?r.y+r.h/2:r.x+r.w/2});list.sort((a,b)=>ok[list.indexOf(a)]-ok[list.indexOf(b)]);
+      const r=ext(R[list[0].k]),lo=h?r.y+r.h*0.15:r.x+r.w*0.15,hi=h?r.y+r.h*0.85:r.x+r.w*0.85;
+      list.forEach((a,j)=>{const v=list.length===1?(lo+hi)/2:lo+(hi-lo)*j/(list.length-1),p=port(R[a.k],a.sd,v,a.i?6:4);
+        if(a.i)a.g.p2=p;else a.g.p1=p;a.g.c=a.g.mid(a.g.p1,a.g.p2);if(a.g.lab)a.g.lab=[a.g.c[0]+(a.g.e.o.lx||0),a.g.c[1]+(a.g.e.o.ly||0)]})})}
+  geo.forEach(g=>{if(g&&Math.hypot(g.p2[0]-g.p1[0],g.p2[1]-g.p1[1])<24)console.warn(cfg.id,"stub arrow",g.e.a,"→",g.e.b)});
+  let H=Math.max(cfg.minH,...Object.values(R).map(r=>r.y+r.h),...geo.filter(Boolean).map(g=>Math.max(g.c[1],g.p1[1],g.p2[1])+(g.lab?Math.max(0,g.lab[1]-g.c[1])+14:0)))+40;
+  inner.style.height=H+"px";svg.setAttribute("width",W);svg.setAttribute("height",H);svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+  const rc=rough_?rough_.svg(svg):fallbackRC(svg);
+  const n0=svg.childNodes.length;if(cfg.draw)cfg.draw(rc,svg,R,H);cfg._drawN=[n0,svg.childNodes.length];
+  let seed=7;
+  cfg.nodes.forEach(n=>{const r=R[n.k],toks=n.s.split(" "),f=FILL[toks.find(t=>FILL[t])]||"var(--card)";seed+=3;
+    const o={stroke:toks.includes("r")?"var(--red)":"var(--ink)",strokeWidth:2.2,roughness:1.3,fill:f,fillStyle:"solid",seed};if(toks.includes("dash"))o.strokeLineDash=[10,7];
+    if(toks.includes("oval"))add(svg,rc.ellipse(r.x+r.w/2,r.y+r.h/2,r.w*1.1,r.h*1.34,o));
+    else if(toks.includes("box"))add(svg,rc.rectangle(r.x,r.y,r.w,r.h,o));});
+  const icm=ICONS[cfg.id]||{};
+  Object.keys(icm).forEach(k=>{const r=R[k],f=I[icm[k]];if(!r||!f||!/\bbox\b/.test(r.s))return;try{f(rc,svg,r.x+r.w-36,r.y+34)}catch(e){console.error(cfg.id,k,e)}});
+  const labels=[];
+  geo.forEach(g=>{if(!g)return;const e=g.e,o=e.o;arrow(rc,svg,g.p1,g.p2,o);
+    if(e.l){const d=document.createElement("div");d.className="el"+(o.color==="blue"?" blue":"");d.textContent=e.l;d.style.left=g.lab[0]+"px";d.style.top=g.lab[1]+"px";labels.push(d);g.el=d}});
+  labels.forEach(d=>inner.appendChild(d));
+  /* a label longer than about half its arrow would hide it → move it beside the line instead of on it */
+  geo.forEach(g=>{if(!g||!g.el||g.e.o.lx!=null||g.e.o.ly!=null)return;const dx=g.p2[0]-g.p1[0],dy=g.p2[1]-g.p1[1],L=Math.hypot(dx,dy),w=g.el.offsetWidth,h=g.el.offsetHeight;
+    if(w>0.4*L||(Math.abs(dy)>Math.abs(dx)&&h>0.4*L)){if(Math.abs(dx)>=Math.abs(dy))g.el.style.top=(g.c[1]-h/2-12)+"px";else g.el.style.left=(g.c[0]+w/2+14)+"px"}});
+  cfg._H=H;cfg._host=host;cfg._inner=inner;cfg._sizer=sizer;cfg._R=R;cfg._geo=geo.filter(Boolean);cfg._svg=svg;fit(cfg);
+}
+function fit(cfg){if(!cfg._host)return;const avail=cfg._host.clientWidth||W;let s=Math.min(1,avail/W);if(s<0.6)s=0.6;
+  cfg._inner.style.transform=`scale(${s})`;cfg._sizer.style.width=(W*s)+"px";cfg._sizer.style.height=(cfg._H*s)+"px"}
+window.addEventListener("resize",()=>BOARDS.forEach(fit));
+
+/* ---------- content ---------- */
+const sticky=(p,s)=>`<span class="bigp">${p}</span>${s?`<br><small>${s}</small>`:""}`;
+const X=s=>`<pre>${s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/\[\[/g,"<b>").replace(/\]\]/g,"</b>")}</pre>`;
+const box=(rc,svg,x,y,w,h,f,seed,o={})=>add(svg,rc.rectangle(x,y,w,h,Object.assign({stroke:"var(--ink)",strokeWidth:1.8,roughness:0.9,fill:f||"var(--card)",fillStyle:"solid",seed:seed||3},o)));
+/* a row of array cells: vals, optional index labels under, optional addresses over; returns cell centres */
+function cells(rc,svg,x,y,vals,o={}){const w=o.w||64,h=o.h||46,out=[];
+  vals.forEach((v,i)=>{const hl=(o.hl||[]).includes(i),em=v===""||v==null;
+    box(rc,svg,x+i*w,y,w,h,hl?(o.hlf||"var(--y)"):em?"var(--card)":(o.fill||"var(--b)"),40+i+(o.seed||0),em?{strokeLineDash:[6,5]}:{});
+    if(!em)T(svg,x+i*w+w/2,y+h/2+7,String(v),{size:o.size||20,weight:700});
+    if(o.idx!==false)T(svg,x+i*w+w/2,y+h+22,(o.ip||"")+(o.i0!=null?o.i0+i:i),{size:15,color:"var(--soft)"});
+    if(o.addr)T(svg,x+i*w+w/2,y-10,String(o.addr[i]),{size:14,color:"var(--blue)"});
+    out.push([x+i*w+w/2,y+h/2])});return out}
+/* a linked-list node [data|next] (dbl: [prev|data|next]); returns geometry */
+function lnode(rc,svg,x,y,val,o={}){const dw=o.dw||70,pw=o.pw||34,h=o.h||46,f=o.fill||"var(--g)",s=o.seed||60;let cx=x;
+  const g={x,y,h};
+  if(o.dbl){box(rc,svg,cx,y,pw,h,"var(--card)",s);g.prev=[cx+pw/2,y+h/2];cx+=pw}
+  box(rc,svg,cx,y,dw,h,f,s+1);T(svg,cx+dw/2,y+h/2+7,String(val),{size:19,weight:700});g.data=[cx+dw/2,y+h/2];cx+=dw;
+  box(rc,svg,cx,y,pw,h,"var(--card)",s+2);g.next=[cx+pw/2,y+h/2];cx+=pw;g.w=cx-x;g.r=cx;
+  [g.next,g.prev].forEach(p=>{if(p)add(svg,rc.circle(p[0],p[1],7,{fill:"var(--ink)",fillStyle:"solid",stroke:"var(--ink)",roughness:0.3}))});return g}
+/* a whole list; returns node geometries */
+function llist(rc,svg,x,y,vals,o={}){const gap=o.gap||56,gs=[];let cx=x;
+  vals.forEach((v,i)=>{const hl=(o.hl||[]).includes(i);const g=lnode(rc,svg,cx,y,v,{dbl:o.dbl,fill:hl?"var(--y)":o.fill,seed:70+i*5+(o.seed||0),dw:o.dw,pw:o.pw});gs.push(g);cx=g.r+gap});
+  gs.forEach((g,i)=>{const n=gs[i+1];if(n){arrow(rc,svg,[g.next[0]+4,g.next[1]-(o.dbl?10:0)],[n.x-2,n.y+n.h/2-(o.dbl?10:0)],{bend:0,color:"ink"});
+      if(o.dbl)arrow(rc,svg,[n.prev[0]-4,n.prev[1]+12],[g.r+2,g.y+g.h/2+12],{bend:0,color:"blue"})}});
+  const L=gs[gs.length-1];
+  if(o.circ){const f=gs[0],yb=y+L.h+(o.dbl?44:36);add(svg,rc.linearPath([[L.next[0],L.next[1]],[L.next[0],yb],[f.x+18,yb]],{stroke:"var(--red)",strokeWidth:2.4,roughness:0.8}));arrow(rc,svg,[f.x+18,yb],[f.x+18,y+L.h+4],{bend:0,color:"red"});
+    if(o.dbl){const yt=y-34;add(svg,rc.linearPath([[f.prev[0],f.prev[1]],[f.prev[0],yt],[L.data[0],yt]],{stroke:"var(--blue)",strokeWidth:2.2,roughness:0.8}));arrow(rc,svg,[L.data[0],yt],[L.data[0],y-4],{bend:0,color:"blue"})}}
+  else if(o.nul!==false){arrow(rc,svg,[L.next[0]+4,L.next[1]],[L.r+46,L.next[1]],{bend:0,color:"ink"});T(svg,L.r+52,L.next[1]+6,"NULL",{anchor:"start",size:17,color:"var(--soft)"});
+    if(o.dbl){const f=gs[0];arrow(rc,svg,[f.prev[0]-4,f.prev[1]],[f.x-44,f.prev[1]],{bend:0,color:"blue"});T(svg,f.x-50,f.prev[1]+6,"NULL",{anchor:"end",size:17,color:"var(--soft)"})}}
+  if(o.head!==false){const f=gs[0];T(svg,f.x+(o.dbl?34:0)+35,y-(o.circ&&o.dbl?44:16),o.head||"head",{size:17,color:"var(--red)",weight:700})}
+  return gs}
+const gap=(h)=>`<div style="height:${h}px"></div>`;
+const lab=(svg,x,y,s,o={})=>T(svg,x,y,s,Object.assign({size:17,color:"var(--soft)",anchor:"start"},o));
+
+/* ===== 1 · what data structures are ===== */
+B("b1a",[
+  N("da",40,40,400,"box w",`<span class="t">Data</span><b>raw facts</b>, figures, symbols or observations a computer can collect + process<br><span class="ann">matric numbers · names + dates of birth · exam scores · bank balances · daily temperatures · images, audio, sensor readings</span><br>on its own it may not mean much`),
+  N("in","r:da:110","t:da",400,"box y",`<span class="t">Information</span>data that has been <b>processed, organised or interpreted</b> → gives meaning + supports <b>decisions</b>`),
+  N("ex","c:in","b:in:30",400,"plain",`<span class="ann">scores 65, 72, 48, 81, 54 = data → their <b>average</b> + the <b>top student</b> = information<br>slide 3's version: Ada CSC 78 · Bola MTH 65 · Chidi CSC 82 → 3 students, average 75.0, highest 82 (Chidi), 2 in CSC</span>`),
+  N("ds","r:in:110","t:da",440,"box g",`<span class="t">Data structure</span>a particular way of <b>organising + storing</b> data so it can be <b>accessed, modified + processed efficiently</b> · it decides <b>which operations</b> run well`),
+  N("ss",40,"b:da,ex,ds:50",1420,"box b",`<span class="t">Examples named in the note</span><b>Array</b>: similar values together · <b>Linked list</b>: elements connected through links · <b>Stack</b>: Last-In, First-Out · <b>Queue</b>: First-In, First-Out · <b>Tree</b>: hierarchy · <b>Graph</b>: networks + connections · <b>Hash table</b>: store + find by <b>key</b>`),
+  N("sl",40,"b:ss:30",820,"box w",`slides' wording: data structures define how data is <b>organised, stored + manipulated</b> within a program · how it's <b>arranged in memory</b> and how <b>insertion, deletion, searching + traversal</b> are done · essential for efficient algorithms`),
+  N("sk","r:sl:60","t:sl",540,"sticky",sticky(`Raw → Ripe → Rack`,`data is raw fruit · information is ripe (useful) · a data structure is the rack you store it on`))
+],[E("da","in","①",{bend:0}),E("in","ds","②",{bend:0})]);
+
+B("b1b",[
+  N("w1",40,20,340,"box w",`<span class="t">① Efficient data access</span>find a record fast · e.g. a student system pulling one record from <b>thousands</b>`),
+  N("w2","r:w1:30","t:w1",340,"box w",`<span class="t">② Efficient insertion + deletion</span>add/remove often · e.g. a <b>ticketing queue</b> serving customers in order`),
+  N("w3","r:w2:30","t:w1",340,"box w",`<span class="t">③ Effective memory use</span>structures need different <b>amounts + arrangements</b> of memory`),
+  N("w4","r:w3:30","t:w1",340,"box w",`<span class="t">④ Better problem-solving</span>family tree → <b>tree</b> · road network → <b>graph</b>`),
+  N("w5",40,"b:w1,w2,w3,w4:30",520,"box w",`<span class="t">⑤ Improved software performance</span>a bad choice burns <b>time or memory</b>, worst on <b>large datasets</b>`),
+  N("w6","r:w5:30","t:w5",880,"box g",`<span class="t">⑥ Foundation for advanced computing</span><table class="tb"><tr><th>area</th><th>uses</th></tr><tr><td>Database systems</td><td>indexing, record organisation, query processing</td></tr><tr><td>Operating systems</td><td>process scheduling, memory management, task queues</td></tr><tr><td>Artificial intelligence</td><td>search trees, graphs, priority queues</td></tr><tr><td>Computer networks</td><td>network topology + routing</td></tr><tr><td>Compilers</td><td>syntax trees, symbol tables, stacks</td></tr><tr><td>Information retrieval</td><td>indexes, hash tables, search structures</td></tr><tr><td>Software engineering</td><td>efficient storage + handling of app data</td></tr></table>`),
+  N("ap",40,"b:w5:30",520,"box b",`<span class="t">Slides' application list</span>operating systems (processes + memory) · databases (retrieval + storage) · web apps (user data + interactions) · machine learning (large datasets) · cryptographic systems (secure storage + retrieval)`),
+  N("sk",40,"b:ap:40",520,"sticky",sticky(`"All Insects Make Paths Past Flowers"`,`Access · Insert/delete · Memory · Problem-solving · Performance · Foundation`))
+],[]);
+
+B("b1c",[
+  N("li",40,20,680,"box g",`<span class="t">LINEAR</span>elements in a <b>sequence</b>: apart from the two ends, each has a <b>predecessor + a successor</b><br>array · linked list · stack · queue`),
+  N("nl","r:li:60","t:li",680,"box p",`<span class="t">NON-LINEAR</span>elements form <b>hierarchical</b> or <b>network</b> relationships, not one line<br>tree · graph`),
+  N("ar",40,"b:li:210",300,"box w",`<b>Array</b>: elements organised by <b>position</b> <span class="ann">[10, 20, 30, 40, 50]</span>`),
+  N("ll","r:ar:20","t:ar",300,"box w",`<b>Linked list</b>: nodes connected through <b>links</b>`),
+  N("tr","r:ll:60","t:ar",320,"box w",`<b>Tree</b>: file systems · organisation charts · hierarchical classifications`),
+  N("gr","r:tr:20","t:ar",360,"box w",`<b>Graph</b>: <b>vertices</b> (nodes) joined by <b>edges</b> · road, social + computer networks · links between web pages`),
+  N("sq",40,"b:ar,ll,tr,gr:24",660,"box y",`<b>Stack</b> = <b>LIFO</b> (last in, first out) · <b>Queue</b> = <b>FIFO</b> (first in, first out) · both are <b>ADTs</b> you can build from an <b>array or a linked structure</b>`),
+  N("sk","r:sq:80","t:sq",540,"sticky",sticky(`Linear = a train 🚃 · non-linear = a family tree or a road map`,`if every element has ONE before + ONE after, it's linear`))
+],[],(rc,svg,R)=>{const y=R.li.y+R.li.h+40;
+  cells(rc,svg,90,y+10,["A","B","C","D","E"],{w:56,h:40,idx:false});arrow(rc,svg,[96,y+70],[90+5*56-6,y+70],{bend:0,color:"ink"});lab(svg,400,y+38,"one line: before → after");
+  const tx=1000,ty=y+6;const nd=[[tx,ty],[tx-70,ty+52],[tx+70,ty+52],[tx-110,ty+100],[tx-30,ty+100]];
+  [[0,1],[0,2],[1,3],[1,4]].forEach(([a,b])=>add(svg,rc.line(nd[a][0],nd[a][1],nd[b][0],nd[b][1],{stroke:"var(--ink)",strokeWidth:2,roughness:0.8})));
+  nd.forEach((p,i)=>add(svg,rc.circle(p[0],p[1],26,{fill:"var(--p)",fillStyle:"solid",stroke:"var(--ink)",strokeWidth:1.8,seed:90+i})));lab(svg,tx+110,ty+40,"tree: a hierarchy");
+  const gx=1300,gy=y+20;const gp=[[gx,gy],[gx+90,gy+10],[gx+40,gy+80],[gx+130,gy+90]];[[0,1],[0,2],[1,2],[1,3],[2,3]].forEach(([a,b])=>add(svg,rc.line(gp[a][0],gp[a][1],gp[b][0],gp[b][1],{stroke:"var(--ink)",strokeWidth:2,roughness:0.8})));
+  gp.forEach((p,i)=>add(svg,rc.circle(p[0],p[1],24,{fill:"var(--p)",fillStyle:"solid",stroke:"var(--ink)",strokeWidth:1.8,seed:95+i})));lab(svg,gx-20,gy+118,"graph: a network");});
+
+B("b1d",[
+  N("q",40,20,1420,"box b",`<span class="t">Static vs dynamic allocation</span>this split is about <b>how memory is allocated + managed</b>, and whether storage can change while the program runs`),
+  N("st",40,"b:q:40",600,"box w",`<span class="t">STATIC (fixed) allocation</span>memory size decided <b>before or at the start</b> of the object's lifetime, not requested + resized as it runs`+X(`int scores[5] = {70,65,80,75,90};
+// slide: "allocated at compile time
+//  (or at the start of the program)"`)+`<ul><li>capacity <b>fixed</b> · a 6th element needs a different arrangement</li><li>memory needs are <b>predictable</b></li><li>index access is <b>efficient</b></li><li>can't grow past its capacity without another allocation</li></ul>`),
+  N("dy","r:st:220","t:st",600,"box g",`<span class="t">DYNAMIC allocation</span>the program <b>requests memory during execution</b>`+X(`#include <stdlib.h>
+int *scores = [[malloc]](5 * sizeof(int));
+if (scores != NULL) {      // check it worked
+  scores[0] = 70; /* … scores[4] = 90 */
+}
+[[free]](scores);           // give it back`)+`<ul><li>memory requested <b>when needed</b></li><li>structures created + destroyed <b>while running</b></li><li>supports <b>linked lists + trees</b></li><li>in C you must manage it: avoid <b>memory leaks + invalid pointers</b></li></ul>`),
+  N("tb",40,"b:st,dy:40",820,"box w",`<table class="tb"><tr><th>feature</th><th>static / fixed</th><th>dynamic</th></tr><tr><td>capacity</td><td>fixed for the object</td><td>requested as needed</td></tr><tr><td>allocation</td><td>decided in advance / at creation</td><td>requested during execution</td></tr><tr><td>flexibility</td><td>limited</td><td>more flexible</td></tr><tr><td>memory management</td><td>often simpler</td><td>may need explicit management</td></tr><tr><td>example</td><td>fixed-size array</td><td>memory from malloc()</td></tr><tr><td>can it grow? <span class="ann">(slide)</span></td><td>no</td><td>yes: allocate a new block</td></tr><tr><td>arrays: contiguous? <span class="ann">(slide)</span></td><td>yes</td><td>yes</td></tr><tr><td>typical use <span class="ann">(slide)</span></td><td>fixed arrays, global + static variables</td><td>dynamic arrays, linked lists, trees</td></tr></table>`),
+  N("im","r:tb:40","t:tb",560,"box y",`<span class="t">⚠ Important</span>a <b>dynamically allocated</b> array can still have a <b>fixed capacity</b> · dynamic allocation ≠ dynamic <b>resizing</b>`),
+  N("cv","r:tb:40","b:im:24",560,"plain",`<span class="ann">C detail: a local fixed array has <b>automatic</b> storage duration, a global or <code>static</code> one has <b>static</b> storage duration · the key idea here is just <b>fixed capacity</b></span>`),
+  N("sk","r:tb:40","b:cv:24",560,"sticky",sticky(`Static = a booked hall 🏛 · dynamic = chairs brought in as guests arrive`,`booked size never changes; extra chairs must be returned (free)`))
+],[E("q","st","",{from:"b",to:"t",bend:0}),E("q","dy","",{from:"b",to:"t",bend:0})]);
+
+B("b1e",[
+  N("co",40,20,680,"box b",`<span class="t">CONTIGUOUS storage</span>elements sit in <b>consecutive</b> memory locations · arrays are the usual example`),
+  N("lk","r:co:60","t:co",680,"box g",`<span class="t">LINKED storage</span>elements live in separate <b>nodes</b> joined by <b>pointers / references</b> · nodes need <b>not</b> be next to each other · e.g. a singly linked list: each node = data + pointer to the next`),
+  N("fo",40,"b:co,lk:150",680,"box y",`<b>Address(A[i]) = base address + i × element size</b><br>e.g. ints of 4 bytes from 1000: <code>numbers[2]</code> → 1000 + 2×4 = <b>1008</b> → that's why indexing is <b>O(1)</b>`),
+  N("cp",40,"b:fo:24",330,"box w",`<span class="hg">✓ fast indexed access · efficient traversal · low per-element overhead</span>`),
+  N("cm","r:cp:20","t:cp",330,"box w",`<span class="hp">✗ middle insert/delete may shift elements · a fixed array can't pass its capacity · a big contiguous block may not be free</span>`),
+  N("lp","r:co:60","b:fo:24",330,"box w",`<span class="hg">✓ nodes allocated as needed · insert/delete fast when the link is known · grows without one big block</span>`),
+  N("lm","r:lp:20","t:lp",330,"box w",`<span class="hp">✗ extra memory for pointers · reaching position <i>k</i> means traversal: <b>O(n)</b> · pointer handling adds complexity</span>`),
+  N("tb",40,"b:cp,cm,lp,lm:30",900,"box w",`<table class="tb"><tr><th>feature</th><th>contiguous</th><th>linked</th></tr><tr><td>memory</td><td>consecutive locations</td><td>separate locations joined by links</td></tr><tr><td>example</td><td>array</td><td>linked list</td></tr><tr><td>indexed access</td><td>typically O(1)</td><td>typically O(n)</td></tr><tr><td>insert/delete in middle</td><td>may shift elements</td><td>efficient if the link is known</td></tr><tr><td>extra pointer storage</td><td>usually none</td><td>required</td></tr><tr><td>growth</td><td>may need resizing / reallocation</td><td>add nodes one at a time</td></tr></table>`),
+  N("sk","r:tb:40","t:tb",520,"sticky",sticky(`Contiguous = a row of cinema seats 🎬 · linked = a treasure hunt 🗺`,`seats: count to seat 7 instantly · hunt: each clue tells you where the next one is`))
+],[],(rc,svg,R)=>{const y=Math.max(R.co.y+R.co.h,R.lk.y+R.lk.h)+38;cells(rc,svg,90,y,[10,20,30,40],{w:70,h:44,addr:[1000,1004,1008,1012],idx:false});
+  const ys=[y+4,y+34,y+2];const xs=[800,1010,1230];xs.forEach((x,i)=>{lnode(rc,svg,x,ys[i],[10,20,30][i],{seed:120+i*4,dw:60});T(svg,x+47,ys[i]-8,["2040","1196","3308"][i],{size:14,color:"var(--blue)"})});
+  arrow(rc,svg,[x0n(800),ys[0]+23],[1008,ys[1]+23],{bend:0.1,color:"ink"});arrow(rc,svg,[x0n(1010),ys[1]+23],[1228,ys[2]+23],{bend:-0.1,color:"ink"});
+  function x0n(x){return x+60+17+4}});
+
+B("b1f",[
+  N("pt",40,20,1420,"box y",`<span class="t">The key teaching point</span><b>static/dynamic</b> (how memory is <b>allocated</b>) and <b>contiguous/linked</b> (how elements are <b>laid out</b>) are <b>different classifications</b> · a structure can be <b>dynamically allocated and still contiguous</b>`),
+  N("tb",40,"b:pt:40",860,"box w",`<table class="tb"><tr><th>example</th><th>allocation</th><th>storage</th></tr><tr><td>fixed-size local array</td><td>typically automatic</td><td>contiguous</td></tr><tr><td>array from malloc()</td><td><b>dynamic</b></td><td><b>contiguous</b></td></tr><tr><td>linked list, nodes from malloc()</td><td>dynamic</td><td>linked</td></tr><tr><td>dynamically resized array</td><td>dynamic resizing</td><td>contiguous at any given time</td></tr></table>`),
+  N("cd","r:tb:40","t:tb",520,"box g",`<span class="t">The note's example</span>`+X(`int *a = malloc(10 * sizeof(int));`)+`<b>dynamic</b> allocation, but the 10 ints are <b>consecutive</b> → dynamic + contiguous<br>a linked list instead allocates <b>each node separately</b> + joins them with pointers`),
+  N("rq",40,"b:tb,cd:30",860,"box b",`<span class="t">Review question in note 2</span>"Why is a dynamically allocated object <b>not necessarily</b> a linked structure?" → because malloc only says <b>when/where</b> memory comes from; one malloc'd block is still <b>one contiguous block</b>`),
+  N("sk","r:rq:40","t:rq",520,"sticky",sticky(`WHEN you get memory ≠ HOW it's arranged`,`two questions, two answers: "static or dynamic?" + "contiguous or linked?"`))
+],[]);
+
+B("b1g",[
+  N("df",40,20,700,"box y big",`An <b>ADT</b> defines a data type by the <b>values</b> it can hold + the <b>operations</b> on them, <b>without</b> saying how it's implemented`),
+  N("wh","r:df:60","t:df",340,"oval b center",`ADT = <b>WHAT</b> it does`),
+  N("ho","r:wh:40","t:df",280,"oval g center",`implementation = <b>HOW</b>`),
+  N("st",40,"b:df:40",560,"box w",`<span class="t">The stack ADT</span><b>push(x)</b>: add to the top<br><b>pop()</b>: remove + return the top<br><b>peek()</b>: return the top <b>without removing</b> it<br><b>isEmpty()</b>: does it hold anything?<br><span class="ann">build it from an array or a linked list: the same behaviour either way</span>`),
+  N("tb","r:st:40","t:st",820,"box w",`<table class="tb"><tr><th>ADT</th><th>typical operations</th><th>possible implementation</th></tr><tr><td>Stack</td><td>push, pop, peek</td><td>array or linked list</td></tr><tr><td>Queue</td><td>enqueue, dequeue</td><td>array or linked list</td></tr><tr><td>List</td><td>insert, remove, retrieve</td><td>array or linked list</td></tr><tr><td>Priority queue</td><td>insert, remove highest/lowest priority</td><td>heap or another suitable structure</td></tr><tr><td>Dictionary / map</td><td>insert, search, remove by key</td><td>hash table or search tree</td></tr></table>`),
+  N("wy",40,"b:st,tb:30",860,"box g",`<span class="t">Why the split matters</span>you can <b>swap the implementation</b> without changing how the rest of the program uses it`),
+  N("sk","r:wy:40","t:wy",520,"sticky",sticky(`ADT = the TV remote 📺 · implementation = the circuits inside`,`you press "volume up" (the operation); you don't care how the board does it`))
+],[E("df","wh","",{bend:0})]);
+
+B("b1h",[
+  N("tb",40,20,860,"box w",`<table class="tb"><tr><th>operation</th><th>meaning</th><th>example</th></tr><tr><td><b>Traversal</b></td><td>visit elements systematically</td><td>display every student record</td></tr><tr><td><b>Insertion</b></td><td>add a new element</td><td>add a new student</td></tr><tr><td><b>Deletion</b></td><td>remove an element</td><td>remove a cancelled booking</td></tr><tr><td><b>Searching</b></td><td>locate an element</td><td>find a student by matric number</td></tr><tr><td><b>Sorting</b></td><td>arrange in order</td><td>scores lowest → highest</td></tr><tr><td><b>Updating</b></td><td>modify an element</td><td>fix a student's phone number</td></tr><tr><td><b>Accessing</b></td><td>retrieve an element</td><td>read the array element at an index</td></tr><tr><td><b>Merging</b></td><td>combine two collections</td><td>join two lists of records</td></tr></table>`),
+  N("nt","r:tb:40","t:tb",520,"box b",`not every structure does these <b>equally well</b>: reading an array <b>by index</b> beats searching an <b>unsorted linked list</b> by value`),
+  N("sk","r:tb:40","b:nt:30",520,"sticky",sticky(`"The Ice-cream Delivery Shop Sorts Up And Merges"`,`Traverse · Insert · Delete · Search · Sort · Update · Access · Merge`)),
+  N("ti",40,"b:tb:40",440,"box y",`<span class="t">Time complexity</span>how the amount of <b>computation grows</b> as the input size grows`),
+  N("sp","r:ti:30","t:ti",440,"box p",`<span class="t">Space complexity</span>how the <b>memory needed grows</b> as the input size grows`),
+  N("bo","r:sp:30","t:ti",480,"box g",`<span class="t">Big-O, first look</span>finding one record among <b>n</b> by sequential search may check all n → worst case <b>O(n)</b> · an indexed lookup / search structure can be faster`),
+  N("pr",40,"b:ti,sp,bo:30",1420,"box w center",`the <b>best</b> data structure depends on <b>the problem</b>, <b>the operations needed</b> + <b>the resources available</b>`)
+],[]);
+
+B("b1i",[
+  N("tb",40,20,1000,"box w",`<table class="tb"><tr><th>week</th><th>topic</th><th>content</th></tr><tr><td>1</td><td>Course introduction</td><td>importance + types of data structures, ADTs, efficiency</td></tr><tr><td>2</td><td>Primitive types + data representation</td><td>types, variables, addresses, memory organisation</td></tr><tr><td>3</td><td>Arrays, records + strings</td><td>1-D + multi-D arrays, structures, string processing, basic operations</td></tr><tr><td>4</td><td>Pointers, references + dynamic memory</td><td>addresses, stack vs heap, static vs dynamic, allocate + free</td></tr><tr><td>5</td><td>Stacks</td><td>LIFO, push, pop, peek; array + linked versions; applications</td></tr><tr><td>6</td><td>Queues</td><td>FIFO, enqueue, dequeue; array + linked; <b>circular queues</b>; applications</td></tr><tr><td>7</td><td><b>Mid-term exam</b></td><td></td></tr><tr><td>8</td><td>Linked structures</td><td>nodes + links, singly linked lists: traverse, insert, delete, search</td></tr><tr><td>9</td><td>Advanced linked structures</td><td>doubly + circular lists; linked vs array</td></tr><tr><td>10</td><td>Trees</td><td>root, nodes, edges, leaves, levels, height; binary trees</td></tr><tr><td>11</td><td>Heaps + hash tables</td><td>min/max heaps; hashing, hash functions, collisions</td></tr><tr><td>12</td><td>Graphs</td><td>directed/undirected, adjacency matrix + list, BFS + DFS</td></tr><tr><td>13–15</td><td>Revision · final exam</td><td></td></tr></table>`),
+  N("mt","r:tb:40",40,420,"box y",`<span class="t">Midterm scope</span>weeks <b>1–6</b> by the outline · in practice the shared notes are 1, 2, 3 + 5 (linked lists, taught early)`),
+  N("lo","r:tb:40","b:mt:30",420,"box b",`<span class="t">Course outcomes</span>explain structures + their memory representation · implement stacks, queues, trees, linked structures · pick the right structure · analyse <b>time + space</b> efficiency`)
+],[]);
+
+/* ===== 2 · primitive types + memory ===== */
+B("b2a",[
+  N("dt",40,20,560,"box y",`<span class="t">Data type</span>says <b>what kind of value</b> a variable can represent + <b>which operations</b> work on it<br><span class="t" style="margin-top:8px">Primitive data types</span>the <b>basic</b> types a language gives you directly · exact types + sizes <b>depend on the language + implementation</b>`),
+  N("tb","r:dt:40","t:dt",820,"box w",`<table class="tb"><tr><th>type</th><th>purpose</th><th>C example</th><th>typical size <span class="ann">(slide 6)</span></th></tr><tr><td><b>int</b></td><td>whole numbers</td><td><code>int age = 25;</code></td><td>4 bytes</td></tr><tr><td><b>char</b></td><td>a character or small integer</td><td><code>char grade = 'A';</code></td><td>1 byte</td></tr><tr><td><b>float</b></td><td>real numbers, single precision</td><td><code>float price = 15.5f;</code></td><td>4 bytes</td></tr><tr><td><b>double</b></td><td>real numbers, more precision</td><td><code>double pi = 3.14159265;</code></td><td>8 bytes</td></tr><tr><td><b>_Bool</b></td><td>true / false</td><td><code>_Bool passed = 1;</code></td><td>typically 1 byte</td></tr></table>`),
+  N("ii",40,"b:dt,tb:30",340,"box w",`<span class="t">int</span>no fractional part · counts: students, stock, transactions · size varies → <code>sizeof(int)</code> tells you`),
+  N("ch","r:ii:20","t:ii",340,"box w",`<span class="t">char</span>exactly <b>1 byte</b> in C = the smallest addressable unit, <b>at least 8 bits</b> · stored as a code: ASCII <b>'A' = 65</b>`),
+  N("fl","r:ch:20","t:ii",340,"box w",`<span class="t">float / double</span><b>approximations</b> of real numbers · some decimals can't be exact in binary: <b>0.1 + 0.2</b> may not give exactly 0.3`),
+  N("bo","r:fl:20","t:ii",340,"box w",`<span class="t">_Bool</span>C's built-in Boolean · <code>&lt;stdbool.h&gt;</code> gives the name <b>bool</b> · used in conditions: <code>if (isRegistered)</code>`),
+  N("wy",40,"b:ii,ch,fl,bo:30",900,"box b",`<span class="t">Why sizes matter (slides 7–9)</span>sizes differ across languages + systems · knowing them lets you <b>estimate memory</b>, design efficient structures, stay <b>portable</b> + understand addresses<br>e.g. <b>100 ints × 4 bytes = 400 bytes</b>`),
+  N("sk","r:wy:40","t:wy",480,"sticky",sticky(`"I Can Float Double Booleans" → 4 · 1 · 4 · 8 · 1`,`int 4 · char 1 · float 4 · double 8 (double the float) · bool 1`))
+],[]);
+
+B("b2b",[
+  N("df",40,20,560,"box y",`A <b>variable</b> is a <b>named object</b> that stores a value the program can read or change while it runs`+X(`int score = 75;`)+`three properties: <b>name</b> (score) · <b>value</b> (75) · <b>address</b> (where it lives)`),
+  N("dg","r:df:40","t:df",820,"plain",gap(200)),
+  N("dc",40,"b:df,dg:30",440,"box w",`<span class="t">Declaration</span>introduces it + its type<br><code>int age;</code>`),
+  N("in","r:dc:30","t:dc",440,"box w",`<span class="t">Initialisation</span>gives its <b>first</b> value<br><code>int age = 20;</code>`),
+  N("as","r:in:30","t:dc",480,"box w",`<span class="t">Assignment</span>changes an existing value<br><code>age = 21;</code> → value 21, <b>address unchanged</b>`),
+  N("sk",40,"b:dc,in,as:30",700,"sticky",sticky(`Name · Value · Address = what it's called · what's inside · where the house is`,`a house 🏠: the family's name on the door, the people inside, the street number`))
+],[],(rc,svg,R)=>{const d=R.dg,x=d.x+20,y=d.y+40;
+  [["score","int","75","0x1000","00 00 00 4B"],["grade","char","'A'","0x1004","41"],["height","float","1.75","0x1008","00 00 E0 3F"]].forEach((r,i)=>{const yy=y+i*52;
+    box(rc,svg,x,yy,120,40,"var(--card)",150+i);T(svg,x+60,yy+27,r[0],{size:18,weight:700});
+    box(rc,svg,x+120,yy,80,40,"var(--p)",153+i);T(svg,x+160,yy+27,r[1],{size:16});
+    box(rc,svg,x+200,yy,90,40,"var(--y)",156+i);T(svg,x+245,yy+27,r[2],{size:18,weight:700});
+    box(rc,svg,x+290,yy,110,40,"var(--b)",159+i);T(svg,x+345,yy+27,r[3],{size:16,color:"var(--blue)"});
+    T(svg,x+420,yy+27,"bytes: "+r[4],{size:16,anchor:"start",color:"var(--soft)"})});
+  ["name","type","value","address"].forEach((h,i)=>T(svg,[x+60,x+160,x+245,x+345][i],y-12,h,{size:15,color:"var(--red)"}));lab(svg,x,y+176,"slide 14: one row per variable · 0x1000 is an illustrative address")});
+
+B("b2c",[
+  N("ad",40,20,560,"box w",`<span class="t">Memory address</span>identifies a location in addressable memory · get it with <b>&amp;</b> (address-of) · print with <b>%p</b>`+X(`int score = 75;
+printf("Value: %d\\n", score);
+printf("Address: %p\\n", (void *)[[&score]]);`)+`<span class="ann">a real address looks like 0x7ffe… and changes between runs + systems</span>`),
+  N("vt","r:ad:40","t:ad",380,"box w",`<table class="tb"><tr><th>concept</th><th>example</th></tr><tr><td>name</td><td>score</td></tr><tr><td>value</td><td>75</td></tr><tr><td>address</td><td>what %p prints</td></tr><tr><td>data type</td><td>int</td></tr></table><span class="hp">the value 75 is NOT the address that stores it</span>`),
+  N("pt","r:vt:40","t:ad",440,"box g",`<span class="t">Pointer</span>a variable that <b>stores an address</b> (usually of another object or a function)`+X(`int score = 75;
+int *ptr = &score;
+printf("%d\\n", *ptr);   // 75`)+`<b>&amp;score</b> = its address · <b>ptr</b> holds it · <b>*ptr</b> reaches the value through it`),
+  N("dg",40,"b:ad,vt,pt:30",900,"plain",gap(110)),
+  N("sk","r:dg:40","t:dg",480,"sticky",sticky(`& = "where is it?" · * = "what's there?"`,`& asks for the address · * follows it to the value`))
+],[],(rc,svg,R)=>{const d=R.dg,y=d.y+30;box(rc,svg,d.x+40,y,120,54,"var(--y)",171);T(svg,d.x+100,y+35,"75",{size:24,weight:700});T(svg,d.x+100,y-10,"score @ 0x1000",{size:16,color:"var(--blue)"});
+  box(rc,svg,d.x+460,y,160,54,"var(--g)",173);T(svg,d.x+540,y+35,"0x1000",{size:22,weight:700,color:"var(--blue)"});T(svg,d.x+540,y-10,"ptr",{size:16,color:"var(--blue)"});
+  arrow(rc,svg,[d.x+458,y+27],[d.x+168,y+27],{bend:0.2,color:"red"});T(svg,d.x+314,y+84,"*ptr follows the address → 75",{size:17,color:"var(--red)"})});
+
+B("b2d",[
+  N("bb",40,20,440,"box w",`<span class="t">Bits + bytes</span>a <b>bit</b> is 0 or 1 · <b>8 bits = 1 byte</b> · the same pattern means different things by <b>type + encoding</b>: <code>01000001</code> = 65 as a number, <b>'A'</b> in ASCII`),
+  N("dg","r:bb:40","t:bb",940,"plain",gap(140)),
+  N("ui",40,"b:bb,dg:30",440,"box y",`<span class="t">Ranges</span>unsigned 8-bit: <b>0 to 2⁸ − 1 = 255</b><br>signed: depends on the representation · modern systems use <b>two's complement</b>`),
+  N("as","r:ui:40","t:ui",440,"box w",`<table class="tb"><tr><th>char</th><th>decimal</th><th>8-bit binary</th></tr><tr><td>A</td><td>65</td><td>01000001</td></tr><tr><td>B</td><td>66</td><td>01000010</td></tr><tr><td>C</td><td>67</td><td>01000011</td></tr><tr><td>a</td><td>97</td><td>01100001</td></tr></table>a character is stored as a <b>numeric code</b>, not a picture of a letter`),
+  N("rq","r:as:40","t:ui",420,"box g",`<span class="t">Review Q: 01000001 → decimal?</span>64 + 1 = <b>65</b> (it's 'A')`),
+  N("sk","r:as:40","b:rq:24",420,"sticky",sticky(`'a' = 'A' + 32`,`capital A 65 · small a 97: the gap is always 32`))
+],[],(rc,svg,R)=>{const d=R.dg,x=d.x+20,y=d.y+40;const bits=[0,1,0,0,1,0,1,0],pw=[128,64,32,16,8,4,2,1];
+  T(svg,x,y-14,"0100 1010₂ = ?",{anchor:"start",size:18,weight:700});
+  bits.forEach((b,i)=>{box(rc,svg,x+i*62,y,62,44,b?"var(--y)":"var(--card)",180+i);T(svg,x+i*62+31,y+30,String(b),{size:22,weight:700});T(svg,x+i*62+31,y+68,String(pw[i]),{size:15,color:"var(--soft)"})});
+  T(svg,x+8*62+26,y+30,"= 64 + 8 + 2 = 74",{anchor:"start",size:22,weight:700,color:"var(--red)"});lab(svg,x,y+96,"place values under each bit · add the ones that are 1")});
+
+B("b2e",[
+  N("fm",40,20,1420,"box b",`<span class="t">IEEE 754 single precision = 32 bits</span><b>1 sign</b> bit · <b>8 exponent</b> bits · <b>23 fraction</b> (mantissa) bits · covers a wide range, but some values are only approximate`),
+  N("dg",40,"b:fm:20",1420,"plain",gap(110)),
+  N("s1",40,"b:dg:20",330,"box w",`<span class="t">① To binary</span>12 = <b>1100</b>₂ · 0.5 = <b>0.1</b>₂<br>→ 12.5 = <b>1100.1</b>₂`),
+  N("s2","r:s1:30","t:s1",330,"box w",`<span class="t">② Normalise</span>move the point <b>3 left</b>: 1100.1 = <b>1.1001 × 2³</b><br><span class="ann">like 125 = 1.25 × 10²</span>`),
+  N("s3","r:s2:30","t:s1",330,"box w",`<span class="t">③ Exponent + bias</span>stored = 3 + <b>127</b> = 130 = <b>10000010</b>₂<br><span class="ann">the bias lets it hold negative exponents too</span>`),
+  N("s4","r:s3:30","t:s1",340,"box w",`<span class="t">④ Fraction</span>drop the leading <b>1.</b> (implied, not stored) → 1001 → pad to 23 bits: <b>10010000000000000000000</b>`),
+  N("hx",40,"b:s1,s2,s3,s4:30",820,"box g",`<span class="t">⑤ Put it together + hex</span><code>0 10000010 10010000000000000000000</code><br>group in 4s: 0100 0001 0100 1000 0000 … → <b>0x41480000</b><br>bytes in memory: little-endian <b>00 00 48 41</b> · big-endian <b>41 48 00 00</b>`),
+  N("sk","r:hx:40","t:hx",560,"sticky",sticky(`Sign · Shift · Shave`,`sign bit (+ = 0) · how far you shifted (+127) · shave off the leading 1, keep the rest`))
+],[],(rc,svg,R)=>{const d=R.dg,x=d.x+60,y=d.y+30,bw=34;const bits="0"+"10000010"+"10010000000000000000000";
+  [...bits].forEach((b,i)=>{const f=i===0?"var(--p)":i<9?"var(--y)":"var(--g)";box(rc,svg,x+i*(bw+6)+(i>=1?14:0)+(i>=9?14:0),y,bw,40,f,200+i,{roughness:0.6});T(svg,x+i*(bw+6)+(i>=1?14:0)+(i>=9?14:0)+bw/2,y+28,b,{size:18,weight:700})});
+  T(svg,x+17,y+66,"sign",{size:15,color:"var(--soft)"});T(svg,x+14+4*40+17,y+66,"exponent (8) = 130",{size:15,color:"var(--soft)"});T(svg,x+28+9*40+11*40,y+66,"fraction (23)",{size:15,color:"var(--soft)"})});
+
+B("b2f",[
+  N("q",40,20,1420,"box y",`<span class="t">Assignment 1: 10.25 in IEEE 754 single precision</span><span class="ann">(worked here so you can check yours · same 4 steps as 12.5)</span>`),
+  N("a",40,"b:q:30",330,"box w",`<span class="t">a. To binary</span>10 = <b>1010</b>₂ · 0.25 = <b>0.01</b>₂ (×2 → 0.5 → 0 · ×2 → 1.0 → 1)<br>→ <b>1010.01</b>₂`),
+  N("b","r:a:30","t:a",330,"box w",`<span class="t">b. Normalise</span>point <b>3 left</b>: <b>1.01001 × 2³</b>`),
+  N("c","r:b:30","t:a",330,"box w",`<span class="t">c. Sign + biased exponent</span>positive → sign <b>0</b> · 3 + 127 = 130 = <b>10000010</b>`),
+  N("d","r:c:30","t:a",340,"box w",`<span class="t">d. Fraction + all 32 bits</span>after the leading 1: 01001 → <b>01001000000000000000000</b>`),
+  N("r",40,"b:a,b,c,d:30",900,"box g",`<code>0 10000010 01001000000000000000000</code><br>= 0100 0001 0010 0100 0000 0000 0000 0000 = <b>0x41240000</b>`),
+  N("sk","r:r:40","t:r",480,"sticky",sticky(`Fractions: keep doubling`,`×2 each time; the digit before the point is the next bit`))
+],[]);
+
+B("b2g",[
+  N("st",90,20,510,"box p",`<span class="t">⬇ Stack</span>function call <b>frames</b>: return addresses, local (<b>automatic</b>) variables, parameters · managed <b>automatically</b> (push/pop) · grows <b>downward</b> (high → low addresses)<br><span class="ann">compilers may keep a local in a register or optimise it away</span>`),
+  N("hp",90,"b:st:22",510,"box g",`<span class="t">⬆ Heap</span><b>dynamically allocated</b> memory: <code>malloc()</code> in C, <code>new</code> in C++ · managed <b>by you</b> (allocate + <code>free</code>; forget = <b>memory leak</b>) · grows <b>upward</b>`),
+  N("da",90,"b:hp:22",510,"box y",`<span class="t">Data segment</span><b>initialised</b> globals + statics · e.g. <code>int count = 100;</code> · lives the whole run`),
+  N("bs",90,"b:da:22",510,"box y",`<span class="t">BSS segment</span><b>uninitialised</b> globals + statics → set to <b>zero</b> · e.g. <code>static int total;</code>`),
+  N("tx",90,"b:bs:22",510,"box b",`<span class="t">Text / code segment</span>the program's <b>machine instructions</b> · usually <b>read-only</b> · loaded from the executable at start`),
+  N("pg","r:st:50","t:st",410,"box w",`<span class="t">Slide 13's program</span>`+X(`int g = 10;        // data
+int count;         // BSS → 0
+int main(void) {
+  int a = 5;        // stack
+  float b = 3.5;    // stack
+  struct Student s = {1001, 4.0};
+  int *p = malloc(3*sizeof(int));
+  p[0]=10; p[1]=20; p[2]=30; // heap
+  free(p);
+}`)+`prints <code>a = 5, b = 3.5, s.id = 1001, g = 10, count = 0</code>`),
+  N("gs","r:pg:30","t:pg",370,"box w",`<span class="t">Global vs static (Table 2.2)</span><table class="tb"><tr><th></th><th>global</th><th>static</th></tr><tr><td>declared</td><td>outside all functions</td><td>with <code>static</code>, inside or outside a function</td></tr><tr><td>scope</td><td>the file after it (other files by linkage)</td><td>by location; file-scope static = this file only</td></tr><tr><td>lifetime</td><td colspan="2">the whole program run</td></tr><tr><td>default</td><td colspan="2">zero if not initialised</td></tr><tr><td>lives in</td><td colspan="2">data or BSS</td></tr><tr><td>purpose</td><td>share data across functions</td><td>keep a value between calls · hide it in one file</td></tr></table>`),
+  N("ex","r:tx:50","b:pg:30",410,"box w",X(`int totalStudents = 500;  // global
+void example(void) {
+  static int count = 0;    // static local
+  count++;   // remembers between calls
+}`)),
+  N("sk","l:ex","b:ex:30",410,"sticky",sticky(`"Silly Hippos Dance Barefoot Tonight"`,`top → bottom: Stack · Heap · Data · BSS · Text`))
+],[],
+(rc,svg,R)=>{const x=R.st.x-26;arrow(rc,svg,[x,R.tx.y+R.tx.h],[x,R.st.y],{bend:0,color:"ink"});T(svg,x-10,R.st.y+40,"high",{size:14,anchor:"middle",color:"var(--soft)",rotate:-90});T(svg,x-10,R.tx.y+R.tx.h-50,"low",{size:14,anchor:"middle",color:"var(--soft)",rotate:-90})});
+
+/* ===== 3 · arrays, structures + strings ===== */
+B("b3a",[
+  N("df",40,20,700,"box y big",`An <b>array</b> = elements of the <b>same type</b> in <b>consecutive</b> memory, reached through <b>one name + an index</b>`),
+  N("wh","r:df:40","t:df",680,"box w",`<span class="t">Why</span>five scores need five variables <code>score1…score5</code>, or one array:<br><code>int scores[5] = {65, 72, 80, 68, 91};</code>`),
+  N("dg",40,"b:df,wh:20",700,"plain",gap(100)),
+  N("ch","r:dg:40","t:dg",680,"box w",`<span class="t">Six characteristics (slides 4–9)</span>① <b>homogeneous</b>: one element type<br>② <b>indexed</b>: in C indexing starts at <b>0</b><br>③ <b>contiguous</b>: 4 bytes apart for int<br>④ <b>fixed length</b> for a normal C array<br>⑤ <b>efficient</b>: access by index in <b>O(1)</b><br>⑥ <b>ordered</b>: a defined sequence, index 0 → n−1`),
+  N("ix",40,"b:dg:10",700,"box b",`n elements → valid indices <b>0 to n − 1</b> · <code>scores[2]</code> is the <b>third</b> element (80)`),
+  N("sk",40,"b:ix:30",700,"sticky",sticky(`"Hot Irons Can Fix Every Outfit"`,`Homogeneous · Indexed · Contiguous · Fixed · Efficient · Ordered`))
+],[],(rc,svg,R)=>{const d=R.dg;cells(rc,svg,d.x+40,d.y+28,[65,72,80,68,91],{w:80,hl:[2],addr:[1000,1004,1008,1012,1016]});T(svg,d.x+40+5*80+20,d.y+58,"scores[2] = 80",{anchor:"start",size:19,color:"var(--red)",weight:700})});
+
+B("b3b",[
+  N("dc",40,20,440,"box w",`<span class="t">Declare</span><code>data_type name[size];</code>`+X(`int ages[10];
+float temperatures[7];
+char letters[26];`)+`size must be known at compile time <span class="ann">(variable-length arrays only where the C version supports them)</span>`),
+  N("in","r:dc:30","t:dc",500,"box w",`<span class="t">Initialise</span>`+X(`int scores[5] = {65, 72, 80, 68, 91};
+int s2[5] = { [0]=65, [2]=80, [4]=91 };
+                 // others → 0
+int s3[] = {65, 72, 80, 68, 91};
+                 // size worked out: 5
+int a[5] = {2, 4, 8};  // 2 4 8 0 0
+int z[5] = {0};        // all zero`)),
+  N("wn","r:in:30","t:dc",460,"box y",`<span class="t">⚠ When is it zero?</span>a <b>local</b> array with <b>no initialiser</b> holds <b>garbage</b> (indeterminate) until assigned · <b>static</b> arrays + any array with a partial initialiser fill the rest with <b>0</b>`),
+  N("ac",40,"b:dc,in,wn:30",560,"box g",`<span class="t">Access + modify</span>`+X(`printf("%d\\n", scores[0]); // 65
+printf("%d\\n", scores[2]); // 80
+scores[1] = 75;            // update`)),
+  N("tr","r:ac:30","t:ac",420,"box g",`<span class="t">Traverse (+ sum, average)</span>`+X(`int sum = 0;
+for (int i = 0; i < 5; i++)
+  sum += scores[i];
+double avg = [[(double)]]sum / 5;`)+`376 → <b>75.20</b> · the cast stops <b>integer division</b> chopping off .20`),
+  N("ln","r:tr:30","t:ac",420,"box b",`<span class="t">Slide extras</span>length: <code>n = sizeof(arr) / sizeof(arr[0]);</code><br>backwards: <code>for (i = 4; i >= 0; i--)</code><br>Java: <code>new int[5]</code>, <code>arr.length</code> · Python list: <code>append</code>, <code>remove</code>, <code>insert(2, 25)</code>`)
+],[]);
+
+B("b3c",[
+  N("fo",40,20,620,"box y big",`<b>Address(A[i]) = B + i × w</b><br><small>B = base address (first element) · w = bytes per element</small>`),
+  N("dg","r:fo:40","t:fo",760,"plain",gap(160)),
+  N("e1",40,"b:fo,dg:24",440,"box w",`<span class="t">Example (note 1)</span>ints, 4 bytes, start 1000:<br><code>numbers[2]</code> = 1000 + 2×4 = <b>1008</b>`),
+  N("e2","r:e1:30","t:e1",440,"box w",`<span class="t">Example (note 3)</span><code>numbers[3]</code> starts <b>12 bytes</b> after the first (3 × 4)`),
+  N("wy","r:e2:30","t:e1",510,"box g",`one multiply + one add, whatever i is → <b>O(1)</b> access · that's also why C counts from <b>0</b>: index = <b>offset</b> from the start`),
+  N("sk",40,"b:e1,e2,wy:30",700,"sticky",sticky(`Base + steps × stride 🚶`,`start at the front door, take i steps, each step w bytes long`))
+],[],(rc,svg,R)=>{const d=R.dg;cells(rc,svg,d.x+40,d.y+34,[10,20,30,40],{w:90,addr:["B = 1000","1004","1008","1012"],hl:[2]});arrow(rc,svg,[d.x+40+45,d.y+118],[d.x+40+2*90+40,d.y+118],{bend:0.22,color:"red"});T(svg,d.x+40+135,d.y+168,"2 steps × 4 bytes",{size:15,color:"var(--red)"});T(svg,d.x+40+4*90+30,d.y+64,"+ 2 × 4 = 1008",{anchor:"start",size:20,color:"var(--red)",weight:700})});
+
+B("b3d",[
+  N("sa",40,20,440,"box w",`<span class="t">Static array (slide 30)</span><b>fixed size</b> set when declared · memory allocated <b>before the program runs</b> (compile time)`),
+  N("da","r:sa:30","t:sa",500,"box g",`<span class="t">Dynamic array (slides 31–32)</span>can <b>grow or shrink</b> while running · memory allocated at <b>runtime</b><br><span class="hg">✓ flexible size · efficient use of memory</span><br><span class="hp">✗ slightly slower (resizing) · careful memory management in low-level languages</span>`),
+  N("py","r:da:30","t:sa",420,"box b",`Python list as the dynamic example:`+X(`a = [10, 20, 30]
+a.append(40)   # [10,20,30,40]
+a.remove(20)   # [10,30,40]`)),
+  N("ad",40,"b:sa,da,py:30",680,"box w",`<span class="t">✓ Advantages (note 3)</span><ul><li><b>direct access</b> by index</li><li>efficient traversal</li><li>simple way to hold sequences + tables</li><li><b>good memory locality</b> (contiguous)</li><li>building block for other structures</li></ul>`),
+  N("li","r:ad:40","t:ad",700,"box p",`<span class="t">✗ Limitations</span><ul><li><b>fixed capacity</b> (ordinary arrays)</li><li>insert/delete may <b>shift</b> elements</li><li>all elements <b>one type</b></li><li><b>no bounds checking</b> in C: a bad index = undefined behaviour</li><li>a big array needs a big <b>contiguous</b> block</li></ul>`)
+],[]);
+
+B("b3e",[
+  N("df",40,20,560,"box y",`A <b>multidimensional array</b> arranges elements in <b>several dimensions</b> · "an <b>array of arrays</b>" · most common: <b>2-D</b> = a table / matrix`),
+  N("ap",40,"b:df:24",560,"box w",`uses: scores per student per course · monthly sales per branch · <b>image pixels</b> · matrices in numerical work + ML · game boards + grids`),
+  N("cd","r:df:40","t:df",420,"box g",`<code>data_type a[rows][cols];</code>`+X(`int marks[3][4] = {
+  {70, 65, 80, 75},
+  {60, 72, 68, 81},
+  {90, 85, 88, 92}
+};                 // 3 × 4 = 12 ints`)),
+  N("dg","r:cd:30","t:df",400,"plain",gap(180)),
+  N("tv",40,"b:ap,cd,dg:30",560,"box w",`<span class="t">Nested loops</span>`+X(`for (int i = 0; i < 3; i++) {     // rows
+  int total = 0;
+  for (int j = 0; j < 4; j++)     // columns
+    total += marks[i][j];
+  printf("Student %d total: %d\\n", i+1, total);
+}`)),
+  N("d3","r:tv:40","t:tv",420,"box b",`<span class="t">3-D</span><code>int temperature[2][3][4];</code> = 2 layers × 3 rows × 4 cols = <b>24</b> · e.g. 2 locations × 3 days × 4 readings · <code>temperature[0][1][2] = 28;</code><br><span class="ann">slides: data cubes, colour images (height × width × RGB), a numpy 3×3×3 example</span>`),
+  N("cm","r:d3:30","t:tv",400,"box w",`<table class="tb"><tr><th></th><th>1-D</th><th>multi-D</th></tr><tr><td>indices</td><td>one</td><td>two +</td></tr><tr><td>shape</td><td>sequence</td><td>table / grid</td></tr><tr><td>example</td><td>scores[5]</td><td>marks[3][4]</td></tr><tr><td>loops</td><td>one</td><td>nested</td></tr></table>`)
+],[],(rc,svg,R)=>{const d=R.dg,x=d.x+40,y=d.y+40;[[70,65,80,75],[60,72,68,81],[90,85,88,92]].forEach((row,i)=>cells(rc,svg,x,y+i*46,row,{w:66,idx:false,hl:i===1?[2]:[],seed:i*7}));
+  [0,1,2,3].forEach(j=>T(svg,x+j*66+33,y-10,"c"+j,{size:14,color:"var(--soft)"}));[0,1,2].forEach(i=>T(svg,x-16,y+i*46+29,"r"+i,{size:14,color:"var(--soft)"}));T(svg,x+132,y+3*46+26,"marks[1][2] = 68",{size:18,color:"var(--red)",weight:700})});
+
+B("b3f",[
+  N("rm",40,20,620,"box y",`C stores multi-D arrays in <b>row-major order</b>: all of row 0, then all of row 1, …`+X(`int A[2][3] = { {1, 2, 3},
+                {4, 5, 6} };`)+`memory order: <b>1 2 3 4 5 6</b>`),
+  N("dg","r:rm:40","t:rm",760,"plain",gap(160)),
+  N("fo",40,"b:rm,dg:24",620,"box g big",`offset(A[i][j]) = <b>i·C + j</b> &nbsp;·&nbsp; address = <b>B + (i·C + j)·w</b><br><small>C = number of columns</small>`),
+  N("wk","r:fo:40","t:fo",480,"box w",`<span class="t">Try it</span><code>marks[3][4]</code>, ints (4 bytes), base 1000:<br><code>marks[1][2]</code> → (1×4 + 2)×4 = 24 → <b>1024</b>`),
+  N("sk","r:wk:30","t:fo",250,"sticky",sticky(`Read like a book 📖`,`finish the line, then the next line`))
+],[],(rc,svg,R)=>{const d=R.dg,x=d.x+20,y=d.y+30;cells(rc,svg,x,y,[1,2,3],{w:56,idx:false});cells(rc,svg,x,y+50,[4,5,6],{w:56,idx:false,fill:"var(--g)",seed:5});
+  arrow(rc,svg,[x+190,y+50],[x+250,y+50],{bend:0,color:"red"});const mx=x+270;cells(rc,svg,mx,y+26,[1,2,3,4,5,6],{w:62});
+  [[0,"row 0"],[3,"row 1"]].forEach(([i,t])=>T(svg,mx+i*62+93,y+12,t,{size:15,color:"var(--soft)"}));box(rc,svg,mx+3*62,y+26,186,46,"transparent",222,{fill:undefined,fillStyle:undefined,stroke:"var(--green)",strokeWidth:2.6});lab(svg,mx,y+120,"offset of A[1][0] = 1·3 + 0 = 3 ✓")});
+
+B("b3g",[
+  N("df",40,20,620,"box y",`A <b>record</b> = related <b>fields</b> describing <b>one entity</b>; fields may have <b>different types</b> · in C: <b>struct</b> groups members under one name`),
+  N("tb",40,"b:df:24",620,"box w",`<table class="tb"><tr><th>field</th><th>example</th><th>type</th></tr><tr><td>Name</td><td>Ada</td><td>char array</td></tr><tr><td>Age</td><td>20</td><td>int</td></tr><tr><td>CGPA</td><td>4.25</td><td>float</td></tr><tr><td>Matric no.</td><td>CSC/2026/001</td><td>char array</td></tr></table>`),
+  N("de","r:df:40","t:df",360,"box g",`<span class="t">Declare a type</span>`+X(`struct Student {
+  int age;
+  float cgpa;
+  char name[50];
+};`)+`<span class="ann">only a <b>type</b>: no student exists yet · <code>name[50]</code> holds up to <b>49</b> chars + '\\0' · type names usually start with a capital</span>`),
+  N("iv","r:de:30","t:df",360,"box b",`<span class="t">Make + fill one</span>`+X(`struct Student s1 = {20, 4.25f, "Ada"};
+       // in member order
+struct Student s2 = {
+  .name = "John",
+  .age = 21,
+  .cgpa = 3.80f };   // designated`)),
+  N("dt",40,"b:tb,de,iv:30",620,"box w",`<span class="t">The dot operator</span>`+X(`printf("Name: %s\\n", s.name);
+s.age = 21;
+s.cgpa = 4.50f;`)+`<span class="ann">slide 43 memory: age 4 bytes · cgpa 4 bytes · name 50 bytes</span>`),
+  N("ky","r:dt:40","t:dt",800,"box y",`<span class="t">Key distinction</span><b>array</b> = many elements of the <b>same</b> type, reached by <b>index</b> <code>scores[0]</code> · <b>structure</b> = related members of <b>different</b> types, reached by <b>name</b> <code>student.age</code>`),
+  N("sk","r:dt:40","b:ky:24",800,"sticky",sticky(`Array = an egg tray 🥚 · struct = a student ID card 🪪`,`tray: lots of the same thing in slots · card: different facts about ONE person`))
+],[]);
+
+B("b3h",[
+  N("ar",40,20,460,"box w",`<span class="t">Array of structures</span>many records of one struct type`+X(`struct Student students[3] = {
+  {20, 4.25f, "Ada"},
+  {21, 3.80f, "John"},
+  {19, 4.50f, "Mary"} };`)+`<code>students[0].name</code> → Ada · <code>students[1].cgpa</code> → 3.80 · <code>students[2].age</code> → 19<br><span class="ann">student systems · employee databases · inventory</span>`),
+  N("ne","r:ar:30","t:ar",460,"box w",`<span class="t">Nested structures</span>`+X(`struct Address { char city[30];
+                 char state[30]; };
+struct Student { char name[30];
+                 int age;
+                 struct Address address; };
+struct Student s = { .name = "Ada", .age = 20,
+  .address = { .city = "Abuja", .state = "FCT" } };`)+`<code>s.address.city</code> → "Abuja"`),
+  N("pt","r:ne:30","t:ar",460,"box g",`<span class="t">Pointer to a structure</span>`+X(`struct Student s = {20, 4.25f};
+struct Student *ptr = &s;
+printf("%d\\n", ptr[[->]]age);
+ptr->age = 21;`)+`<code>ptr->age</code> ≡ <code>(*ptr).age</code> · this is how <b>linked lists + trees</b> reach their nodes`),
+  N("pd",40,"b:ar,ne,pt:30",700,"box y",`<span class="t">Padding</span>members are stored <b>in declaration order</b>, but the compiler may add <b>padding bytes</b> for alignment`+X(`struct Example { char letter;   // 1 byte
+                 int number; }; // 4 bytes
+printf("%zu\\n", sizeof(struct Example));
+                 // often 8, not 5`)),
+  N("dg","r:pd:40","t:pd",340,"plain",gap(120)),
+  N("ad","r:dg:20","t:pd",340,"box b",`<span class="t">Why structs</span>group related info · readable code · mixed types · arrays of records · nesting + pointers → complex structures`)
+],[],(rc,svg,R)=>{const d=R.dg,x=d.x+20,y=d.y+40;box(rc,svg,x,y,40,44,"var(--y)",230);T(svg,x+20,y+29,"c",{size:18,weight:700});[1,2,3].forEach(i=>{box(rc,svg,x+i*40,y,40,44,"var(--card)",231+i,{strokeLineDash:[5,4]})});box(rc,svg,x+160,y,140,44,"var(--b)",236);T(svg,x+230,y+29,"number",{size:17,weight:700});
+  T(svg,x+80,y+66,"padding",{size:14,color:"var(--red)"});T(svg,x+150,y-12,"1 + 3 + 4 = 8 bytes",{size:16,color:"var(--soft)"})});
+
+B("b3i",[
+  N("df",40,20,620,"box y",`A C <b>string</b> = an <b>array of characters</b> ending in the <b>null character '\\0'</b> · C has <b>no built-in string type</b> (char arrays or pointers to chars)`),
+  N("dg",40,"b:df:20",620,"plain",gap(100)),
+  N("nt",40,"b:dg:10",620,"box w",`"Ada" = 3 visible chars but <b>4 elements</b> · <b>'\\0' ≠ '0'</b> · "Hello" takes <b>6</b>: H e l l o \\0`),
+  N("dc","r:df:40","t:df",380,"box g",`<span class="t">Declare</span>`+X(`char name[20] = "Ada";   // room for 20
+char greeting[] = "Hello"; // size 6
+char word[] = {'C','o','d','e','\\0'};`)),
+  N("io","r:dc:30","t:df",380,"box b",`<span class="t">Read + print</span><code>printf("%s", name);</code>`+X(`scanf("%29s", name);  // one word
+fgets(fullName, sizeof fullName, stdin);`)+`<b>%29s</b> leaves room for '\\0' but stops at a <b>space</b> · <b>fgets</b> reads a whole line, keeps the <b>newline</b> if it fits`),
+  N("ol","r:df:40","b:dc,io:30",790,"box w",`<span class="t">Other languages (slides 51–52)</span><b>Python</b>: strings are <b>immutable</b> objects · <b>C++</b> <code>std::string</code> manages its own memory, <b>grows + shrinks</b>, has built-in join, compare, substring + search`),
+  N("sk",40,"b:nt:30",620,"sticky",sticky(`'\\0' is the full stop of a C string`,`no full stop → the computer keeps reading into whatever's next`))
+],[],(rc,svg,R)=>{const d=R.dg;cells(rc,svg,d.x+40,d.y+20,["A","d","a","\\0"],{w:70,hl:[3],hlf:"var(--p)"});T(svg,d.x+40+4*70+20,d.y+50,"char name[] = \"Ada\";",{anchor:"start",size:19,weight:700})});
+
+B("b3j",[
+  N("tb",40,20,900,"box w",`<table class="tb"><tr><th>job</th><th>C (<code>&lt;string.h&gt;</code>)</th><th>result / rule</th></tr>
+<tr><td>length</td><td><code>strlen(s)</code></td><td>chars <b>before '\\0'</b> (doesn't count it) · "Data Structures" → <b>15</b> (spaces count)</td></tr>
+<tr><td>copy</td><td><code>strcpy(dest, src)</code></td><td>copies src <b>including '\\0'</b> · dest must be big enough</td></tr>
+<tr><td>join</td><td><code>strcat(dest, src)</code></td><td>appends · "Data " + "Structures" → "Data Structures" · dest needs room</td></tr>
+<tr><td>compare</td><td><code>strcmp(a, b)</code></td><td><b>0</b> equal · <b>&lt; 0</b> a comes first · <b>&gt; 0</b> a comes after · only the <b>sign</b> is guaranteed</td></tr>
+<tr><td>find a char</td><td><code>strchr(s, 'S')</code></td><td>pointer to the first match, or <b>NULL</b></td></tr>
+<tr><td>find a substring</td><td><code>strstr(s, "Data")</code></td><td>pointer to the first match, or NULL · index = <code>ptr − s</code></td></tr>
+<tr><td>change case</td><td><code>toupper</code> / <code>tolower</code> (<code>&lt;ctype.h&gt;</code>)</td><td>one char at a time · cast to <code>unsigned char</code> first · loop to '\\0' for a whole string</td></tr></table>`),
+  N("ml","r:tb:40","t:tb",480,"box g",`<span class="t">strlen by hand</span>`+X(`int length = 0;
+while (text[length] != '\\0')
+  length++;
+// "Hello" → 5`)+`stops at the null terminator · this is <b>traversal</b>, the same idea used on arrays + linked lists`),
+  N("ap","r:tb:40","b:ml:24",480,"box p",`<span class="t">Never <code>==</code> on C strings</span><code>a == b</code> compares <b>addresses</b>, not contents → use <code>strcmp</code> · "Apple" vs "Banana" → negative (slide shows −1)`),
+  N("sk",40,"b:tb:30",900,"sticky",sticky(`"Long Copies Cat Compares Characters, Searching Strings"`,`strLen · strCpy · strCat · strCmp · strChr · strStr`))
+],[]);
+
+B("b3k",[
+  N("su",40,20,460,"box w",`<span class="t">Substring (slicing)</span>a <b>part</b> of a string: "Data" from "Data Structures"<br><b>C</b>: no built-in → copy chars in a loop, end with <code>sub[i] = '\\0'</code><br><b>C++</b>: <code>s.substr(0, 4)</code> = 4 chars from index 0<br><b>Python</b>: <code>s[0:4]</code> "Data" · <code>s[5:15]</code> "Structures" · <code>s[:4]</code> · <code>s[5:]</code> · end index <b>not included</b>`),
+  N("se","r:su:30","t:su",460,"box w",`<span class="t">Searching</span>"is it there + where?"<br><b>C</b>: <code>strchr</code> / <code>strstr</code> → a <b>pointer</b> or NULL<br><b>C++</b>: <code>s.find(…)</code> → an <b>index</b>, or <code>string::npos</code> if absent<br><b>Python</b>: <code>'S' in s</code> → True/False · <code>s.find()</code> → index or <b>−1</b><br><span class="ann">'S' / "Struct" in "Data Structures" → <b>5</b> in all three</span>`),
+  N("cp","r:se:30","t:su",460,"box w",`<span class="t">Comparing</span>equal? or which comes first in <b>dictionary (lexicographic)</b> order<br><b>C</b>: <code>strcmp</code> (never ==)<br><b>C++</b>: <code>a.compare(b)</code> → 0 / &lt;0 / &gt;0, and <code>==, &lt;, &gt;</code> also work<br><b>Python</b>: <code>== != &lt; &gt; &lt;= &gt;=</code> directly · <b>case-sensitive</b>`),
+  N("tr",40,"b:su,se,cp:30",700,"box b",`<span class="t">Traversal + joining</span>Python <code>for ch in "DATA"</code> → D A T A · join: C <code>strcat</code> · C++ <code>+</code> or <code>append</code> · Python <code>+</code> or <code>f"{s1} {s2}"</code>`),
+  N("sk","r:tr:40","t:tr",680,"sticky",sticky(`C hands you a pointer · C++ + Python hand you an index`,`not found: NULL (C) · npos (C++) · −1 (Python)`))
+],[]);
+
+B("b3l",[
+  N("er",40,20,560,"box p",`<span class="t">Common string mistakes</span><ul><li>no room for the <b>'\\0'</b></li><li>copying / joining into a <b>too-small</b> array</li><li>using <b>==</b> to compare contents</li><li>reading input <b>without a size limit</b></li><li>going <b>past the array's bounds</b></li><li>assuming every line fits the buffer</li><li>mixing up <b>'0'</b> and <b>'\\0'</b></li></ul><span class="ann">C strings are byte-based: one Unicode character can take several bytes</span>`),
+  N("cm","r:er:40","t:er",820,"box w",`<table class="tb"><tr><th></th><th>array</th><th>structure</th><th>C string</th></tr><tr><td>purpose</td><td>a sequence of elements</td><td>group related fields</td><td>store text</td></tr><tr><td>types</td><td>one element type</td><td>members may differ</td><td>characters</td></tr><tr><td>access</td><td>index</td><td>member name</td><td>index or string functions</td></tr><tr><td>example</td><td><code>int A[5];</code></td><td><code>struct Student s;</code></td><td><code>char name[20];</code></td></tr><tr><td>usual ops</td><td>traverse, search, update, sort</td><td>read / update fields</td><td>length, copy, compare, join, search</td></tr><tr><td>memory</td><td>contiguous</td><td>members + possible <b>padding</b></td><td>needs a <b>'\\0'</b> at the end</td></tr></table>`)
+],[]);
+
+/* ===== 4 · basic operations ===== */
+B("b4a",[
+  N("tr",40,20,460,"box w",`<span class="t">Traversal</span>visit each element to process it`+X(`for (int i = 0; i < 5; i++)
+  printf("%d ", scores[i]);`)+`for: display · totals · min + max · counting · transforming · <b>O(n)</b>`),
+  N("ac","r:tr:30","t:tr",460,"box g",`<span class="t">Accessing</span>retrieve one element · <code>int value = scores[2];</code><br>array by valid index: <b>O(1)</b> (address is calculated)<br>linked list by position: walk from the start → <b>O(n)</b>`),
+  N("up","r:ac:30","t:tr",460,"box y",`<span class="t">Updating</span>change an existing element<br><code>scores[2] = 85;</code> · <code>student.cgpa = 4.50f;</code><br>by index: <b>O(1)</b> · if you must <b>find</b> it first, add the search cost`),
+  N("sk",40,"b:tr,ac,up:30",900,"sticky",sticky(`Know the index → instant · know only the value → go looking`,`O(1) to jump, O(n) to hunt`))
+],[]);
+
+B("b4b",[
+  N("al",40,20,520,"box w",`<span class="t">InsertIntoArray(A, n, capacity, pos, value)</span>`+X(`1. if n == capacity → report [[overflow]]
+2. if pos is invalid → report an error
+3. for i = n-1 [[down to]] pos:
+       A[i+1] = A[i]       // shift right
+4. A[pos] = value
+5. n = n + 1`)+`valid positions: <b>0 … n</b>`),
+  N("dg","r:al:40","t:al",880,"plain",gap(270)),
+  N("co",40,"b:al,dg:30",520,"box y",`<span class="t">Cost</span>at the <b>front or middle</b>: shift up to n elements → <b>O(n)</b><br>at the <b>end</b> with spare room: <b>O(1)</b>`),
+  N("wy","r:co:40","t:co",440,"box b",`why loop <b>backwards</b>? going forwards would copy 40 over 50 before 50 has moved: you'd smear one value down the array`),
+  N("sk","r:wy:30","t:co",400,"sticky",sticky(`Shuffle along the bench 🪑`,`the person at the END moves first, or someone gets sat on`))
+],[],(rc,svg,R)=>{const d=R.dg,x=d.x+40,y1=d.y+90,y2=d.y+190;T(svg,x,d.y+20,"insert 30 at index 2 (capacity 5)",{anchor:"start",size:18,weight:700});
+  cells(rc,svg,x,y1,[10,20,40,50,""],{w:70});T(svg,x+5*70+20,y1+30,"before",{anchor:"start",size:16,color:"var(--soft)"});
+  arrow(rc,svg,[x+3*70+40,y1-6],[x+4*70+35,y1-6],{bend:-0.45,color:"red"});arrow(rc,svg,[x+2*70+35,y1-6],[x+3*70+28,y1-6],{bend:-0.45,color:"red"});T(svg,x+4*70+8,y1-44,"①",{size:17,color:"var(--red)",weight:700});T(svg,x+3*70,y1-44,"②",{size:17,color:"var(--red)",weight:700});T(svg,x+5*70+20,y1-14,"① 50 → [4] first · ② then 40 → [3]",{anchor:"start",size:15,color:"var(--red)"});
+  cells(rc,svg,x,y2,[10,20,30,40,50],{w:70,hl:[2],seed:9});T(svg,x+5*70+20,y2+30,"③ A[2] = 30 · n = 5",{anchor:"start",size:17,color:"var(--red)",weight:700});lab(svg,x+5*70+20,y1+58,"(Python: a.insert(2, 25) shifts for you)",{size:15})});
+
+B("b4c",[
+  N("al",40,20,520,"box w",`<span class="t">DeleteFromArray(A, n, pos)</span>`+X(`1. if n == 0 → report [[underflow]]
+2. if pos is invalid → report an error
+3. for i = pos to n-2:
+       A[i] = A[i+1]       // shift left
+4. n = n - 1`)),
+  N("dg","r:al:40","t:al",880,"plain",gap(200)),
+  N("co",40,"b:al,dg:30",520,"box y",`<span class="t">Cost</span>front or middle: <b>O(n)</b> (shift) · the last element: <b>O(1)</b>`),
+  N("ou","r:co:40","t:co",840,"box p",`<b>overflow</b> = adding to a <b>full</b> structure · <b>underflow</b> = removing from an <b>empty</b> one · the same two words come back for <b>stacks + queues</b>`)
+],[],(rc,svg,R)=>{const d=R.dg,x=d.x+40;T(svg,x,d.y+20,"delete index 2",{anchor:"start",size:18,weight:700});
+  cells(rc,svg,x,d.y+44,[10,20,30,40,50],{w:70,hl:[2],hlf:"var(--p)"});arrow(rc,svg,[x+3*70+35,d.y+44-6],[x+2*70+35,d.y+44-6],{bend:0.5,color:"red"});arrow(rc,svg,[x+4*70+35,d.y+44-6],[x+3*70+35,d.y+44-6],{bend:0.5,color:"red"});
+  cells(rc,svg,x,d.y+130,[10,20,40,50,""],{w:70,seed:9});T(svg,x+5*70+20,d.y+160,"n = 4 · left to right this time",{anchor:"start",size:17,color:"var(--red)"})});
+
+B("b4d",[
+  N("ls",40,20,560,"box w",`<span class="t">Linear search</span>check each element <b>in turn</b> until found or the end`+X(`int linearSearch(int A[], int n, int target) {
+  for (int i = 0; i < n; i++)
+    if (A[i] == target) return i;
+  return -1;               // not found
+}`)+`works on <b>any</b> array (sorted or not) · worst case <b>O(n)</b>`),
+  N("bs","r:ls:40","t:ls",520,"box g",`<span class="t">Binary search</span>needs a <b>sorted</b> array · halve the range each time · worst case <b>O(log n)</b>`+X(`low, high = 0, len(a) - 1      # slide 25 (Python)
+while low <= high:
+    mid = (low + high) // 2
+    if a[mid] == key: return mid
+    elif a[mid] < key: low = mid + 1
+    else: high = mid - 1
+return -1`)),
+  N("dg","r:bs:30","t:ls",300,"plain",gap(270)),
+  N("sk",40,"b:ls,bs,dg:30",900,"sticky",sticky(`Linear = reading every page · binary = opening the dictionary in the middle 📖`,`1,000,000 items: up to 1,000,000 checks vs about 20`))
+],[],(rc,svg,R)=>{const d=R.dg,x=d.x+10,y=d.y+40;T(svg,x,y-18,"find 40 in [10 20 30 40 50]",{anchor:"start",size:16,weight:700});
+  cells(rc,svg,x,y,[10,20,30,40,50],{w:54,hl:[2],size:17});lab(svg,x,y+92,"① mid = 2 → 30 < 40 → low = 3",{size:15});
+  cells(rc,svg,x,y+118,["","","",40,50],{w:54,hl:[3],hlf:"var(--g)",size:17,seed:5});lab(svg,x,y+210,"② mid = 3 → 40 ✓ found in 2 steps",{size:15,color:"var(--green)"})});
+
+B("b4e",[
+  N("so",40,20,480,"box w",`<span class="t">Sorting</span>arrange in order (ascending / descending)<br>[40, 10, 50, 20, 30] → [10, 20, 30, 40, 50]<br>useful for <b>ordered display</b> + faster searching (binary search needs it)`),
+  N("tb","r:so:40","t:so",400,"box y",`<table class="tb"><tr><th>algorithm</th><th>worst case</th></tr><tr><td>bubble sort</td><td>O(n²)</td></tr><tr><td>selection sort</td><td>O(n²)</td></tr><tr><td>insertion sort</td><td>O(n²)</td></tr><tr><td>merge sort</td><td><b>O(n log n)</b></td></tr><tr><td>heap sort</td><td><b>O(n log n)</b></td></tr><tr><td>quick sort</td><td><span class="ann">named, no bound given</span></td></tr></table>`),
+  N("me","r:tb:40","t:so",400,"box g",`<span class="t">Merging</span>combine two collections<br>[10, 20, 30] + [40, 50] → [10, 20, 30, 40, 50]<br>two <b>sorted</b> arrays kept sorted: <b>O(n + m)</b> (n, m = their lengths)`),
+  N("sk",40,"b:so,tb,me:30",900,"sticky",sticky(`"Big Silly Insects" are slow (n²) · "Merge + Heap" are quick (n log n)`,`Bubble · Selection · Insertion vs Merge · Heap`))
+],[]);
+
+B("b4f",[
+  N("tb",40,20,900,"box w",`<table class="tb"><tr><th>operation</th><th>meaning</th><th>typical array cost</th></tr>
+<tr><td>access</td><td>get an element by index</td><td><b>O(1)</b></td></tr>
+<tr><td>traversal</td><td>visit all elements</td><td><b>O(n)</b></td></tr>
+<tr><td>insertion</td><td>add an element</td><td><b>O(n)</b> in general (O(1) at the end with room)</td></tr>
+<tr><td>deletion</td><td>remove an element</td><td><b>O(n)</b> in general</td></tr>
+<tr><td>linear search</td><td>check one by one</td><td><b>O(n)</b> worst case</td></tr>
+<tr><td>binary search</td><td>halve a sorted range</td><td><b>O(log n)</b> worst case</td></tr>
+<tr><td>updating</td><td>change by index</td><td><b>O(1)</b></td></tr>
+<tr><td>sorting</td><td>put in order</td><td>depends on the algorithm</td></tr>
+<tr><td>merging</td><td>combine two sorted arrays</td><td><b>O(n + m)</b></td></tr></table>`),
+  N("nt","r:tb:40","t:tb",480,"box b",`these are <b>typical</b> bounds · real speed also depends on the algorithm, how the data is arranged + whether <b>resizing</b> is needed`),
+  N("rq","r:tb:40","b:nt:24",480,"box y",`<span class="t">Review Q: why is middle insert/delete O(n)?</span>everything after the position must <b>shift</b> one place, and that can be up to <b>n</b> elements`),
+  N("sk","r:tb:40","b:rq:24",480,"sticky",sticky(`"1 · log · n · n log n · n²"`,`fastest → slowest: the order to rank any answer options`))
+],[]);
+
+/* ===== 5 · pointers + dynamic memory ===== */
+B("b5a",[
+  N("pt",40,20,560,"box y",`<span class="t">A pointer stores an address</span>`+X(`int score = 75;
+int *ptr = &score;   // ptr holds score's address
+printf("%d", *ptr);  // 75: follow it
+*ptr = 80;           // score is now 80`)+`<span class="ann">from note 2 · "covered in greater detail in week 4"</span>`),
+  N("op","r:pt:40","t:pt",400,"box w",`<table class="tb"><tr><th>symbol</th><th>meaning</th></tr><tr><td><code>int *p</code></td><td>declare a pointer to an int</td></tr><tr><td><code>&amp;x</code></td><td><b>address of</b> x</td></tr><tr><td><code>*p</code></td><td>the value <b>at</b> that address</td></tr><tr><td><code>p->m</code></td><td>member m through a struct pointer = <code>(*p).m</code></td></tr><tr><td><code>NULL</code></td><td>points nowhere (end of a list, failed malloc)</td></tr></table>`),
+  N("wy","r:op:40","t:pt",420,"box g",`<span class="t">Why the course needs them</span>every <b>linked</b> structure is built from pointers: a node's <code>next</code>, a tree's children · heap memory is reached <b>only</b> through a pointer`),
+  N("rf",40,"b:pt,op,wy:30",900,"box b",`<span class="t">References</span><span class="ann">(named in the week-4 outline)</span> C++ / Java / Python variables that refer to an object: like a pointer you <b>don't</b> dereference with * · e.g. Python's <code>self.next = None</code> in the linked-list slides`),
+  N("sk","r:rf:40","t:rf",480,"sticky",sticky(`A pointer is a sticky note with a house number on it`,`the note isn't the house · * walks you to the door`))
+],[]);
+
+B("b5b",[
+  N("ma",40,20,560,"box w",`<span class="t">malloc + free</span><span class="ann">(note 1 + note 2)</span>`+X(`#include <stdlib.h>
+int *ptr = [[malloc]](sizeof(int));     // 1 int
+int *arr = malloc(5 * sizeof(int));  // 5 ints
+if (arr == NULL) { /* out of memory */ }
+...
+[[free]](arr);   // release when done`)+`memory comes from the <b>heap</b> · the program holds it through a <b>pointer</b>`),
+  N("lk","r:ma:40","t:ma",400,"box p",`<span class="t">Memory leak</span>heap memory you <b>no longer need</b> but never <b>free</b> → the program keeps holding it · in C nothing frees it for you`),
+  N("ip","r:ma:40","b:lk:24",400,"box p",`<span class="t">Invalid (dangling) pointer</span>using a pointer <b>after free</b>, or one never set → undefined behaviour`),
+  N("sh","r:lk:30","t:ma",420,"box y",`<span class="t">Stack vs heap allocation</span><span class="ann">(outline wk 4 + note 2)</span><br><b>stack</b>: locals, made + freed <b>automatically</b> when the function returns<br><b>heap</b>: you ask (<code>malloc</code>) + you give back (<code>free</code>) · lives until freed`),
+  N("sk",40,"b:ma,ip,sh:30",900,"sticky",sticky(`malloc borrows · free returns 📚`,`every malloc needs exactly one free · a library book never returned = a leak`))
+],[]);
+
+B("b5c",[
+  N("q",40,20,620,"box y",`<span class="t">How can a dynamic array stay contiguous?</span><span class="ann">(last session's final, Q2a: 8 marks)</span> it often can't grow in place (the bytes after it may be in use), so when full it usually <b>moves</b>:`),
+  N("st",40,"b:q:24",620,"box w",`① <b>allocate</b> a new, bigger block (usually <b>double</b>)<br>② <b>copy</b> every element across<br>③ <b>free</b> the old block<br>④ point the array at the new block<br><span class="ann">C does ①–③ with <code>realloc(p, newSize)</code></span>`),
+  N("dg","r:q:40","t:q",760,"plain",gap(230)),
+  N("wd",40,"b:st,dg:30",620,"box g",`<span class="t">Why double, not +1?</span><b>fewer resizes</b>: each copy is O(n), but doubling makes them rare → appending costs <b>O(1) on average</b> (amortised)<br><span class="ann">past midterm: "a dynamic array stack doubles in size when full: benefit?" → reduce the number of resizes</span>`),
+  N("sk","r:wd:40","t:wd",760,"sticky",sticky(`Moving house when the family grows 🏠➡🏡`,`buy a place twice as big, carry everything over, sell the old one; C++ vector, Java ArrayList + Python lists grow this way`))
+],[],(rc,svg,R)=>{const d=R.dg,x=d.x+30;cells(rc,svg,x,d.y+30,[1,2,3,4],{w:58,hl:[0,1,2,3],hlf:"var(--b)"});T(svg,x+4*58+20,d.y+60,"full (capacity 4) + push 5",{anchor:"start",size:16,color:"var(--red)"});
+  cells(rc,svg,x,d.y+140,[1,2,3,4,5,"","",""],{w:58,hl:[4],seed:6});T(svg,x+4*58,d.y+128,"new block, capacity 8",{size:16,color:"var(--green)"});
+  arrow(rc,svg,[x+87,d.y+100],[x+87,d.y+134],{bend:0,color:"green"});T(svg,x+74,d.y+124,"copy",{anchor:"end",size:15,color:"var(--green)"});
+  box(rc,svg,x-8,d.y+22,4*58+16,62,"transparent",250,{fill:undefined,fillStyle:undefined,stroke:"var(--red)",strokeWidth:2,strokeLineDash:[8,6]});T(svg,x+4*58+20,d.y+92,"old block → freed",{anchor:"start",size:15,color:"var(--red)"})});
+
+/* ===== 6 · linked lists ===== */
+B("b6a",[
+  N("df",40,20,700,"box y",`<span class="t">Linked list</span>a <b>non-contiguous, linear</b> data structure whose elements (<b>nodes</b>) are linked by <b>pointers / references</b><br>each node = <b>data</b> (the information) + a <b>pointer (link)</b> to the next node's address`),
+  N("dg",40,"b:df:30",1000,"plain",gap(150)),
+  N("vs","r:df:40","t:df",680,"box b",`<span class="t">Linked list vs array (slide 5)</span><b>array</b>: size given at creation → <b>fixed length</b> · <b>linked list</b>: <b>dynamic</b> size, add nodes any time<br>an array holds <b>similar</b> data types; the slide says a linked list "can store various nodes of <b>different data types</b>"`),
+  N("ad","r:dg:20","t:dg",400,"box w",`each pointer field holds the <b>next node's address</b> · the last one holds <b>NULL</b> = end of the list · <b>head</b> points at the first node`),
+  N("ty",40,"b:dg:20",1000,"box g",`<span class="t">Three types</span><b>singly</b> (one link: next) · <b>doubly</b> (two links: prev + next) · <b>circular</b> (the last node links back to the first)`),
+  N("sk","r:ty:40","t:ty",380,"sticky",sticky(`A conga line 💃`,`each dancer only holds the shoulder of the one in front · the last one holds nobody (NULL)`))
+],[],(rc,svg,R)=>{const d=R.dg,y=d.y+56;const gs=llist(rc,svg,d.x+30,y,[15,3,17,90],{gap:80});
+  ["3200","3600","4000","4400"].forEach((a,i)=>{T(svg,gs[i].x+52,y-42,a,{size:15,color:"var(--blue)"});T(svg,gs[i].next[0],y+gs[i].h+26,["3600","4000","4400","NULL"][i],{size:13,color:"var(--red)"})});
+  lab(svg,d.x+30,y+gs[0].h+56,"blue = where the node lives · red = the address stored in its next field");
+  T(svg,gs[0].x+35,y-34,"",{});});
+
+B("b6b",[
+  N("st",40,20,520,"box w",`<span class="t">Creating a list of size 3 (slide 9)</span>① allocate the <b>first</b> node, store data, mark it <b>head</b><br>② allocate the <b>second</b>, store data, <b>link</b> first → second<br>③ allocate the <b>third</b>, store data, link second → third, set its <b>next = NULL</b> so the last node ends the list<br><span class="ann">"two buckets" per node: one holds data, one holds the next address · traverse in <b>one direction only</b></span>`),
+  N("cp","r:st:40","t:st",420,"box g",`<span class="t">C++ (slides 8 + 10)</span>`+X(`class Node {
+public:
+  int data;
+  Node* next;
+  Node(int new_data) {
+    this->data = new_data;
+    this->next = [[nullptr]];
+  }
+};
+Node* head = new Node(10);
+head->next = new Node(20);
+head->next->next = new Node(30);
+head->next->next->next = new Node(40);
+while (head != nullptr) {
+  cout << head->data << " ";
+  head = head->next;
+}`)),
+  N("py","r:cp:40","t:st",420,"box b",`<span class="t">Python</span>`+X(`class Node:
+  def __init__(self, new_data):
+    self.data = new_data
+    self.next = [[None]]
+
+head = Node(10)
+head.next = Node(20)
+head.next.next = Node(30)
+head.next.next.next = Node(40)
+
+temp = head
+while temp:
+  print(temp.data, end=" ")
+  temp = temp.next`)),
+  N("dg",40,"b:st:30",520,"plain",gap(110)),
+  N("wn",40,"b:dg:10",520,"box y",`⚠ the C++ print loop moves <b>head itself</b> → afterwards the list is lost · the Python one walks a copy, <b>temp</b>: the safe habit`),
+  N("sk",40,"b:wn:30",520,"sticky",sticky(`Allocate · Fill · Link · NULL-cap`,`every new node: make it, put data in, hook it on, make sure the end says NULL`))
+],[],(rc,svg,R)=>{const d=R.dg;llist(rc,svg,d.x+20,d.y+40,[10,20,30,40],{gap:30,dw:52})});
+
+/* three before/after rows for insert or delete */
+function stepRow(rc,svg,x,y,before,after,o={}){const P={gap:34,dw:46,pw:30},lx=x+(o.dbl?150:100);
+  lab(svg,x,y+48,"before",{size:16});llist(rc,svg,lx,y+20,before,Object.assign({},P,{dbl:o.dbl,seed:o.seed||0},o.b||{}));
+  arrow(rc,svg,[x+28,y+60],[x+28,y+118],{bend:0,color:"green"});
+  lab(svg,x,y+138,"after",{size:16,color:"var(--green)"});llist(rc,svg,lx,y+110,after,Object.assign({},P,{dbl:o.dbl,seed:(o.seed||0)+50,head:false},o.a||{}))}
+B("b6c",[
+  N("i1",40,20,420,"box w",`<span class="t">① At the beginning (slides 13–16)</span>create the new node (1) on its own → <code>newNode->next = head</code> → <code>head = newNode</code><br><span class="hg">no traversal needed: O(1)</span>`),
+  N("g1","r:i1:30","t:i1",960,"plain",gap(170)),
+  N("i2",40,"b:i1,g1:40",420,"box w",`<span class="t">② At the end (slides 17–19)</span>create the new node (4) → <b>traverse to the last node</b> → <code>lastNode->next = newNode</code> (its next is already NULL)<br><span class="ann">walking to the end costs O(n) unless you keep a tail pointer</span>`),
+  N("g2","r:i2:30","t:i2",960,"plain",gap(170)),
+  N("i3",40,"b:i2,g2:40",420,"box w",`<span class="t">③ At a position (slides 20–23, Pos = 3)</span>traverse with <b>curr</b> to node <b>position − 1</b> → <code>newNode->next = curr->next</code> → <code>curr->next = newNode</code>`),
+  N("g3","r:i3:30","t:i3",960,"plain",gap(170)),
+  N("wn",40,"b:i3,g3:40",880,"box y",`⚠ <b>order matters</b>: set <code>newNode->next</code> <b>first</b>. If you set <code>curr->next = newNode</code> first, the rest of the list (4) is lost.`),
+  N("sk","r:wn:40","t:wn",500,"sticky",sticky(`"Grab the next hand before you let go"`,`new node holds the rest first, then the old node lets go to hold the new one`))
+],[],(rc,svg,R)=>{
+  stepRow(rc,svg,R.g1.x+20,R.g1.y+20,[2,3,4],[1,2,3,4],{a:{hl:[0]}});
+  stepRow(rc,svg,R.g2.x+20,R.g2.y+20,[1,2,3],[1,2,3,4],{seed:10,a:{hl:[3]}});
+  stepRow(rc,svg,R.g3.x+20,R.g3.y+20,[1,2,4],[1,2,3,4],{seed:20,b:{hl:[1]},a:{hl:[2]}});lab(svg,R.g3.x+20+100+110-20,R.g3.y+24,"curr (pos − 1)",{color:"var(--red)",size:15})});
+
+B("b6d",[
+  N("d1",40,20,420,"box w",`<span class="t">① First node (slides 25–27)</span><code>temp = head</code> → <code>head = head->next</code> → <code>free(temp)</code> (check head ≠ NULL first)<br><span class="hg">O(1)</span>`),
+  N("g1","r:d1:30","t:d1",960,"plain",gap(170)),
+  N("d2",40,"b:d1,g1:40",420,"box w",`<span class="t">② Last node (slides 32–35)</span>traverse with <b>curr</b> to the <b>second-last</b> node → <code>curr->next = NULL</code> → delete the last node<br><span class="ann">singly list, no tail pointer: you must walk there → <b>O(n)</b></span>`),
+  N("g2","r:d2:30","t:d2",960,"plain",gap(170)),
+  N("d3",40,"b:d2,g2:40",420,"box w",`<span class="t">③ By position (slides 28–31, Pos = 3)</span>traverse with <b>curr</b> to node <b>position − 1</b> → <code>temp = curr->next</code> → <code>curr->next = temp->next</code> → <code>free(temp)</code>`),
+  N("g3","r:d3:30","t:d3",960,"plain",gap(170)),
+  N("fr",40,"b:d3,g3:40",880,"box y",`always <b>free / delete</b> the removed node, or its memory leaks · check for an <b>empty list</b> (head == NULL) before deleting`),
+  N("sk","r:fr:40","t:fr",500,"sticky",sticky(`To delete, stand one node BEFORE it`,`in a singly list you can't step back, so stop at position − 1`))
+],[],(rc,svg,R)=>{
+  stepRow(rc,svg,R.g1.x+20,R.g1.y+20,[1,2,3,4],[2,3,4],{b:{hl:[0]}});
+  stepRow(rc,svg,R.g2.x+20,R.g2.y+20,[1,2,3,4],[1,2,3],{seed:10,b:{hl:[3]}});
+  stepRow(rc,svg,R.g3.x+20,R.g3.y+20,[1,2,3,4],[1,2,4],{seed:20,b:{hl:[2]}})});
+
+B("b6e",[
+  N("se",40,20,620,"box w",`<span class="t">Searching</span><span class="ann">the slide titled "Searching" only repeats the delete-by-position picture; this is the standard walk it stands for:</span>`+X(`curr = head
+while curr != NULL:
+    if curr->data == key: return found
+    curr = curr->next
+return not found`)+`linear: up to <b>n</b> nodes → <b>O(n)</b> · no jumping to the middle, so <b>no binary search</b>`),
+  N("pr","r:se:40","t:se",380,"box g",`<span class="t">✓ Advantages (slide 11)</span><ul><li><b>dynamic size</b>, no fixed limit</li><li>efficient insert + delete at the <b>beginning and end</b></li><li>used to build <b>stacks, queues, graphs</b></li></ul>`),
+  N("cn","r:pr:20","t:se",380,"box p",`<span class="t">✗ Disadvantages</span><ul><li><b>extra memory</b> for pointers</li><li><b>no direct / random access</b>: traverse</li><li><b>cache unfriendly</b>: not contiguous</li></ul>`),
+  N("sk","r:se:40","b:pr,cn:30",780,"sticky",sticky(`Flexible but forgetful`,`grows anywhere, but has to walk from the head every time it looks for something`))
+],[]);
+
+B("b6f",[
+  N("df",40,20,560,"box y",`<span class="t">Doubly linked list</span>each node has <b>three</b> fields: <b>data</b> · <b>next</b> (pointer to the next node) · <b>prev</b> (pointer to the previous node)<br>→ quick insert/delete + traversal <b>in both directions</b>`),
+  N("dg","r:df:40","t:df",820,"plain",gap(120)),
+  N("mk",40,"b:df,dg:30",560,"box w",`<span class="t">Building 4 nodes (slide 41)</span>① head node: <b>prev + next = NULL</b><br>② <code>head.next = new Node(v2)</code> then <code>head.next.prev = head</code><br>③ <code>head.next.next = new Node(v3)</code> then <code>head.next.next.prev = head.next</code><br>④ repeat · the last node's <b>next must be NULL</b> · keep <b>head</b> (+ optionally a <b>tail</b>: makes appends easy)`),
+  N("cp","r:mk:40","t:mk",400,"box g",`<span class="t">C++ node</span>`+X(`class Node {
+public:
+  int data;
+  Node* prev;
+  Node* next;
+  Node(int d) {
+    data = d;
+    prev = next = nullptr;
+  }
+};
+head->next = new Node(20);
+head->next->[[prev]] = head;`)),
+  N("py","r:cp:40","t:mk",380,"box b",`<span class="t">Python node</span>`+X(`class Node:
+  def __init__(self, d):
+    self.data = d
+    self.prev = None
+    self.next = None
+
+head.next = Node(20)
+head.next.[[prev]] = head`)+`<span class="ann">prints forward as 10 &lt;-&gt; 20 &lt;-&gt; 30 &lt;-&gt; 40</span>`),
+  N("sk",40,"b:mk,cp,py:30",900,"sticky",sticky(`Every new link is a handshake 🤝`,`set next going forward AND prev coming back: two pointers per join`))
+],[],(rc,svg,R)=>{const d=R.dg;llist(rc,svg,d.x+70,d.y+46,[10,20,30,40],{dbl:true,gap:42,dw:56});lab(svg,d.x+70,d.y+118,"black = next · blue = prev · first.prev = NULL · last.next = NULL")});
+
+B("b6g",[
+  N("f",40,20,420,"box w",`<span class="t">Insert at the front (slides 43–44)</span>① new node, <code>new->prev = NULL</code><br>② <code>new->next = head</code><br>③ if the list isn't empty: <code>head->prev = new</code><br>④ the new node is the <b>new head</b>`),
+  N("g1","r:f:30","t:f",960,"plain",gap(180)),
+  N("b",40,"b:f,g1:30",420,"box w",`<span class="t">Delete the first node (slides 46–47)</span>empty? return · <code>temp = head</code> · <code>head = head->next</code> · if the new head isn't NULL: <code>head->prev = NULL</code> · free temp`),
+  N("g2","r:b:30","t:b",960,"plain",gap(180)),
+  N("e",40,"b:b,g2:30",420,"box w",`<span class="t">Delete the last node (slides 48–49)</span>empty? nothing to do · move <b>curr</b> to the last node · <code>curr->prev->next = NULL</code> (only one node? set <code>head = NULL</code>) · free curr`),
+  N("g3","r:e:30","t:e",960,"plain",gap(180)),
+  N("p",40,"b:e,g3:30",420,"box w",`<span class="t">Delete at a position (slides 50–54, Pos = 2)</span>traverse <b>curr</b> to position − 1 → save the target · <code>curr->next = curr->next->next</code> · <b>if</b> <code>curr->next != NULL</code>: <code>curr->next->prev = curr</code> → free the target`),
+  N("g4","r:p:30","t:p",960,"plain",gap(180)),
+  N("sk",40,"b:p,g4:30",900,"sticky",sticky(`Two pointers to fix, both sides`,`in a doubly list every change rewires next on one side AND prev on the other`))
+],[],(rc,svg,R)=>{const row=(g,bv,av,o)=>stepRow(rc,svg,g.x+20,g.y+10,bv,av,Object.assign({dbl:true},o));
+  row(R.g1,[2,3],[1,2,3],{a:{hl:[0]}});row(R.g2,[1,2,3],[2,3],{b:{hl:[0]},seed:5});row(R.g3,[1,2,3],[1,2],{b:{hl:[2]},seed:9});row(R.g4,[1,2,3],[1,3],{b:{hl:[1]},seed:13})});
+
+B("b6h",[
+  N("df",40,20,620,"box y",`<span class="t">Circular linked list</span>the <b>last node points back to the first</b> → a closed loop · traversal never meets NULL<br><span class="ann">regular list: last → NULL · circular: last → first</span><br>used for <b>scheduling</b> + <b>playlists</b>: smooth, repeated cycling`),
+  N("s1",40,"b:df:30",620,"box w",`<span class="t">① Circular singly</span>one pointer (<b>next</b>) per node · the last node's next → the first · <b>one direction</b> only · the slides keep a <b>last</b> pointer: <code>last->next</code> is the first node`),
+  N("g1","r:df:40","t:df",760,"plain",gap(130)),
+  N("s2",40,"b:s1:30",620,"box w",`<span class="t">② Circular doubly</span><b>prev + next</b> per node · last → first <b>and</b> first.prev → last`),
+  N("g2","r:s2:40","t:s2",760,"plain",gap(140)),
+  N("sk",40,"b:s2,g2:30",620,"sticky",sticky(`A round table, not a queue 🍽`,`after the last guest you're back at the first: no end`))
+],[],(rc,svg,R)=>{llist(rc,svg,R.g1.x+40,R.g1.y+40,[10,20,30,40,50],{circ:true,gap:26,dw:44});lab(svg,R.g1.x+40+4*130-6,R.g1.y+28,"last",{color:"var(--red)",weight:700});
+  llist(rc,svg,R.g2.x+40,R.g2.y+60,[10,20,30,40],{circ:true,dbl:true,gap:30,dw:44,seed:9})});
+
+B("b6i",[
+  N("a1",40,20,340,"box w",`🎵 <b>music player</b>: songs linked to the previous + next song`),
+  N("a2","r:a1:30","t:a1",340,"box w",`🌐 <b>web browser</b>: previous + next pages via back/forward → <b>doubly</b>`),
+  N("a3","r:a2:30","t:a1",340,"box w",`🖼 <b>image viewer</b>: previous + next image buttons → <b>doubly</b>`),
+  N("a4","r:a3:30","t:a1",340,"box w",`🔁 <b>round-robin</b> things: visit each element one by one, forever → <b>circular</b>`),
+  N("a5",40,"b:a1,a2,a3,a4:30",1000,"box g",`linked lists are <b>preferred over arrays</b> for implementing <b>queues + deques</b>: fast insert/delete at the <b>front</b> (an array would shift everything)`),
+  N("sk","r:a5:40","t:a5",380,"sticky",sticky(`Back + forward → doubly · round and round → circular`,`the exam's favourite pairing`))
+],[]);
+
+/* ===== 7 · stacks ===== */
+function stackPic(rc,svg,x,y,vals,cap,o={}){const w=o.w||90,h=36;for(let i=0;i<cap;i++){const yy=y+(cap-1-i)*h,v=vals[i];box(rc,svg,x,yy,w,h,v==null?"var(--card)":(i===vals.length-1?(o.top||"var(--y)"):"var(--b)"),300+i+(o.seed||0),v==null?{strokeLineDash:[5,4]}:{});if(v!=null)T(svg,x+w/2,yy+25,String(v),{size:18,weight:700});T(svg,x-12,yy+24,String(i),{size:14,anchor:"end",color:"var(--soft)"})}
+  const ty=vals.length?y+(cap-vals.length)*h+18:y+cap*h+16;arrow(rc,svg,[x+w+60,ty],[x+w+8,ty],{bend:0,color:"red"});T(svg,x+w+66,ty+6,o.lbl===false?"top":"top = "+(vals.length-1),{anchor:"start",size:16,color:"var(--red)",weight:700})}
+B("b7a",[
+  N("df",40,20,560,"box y",`<span class="t">Stack = LIFO</span><b>Last In, First Out</b>: the last item added is the first removed · all action happens at <b>one end</b>, the <b>top</b>`),
+  N("op",40,"b:df:24",560,"box w",`<table class="tb"><tr><th>operation</th><th>does</th><th>cost</th></tr><tr><td><b>push(x)</b></td><td>add x on top</td><td>O(1)</td></tr><tr><td><b>pop()</b></td><td>remove + return the top</td><td>O(1)</td></tr><tr><td><b>peek()</b> / top</td><td>look at the top, don't remove</td><td>O(1)</td></tr><tr><td><b>isEmpty()</b></td><td>anything in it?</td><td>O(1)</td></tr><tr><td>isFull()</td><td>array version only</td><td>O(1)</td></tr></table><span class="ann">note 1's stack ADT lists push, pop, peek, isEmpty</span>`),
+  N("dg","r:df:40","t:df",820,"plain",gap(230)),
+  N("ap",40,"b:op,dg:30",880,"box g",`<span class="t">Where stacks show up</span><b>undo</b> (text editor, photo editor, game moves) · <b>function calls / recursion</b> (the call stack) · the browser <b>back button</b> · checking <b>matching brackets</b> + evaluating expressions · compilers (note 1)`),
+  N("sk","r:ap:40","t:ap",500,"sticky",sticky(`A stack of plates 🍽`,`you only ever touch the top plate`))
+],[],(rc,svg,R)=>{const d=R.dg,y=d.y+30;const st=[[[10],"push 10"],[[10,20],"push 20"],[[10,20,30],"push 30"],[[10,20],"pop → 30"]];
+  st.forEach(([v,l],i)=>{const x=d.x+40+i*200;stackPic(rc,svg,x,y,v,4,{w:70,seed:i*5,lbl:false});T(svg,x+35,y+4*36+30,l,{size:17,weight:700,color:i===3?"var(--red)":"var(--ink)"})})});
+
+B("b7b",[
+  N("in",40,20,440,"box w",`<span class="t">Array stack</span>an array <code>S[size]</code> + an index <b>top</b><br>empty: <b>top = −1</b><br>full: <b>top = size − 1</b>`),
+  N("pu","r:in:30","t:in",460,"box g",`<span class="t">push(x): overflow check first</span>`+X(`if top == size - 1:
+    print "Stack [[Overflow]]"
+else:
+    top = top + 1
+    S[top] = x`)),
+  N("po","r:pu:30","t:in",460,"box p",`<span class="t">pop(): underflow check first</span>`+X(`if top == -1:
+    print "Stack [[Underflow]]"
+else:
+    x = S[top]
+    top = top - 1
+    return x`)+`peek = return <code>S[top]</code> without moving top`),
+  N("dg",40,"b:in:24",440,"plain",gap(210)),
+  N("ex","r:dg:30","b:pu,po:30",950,"box y",`<span class="t">Past-paper style</span>size 5, push 5 items → top = <b>4</b> · pop 2 → top = <b>2</b><br>size 5, top = 4, push one more → <b>overflow</b> · pop on top = −1 → <b>underflow</b><br>pop <b>decrements top</b> (top − 1) · the old value stays in the array but is no longer "in" the stack`),
+  N("sk","r:dg:30","b:ex:24",950,"sticky",sticky(`Push: "is there room?" · Pop: "is there anything?"`,`full = top at size − 1 · empty = top at −1`))
+],[],(rc,svg,R)=>{const d=R.dg;stackPic(rc,svg,d.x+50,d.y+10,[5,8,2],5,{w:80});T(svg,d.x+90,d.y+5*36+36,"size 5 · 3 items",{size:16,color:"var(--soft)"})});
+
+B("b7c",[
+  N("ls",40,20,460,"box w",`<span class="t">Linked stack</span>the <b>head</b> is the top<br><b>push</b> = insert at the front · <b>pop</b> = delete the front · both <b>O(1)</b><br>no fixed size: no overflow until memory runs out · <b>pop frees</b> the node's memory (free/delete)`),
+  N("dg","r:ls:30","t:ls",440,"plain",gap(110)),
+  N("dy","r:dg:30","t:ls",450,"box g",`<span class="t">Growing array stack</span>push when full → <b>double the array</b> (copy across) instead of overflowing · benefit: <b>fewer resizes</b> (§5.3)`),
+  N("tw",40,"b:ls,dg,dy:30",700,"box y",`<span class="t">Two stacks in one array</span>A grows from the <b>left</b> (topA starts at −1) · B from the <b>right</b> (topB starts at n)<br>pushing either is safe while <b>topA + 1 &lt; topB</b> (a free cell between them)<br>overflow when <b>topA + 1 == topB</b> · no space is wasted: either stack can use all the free room`),
+  N("dg2","r:tw:40","t:tw",720,"plain",gap(120))
+],[],(rc,svg,R)=>{const d=R.dg;llist(rc,svg,d.x+10,d.y+46,[30,20,10],{gap:26,dw:48,head:"top"});
+  const g=R.dg2,x=g.x+20,y=g.y+40;cells(rc,svg,x,y,["a1","a2","","","","b2","b1"],{w:70,i0:0,hl:[0,1,5,6],hlf:"var(--b)",size:17});
+  arrow(rc,svg,[x+105,y-34],[x+105,y-4],{bend:0,color:"red"});T(svg,x+105,y-40,"topA",{size:15,color:"var(--red)",weight:700});
+  arrow(rc,svg,[x+385,y-34],[x+385,y-4],{bend:0,color:"blue"});T(svg,x+385,y-40,"topB",{size:15,color:"var(--blue)",weight:700});lab(svg,x,y+100,"topA = 1 · topB = 5 · 1 + 1 < 5 → still room")});
+
+/* ===== 8 · queues ===== */
+B("b8a",[
+  N("df",40,20,560,"box y",`<span class="t">Queue = FIFO</span><b>First In, First Out</b>: served in arrival order · add at the <b>rear</b> (enqueue), remove at the <b>front</b> (dequeue)`),
+  N("op",40,"b:df:24",560,"box w",`<b>enqueue(x)</b> at the rear · <b>dequeue()</b> from the front · <b>peek / front()</b> · <b>isEmpty</b> · <b>isFull</b><br>uses: <b>printer queue</b>, <b>FCFS CPU scheduling</b>, customer-support requests, ticketing, web pages served in arrival order`),
+  N("dg","r:df:40","t:df",820,"plain",gap(150)),
+  N("la",40,"b:op,dg:30",700,"box w",`<span class="t">Linear array queue</span>empty: <b>front = rear = −1</b><br>first enqueue: <b>front = 0, rear = 0</b><br>enqueue: <code>rear = rear + 1; Q[rear] = x</code> (full when <b>rear = size − 1</b>)<br>dequeue: <code>x = Q[front]; front = front + 1</code> (empty when front = −1 or front &gt; rear)`),
+  N("pb","r:la:40","t:la",680,"box p",`<span class="t">The problem</span>after some dequeues the cells at the <b>start are unused</b> → <b>wasted memory</b>: rear hits the end even though the queue isn't full<br>fix 1: <b>shift</b> everything left on each dequeue → <b>O(n)</b> ✗<br>fix 2: a <b>circular</b> queue → O(1) ✓`),
+  N("sk",40,"b:la,pb:30",900,"sticky",sticky(`A bank queue 🏦: join at the back, leave from the front`,`enqueue → rear · dequeue → front`))
+],[],(rc,svg,R)=>{const d=R.dg,x=d.x+40,y=d.y+46;cells(rc,svg,x,y,["","",30,40,50,""],{w:74,hl:[2],hlf:"var(--g)"});
+  T(svg,x+2*74+37,y-12,"front = 2",{size:16,color:"var(--green)",weight:700});T(svg,x+4*74+37,y-12,"rear = 4",{size:16,color:"var(--red)",weight:700});
+  T(svg,x+74,y+90,"wasted after 2 dequeues",{size:15,color:"var(--red)"})});
+
+B("b8b",[
+  N("id",40,20,560,"box y",`<span class="t">Circular queue</span>the last cell is followed by cell 0 → <b>reuse</b> the freed space · indexes wrap with <b>% size</b> · enqueue + dequeue both <b>O(1)</b>, no shifting`),
+  N("cd",40,"b:id:24",560,"box w",X(`enqueue(x):
+  if (rear + 1) % size == front: "[[Full]]"
+  else:
+    if front == -1: front = 0
+    rear = (rear + 1) % size
+    Q[rear] = x
+
+dequeue():
+  if front == -1: "[[Empty]]"; return
+  x = Q[front]
+  if front == rear: front = rear = -1  // last one
+  else: front = (front + 1) % size
+  return x`)),
+  N("dg","r:id:40","t:id",820,"plain",gap(300)),
+  N("ct","r:cd:40","b:dg:20",820,"box g",`<span class="t">How many elements?</span>count = <b>(rear − front + size) % size + 1</b> <span class="ann">(when not empty, front + rear on elements)</span><br>e.g. size 10, front = 8, rear = 1 → (1 − 8 + 10) % 10 + 1 = <b>4</b> (cells 8, 9, 0, 1)`),
+  N("sk",40,"b:cd,ct:30",900,"sticky",sticky(`"It's all in the indexing": full = rear one step behind front · empty = front is −1`,`the final paper's own hint for the queue-full/empty question`))
+],[],(rc,svg,R)=>{const d=R.dg,cx=d.x+190,cy=d.y+150,r1=70,r2=130,n=8;const vals=["C","D","","","","","A","B"];
+  for(let i=0;i<n;i++){const a0=-Math.PI/2+i*2*Math.PI/n,a1=a0+2*Math.PI/n;const P=(r,a)=>[cx+r*Math.cos(a),cy+r*Math.sin(a)];const p=[P(r2,a0),P(r2,a1),P(r1,a1),P(r1,a0)];
+    add(svg,rc.polygon(p,{fill:vals[i]?(i===6?"var(--g)":i===1?"var(--y)":"var(--b)"):"var(--card)",fillStyle:"solid",stroke:"var(--ink)",strokeWidth:1.8,roughness:0.7,seed:320+i}));
+    const m=P((r1+r2)/2,(a0+a1)/2);if(vals[i])T(svg,m[0],m[1]+7,vals[i],{size:20,weight:700});const q=P(r2+20,(a0+a1)/2);T(svg,q[0],q[1]+5,String(i),{size:14,color:"var(--soft)"})}
+  T(svg,cx,cy+6,"size 8",{size:16,color:"var(--soft)"});
+  T(svg,cx+250,cy-70,"front = 6 (A)",{anchor:"start",size:18,color:"var(--green)",weight:700});T(svg,cx+250,cy-40,"rear = 1 (D): it wrapped past 7 → 0",{anchor:"start",size:18,color:"var(--red)",weight:700});
+  T(svg,cx+250,cy,"count = (1 − 6 + 8) % 8 + 1 = 4",{anchor:"start",size:18});T(svg,cx+250,cy+30,"next enqueue goes to (1 + 1) % 8 = 2",{anchor:"start",size:18,color:"var(--soft)"})});
+
+B("b8c",[
+  N("lq",40,20,460,"box w",`<span class="t">Linked queue</span>keep <b>front</b> + <b>rear</b> pointers<br>enqueue = add after rear · dequeue = remove at front · both <b>O(1)</b> · grows as needed`),
+  N("dg","r:lq:30","t:lq",500,"plain",gap(100)),
+  N("cb",40,"b:lq,dg:30",460,"box y",`<span class="t">Circular buffer (ring buffer)</span>a <b>fixed-size</b> circular queue that, when full, <b>overwrites the oldest</b> item instead of refusing · the oldest is at the <b>front</b><br>for "keep the <b>last N</b>": last 100 GPS points · last 50 sensor / temperature readings · last 3 failed logins · a call log`),
+  N("dq","r:cb:30","t:cb",460,"box g",`<span class="t">Deque (double-ended queue)</span>insert <b>and</b> delete at <b>both</b> ends · e.g. a job scheduler where <b>urgent</b> jobs jump to the front · a playlist adding/removing at both ends · best built from a <b>doubly linked list</b>`),
+  N("sk","r:dq:30","t:cb",420,"sticky",sticky(`Ring buffer = a dashcam 🎥`,`it records over the oldest footage when the card is full`))
+],[],(rc,svg,R)=>{const d=R.dg;llist(rc,svg,d.x+30,d.y+40,[10,20,30],{gap:30,dw:48,head:"front"});T(svg,d.x+30+2*112+24,d.y+24,"rear",{size:17,color:"var(--red)",weight:700})});
+
+B("b8d",[
+  N("pq",40,20,620,"box y",`<span class="t">Priority queue</span>each item has a <b>priority</b>; the <b>highest</b> (or lowest) comes out first, not the oldest · e.g. a CPU running the <b>shortest job first</b>, hospital triage, urgent print jobs<br><span class="ann">note 1: implement with a <b>heap</b> or another suitable structure</span>`),
+  N("tb",40,"b:pq:24",620,"box w",`<table class="tb"><tr><th>built on</th><th>insert</th><th>remove highest</th></tr><tr><td><b>unsorted</b> array / list</td><td>O(1) (just append)</td><td><b>O(n)</b> (search for it)</td></tr><tr><td><b>sorted</b> array</td><td><b>O(n)</b> (shift into place)</td><td>O(1) (it's at the end)</td></tr><tr><td>sorted linked list</td><td>O(n) to find the spot</td><td>O(1) (at the head)</td></tr><tr><td>heap (week 11)</td><td>O(log n)</td><td>O(log n)</td></tr></table>`),
+  N("ts","r:pq:40","t:pq",760,"box g",`<span class="t">A queue made of two stacks</span>enqueue: <b>push onto stack A</b><br>dequeue: if <b>stack B is empty</b>, <b>pop everything from A and push it onto B</b> (this reverses the order) → then <b>pop B</b><br><span class="ann">the oldest item ends up on top of B, so FIFO is kept</span>`),
+  N("dg","r:tb:40","b:ts:10",760,"plain",gap(230))
+],[],(rc,svg,R)=>{const d=R.dg,y=d.y+20;stackPic(rc,svg,d.x+40,y,[1,2,3],4,{w:64});T(svg,d.x+72,y+4*36+28,"A (in)",{size:16,weight:700});
+  arrow(rc,svg,[d.x+260,y+80],[d.x+360,y+80],{bend:-0.2,color:"green"});T(svg,d.x+310,y+50,"move all",{size:15,color:"var(--green)"});
+  stackPic(rc,svg,d.x+440,y,[3,2,1],4,{w:64,seed:9});T(svg,d.x+472,y+4*36+28,"B (out): pop → 1 ✓",{size:16,weight:700})});
+
+/* ===== 9 · exam drill ===== */
+B("b9a",[
+  N("q",40,20,1420,"box y center",`<b>Read the scenario for its verb</b>: last-first? first-first? keep the last N? jump by index? both ends? middle of a list? highest priority?`),
+  N("s1",40,"b:q:40",330,"box w",`<span class="t">→ Stack</span>undo / redo · recursion + function calls · browser <b>back</b> button only · "LIFO"`),
+  N("s2","r:s1:30","t:s1",330,"box w",`<span class="t">→ Queue</span>served in arrival order · FCFS scheduler · printer queue · support requests · "FIFO"`),
+  N("s3","r:s2:30","t:s1",330,"box w",`<span class="t">→ Circular buffer</span>"last 100 / 50 / 3 …, <b>overwrite or drop the oldest</b>" · GPS · sensors · logins · call log`),
+  N("s4","r:s3:30","t:s1",340,"box w",`<span class="t">→ Circular array queue</span>enqueue + dequeue O(1) <b>without shifting</b> · reuse the space freed at the front`),
+  N("s5",40,"b:s1,s2,s3,s4:30",330,"box g",`<span class="t">→ Array</span>access by <b>index / roll number</b> in O(1) · read often, change rarely`),
+  N("s6","r:s5:30","t:s5",330,"box g",`<span class="t">→ Doubly linked list</span><b>back AND forward</b> · close a tab / cancel a job <b>from the middle</b> · insert/delete at both ends · travel backwards`),
+  N("s7","r:s6:30","t:s5",330,"box g",`<span class="t">→ Circular linked list</span>round-robin · rotating players · a <b>repeating</b> playlist`),
+  N("s8","r:s7:30","t:s5",340,"box g",`<span class="t">→ Deque</span>add at the <b>front or rear</b>: urgent jobs to the front · both-ends playlist`),
+  N("s9",40,"b:s5,s6,s7,s8:30",660,"box p",`<span class="t">→ Priority queue</span>"shortest / highest / most urgent <b>first</b>", not arrival order`),
+  N("s10","r:s9:30","t:s9",730,"box p",`<span class="t">→ Tree / graph</span>hierarchy (org chart, family tree, file system) → <b>tree</b> · connections (roads, networks, social) → <b>graph</b>`)
+],[]);
+
+B("b9b",[
+  N("tb",40,20,1420,"box w",`<table class="tb"><tr><th>structure</th><th>access by index</th><th>search</th><th>insert at front</th><th>insert at end</th><th>delete front</th><th>delete end</th><th>middle (position known)</th></tr>
+<tr><td><b>array</b></td><td>O(1)</td><td>O(n) · sorted O(log n)</td><td>O(n) shift</td><td>O(1) if room</td><td>O(n) shift</td><td>O(1)</td><td>O(n) shift</td></tr>
+<tr><td><b>singly linked</b> (head only)</td><td>O(n)</td><td>O(n)</td><td><b>O(1)</b></td><td>O(n) walk · O(1) with tail</td><td><b>O(1)</b></td><td><b>O(n)</b> even with a tail</td><td>O(n) to reach it</td></tr>
+<tr><td><b>doubly linked</b> (head + tail)</td><td>O(n)</td><td>O(n)</td><td>O(1)</td><td>O(1)</td><td>O(1)</td><td>O(1)</td><td>O(1) once you hold the node</td></tr>
+<tr><td><b>stack</b> (array or linked)</td><td colspan="2">—</td><td colspan="5">push, pop, peek all O(1)</td></tr>
+<tr><td><b>queue</b> (circular array or linked)</td><td colspan="2">—</td><td colspan="5">enqueue, dequeue, front all O(1) · linear array with shifting: dequeue O(n)</td></tr></table>`),
+  N("tr",40,"b:tb:30",680,"box y",`<span class="t">Traps</span>moving <b>one step</b> back in a doubly list = O(1), but <b>traversing</b> back from the tail = O(n) · a doubly list can do both, so "impossible" is wrong · a circular list's "next player" = O(1)`),
+  N("km","r:tr:40","t:tr",700,"box p",`<span class="t">Delete a known node in a circular list?</span><span class="ann">(asked twice last session)</span> singly: you need the node <b>before</b> it → <b>O(n)</b> to find it · doubly, or if you're handed the previous node: <b>O(1)</b> · read the options, and use the singly answer when nothing extra is given`)
+],[]);
+
+B("b9c",[
+  N("hd",40,20,1420,"box y",`<span class="t">Last session's midterm (CSC 301/CYB 309): 100 scenario questions</span><span class="ann">answers are worked out from the notes, not an official key · the photos were partly unreadable, so options are paraphrased</span>`),
+  N("c1",40,"b:hd:24",700,"box w",`<table class="tb"><tr><th>question</th><th>answer</th></tr>
+<tr><td>undo in a game / text editor · photo-editor undo</td><td><b>stack</b></td></tr>
+<tr><td>function calls in recursion (LIFO)</td><td><b>stack</b></td></tr>
+<tr><td>implement the browser back button</td><td><b>stack</b></td></tr>
+<tr><td>browser back <i>and</i> forward</td><td><b>doubly linked list</b></td></tr>
+<tr><td>close any tab in the middle · cancel a print job from the middle</td><td><b>doubly linked list</b> (a plain queue can't remove from the middle)</td></tr>
+<tr><td>insert/delete at both ends · mostly ends, rarely middle</td><td><b>deque</b> (built on a doubly linked list): pick whichever is offered</td></tr>
+<tr><td>top-10 high scores, inserts/deletes anywhere</td><td><b>doubly linked list</b></td></tr>
+<tr><td>circular playlist · rotating players</td><td><b>circular linked list</b>; next player <b>O(1)</b></td></tr>
+<tr><td>pages served in arrival order · FCFS CPU scheduler</td><td><b>queue</b></td></tr>
+<tr><td>CPU runs shortest job first</td><td><b>priority queue</b></td></tr>
+<tr><td>urgent jobs added at the front</td><td><b>deque</b></td></tr>
+<tr><td>access a student by roll number · read often, rarely changed</td><td><b>array</b></td></tr>
+<tr><td>constant-time access by index</td><td><b>array</b></td></tr>
+<tr><td>last 100 GPS points / 50 readings / 3 logins / 100 calls, oldest dropped</td><td><b>circular buffer</b></td></tr>
+<tr><td>circular buffer full + a new reading arrives</td><td><b>overwrites the oldest</b> · oldest sits at <b>front</b></td></tr></table>`),
+  N("c2","r:c1:20","t:c1",700,"box w",`<table class="tb"><tr><th>question</th><th>answer</th></tr>
+<tr><td>array stack: push 5, pop 2 → top index</td><td><b>2</b></td></tr>
+<tr><td>array stack overflow happens when</td><td><b>top == size − 1</b></td></tr>
+<tr><td>size 5, top = 4, push one more</td><td><b>overflow</b></td></tr>
+<tr><td>array stack pop changes which pointer</td><td><b>top</b> (top − 1)</td></tr>
+<tr><td>dynamic array stack, push when full</td><td><b>double the array</b> → fewer resizes</td></tr>
+<tr><td>linked stack: does pop free memory?</td><td><b>yes</b> (the node is freed)</td></tr>
+<tr><td>two stacks, one array: push A safe if</td><td><b>topA + 1 &lt; topB</b></td></tr>
+<tr><td>linear array queue: free cells at the start</td><td><b>wasted memory</b></td></tr>
+<tr><td>O(1) enqueue/dequeue without shifting</td><td><b>circular array queue</b></td></tr>
+<tr><td>array queue whose dequeue shifts</td><td><b>O(n)</b></td></tr>
+<tr><td>first insert when front = rear = −1</td><td><b>front = 0, rear = 0</b></td></tr>
+<tr><td>circular queue full test</td><td><b>(rear + 1) % size == front</b></td></tr>
+<tr><td>two-stack queue, stack B empty, dequeue</td><td><b>move all of A onto B</b>, then pop B</td></tr>
+<tr><td>linked queue enqueue at rear / dequeue</td><td><b>O(1)</b> / <b>O(1)</b></td></tr>
+<tr><td>unsorted array PQ: remove highest</td><td><b>O(n)</b></td></tr>
+<tr><td>sorted array PQ: insert</td><td><b>O(n)</b></td></tr>
+<tr><td>insert at an index in an array</td><td><b>shift right</b> · <b>O(n)</b></td></tr>
+<tr><td>singly list: insert / delete at head</td><td><b>O(1)</b></td></tr>
+<tr><td>singly list: delete last, no tail pointer</td><td><b>O(n)</b></td></tr>
+<tr><td>doubly list: insert at front</td><td><b>O(1)</b></td></tr>
+<tr><td>doubly list: traverse back from the tail</td><td><b>O(n)</b></td></tr></table>`)
+],[]);
+
+B("b9d",[
+  N("hd",40,20,1420,"box y",`<span class="t">Last session's final: the written questions inside midterm scope</span><span class="ann">(5 of 7, at least one per section) · what each answer needs</span>`),
+  N("a1",40,"b:hd:24",460,"box w",`<span class="t">A · 5 ADTs + a scenario each (5)</span>stack → undo · queue → printer · list/array → class register · tree → org chart · graph → road map · priority queue → triage<br><b>Classify by linearity (5)</b>: linear = array, list, stack, queue · non-linear = tree, graph`),
+  N("a2","r:a1:20","t:a1",460,"box w",`<span class="t">A · two categories of data types (5)</span><b>primitive</b> (built in: int, char, float, double, bool) vs <b>non-primitive</b> / derived (built from them: arrays, structs, strings, lists)<br><b>Why study DS?</b> → the 6 reasons in §1.2`),
+  N("a3","r:a2:20","t:a1",460,"box w",`<span class="t">B · dynamic array stays contiguous (8)</span>allocate bigger block → copy → free old → repoint (§5.3)<br><b>Array vs linked list (8)</b>: the table in §1.5 (memory, access O(1) vs O(n), insert/delete, pointer overhead, growth)`),
+  N("b1",40,"b:a1,a2,a3:24",700,"box g",`<span class="t">B · exam seating with a multi-D array (12)</span>`+X(`seat[3][F][200]          // exam × floor × seat
+for e = 0 to 2:
+  next = 0                // student index for exam e
+  for f = 0 to F-1:
+    for s = 0 to 199:
+      if next < count[e]:
+        seat[e][f][s] = student[e][next]
+        next = next + 1
+      else: seat[e][f][s] = EMPTY`)+`<span class="ann">never more than 200 per floor · each exam + floor handled separately</span>`),
+  N("b2","r:b1:20","t:b1",700,"box g",`<span class="t">B · cafeteria orders, singly linked list (12)</span>`+X(`node { orderID; next }
+insert(id): new.orderID = id; new.next = NULL
+  if head == NULL: head = new
+  else: walk curr to last; curr.next = new
+display(): curr = head
+  while curr != NULL: print curr.orderID; curr = curr.next
+cancel(id): if head == NULL: return "empty"
+  if head.orderID == id: t = head; head = head.next; free t; return
+  prev = head
+  while prev.next != NULL and prev.next.orderID != id:
+      prev = prev.next
+  if prev.next == NULL: return "not found"
+  t = prev.next; prev.next = t.next; free t`)),
+  N("c1",40,"b:b1,b2:24",700,"box b",`<span class="t">C · stack overflow in push (8) · undo stack (12)</span>push with the <b>top == size − 1</b> check (§7.2) · each edit = <b>push(action)</b> · undo = <b>pop()</b> (check empty) · show = <b>peek()</b>`),
+  N("c2","r:c1:20","t:c1",700,"box b",`<span class="t">C · queue full/empty "all in the indexing" (8) · support requests (12)</span>full: <b>(rear + 1) % size == front</b> · empty: <b>front == −1</b> (§8.2) · new request = <b>enqueue</b> at rear · process = <b>dequeue</b> from front · show = <b>front()</b>`)
+],[]);
+/* ---------- sticker doodles (drawn ~46px around x,y) ---------- */
+const P=Math.PI;
+const S=(f,st,w)=>{const o={stroke:st||"var(--ink)",strokeWidth:w||2,roughness:0.9};if(f){o.fill=f;o.fillStyle="solid"}return o};
+const TX=(t,c)=>(rc,s,x,y)=>T(s,x,y+9,t,{size:26,weight:700,color:c||"var(--blue)"});
+const I={
+  twist:(rc,s,x,y)=>{const a=[],b=[];for(let t=-22;t<=22;t+=2){a.push([x+t,y+8*Math.sin(t/4.5)]);b.push([x+t,y-8*Math.sin(t/4.5)])}add(s,rc.curve(a,S(0,"var(--blue)",3)));add(s,rc.curve(b,S(0,"var(--red)",3)))},
+  coax:(rc,s,x,y)=>{add(s,rc.circle(x,y,44,S("var(--soft)")));add(s,rc.circle(x,y,30,S("var(--y)")));add(s,rc.circle(x,y,12,S("var(--red)")))},
+  fibre:(rc,s,x,y)=>{add(s,rc.line(x-22,y+16,x+6,y-4,S(0,"var(--blue)",5)));for(let i=0;i<8;i++){const a=i*P/4;add(s,rc.line(x+12+5*Math.cos(a),y-8+5*Math.sin(a),x+12+14*Math.cos(a),y-8+14*Math.sin(a),S(0,"var(--red)")))}},
+  radio:(rc,s,x,y)=>{add(s,rc.linearPath([[x-10,y+22],[x,y-10],[x+10,y+22]],S()));add(s,rc.line(x-6,y+10,x+6,y+10,S()));add(s,rc.circle(x,y-12,7,S("var(--red)","var(--red)")));[14,26].forEach(r=>{add(s,rc.arc(x,y-12,r,r,P*0.7,P*1.3,false,S(0,"var(--blue)")));add(s,rc.arc(x,y-12,r,r,-P*0.3,P*0.3,false,S(0,"var(--blue)")))})},
+  dish:(rc,s,x,y)=>{add(s,rc.arc(x-4,y-4,38,38,P*0.6,P*1.6,true,S("var(--b)")));add(s,rc.line(x-4,y-4,x+12,y-18,S()));add(s,rc.circle(x+13,y-19,6,S("var(--red)","var(--red)")));add(s,rc.line(x-4,y-4,x-4,y+20,S()));add(s,rc.line(x-14,y+21,x+6,y+21,S(0,0,3)))},
+  remote:(rc,s,x,y)=>{add(s,rc.rectangle(x-8,y-4,16,28,S("var(--card)")));[0,8,16].forEach(d=>add(s,rc.circle(x,y+3+d,5,S("var(--red)","var(--red)"))));[-8,0,8].forEach(d=>add(s,rc.line(x+d*0.4,y-8,x+d*1.6,y-22,{...S(0,"var(--red)"),strokeLineDash:[3,3]})))},
+  globe:(rc,s,x,y)=>{add(s,rc.circle(x,y,40,S("var(--b)")));add(s,rc.ellipse(x,y,18,40,S()));add(s,rc.line(x-20,y,x+20,y,S()));add(s,rc.line(x-16,y-10,x+16,y-10,S()));add(s,rc.line(x-16,y+10,x+16,y+10,S()))},
+  mail:(rc,s,x,y)=>{add(s,rc.rectangle(x-20,y-13,40,26,S("var(--card)")));add(s,rc.linearPath([[x-20,y-13],[x,y+3],[x+20,y-13]],S(0,"var(--red)")))},
+  lock:(rc,s,x,y)=>{add(s,rc.arc(x,y-4,22,28,P,2*P,false,S(0,0,3)));add(s,rc.rectangle(x-14,y-4,28,22,S("var(--y)")));add(s,rc.circle(x,y+6,6,S("var(--ink)","var(--ink)")))},
+  clock:(rc,s,x,y)=>{add(s,rc.circle(x,y,42,S("var(--card)")));add(s,rc.line(x,y,x,y-14,S(0,0,3)));add(s,rc.line(x,y,x+10,y+4,S(0,"var(--red)",3)))},
+  bolt:(rc,s,x,y)=>add(s,rc.polygon([[x+5,y-22],[x-12,y+2],[x-1,y+2],[x-6,y+22],[x+12,y-4],[x+1,y-4]],S("var(--y)"))),
+  pc:(rc,s,x,y)=>{add(s,rc.rectangle(x-20,y-18,40,28,S("var(--b)")));add(s,rc.line(x,y+10,x,y+17,S(0,0,3)));add(s,rc.line(x-11,y+19,x+11,y+19,S(0,0,3)))},
+  phone:(rc,s,x,y)=>{add(s,rc.rectangle(x-11,y-21,22,42,S("var(--card)")));add(s,rc.line(x-4,y-16,x+4,y-16,S()));add(s,rc.circle(x,y+15,5,S()))},
+  server:(rc,s,x,y)=>{[-20,-6,8].forEach(d=>{add(s,rc.rectangle(x-18,y+d,36,12,S("var(--card)")));add(s,rc.circle(x+11,y+d+6,4,S("var(--green)","var(--green)")))})},
+  router:(rc,s,x,y)=>{add(s,rc.line(x-12,y,x-17,y-20,S(0,0,3)));add(s,rc.line(x+12,y,x+17,y-20,S(0,0,3)));add(s,rc.rectangle(x-21,y-2,42,18,S("var(--g)")));[-10,-2,6].forEach(d=>add(s,rc.circle(x+d,y+7,4,S("var(--red)","var(--red)"))))},
+  switch:(rc,s,x,y)=>{add(s,rc.rectangle(x-23,y-9,46,18,S("var(--y)")));[-17,-9,-1,7,15].forEach(d=>add(s,rc.rectangle(x+d-2,y-3,6,6,S("var(--ink)"))))},
+  wifi:(rc,s,x,y)=>{[12,26,40].forEach(r=>add(s,rc.arc(x,y+14,r,r,-P*0.8,-P*0.2,false,S(0,"var(--blue)",3))));add(s,rc.circle(x,y+14,6,S("var(--blue)","var(--blue)")))},
+  megaphone:(rc,s,x,y)=>{add(s,rc.polygon([[x-16,y-6],[x+10,y-18],[x+10,y+18],[x-16,y+6]],S("var(--y)")));add(s,rc.rectangle(x-22,y-5,6,10,S("var(--card)")));add(s,rc.arc(x+12,y,18,26,-P*0.4,P*0.4,false,S(0,"var(--red)")))},
+  walkie:(rc,s,x,y)=>{add(s,rc.line(x+5,y-12,x+5,y-25,S(0,0,3)));add(s,rc.rectangle(x-10,y-12,20,34,S("var(--g)")));[-4,1,6].forEach(d=>add(s,rc.line(x-6,y+d,x+6,y+d,S())))},
+  people:(rc,s,x,y)=>{[-9,9].forEach(d=>{add(s,rc.arc(x+d,y+20,22,26,P,2*P,true,S("var(--b)")));add(s,rc.circle(x+d,y-8,13,S("var(--card)")))})},
+  school:(rc,s,x,y)=>{add(s,rc.rectangle(x-11,y-2,22,12,S("var(--ink)","var(--ink)")));add(s,rc.polygon([[x-23,y-6],[x,y-17],[x+23,y-6],[x,y+4]],S("var(--b)")));add(s,rc.line(x+16,y-3,x+16,y+14,S(0,"var(--red)",2)))},
+  hospital:(rc,s,x,y)=>{add(s,rc.rectangle(x-6,y-18,12,36,S("var(--red)","var(--red)")));add(s,rc.rectangle(x-18,y-6,36,12,S("var(--red)","var(--red)")))},
+  bank:(rc,s,x,y)=>{add(s,rc.polygon([[x-22,y-8],[x,y-21],[x+22,y-8]],S("var(--y)")));[-14,-5,4,13].forEach(d=>add(s,rc.line(x+d,y-6,x+d,y+14,S(0,0,3))));add(s,rc.rectangle(x-22,y+14,44,6,S("var(--card)")))},
+  factory:(rc,s,x,y)=>{add(s,rc.polygon([[x-22,y+18],[x-22,y-2],[x-10,y-10],[x-10,y-2],[x+2,y-10],[x+2,y-2],[x+14,y-10],[x+14,y+18]],S("var(--card)")));add(s,rc.rectangle(x+14,y-20,7,38,S("var(--soft)")));add(s,rc.circle(x+20,y-25,8,S()))},
+  city:(rc,s,x,y)=>{[[-22,-4,12],[-9,-18,12],[4,-10,12],[16,-2,8]].forEach(([dx,dy,w],i)=>add(s,rc.rectangle(x+dx,y+dy,w,20-dy,S(["var(--b)","var(--y)","var(--g)","var(--p)"][i]))))},
+  text:TX("Aa"),numbers:TX("123"),percent:TX("%","var(--red)"),sigma:TX("Σ"),xor:TX("⊕","var(--red)"),plusminus:TX("±","var(--red)"),bits:TX("01"),
+  image:(rc,s,x,y)=>{add(s,rc.rectangle(x-20,y-15,40,30,S("var(--b)")));add(s,rc.linearPath([[x-18,y+13],[x-6,y-2],[x+2,y+8],[x+8,y+2],[x+18,y+13]],S(0,"var(--green)",2.5)));add(s,rc.circle(x+10,y-7,8,S("var(--y)")))},
+  mic:(rc,s,x,y)=>{add(s,rc.ellipse(x,y-9,16,24,S("var(--card)")));add(s,rc.arc(x,y-4,24,24,0,P,false,S()));add(s,rc.line(x,y+8,x,y+18,S()));add(s,rc.line(x-8,y+19,x+8,y+19,S(0,0,3)))},
+  film:(rc,s,x,y)=>{add(s,rc.rectangle(x-21,y-15,42,30,S("var(--card)")));[-15,-5,5,15].forEach(d=>{add(s,rc.rectangle(x+d-2,y-13,4,4,S("var(--ink)","var(--ink)")));add(s,rc.rectangle(x+d-2,y+9,4,4,S("var(--ink)","var(--ink)")))});add(s,rc.polygon([[x-4,y-6],[x+6,y],[x-4,y+6]],S("var(--red)","var(--red)")))},
+  thermo:(rc,s,x,y)=>{add(s,rc.rectangle(x-4,y-21,8,30,S("var(--card)")));add(s,rc.circle(x,y+14,15,S("var(--red)")));add(s,rc.line(x,y-6,x,y+8,S(0,"var(--red)",3)))},
+  camera:(rc,s,x,y)=>{add(s,rc.rectangle(x-20,y-9,40,26,S("var(--card)")));add(s,rc.rectangle(x-8,y-15,14,6,S("var(--card)")));add(s,rc.circle(x,y+4,16,S("var(--b)")))},
+  sine:(rc,s,x,y)=>{const p=[];for(let t=-22;t<=22;t+=2)p.push([x+t,y-12*Math.sin(t/7)]);add(s,rc.curve(p,S(0,"var(--blue)",3)))},
+  square:(rc,s,x,y)=>add(s,rc.linearPath([[x-22,y+10],[x-12,y+10],[x-12,y-10],[x,y-10],[x,y+10],[x+8,y+10],[x+8,y-10],[x+22,y-10]],S(0,"var(--green)",3))),
+  para:(rc,s,x,y)=>[-12,-4,4,12].forEach(d=>{add(s,rc.line(x-20,y+d,x+16,y+d,S()));head(rc,s,x+20,y+d,x,y+d,"var(--red)")}),
+  serial:(rc,s,x,y)=>{add(s,rc.line(x-22,y,x+16,y,S()));head(rc,s,x+20,y,x,y,"var(--red)");[-16,-8,0,8].forEach(d=>add(s,rc.circle(x+d,y-8,5,S("var(--blue)","var(--blue)"))))},
+  check:(rc,s,x,y)=>add(s,rc.linearPath([[x-16,y],[x-4,y+12],[x+18,y-14]],S(0,"var(--green)",4))),
+  cross:(rc,s,x,y)=>{add(s,rc.line(x-14,y-14,x+14,y+14,S(0,"var(--red)",4)));add(s,rc.line(x+14,y-14,x-14,y+14,S(0,"var(--red)",4)))},
+  magnifier:(rc,s,x,y)=>{add(s,rc.circle(x-4,y-4,28,S("var(--b)")));add(s,rc.line(x+6,y+6,x+19,y+19,S(0,0,5)))},
+  gear:(rc,s,x,y)=>{for(let i=0;i<8;i++){const a=i*P/4;add(s,rc.line(x+12*Math.cos(a),y+12*Math.sin(a),x+20*Math.cos(a),y+20*Math.sin(a),S(0,0,4)))}add(s,rc.circle(x,y,26,S("var(--y)")));add(s,rc.circle(x,y,9,S("var(--card)")))},
+  package:(rc,s,x,y)=>{add(s,rc.polygon([[x-18,y-8],[x-6,y-18],[x+20,y-18],[x+8,y-8]],S("var(--y)")));add(s,rc.rectangle(x-18,y-8,26,26,S("var(--y)")));add(s,rc.polygon([[x+8,y-8],[x+20,y-18],[x+20,y+8],[x+8,y+18]],S("var(--p)")))},
+  warn:(rc,s,x,y)=>{add(s,rc.polygon([[x,y-20],[x+21,y+17],[x-21,y+17]],S("var(--y)")));T(s,x,y+13,"!",{size:22,weight:700,color:"var(--red)"})},
+  satellite:(rc,s,x,y)=>{add(s,rc.rectangle(x-22,y-6,14,12,S("var(--b)")));add(s,rc.rectangle(x+8,y-6,14,12,S("var(--b)")));add(s,rc.rectangle(x-6,y-8,12,16,S("var(--y)")));add(s,rc.line(x,y+8,x,y+16,S()));add(s,rc.arc(x,y+20,14,10,P,2*P,false,S(0,"var(--red)")))},
+  stack:(rc,s,x,y)=>[["var(--b)",-16],["var(--g)",-4],["var(--p)",8]].forEach(([f,d])=>add(s,rc.rectangle(x-18+d/2,y+d,34,10,S(f)))),
+  chain:(rc,s,x,y)=>{add(s,rc.ellipse(x-8,y,28,16,S(0,0,3)));add(s,rc.ellipse(x+8,y,28,16,S(0,"var(--blue)",3)))},
+  speedo:(rc,s,x,y)=>{add(s,rc.arc(x,y+10,46,46,P,2*P,true,S("var(--card)")));add(s,rc.line(x,y+10,x+12,y-6,S(0,"var(--red)",3)));add(s,rc.circle(x,y+10,6,S("var(--ink)","var(--ink)")))},
+  hourglass:(rc,s,x,y)=>{add(s,rc.polygon([[x-13,y-20],[x+13,y-20],[x,y]],S("var(--y)")));add(s,rc.polygon([[x,y],[x-13,y+20],[x+13,y+20]],S("var(--y)")))},
+  flag:(rc,s,x,y)=>{add(s,rc.line(x-12,y-20,x-12,y+22,S(0,0,3)));add(s,rc.polygon([[x-12,y-20],[x+16,y-12],[x-12,y-3]],S("var(--red)")))},
+  noise:(rc,s,x,y)=>add(s,rc.linearPath([[x-22,y],[x-17,y-12],[x-12,y+9],[x-8,y-6],[x-3,y+14],[x+2,y-15],[x+7,y+5],[x+11,y-8],[x+16,y+11],[x+22,y-2]],S(0,"var(--red)",2.5))),
+  sun:(rc,s,x,y)=>{for(let i=0;i<8;i++){const a=i*P/4;add(s,rc.line(x+12*Math.cos(a),y+12*Math.sin(a),x+21*Math.cos(a),y+21*Math.sin(a),S(0,"var(--red)",2)))}add(s,rc.circle(x,y,18,S("var(--y)")))},
+  plug:(rc,s,x,y)=>{add(s,rc.line(x-5,y-8,x-5,y-20,S(0,0,3)));add(s,rc.line(x+5,y-8,x+5,y-20,S(0,0,3)));add(s,rc.rectangle(x-11,y-8,22,18,S("var(--card)")));add(s,rc.curve([[x,y+10],[x+8,y+18],[x-4,y+22]],S()))},
+  target:(rc,s,x,y)=>{add(s,rc.circle(x,y,42,S("var(--card)")));add(s,rc.circle(x,y,26,S("var(--p)")));add(s,rc.circle(x,y,10,S("var(--red)","var(--red)")))},
+  truck:(rc,s,x,y)=>{add(s,rc.rectangle(x-22,y-12,28,22,S("var(--y)")));add(s,rc.rectangle(x+6,y-4,15,14,S("var(--card)")));add(s,rc.circle(x-14,y+13,9,S("var(--ink)","var(--ink)")));add(s,rc.circle(x+12,y+13,9,S("var(--ink)","var(--ink)")))},
+  house:(rc,s,x,y)=>{add(s,rc.polygon([[x-18,y-2],[x,y-20],[x+18,y-2],[x+18,y+18],[x-18,y+18]],S("var(--y)")));add(s,rc.rectangle(x-5,y+5,10,13,S("var(--red)")))},
+  folder:(rc,s,x,y)=>add(s,rc.polygon([[x-21,y-14],[x-8,y-14],[x-4,y-9],[x+21,y-9],[x+21,y+15],[x-21,y+15]],S("var(--y)"))),
+  chat:(rc,s,x,y)=>{add(s,rc.polygon([[x-21,y-15],[x+21,y-15],[x+21,y+8],[x-4,y+8],[x-12,y+18],[x-11,y+8],[x-21,y+8]],S("var(--card)")));[-9,0,9].forEach(d=>add(s,rc.circle(x+d,y-4,4,S("var(--blue)","var(--blue)"))))},
+  printer:(rc,s,x,y)=>{add(s,rc.rectangle(x-12,y-20,24,12,S("var(--card)")));add(s,rc.rectangle(x-21,y-8,42,18,S("var(--b)")));add(s,rc.rectangle(x-12,y+6,24,14,S("var(--card)")))},
+  coin:(rc,s,x,y)=>{add(s,rc.circle(x,y,40,S("var(--y)")));T(s,x,y+8,"₦",{size:22,weight:700})},
+  swap:(rc,s,x,y)=>{add(s,rc.line(x-18,y-7,x+16,y-7,S()));head(rc,s,x+20,y-7,x,y-7,"var(--red)");add(s,rc.line(x+18,y+8,x-16,y+8,S()));head(rc,s,x-20,y+8,x,y+8,"var(--blue)")},
+  scissors:(rc,s,x,y)=>{add(s,rc.circle(x-14,y+10,12,S()));add(s,rc.circle(x-14,y-10,12,S()));add(s,rc.line(x-8,y+6,x+20,y-12,S(0,0,2.5)));add(s,rc.line(x-8,y-6,x+20,y+12,S(0,0,2.5)))},
+  ruler:(rc,s,x,y)=>{add(s,rc.rectangle(x-22,y-8,44,16,S("var(--y)")));[-16,-8,0,8,16].forEach((d,i)=>add(s,rc.line(x+d,y-8,x+d,y-8+(i%2?6:10),S())))},
+  queue:(rc,s,x,y)=>{[-16,-4,8].forEach(d=>add(s,rc.circle(x+d,y,11,S("var(--b)"))));head(rc,s,x+22,y,x+12,y,"var(--red)")},
+  fade:(rc,s,x,y)=>[22,16,10,5].forEach((h,i)=>add(s,rc.rectangle(x-20+i*11,y+16-h*1.5,8,h*1.5,S("var(--b)")))),
+  grid:(rc,s,x,y)=>{for(let i=0;i<3;i++)for(let j=0;j<3;j++)add(s,rc.rectangle(x-18+i*12,y-18+j*12,11,11,S(i===1&&j===1?"var(--red)":"var(--card)")))},
+  jitter:(rc,s,x,y)=>{add(s,rc.line(x-24,y+10,x+24,y+10,S(0,"var(--soft)")));[-23,-13,-8,4,17].forEach(d=>add(s,rc.rectangle(x+d,y-6,7,13,S("var(--p)"))))},
+  metronome:(rc,s,x,y)=>{add(s,rc.polygon([[x-13,y+20],[x-5,y-20],[x+5,y-20],[x+13,y+20]],S("var(--y)")));add(s,rc.line(x,y+12,x+13,y-18,S(0,"var(--red)",3)));add(s,rc.circle(x+8,y-6,7,S("var(--red)","var(--red)")))},
+  train:(rc,s,x,y)=>{[-23,-7,9].forEach(d=>{add(s,rc.rectangle(x+d,y-10,14,16,S("var(--b)")));add(s,rc.circle(x+d+4,y+9,5,S("var(--ink)","var(--ink)")));add(s,rc.circle(x+d+11,y+9,5,S("var(--ink)","var(--ink)")))});add(s,rc.line(x-9,y-2,x-7,y-2,S()));add(s,rc.line(x+7,y-2,x+9,y-2,S()))},
+  trafficlight:(rc,s,x,y)=>{add(s,rc.rectangle(x-10,y-22,20,44,S("var(--card)")));add(s,rc.circle(x,y-12,11,S("var(--red)","var(--red)")));add(s,rc.circle(x,y,11,S("var(--y)")));add(s,rc.circle(x,y+12,11,S("var(--green)","var(--green)")))},
+  tap:(rc,s,x,y)=>{add(s,rc.rectangle(x-22,y-14,28,8,S("var(--soft)")));add(s,rc.rectangle(x+2,y-14,8,14,S("var(--soft)")));add(s,rc.line(x-10,y-14,x-10,y-22,S(0,0,3)));add(s,rc.line(x-17,y-22,x-3,y-22,S(0,0,3)));[6,15].forEach(d=>add(s,rc.circle(x+6,y+2+d,6,S("var(--blue)","var(--blue)"))))},
+  plane:(rc,s,x,y)=>{add(s,rc.polygon([[x-20,y+2],[x+20,y-14],[x-3,y+16]],S("var(--card)")));add(s,rc.line(x+20,y-14,x-6,y+6,S()));add(s,rc.line(x-22,y+14,x-12,y+10,{...S(0,"var(--soft)"),strokeLineDash:[3,3]}))},
+  magnet:(rc,s,x,y)=>{add(s,rc.arc(x,y-4,34,34,0,P,false,S(0,"var(--red)",7)));add(s,rc.line(x-17,y-4,x-17,y-16,S(0,"var(--red)",7)));add(s,rc.line(x+17,y-4,x+17,y-16,S(0,"var(--red)",7)));add(s,rc.line(x-17,y-17,x-17,y-22,S(0,"var(--soft)",7)));add(s,rc.line(x+17,y-17,x+17,y-22,S(0,"var(--soft)",7)))},
+  crosstalk:(rc,s,x,y)=>{add(s,rc.line(x-22,y-10,x+22,y-10,S(0,"var(--blue)",3)));add(s,rc.line(x-22,y+10,x+22,y+10,S(0,"var(--green)",3)));add(s,rc.linearPath([[x-4,y-8],[x+3,y-2],[x-3,y+2],[x+4,y+8]],S(0,"var(--red)",2.5)))},
+  burst:(rc,s,x,y)=>{const p=[];for(let i=0;i<16;i++){const a=i*P/8,r=i%2?9:21;p.push([x+r*Math.cos(a),y+r*Math.sin(a)])}add(s,rc.polygon(p,S("var(--y)","var(--red)")))},
+  wrench:(rc,s,x,y)=>{add(s,rc.line(x-18,y+18,x+4,y-4,S(0,"var(--soft)",7)));add(s,rc.arc(x+9,y-9,22,22,P*0.35,P*1.65,false,S(0,0,4)))},
+  ask:(rc,s,x,y)=>{add(s,rc.polygon([[x-20,y-16],[x+20,y-16],[x+20,y+8],[x+2,y+8],[x-8,y+18],[x-7,y+8],[x-20,y+8]],S("var(--y)")));T(s,x,y+4,"?",{size:22,weight:700,color:"var(--red)"})},
+  sparkle:(rc,s,x,y)=>{const st=(cx,cy,r,f)=>add(s,rc.polygon([[cx,cy-r],[cx+r*0.25,cy-r*0.25],[cx+r,cy],[cx+r*0.25,cy+r*0.25],[cx,cy+r],[cx-r*0.25,cy+r*0.25],[cx-r,cy],[cx-r*0.25,cy-r*0.25]],S(f)));st(x-4,y+2,18,"var(--y)");st(x+14,y-14,8,"var(--p)")},
+  chair:(rc,s,x,y)=>{add(s,rc.line(x-10,y-20,x-10,y+20,S(0,0,3)));add(s,rc.rectangle(x-10,y-2,22,6,S("var(--b)")));add(s,rc.line(x+12,y+4,x+12,y+20,S(0,0,3)));add(s,rc.line(x-10,y-20,x-10,y-2,S(0,"var(--blue)",5)))},
+  boxes:(rc,s,x,y)=>{[[-20,2,"1"],[0,2,"2"],[-10,-16,"3"]].forEach(([dx,dy,n])=>{add(s,rc.rectangle(x+dx,y+dy,18,16,S("var(--y)")));T(s,x+dx+9,y+dy+13,n,{size:13,weight:700})})},
+  compass:(rc,s,x,y)=>{add(s,rc.circle(x,y,42,S("var(--card)")));add(s,rc.polygon([[x,y-16],[x+5,y],[x-5,y]],S("var(--red)","var(--red)")));add(s,rc.polygon([[x,y+16],[x+5,y],[x-5,y]],S("var(--soft)")))},
+  door:(rc,s,x,y)=>{add(s,rc.rectangle(x-12,y-21,24,42,S("var(--p)")));add(s,rc.circle(x+6,y+2,5,S("var(--ink)","var(--ink)")));add(s,rc.line(x-18,y+21,x+18,y+21,S(0,0,3)))},
+  pulse:(rc,s,x,y)=>add(s,rc.linearPath([[x-23,y],[x-12,y],[x-7,y-16],[x-1,y+14],[x+5,y-8],[x+9,y],[x+23,y]],S(0,"var(--red)",3))),
+  dice:(rc,s,x,y)=>{add(s,rc.rectangle(x-18,y-18,36,36,S("var(--card)")));[[-9,-9],[9,-9],[-9,9],[9,9]].forEach(([a,b])=>add(s,rc.circle(x+a,y+b,7,S("var(--ink)","var(--ink)"))))}
+};
+/* which sticker goes on which box: board → node → sticker */
+Object.assign(I,{
+  swords:(rc,s,x,y)=>{add(s,rc.line(x-18,y+18,x+16,y-16,S(0,"var(--soft)",4)));add(s,rc.line(x+18,y+18,x-16,y-16,S(0,"var(--soft)",4)));add(s,rc.line(x-14,y+8,x-6,y+16,S(0,"var(--red)",4)));add(s,rc.line(x+14,y+8,x+6,y+16,S(0,"var(--red)",4)))},
+  split:(rc,s,x,y)=>{add(s,rc.line(x,y+20,x,y+2,S(0,0,3)));add(s,rc.line(x,y+2,x-16,y-14,S(0,"var(--blue)",3)));head(rc,s,x-19,y-17,x-8,y-6,"var(--blue)");add(s,rc.line(x,y+2,x+16,y-14,S(0,"var(--red)",3)));head(rc,s,x+19,y-17,x+8,y-6,"var(--red)")},
+  pie:(rc,s,x,y)=>{add(s,rc.arc(x,y,42,42,-P/2,P*0.1,true,S("var(--p)")));add(s,rc.arc(x+3,y+2,42,42,P*0.1,P*1.5,true,S("var(--b)")))},
+  ghost:(rc,s,x,y)=>{add(s,rc.polygon([[x-15,y+18],[x-15,y-4],[x-10,y-16],[x,y-20],[x+10,y-16],[x+15,y-4],[x+15,y+18],[x+9,y+12],[x+3,y+18],[x-3,y+12],[x-9,y+18]],S("var(--card)")));add(s,rc.circle(x-5,y-4,5,S("var(--ink)","var(--ink)")));add(s,rc.circle(x+5,y-4,5,S("var(--ink)","var(--ink)")))},
+  puzzle:(rc,s,x,y)=>{add(s,rc.rectangle(x-20,y-12,18,24,S("var(--y)")));add(s,rc.rectangle(x+2,y-8,18,24,S("var(--p)")));add(s,rc.circle(x-2,y,9,S("var(--y)")))},
+  loop:(rc,s,x,y)=>{add(s,rc.arc(x,y,36,36,-P*0.9,P*0.6,false,S(0,"var(--green)",3)));head(rc,s,x-16,y-8,x-12,y+6,"var(--green)");T(s,x,y+6,"BML",{size:11,weight:700})},
+  stairs:(rc,s,x,y)=>add(s,rc.linearPath([[x-22,y+18],[x-22,y+8],[x-11,y+8],[x-11,y-2],[x,y-2],[x,y-12],[x+11,y-12],[x+11,y-22],[x+22,y-22]],S(0,"var(--blue)",3))),
+  balance:(rc,s,x,y)=>{add(s,rc.line(x,y-14,x,y+18,S(0,0,3)));add(s,rc.line(x-20,y-6,x+20,y-18,S(0,0,3)));add(s,rc.arc(x-20,y-2,16,10,0,P,true,S("var(--p)")));add(s,rc.arc(x+20,y-14,12,8,0,P,true,S("var(--b)")));add(s,rc.line(x-10,y+19,x+10,y+19,S(0,0,3)))},
+  tomb:(rc,s,x,y)=>{add(s,rc.polygon([[x-14,y+18],[x-14,y-6],[x-10,y-16],[x,y-20],[x+10,y-16],[x+14,y-6],[x+14,y+18]],S("var(--soft)")));T(s,x,y+6,"%",{size:16,weight:700,color:"var(--paper)"});add(s,rc.line(x-20,y+19,x+20,y+19,S(0,"var(--green)",3)))},
+  crown:(rc,s,x,y)=>add(s,rc.polygon([[x-20,y+14],[x-20,y-10],[x-10,y+2],[x,y-16],[x+10,y+2],[x+20,y-10],[x+20,y+14]],S("var(--y)"))),
+  cliff:(rc,s,x,y)=>{add(s,rc.polygon([[x-22,y+20],[x-22,y-10],[x+2,y-10],[x+6,y+20]],S("var(--g)")));add(s,rc.circle(x-10,y-16,8,S("var(--card)")));add(s,rc.line(x+10,y-6,x+20,y+16,{...S(0,"var(--red)"),strokeLineDash:[3,3]}))},
+  cloud:(rc,s,x,y)=>{add(s,rc.circle(x-10,y+4,22,S("var(--b)")));add(s,rc.circle(x+8,y+4,24,S("var(--b)")));add(s,rc.circle(x,y-6,24,S("var(--b)")))},
+  gamepad:(rc,s,x,y)=>{add(s,rc.rectangle(x-22,y-10,44,22,S("var(--card)")));add(s,rc.line(x-14,y+1,x-6,y+1,S(0,0,3)));add(s,rc.line(x-10,y-3,x-10,y+5,S(0,0,3)));add(s,rc.circle(x+9,y-2,6,S("var(--red)","var(--red)")));add(s,rc.circle(x+15,y+5,6,S("var(--blue)","var(--blue)")))},
+  eye:(rc,s,x,y)=>{add(s,rc.ellipse(x,y,44,24,S("var(--card)")));add(s,rc.circle(x,y,16,S("var(--blue)")));add(s,rc.circle(x,y,6,S("var(--ink)","var(--ink)")))},
+  trash:(rc,s,x,y)=>{add(s,rc.rectangle(x-12,y-10,24,30,S("var(--card)")));add(s,rc.line(x-16,y-12,x+16,y-12,S(0,0,3)));add(s,rc.line(x-4,y-16,x+4,y-16,S(0,0,3)));[-5,0,5].forEach(d=>add(s,rc.line(x+d,y-5,x+d,y+15,S())))},
+  rocket:(rc,s,x,y)=>{add(s,rc.polygon([[x,y-22],[x+8,y-8],[x+8,y+10],[x-8,y+10],[x-8,y-8]],S("var(--card)")));add(s,rc.circle(x,y-6,7,S("var(--b)")));add(s,rc.polygon([[x-8,y+2],[x-15,y+14],[x-8,y+10]],S("var(--red)")));add(s,rc.polygon([[x+8,y+2],[x+15,y+14],[x+8,y+10]],S("var(--red)")));add(s,rc.polygon([[x-4,y+11],[x,y+21],[x+4,y+11]],S("var(--y)")))},
+  pyramid:(rc,s,x,y)=>{add(s,rc.polygon([[x,y-20],[x+22,y+18],[x-22,y+18]],S("var(--y)")));add(s,rc.line(x-11,y-1,x+11,y-1,S()));add(s,rc.line(x-16,y+8,x+16,y+8,S()))},
+  mask:(rc,s,x,y)=>{add(s,rc.polygon([[x-22,y-12],[x+22,y-12],[x+20,y+4],[x+6,y+14],[x,y+6],[x-6,y+14],[x-20,y+4]],S("var(--p)")));add(s,rc.ellipse(x-10,y-3,10,7,S("var(--ink)","var(--ink)")));add(s,rc.ellipse(x+10,y-3,10,7,S("var(--ink)","var(--ink)")))},
+  flask:(rc,s,x,y)=>{add(s,rc.polygon([[x-5,y-20],[x+5,y-20],[x+5,y-6],[x+18,y+18],[x-18,y+18],[x-5,y-6]],S("var(--card)")));add(s,rc.polygon([[x-11,y+6],[x+11,y+6],[x+17,y+17],[x-17,y+17]],S("var(--g)")));add(s,rc.circle(x+3,y-26,6,S(0,"var(--green)")))},
+  ear:(rc,s,x,y)=>{add(s,rc.curve([[x-6,y+18],[x-14,y+4],[x-12,y-14],[x+2,y-20],[x+14,y-10],[x+10,y+4],[x+2,y+10],[x-2,y+20]],S(0,0,3)));add(s,rc.arc(x+1,y-4,12,14,P*0.9,P*2.1,false,S(0,"var(--red)")));[16,24].forEach(r=>add(s,rc.arc(x-14,y-2,r,r*1.4,P*0.7,P*1.3,false,S(0,"var(--blue)"))))},
+  tape:(rc,s,x,y)=>{add(s,rc.circle(x-4,y,40,S("var(--soft)")));add(s,rc.circle(x-4,y,16,S("var(--paper)")));add(s,rc.polygon([[x+12,y+10],[x+24,y+6],[x+24,y+18],[x+12,y+20]],S("var(--soft)")))},
+  db:(rc,s,x,y)=>{add(s,rc.rectangle(x-16,y-12,32,28,S("var(--b)")));add(s,rc.ellipse(x,y+16,32,10,S("var(--b)")));add(s,rc.ellipse(x,y-12,32,10,S("var(--card)")));add(s,rc.arc(x,y+2,32,10,0,P,false,S()))},
+  bulb:(rc,s,x,y)=>{add(s,rc.circle(x,y-6,30,S("var(--y)")));add(s,rc.rectangle(x-7,y+9,14,10,S("var(--soft)")));add(s,rc.line(x-4,y-6,x,y+2,S(0,"var(--red)")));add(s,rc.line(x+4,y-6,x,y+2,S(0,"var(--red)")))},
+  heart:(rc,s,x,y)=>{add(s,rc.path(`M${x} ${y+18} C${x-26} ${y} ${x-18} ${y-22} ${x} ${y-8} C${x+18} ${y-22} ${x+26} ${y} ${x} ${y+18} Z`,S("var(--p)","var(--red)",2.4)))}
+});
+/* one sticker per idea, never repeated */
+const ICONS={
+  b1a:{da:"db",in:"bulb",ds:"boxes"},
+  b1b:{w1:"magnifier",w5:"speedo"},
+  b1d:{st:"lock",dy:"sparkle"},
+  b1e:{co:"grid",lk:"chain"},
+  b1g:{st:"stack"},
+  b1h:{ti:"clock",sp:"ruler"},
+  b1i:{mt:"flag"},
+  b2b:{as:"swap"},
+  b2g:{st:"stairs",hp:"pyramid",tx:"tape"},
+  b3d:{li:"warn"},
+  b3g:{ky:"balance"},
+  b3i:{io:"printer"},
+  b4d:{bs:"target"},
+  b5b:{ip:"ghost"},
+  b5c:{st:"truck"},
+  b6e:{pr:"check",cn:"cross"},
+  b6h:{df:"loop"},
+  b7b:{pu:"burst"},
+  b8a:{pb:"trash"},
+  b8c:{cb:"camera"},
+  b8d:{pq:"crown"},
+  b9a:{q:"ask"},
+  b9d:{hd:"school"}
+};
+/* ---------- boot ---------- */
+function boot(){const r=window.rough||null;
+  /* #only=b1a,b5b shows just those boards (handy for checking one diagram) */
+  const m=/^#only=(.+)$/.exec(location.hash);if(m){const ids=decodeURIComponent(m[1]).split(",");
+    document.querySelectorAll("main>*").forEach(el=>{const keep=(el.classList.contains("board")&&ids.includes(el.id))||(el.tagName==="H3"&&el.nextElementSibling&&ids.includes(el.nextElementSibling.id));el.style.display=keep?"":"none"})}
+  BOARDS.forEach(b=>{const el=document.getElementById(b.id);if(el&&el.offsetParent===null)return;try{render(b,r)}catch(e){console.error(b.id,e)}})}
+(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(boot);
+</script>
+<aside class="bps-cta" aria-label="About Blue Particle Studios">
+  <p><span class="k">Made by Blue Particle Studios</span>Free study notes for students. Blue Particle Studios is a motion design studio in Abuja: we make brand films, ads, launch videos and websites. Share these notes with your class.</p>
+  <div class="btns"><a class="hot" href="/">See our work →</a><a href="/student-notes/">More student notes</a><a href="https://wa.me/2349061950587">WhatsApp us</a></div>
+</aside>
+<footer class="bps-foot"><span>© 2026 Blue Particle Studios · CAC BN 9846749</span><a href="#top">Back to top ↑</a></footer>
+</body>
+</html>
