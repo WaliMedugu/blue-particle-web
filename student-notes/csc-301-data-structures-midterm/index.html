@@ -114,6 +114,13 @@ h3{font:700 24px/1.2 var(--f-hand);color:var(--blue);margin:26px 0 0}
 </style>
 
 <style>
+main[hidden]{display:none!important}
+#styleSw{position:fixed;top:58px;right:14px;z-index:60;font:700 16px var(--f-hand);color:var(--ink);background:var(--card);border:2px solid var(--ink);border-radius:16px 12px 18px 10px;padding:6px 14px;cursor:pointer;box-shadow:3px 4px 0 rgba(0,0,0,.18)}
+#styleSw:hover{background:var(--y)}
+@media (max-width:700px){#styleSw{top:auto;bottom:14px;font-size:15px}}
+</style>
+
+<style>
 .bps-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;max-width:1600px;margin:0 auto 8px;font:600 15px/1.2 "Inter Tight",system-ui,sans-serif}
 .bps-bar a{color:var(--ink);text-decoration:none}
 .bps-brand{display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:-.02em;font-size:16px}
@@ -135,7 +142,8 @@ h3{font:700 24px/1.2 var(--f-hand);color:var(--blue);margin:26px 0 0}
   <a class="bps-brand" href="/" aria-label="Blue Particle Studios, home"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" fill="none" stroke="currentColor"/><path d="M2.5 2.5l19 19M21.5 2.5l-19 19" stroke="currentColor" stroke-width=".6" opacity=".45"/><circle cx="12" cy="12" r="4.4" fill="#2342ff"/></svg>Blue Particle</a>
   <nav class="bps-links" aria-label="Notes"><a href="/student-notes/">All student notes</a><a href="/">Our studio</a></nav>
 </header>
-<main>
+<button id="styleSw" type="button" aria-pressed="false">Switch to detailed notes</button>
+<main id="mDia">
   <span class="sub">CSC 301 · Data Structures · midterm notes</span>
   <h1>CSC 301 Sketch Notes</h1>
   <p class="sub">Every point from the course material, drawn out on wide boards. Follow the arrows.</p>
@@ -150,11 +158,12 @@ h3{font:700 24px/1.2 var(--f-hand);color:var(--blue);margin:26px 0 0}
         <tr><td>Assignment 1</td><td>IEEE 754 for 10.25</td><td><a href="#s2">§2.6</a></td></tr>
         <tr><td>Lecture note 3</td><td>Arrays, multidimensional arrays, structures, strings, basic operations (written notes + slides)</td><td><a href="#s3">§3</a> · <a href="#s4">§4</a></td></tr>
         <tr><td>Lecture note 5</td><td>Linked lists: singly, doubly, circular (slides)</td><td><a href="#s6">§6</a></td></tr>
-        <tr><td>Course outline, weeks 4–6</td><td>Pointers + dynamic memory · stacks · queues</td><td><a href="#s5">§5</a> · <a href="#s7">§7</a> · <a href="#s8">§8</a></td></tr>
+        <tr><td>Lecture note 4</td><td>Pointers, references + dynamic memory (shared 24 Nov)</td><td><a href="#s5">§5</a></td></tr>
+        <tr><td>Course outline, weeks 5–6</td><td>Stacks · queues</td><td><a href="#s7">§7</a> · <a href="#s8">§8</a></td></tr>
         <tr><td>Past papers</td><td>Last session's midterm (multiple choice) + final exam</td><td><a href="#s9">§9</a></td></tr>
       </tbody>
     </table>
-    <p class="covn">No lecture note 4 has been shared (week 4: pointers + dynamic memory), and no notes on stacks or queues (weeks 5–6). Those sections are built from the course outline, the stack/queue parts of notes 1–3 and last session's midterm, and each one is marked <span class="ann">from the outline</span>. Not here: trees, heaps, hash tables + graphs (weeks 10–12, after the midterm; no notes yet). Each section's ✂ line says what small print was left out.</p>
+    <p class="covn">No notes on stacks or queues (weeks 5–6) have been shared. Those sections are built from the course outline, the stack/queue parts of notes 1–3 and last session's midterm, and each one is marked <span class="ann">from the outline</span>. Not here: trees, heaps, hash tables + graphs (weeks 10–12, after the midterm; no notes yet). Each section's ✂ line says what small print was left out.</p>
   </section>
   <nav class="toc" aria-label="Sections">
     <a href="#s1">1 · What data structures are</a><a href="#s2">2 · Types + memory</a><a href="#s3">3 · Arrays, structs + strings</a>
@@ -214,10 +223,13 @@ h3{font:700 24px/1.2 var(--f-hand);color:var(--blue);margin:26px 0 0}
 
   <span class="week">PART 2 · LINKED + LINEAR STRUCTURES</span>
   <h2 id="s5">5 · Pointers + dynamic memory</h2>
-  <p class="sub">Week 4 in the outline · no lecture note shared, so this gathers the pointer + malloc parts of notes 1–3 <span class="ann">(from the outline)</span></p>
+  <p class="sub">Lecture note 4 · pointers, references + dynamic memory</p>
   <h3>5.1 Pointers: &amp;, * and -&gt;</h3><div class="board" id="b5a"></div>
   <h3>5.2 malloc, free + memory leaks</h3><div class="board" id="b5b"></div>
   <h3>5.3 How a dynamic array grows</h3><div class="board" id="b5c"></div>
+  <h3>5.4 Pointer vs reference</h3><div class="board" id="b5d"></div>
+  <h3>5.5 malloc, calloc, realloc, free</h3><div class="board" id="b5e"></div>
+  <h3>5.6 The six pointer errors</h3><div class="board" id="b5f"></div>
 
   <h2 id="s6">6 · Linked lists</h2>
   <p class="sub">Lecture note 5 · singly, doubly + circular</p>
@@ -252,8 +264,134 @@ h3{font:700 24px/1.2 var(--f-hand);color:var(--blue);margin:26px 0 0}
   <h3>9.3 Past midterm questions, answered</h3><div class="board" id="b9c"></div>
   <h3>9.4 Past written questions: what a full answer needs</h3><div class="board" id="b9d"></div>
   <p class="skip">the final paper's tree, heap + graph questions (after the midterm: heap sort, AVL insertion, adjacency list/matrix)</p>
-  <p class="sub" style="margin-top:28px">Covers everything shared for CSC 301 up to 23 Nov 2026. Lecture note 4 gets drawn in if it appears.</p>
+  <p class="sub" style="margin-top:28px">Covers everything shared for CSC 301 up to 23 Nov 2026. Lecture notes 1–5 are all in.</p>
 </main>
+
+
+<main id="mDet" hidden>
+  <span class="sub">CSC 301 · Data Structures · midterm notes</span>
+  <h1>CSC 301 Sketch Notes</h1>
+  <p class="sub">Every point from the course material, drawn out on wide boards. Follow the arrows.</p>
+  <section class="cov" aria-labelledby="x_covH">
+    <h2 id="x_covH" class="covh">What this covers</h2>
+    <p>Every CSC 301 file shared with the class as of <b>23 Nov 2026</b> (both class Drive folders), plus last session's papers.</p>
+    <table>
+      <thead><tr><th>Source</th><th>What it is</th><th>Where</th></tr></thead>
+      <tbody>
+        <tr><td>Lecture note 1</td><td>Course introduction: data structures, classification, ADTs, operations, efficiency (written notes + slides)</td><td><a href="#x_s1">§1</a></td></tr>
+        <tr><td>Lecture note 2</td><td>Primitive types, variables, addresses, binary, IEEE 754, memory layout (written notes + slides)</td><td><a href="#x_s2">§2</a></td></tr>
+        <tr><td>Assignment 1</td><td>IEEE 754 for 10.25</td><td><a href="#x_s2">§2.6</a></td></tr>
+        <tr><td>Lecture note 3</td><td>Arrays, multidimensional arrays, structures, strings, basic operations (written notes + slides)</td><td><a href="#x_s3">§3</a> · <a href="#x_s4">§4</a></td></tr>
+        <tr><td>Lecture note 5</td><td>Linked lists: singly, doubly, circular (slides)</td><td><a href="#x_s6">§6</a></td></tr>
+        <tr><td>Lecture note 4</td><td>Pointers, references + dynamic memory (shared 24 Nov)</td><td><a href="#x_s5">§5</a></td></tr>
+        <tr><td>Course outline, weeks 5–6</td><td>Stacks · queues</td><td><a href="#x_s7">§7</a> · <a href="#x_s8">§8</a></td></tr>
+        <tr><td>Past papers</td><td>Last session's midterm (multiple choice) + final exam</td><td><a href="#x_s9">§9</a></td></tr>
+      </tbody>
+    </table>
+    <p class="covn">No notes on stacks or queues (weeks 5–6) have been shared. Those sections are built from the course outline, the stack/queue parts of notes 1–3 and last session's midterm, and each one is marked <span class="ann">from the outline</span>. Not here: trees, heaps, hash tables + graphs (weeks 10–12, after the midterm; no notes yet). Each section's ✂ line says what small print was left out.</p>
+  </section>
+  <nav class="toc" aria-label="Sections">
+    <a href="#x_s1">1 · What data structures are</a><a href="#x_s2">2 · Types + memory</a><a href="#x_s3">3 · Arrays, structs + strings</a>
+    <a href="#x_s4">4 · Basic operations</a><a href="#x_s5">5 · Pointers + dynamic memory</a><a href="#x_s6">6 · Linked lists</a>
+    <a href="#x_s7">7 · Stacks</a><a href="#x_s8">8 · Queues</a><a href="#x_s9">9 · Exam drill</a>
+  </nav>
+
+  <span class="week">PART 1 · FOUNDATIONS</span>
+  <h2 id="x_s1">1 · What data structures are</h2>
+  <p class="sub">Lecture note 1 · course introduction</p>
+  <h3>1.1 Data → information → data structure</h3><div class="board" id="x_b1a"></div>
+  <h3>1.2 Why data structures matter</h3><div class="board" id="x_b1b"></div>
+  <h3>1.3 Linear vs non-linear</h3><div class="board" id="x_b1c"></div>
+  <h3>1.4 Static vs dynamic allocation</h3><div class="board" id="x_b1d"></div>
+  <h3>1.5 Contiguous vs linked storage</h3><div class="board" id="x_b1e"></div>
+  <h3>1.6 The two classifications are different things</h3><div class="board" id="x_b1f"></div>
+  <h3>1.7 Abstract data types (ADTs)</h3><div class="board" id="x_b1g"></div>
+  <h3>1.8 Common operations + efficiency</h3><div class="board" id="x_b1h"></div>
+  <h3>1.9 The course map</h3><div class="board" id="x_b1i"></div>
+  <p class="skip">the class activity + "home fun" scenario (its answers are the same picks as 1.3 and §9), the key-terms table (every term is on a board)</p>
+
+  <h2 id="x_s2">2 · Primitive types, variables + memory</h2>
+  <p class="sub">Lecture note 2 + Assignment 1</p>
+  <h3>2.1 Primitive data types</h3><div class="board" id="x_b2a"></div>
+  <h3>2.2 A variable: name, value, address</h3><div class="board" id="x_b2b"></div>
+  <h3>2.3 Addresses + a first look at pointers</h3><div class="board" id="x_b2c"></div>
+  <h3>2.4 Bits, bytes, integers + characters</h3><div class="board" id="x_b2d"></div>
+  <h3>2.5 IEEE 754: storing 12.5</h3><div class="board" id="x_b2e"></div>
+  <h3>2.6 Assignment 1 worked: 10.25</h3><div class="board" id="x_b2f"></div>
+  <h3>2.7 How a running program's memory is laid out</h3><div class="board" id="x_b2g"></div>
+  <p class="skip">the practical exercise (print each variable's value, address + sizeof), the output-buffer figure</p>
+
+  <h2 id="x_s3">3 · Arrays, structures + strings</h2>
+  <p class="sub">Lecture note 3 §1–5</p>
+  <h3>3.1 What an array is</h3><div class="board" id="x_b3a"></div>
+  <h3>3.2 Declaring, initialising + accessing</h3><div class="board" id="x_b3b"></div>
+  <h3>3.3 Arrays in memory: the address formula</h3><div class="board" id="x_b3c"></div>
+  <h3>3.4 Static vs dynamic arrays · strengths + limits</h3><div class="board" id="x_b3d"></div>
+  <h3>3.5 Multidimensional arrays</h3><div class="board" id="x_b3e"></div>
+  <h3>3.6 Row-major order</h3><div class="board" id="x_b3f"></div>
+  <h3>3.7 Records + structures</h3><div class="board" id="x_b3g"></div>
+  <h3>3.8 Arrays of structs, nesting, pointers + padding</h3><div class="board" id="x_b3h"></div>
+  <h3>3.9 C strings + the null character</h3><div class="board" id="x_b3i"></div>
+  <h3>3.10 The string functions</h3><div class="board" id="x_b3j"></div>
+  <h3>3.11 Substrings, searching + comparing in C, C++ + Python</h3><div class="board" id="x_b3k"></div>
+  <h3>3.12 String mistakes + the big comparison</h3><div class="board" id="x_b3l"></div>
+  <p class="skip">lab exercises 1–5 + the slides' practice list (reverse, matrix multiply, vowel count)</p>
+
+  <h2 id="x_s4">4 · Basic operations</h2>
+  <p class="sub">Lecture note 3 §6</p>
+  <h3>4.1 Traversal, access + updating</h3><div class="board" id="x_b4a"></div>
+  <h3>4.2 Inserting into an array (shift right)</h3><div class="board" id="x_b4b"></div>
+  <h3>4.3 Deleting from an array (shift left)</h3><div class="board" id="x_b4c"></div>
+  <h3>4.4 Linear vs binary search</h3><div class="board" id="x_b4d"></div>
+  <h3>4.5 Sorting + merging</h3><div class="board" id="x_b4e"></div>
+  <h3>4.6 The operation cost table</h3><div class="board" id="x_b4f"></div>
+
+  <span class="week">PART 2 · LINKED + LINEAR STRUCTURES</span>
+  <h2 id="x_s5">5 · Pointers + dynamic memory</h2>
+  <p class="sub">Lecture note 4 · pointers, references + dynamic memory</p>
+  <h3>5.1 Pointers: &amp;, * and -&gt;</h3><div class="board" id="x_b5a"></div>
+  <h3>5.2 malloc, free + memory leaks</h3><div class="board" id="x_b5b"></div>
+  <h3>5.3 How a dynamic array grows</h3><div class="board" id="x_b5c"></div>
+  <h3>5.4 Pointer vs reference</h3><div class="board" id="x_b5d"></div>
+  <h3>5.5 malloc, calloc, realloc, free</h3><div class="board" id="x_b5e"></div>
+  <h3>5.6 The six pointer errors</h3><div class="board" id="x_b5f"></div>
+
+  <h2 id="x_s6">6 · Linked lists</h2>
+  <p class="sub">Lecture note 5 · singly, doubly + circular</p>
+  <h3>6.1 What a linked list is · vs arrays</h3><div class="board" id="x_b6a"></div>
+  <h3>6.2 Singly linked list: building 3 nodes</h3><div class="board" id="x_b6b"></div>
+  <h3>6.3 Insertion: front, end, position</h3><div class="board" id="x_b6c"></div>
+  <h3>6.4 Deletion: front, end, position</h3><div class="board" id="x_b6d"></div>
+  <h3>6.5 Searching + the singly list's pros and cons</h3><div class="board" id="x_b6e"></div>
+  <h3>6.6 Doubly linked list</h3><div class="board" id="x_b6f"></div>
+  <h3>6.7 Doubly: insert + delete</h3><div class="board" id="x_b6g"></div>
+  <h3>6.8 Circular linked lists</h3><div class="board" id="x_b6h"></div>
+  <h3>6.9 Where linked lists are used</h3><div class="board" id="x_b6i"></div>
+
+  <h2 id="x_s7">7 · Stacks</h2>
+  <p class="sub">Week 5 in the outline · stack ADT from note 1 + last session's midterm <span class="ann">(from the outline)</span></p>
+  <h3>7.1 LIFO + the stack operations</h3><div class="board" id="x_b7a"></div>
+  <h3>7.2 Array stack: top, overflow, underflow</h3><div class="board" id="x_b7b"></div>
+  <h3>7.3 Linked stack, growing stacks + two stacks in one array</h3><div class="board" id="x_b7c"></div>
+
+  <h2 id="x_s8">8 · Queues</h2>
+  <p class="sub">Week 6 in the outline · queue ADT from note 1 + last session's midterm <span class="ann">(from the outline)</span></p>
+  <h3>8.1 FIFO + the linear array queue</h3><div class="board" id="x_b8a"></div>
+  <h3>8.2 Circular queue: wrap-around, full, empty, count</h3><div class="board" id="x_b8b"></div>
+  <h3>8.3 Linked queue · circular buffer · deque</h3><div class="board" id="x_b8c"></div>
+  <h3>8.4 Priority queue + a queue built from two stacks</h3><div class="board" id="x_b8d"></div>
+
+  <span class="week">PART 3 · EXAM</span>
+  <h2 id="x_s9">9 · Exam drill</h2>
+  <p class="sub">Last session's midterm was 100 multiple-choice questions like these; the final had written pseudocode questions</p>
+  <h3>9.1 "Which structure?" decision map</h3><div class="board" id="x_b9a"></div>
+  <h3>9.2 The big Big-O table</h3><div class="board" id="x_b9b"></div>
+  <h3>9.3 Past midterm questions, answered</h3><div class="board" id="x_b9c"></div>
+  <h3>9.4 Past written questions: what a full answer needs</h3><div class="board" id="x_b9d"></div>
+  <p class="skip">the final paper's tree, heap + graph questions (after the midterm: heap sort, AVL insertion, adjacency list/matrix)</p>
+  <p class="sub" style="margin-top:28px">Covers everything shared for CSC 301 up to 23 Nov 2026. Lecture notes 1–5 are all in.</p>
+</main>
+
 
 
 <script>
@@ -396,6 +534,983 @@ function fit(cfg){if(!cfg._host)return;const avail=cfg._host.clientWidth||W;let 
   cfg._inner.style.transform=`scale(${s})`;cfg._sizer.style.width=(W*s)+"px";cfg._sizer.style.height=(cfg._H*s)+"px"}
 window.addEventListener("resize",()=>BOARDS.forEach(fit));
 
+
+/* ---------- content ---------- */
+const sticky=(p,s)=>`<span class="bigp">${p}</span>${s?`<br><small>${s}</small>`:""}`;
+const X=s=>`<pre>${s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/\[\[/g,"<b>").replace(/\]\]/g,"</b>")}</pre>`;
+const box=(rc,svg,x,y,w,h,f,seed,o={})=>add(svg,rc.rectangle(x,y,w,h,Object.assign({stroke:"var(--ink)",strokeWidth:1.8,roughness:0.9,fill:f||"var(--card)",fillStyle:"solid",seed:seed||3},o)));
+/* a row of array cells: vals, optional index labels under, optional addresses over; returns cell centres */
+function cells(rc,svg,x,y,vals,o={}){const w=o.w||64,h=o.h||46,out=[];
+  vals.forEach((v,i)=>{const hl=(o.hl||[]).includes(i),em=v===""||v==null;
+    box(rc,svg,x+i*w,y,w,h,hl?(o.hlf||"var(--y)"):em?"var(--card)":(o.fill||"var(--b)"),40+i+(o.seed||0),em?{strokeLineDash:[6,5]}:{});
+    if(!em)T(svg,x+i*w+w/2,y+h/2+7,String(v),{size:o.size||20,weight:700});
+    if(o.idx!==false)T(svg,x+i*w+w/2,y+h+22,(o.ip||"")+(o.i0!=null?o.i0+i:i),{size:15,color:"var(--soft)"});
+    if(o.addr)T(svg,x+i*w+w/2,y-10,String(o.addr[i]),{size:14,color:"var(--blue)"});
+    out.push([x+i*w+w/2,y+h/2])});return out}
+/* a linked-list node [data|next] (dbl: [prev|data|next]); returns geometry */
+function lnode(rc,svg,x,y,val,o={}){const dw=o.dw||70,pw=o.pw||34,h=o.h||46,f=o.fill||"var(--g)",s=o.seed||60;let cx=x;
+  const g={x,y,h};
+  if(o.dbl){box(rc,svg,cx,y,pw,h,"var(--card)",s);g.prev=[cx+pw/2,y+h/2];cx+=pw}
+  box(rc,svg,cx,y,dw,h,f,s+1);T(svg,cx+dw/2,y+h/2+7,String(val),{size:19,weight:700});g.data=[cx+dw/2,y+h/2];cx+=dw;
+  box(rc,svg,cx,y,pw,h,"var(--card)",s+2);g.next=[cx+pw/2,y+h/2];cx+=pw;g.w=cx-x;g.r=cx;
+  [g.next,g.prev].forEach(p=>{if(p)add(svg,rc.circle(p[0],p[1],7,{fill:"var(--ink)",fillStyle:"solid",stroke:"var(--ink)",roughness:0.3}))});return g}
+/* a whole list; returns node geometries */
+function llist(rc,svg,x,y,vals,o={}){const gap=o.gap||56,gs=[];let cx=x;
+  vals.forEach((v,i)=>{const hl=(o.hl||[]).includes(i);const g=lnode(rc,svg,cx,y,v,{dbl:o.dbl,fill:hl?"var(--y)":o.fill,seed:70+i*5+(o.seed||0),dw:o.dw,pw:o.pw});gs.push(g);cx=g.r+gap});
+  gs.forEach((g,i)=>{const n=gs[i+1];if(n){arrow(rc,svg,[g.next[0]+4,g.next[1]-(o.dbl?10:0)],[n.x-2,n.y+n.h/2-(o.dbl?10:0)],{bend:0,color:"ink"});
+      if(o.dbl)arrow(rc,svg,[n.prev[0]-4,n.prev[1]+12],[g.r+2,g.y+g.h/2+12],{bend:0,color:"blue"})}});
+  const L=gs[gs.length-1];
+  if(o.circ){const f=gs[0],yb=y+L.h+(o.dbl?44:36);add(svg,rc.linearPath([[L.next[0],L.next[1]],[L.next[0],yb],[f.x+18,yb]],{stroke:"var(--red)",strokeWidth:2.4,roughness:0.8}));arrow(rc,svg,[f.x+18,yb],[f.x+18,y+L.h+4],{bend:0,color:"red"});
+    if(o.dbl){const yt=y-34;add(svg,rc.linearPath([[f.prev[0],f.prev[1]],[f.prev[0],yt],[L.data[0],yt]],{stroke:"var(--blue)",strokeWidth:2.2,roughness:0.8}));arrow(rc,svg,[L.data[0],yt],[L.data[0],y-4],{bend:0,color:"blue"})}}
+  else if(o.nul!==false){arrow(rc,svg,[L.next[0]+4,L.next[1]],[L.r+46,L.next[1]],{bend:0,color:"ink"});T(svg,L.r+52,L.next[1]+6,"NULL",{anchor:"start",size:17,color:"var(--soft)"});
+    if(o.dbl){const f=gs[0];arrow(rc,svg,[f.prev[0]-4,f.prev[1]],[f.x-44,f.prev[1]],{bend:0,color:"blue"});T(svg,f.x-50,f.prev[1]+6,"NULL",{anchor:"end",size:17,color:"var(--soft)"})}}
+  if(o.head!==false){const f=gs[0];T(svg,f.x+(o.dbl?34:0)+35,y-(o.circ&&o.dbl?44:16),o.head||"head",{size:17,color:"var(--red)",weight:700})}
+  return gs}
+const gap=(h)=>`<div style="height:${h}px"></div>`;
+const lab=(svg,x,y,s,o={})=>T(svg,x,y,s,Object.assign({size:17,color:"var(--soft)",anchor:"start"},o));
+
+/* ===== 1 · what data structures are (diagram-first) ===== */
+const d1_ln=(rc,svg,x1,y1,x2,y2,c,w,o={})=>add(svg,rc.line(x1,y1,x2,y2,Object.assign({stroke:c||"var(--ink)",strokeWidth:w||2,roughness:0.8},o)));
+const d1_dot=(rc,svg,x,y,d,f,seed)=>add(svg,rc.circle(x,y,d,{fill:f||"var(--p)",fillStyle:"solid",stroke:"var(--ink)",strokeWidth:1.8,roughness:0.8,seed:seed||9}));
+const d1_icon=(rc,svg,n,x,y)=>{try{I[n](rc,svg,x,y)}catch(e){}};
+const d1_hd=(svg,x,y,s,c)=>T(svg,x,y,s,{size:22,mark:true,color:c||"var(--red)"});
+const d1_ls=(svg,x,y,arr,o={})=>arr.forEach((s,i)=>T(svg,x,y+i*(o.lh||24),s,Object.assign({size:17,anchor:"start"},o)));
+
+B("b1a",[],[],(rc,svg)=>{
+  d1_hd(svg,200,52,"DATA");d1_hd(svg,645,52,"INFORMATION");d1_hd(svg,1100,52,"DATA STRUCTURE");
+  box(rc,svg,40,70,320,150,"var(--card)",11,{strokeLineDash:[8,6]});
+  [["65",80,110],["72",190,100],["48",300,125],["81",120,185],["54",250,175]].forEach(([v,x,y],i)=>{box(rc,svg,x-26,y-24,52,36,"var(--b)",20+i);T(svg,x,y,v,{size:19,weight:700})});
+  arrow(rc,svg,[372,145],[472,145],{bend:0,color:"red"});T(svg,422,130,"process",{size:16,color:"var(--red)"});
+  box(rc,svg,482,70,326,150,"var(--y)",12);
+  d1_ls(svg,505,115,["average = 64","top score = 81","→ supports a decision"],{size:19,lh:30});
+  arrow(rc,svg,[820,145],[920,145],{bend:0,color:"red"});T(svg,870,130,"organise",{size:16,color:"var(--red)"});
+  cells(rc,svg,940,110,[48,54,65,72,81],{w:64});
+  T(svg,200,252,"raw facts, figures, observations",{size:16,color:"var(--soft)"});
+  T(svg,645,252,"processed data with meaning",{size:16,color:"var(--soft)"});
+  T(svg,1100,224,"organised + stored so it can be",{size:16,color:"var(--soft)"});T(svg,1100,246,"accessed, modified + processed efficiently",{size:16,color:"var(--soft)"});
+  /* the examples, each drawn small */
+  const cx=i=>140+i*200,y=330;
+  T(svg,750,300,"the structures the course covers",{size:17,color:"var(--blue)"});
+  cells(rc,svg,cx(0)-60,y,["","",""],{w:40,h:34,idx:false,fill:"var(--b)"});
+  [0,1].forEach(k=>{const x=cx(1)-80+k*90;box(rc,svg,x,y,40,34,"var(--g)",60+k);box(rc,svg,x+40,y,22,34,"var(--card)",62+k);if(!k)arrow(rc,svg,[x+52,y+17],[x+88,y+17],{bend:0,color:"ink"})});
+  [0,1,2].forEach(k=>box(rc,svg,cx(2)-45,y+44-k*22,90,20,"var(--y)",70+k));arrow(rc,svg,[cx(2),y-18],[cx(2),y-2],{bend:0,color:"red"});
+  [0,1,2].forEach(k=>box(rc,svg,cx(3)-60+k*40,y+8,40,30,"var(--b)",75+k));arrow(rc,svg,[cx(3)+95,y+23],[cx(3)+64,y+23],{bend:0,color:"green"});arrow(rc,svg,[cx(3)-64,y+23],[cx(3)-95,y+23],{bend:0,color:"red"});
+  const t=[[cx(4),y],[cx(4)-34,y+38],[cx(4)+34,y+38]];[[0,1],[0,2]].forEach(([a,b])=>d1_ln(rc,svg,t[a][0],t[a][1],t[b][0],t[b][1]));t.forEach((p,i)=>d1_dot(rc,svg,p[0],p[1],20,"var(--p)",80+i));
+  const g=[[cx(5)-36,y],[cx(5)+36,y+6],[cx(5)-14,y+44],[cx(5)+40,y+46]];[[0,1],[0,2],[1,2],[1,3],[2,3]].forEach(([a,b])=>d1_ln(rc,svg,g[a][0],g[a][1],g[b][0],g[b][1]));g.forEach((p,i)=>d1_dot(rc,svg,p[0],p[1],18,"var(--g)",85+i));
+  T(svg,cx(6)-44,y+26,"\"Ada\"",{size:16});arrow(rc,svg,[cx(6)-14,y+20],[cx(6)+22,y+20],{bend:0,color:"ink"});[0,1,2].forEach(k=>box(rc,svg,cx(6)+26,y-6+k*18,50,18,k===1?"var(--y)":"var(--card)",90+k));
+  [["Array","same-type values in a row"],["Linked list","nodes joined by links"],["Stack","last in, first out"],["Queue","first in, first out"],["Tree","a hierarchy"],["Graph","a network"],["Hash table","find by key"]].forEach(([n,u],i)=>{T(svg,cx(i),y+86,n,{size:18,weight:700});T(svg,cx(i),y+108,u,{size:15,color:"var(--soft)"})});
+},470);
+
+B("b1b",[
+  N("sk",40,290,760,"sticky",sticky(`"All Insects Make Paths Past Flowers"`,`Access · Insert/delete · Memory · Problem-solving · Performance · Foundation`))
+],[],(rc,svg)=>{
+  const it=[["magnifier","① Fast access","find one record","among thousands"],["swap","② Insert + delete","add/remove often","e.g. a ticket queue"],["db","③ Memory use","the right amount","+ arrangement"],["puzzle","④ Problem-solving","family tree → tree","roads → graph"],["speedo","⑤ Performance","a bad pick = slow,","worst on big data"],["pyramid","⑥ Foundation","databases · OS · AI","networks · compilers"]];
+  it.forEach(([ic,t,a,b],i)=>{const x=158+i*236;add(svg,rc.circle(x,100,96,{fill:"var(--card)",fillStyle:"solid",stroke:"var(--ink)",strokeWidth:2,roughness:0.9,seed:30+i}));d1_icon(rc,svg,ic,x,100);
+    T(svg,x,182,t,{size:19,weight:700});T(svg,x,208,a,{size:16,color:"var(--soft)"});T(svg,x,230,b,{size:16,color:"var(--soft)"})});
+  T(svg,750,40,"why choose the right data structure?",{size:17,color:"var(--blue)"});
+},280);
+
+B("b1c",[],[],(rc,svg)=>{
+  d1_hd(svg,360,48,"LINEAR · one after another");d1_hd(svg,1110,48,"NON-LINEAR · hierarchy or network","var(--blue)");
+  ["Array","Linked list","Stack","Queue"].forEach((n,i)=>{const x=60+i*160;box(rc,svg,x,78,130,58,"var(--b)",40+i);T(svg,x+65,113,n,{size:17,weight:700});
+    d1_dot(rc,svg,x+32,144,16,"var(--ink)",45+i);d1_dot(rc,svg,x+98,144,16,"var(--ink)",50+i);if(i<3)d1_ln(rc,svg,x+130,108,x+160,108,"var(--ink)",3)});
+  T(svg,360,182,"each element has ONE before + ONE after (except the two ends)",{size:16,color:"var(--soft)"});
+  [0,1,2].forEach(k=>box(rc,svg,110,288-k*24,130,22,"var(--y)",60+k));arrow(rc,svg,[175,214],[175,236],{bend:0,color:"red"});arrow(rc,svg,[205,236],[205,212],{bend:0,color:"green"});
+  T(svg,175,340,"Stack = LIFO",{size:19,weight:700});T(svg,175,362,"in + out at the top",{size:15,color:"var(--soft)"});
+  [0,1,2,3].forEach(k=>box(rc,svg,400+k*48,258,48,40,"var(--b)",65+k));arrow(rc,svg,[650,278],[598,278],{bend:0,color:"green"});T(svg,660,284,"in (rear)",{size:15,anchor:"start",color:"var(--green)"});
+  arrow(rc,svg,[398,278],[346,278],{bend:0,color:"red"});T(svg,340,250,"out (front)",{size:15,anchor:"end",color:"var(--red)"});
+  T(svg,496,340,"Queue = FIFO (generally)",{size:19,weight:700});T(svg,496,362,"in at the rear, out at the front",{size:15,color:"var(--soft)"});
+  d1_ln(rc,svg,760,70,760,370,"var(--soft)",1.5,{strokeLineDash:[6,6]});
+  const t=[[930,90],[860,160],[1000,160],[820,230],[900,230]];[[0,1],[0,2],[1,3],[1,4]].forEach(([a,b])=>d1_ln(rc,svg,t[a][0],t[a][1],t[b][0],t[b][1]));t.forEach((p,i)=>d1_dot(rc,svg,p[0],p[1],30,"var(--p)",70+i));
+  T(svg,930,290,"TREE",{size:19,weight:700});T(svg,930,314,"file systems · org charts",{size:15,color:"var(--soft)"});
+  const g=[[1200,95],[1350,110],[1230,215],[1380,225]];[[0,1],[0,2],[1,2],[1,3],[2,3]].forEach(([a,b])=>d1_ln(rc,svg,g[a][0],g[a][1],g[b][0],g[b][1]));g.forEach((p,i)=>d1_dot(rc,svg,p[0],p[1],28,"var(--g)",80+i));
+  T(svg,1290,290,"GRAPH = vertices + edges",{size:19,weight:700});T(svg,1290,314,"roads · social + computer networks",{size:15,color:"var(--soft)"});
+},380);
+
+B("b1d",[],[],(rc,svg)=>{
+  d1_hd(svg,330,48,"STATIC · size fixed up front");d1_hd(svg,1110,48,"DYNAMIC · asked for while running","var(--green)");
+  T(svg,120,84,"int scores[5];",{size:16,anchor:"start",color:"var(--blue)"});
+  cells(rc,svg,120,96,[70,65,80,75,90],{w:70});box(rc,svg,470,96,70,46,"var(--card)",101,{strokeLineDash:[6,5]});
+  d1_ln(rc,svg,478,102,532,136,"var(--red)",2.6);d1_ln(rc,svg,532,102,478,136,"var(--red)",2.6);T(svg,505,186,"6th? no room",{size:15,color:"var(--red)"});
+  d1_ls(svg,120,220,["✓ predictable · fast index access","✗ can't grow past its capacity"]);
+  d1_ln(rc,svg,760,70,760,350,"var(--soft)",1.5,{strokeLineDash:[6,6]});
+  box(rc,svg,790,96,140,64,"var(--p)",110);T(svg,860,134,"program",{size:18,weight:700});
+  box(rc,svg,1000,76,440,130,"var(--card)",111,{strokeLineDash:[9,7]});T(svg,1428,98,"heap",{size:16,anchor:"end",color:"var(--soft)"});
+  cells(rc,svg,1030,120,[70,65,80,75,90],{w:52,idx:false,fill:"var(--g)",seed:5});
+  arrow(rc,svg,[932,112],[1026,136],{bend:-0.1,color:"green"});T(svg,968,96,"malloc",{size:15,color:"var(--green)"});
+  arrow(rc,svg,[1100,170],[910,162],{bend:-0.3,color:"blue",dash:1});T(svg,990,218,"free(p)",{size:15,color:"var(--blue)"});
+  d1_ls(svg,790,252,["int *p = malloc(5 * sizeof(int));","free(p);   // give it back"],{size:16,color:"var(--blue)"});
+  d1_ls(svg,790,312,["✓ flexible: linked lists + trees use it","✗ forget free() → memory leak"]);
+  box(rc,svg,40,380,1420,52,"var(--y)",120);T(svg,750,413,"⚠ dynamic allocation ≠ dynamic resizing: a malloc'd array still has a fixed capacity",{size:18,weight:700});
+},450);
+
+B("b1e",[],[],(rc,svg)=>{
+  d1_hd(svg,340,48,"CONTIGUOUS · side by side");d1_hd(svg,1110,48,"LINKED · scattered + joined","var(--blue)");
+  cells(rc,svg,160,100,[10,20,30,40],{w:90,addr:[1000,1004,1008,1012],hl:[2]});
+  arrow(rc,svg,[205,176],[383,176],{bend:0.18,color:"red"});
+  T(svg,340,240,"Address(A[i]) = base + i × size",{size:22,weight:700});
+  T(svg,340,270,"A[2] = 1000 + 2 × 4 = 1008  →  O(1)",{size:18,color:"var(--red)"});
+  d1_ls(svg,120,310,["✓ instant access by index","✗ a middle insert shifts elements"]);
+  d1_ln(rc,svg,760,70,760,370,"var(--soft)",1.5,{strokeLineDash:[6,6]});
+  const P=[[790,110],[1010,170],[1230,110]],gs=P.map(([x,y],i)=>lnode(rc,svg,x,y,[10,20,30][i],{dw:60,seed:130+i*4}));
+  ["2040","1196","3308"].forEach((a,i)=>T(svg,gs[i].x+47,gs[i].y-10,a,{size:14,color:"var(--blue)"}));
+  arrow(rc,svg,[gs[0].next[0]+4,gs[0].next[1]],[gs[1].x-2,gs[1].y+23],{bend:0.1,color:"ink"});arrow(rc,svg,[gs[1].next[0]+4,gs[1].next[1]],[gs[2].x-2,gs[2].y+23],{bend:-0.1,color:"ink"});
+  arrow(rc,svg,[gs[2].next[0]+4,gs[2].next[1]],[gs[2].r+44,gs[2].next[1]],{bend:0,color:"ink"});T(svg,gs[2].r+50,gs[2].next[1]+6,"NULL",{size:15,anchor:"start",color:"var(--soft)"});
+  T(svg,1110,270,"to reach the k-th node, walk from the head  →  O(n)",{size:18,color:"var(--red)"});
+  d1_ls(svg,800,310,["✓ grows node by node · fast insert if the link is known","✗ extra memory for the pointers"]);
+},370);
+
+B("b1f",[],[],(rc,svg)=>{
+  T(svg,750,40,"two different questions",{size:17,color:"var(--blue)"});
+  T(svg,525,74,"CONTIGUOUS",{size:20,mark:true,color:"var(--red)"});T(svg,975,74,"LINKED",{size:20,mark:true,color:"var(--red)"});
+  T(svg,290,170,"STATIC",{size:20,mark:true,anchor:"end",color:"var(--blue)"});T(svg,290,330,"DYNAMIC",{size:20,mark:true,anchor:"end",color:"var(--blue)"});
+  T(svg,750,430,"↔ HOW it's laid out in memory",{size:16,color:"var(--soft)"});T(svg,150,250,"↕ WHEN memory is given",{size:16,color:"var(--soft)",rotate:-90});
+  box(rc,svg,300,90,450,160,"var(--card)",140);box(rc,svg,750,90,450,160,"var(--card)",141);box(rc,svg,300,250,450,160,"var(--y)",142);box(rc,svg,750,250,450,160,"var(--card)",143);
+  cells(rc,svg,445,130,["","","",""],{w:40,h:34,idx:false,fill:"var(--b)"});T(svg,525,210,"int a[10];  fixed-size array",{size:17});
+  T(svg,975,180,"— (not a normal combination)",{size:16,color:"var(--soft)"});
+  cells(rc,svg,445,290,["","","",""],{w:40,h:34,idx:false,fill:"var(--g)",seed:7});T(svg,525,360,"malloc'd array · resized array",{size:17,weight:700});T(svg,525,384,"dynamic AND contiguous",{size:15,color:"var(--red)"});
+  [0,1,2].forEach(k=>{const x=830+k*120,y=290+(k%2)*30;box(rc,svg,x,y,46,32,"var(--g)",150+k);box(rc,svg,x+46,y,22,32,"var(--card)",153+k);if(k<2)arrow(rc,svg,[x+60,y+16],[x+118,y+16+((k+1)%2?30:-30)],{bend:0,color:"ink"})});
+  T(svg,975,384,"linked list: each node malloc'd",{size:17});
+  d1_ls(svg,1230,160,["one malloc'd block","is still ONE","contiguous block","","dynamic ≠ linked"],{size:17,lh:26});
+},450);
+
+B("b1g",[],[],(rc,svg)=>{
+  box(rc,svg,450,40,600,110,"var(--y)",160);T(svg,750,80,"STACK ADT = WHAT it does",{size:21,weight:700});
+  T(svg,750,112,"push(x) · pop() · peek() · isEmpty()",{size:18});T(svg,750,138,"values + operations · no implementation details",{size:15,color:"var(--soft)"});
+  arrow(rc,svg,[600,152],[450,206],{bend:0.1,color:"red"});arrow(rc,svg,[900,152],[1060,198],{bend:-0.1,color:"red"});
+  T(svg,450,226,"HOW #1: an array + a top index",{size:17,weight:700,color:"var(--green)"});
+  cells(rc,svg,300,244,[5,8,2,"",""],{w:60});T(svg,450,336,"↑ top",{size:16,color:"var(--red)"});
+  T(svg,1080,212,"HOW #2: a linked list (head = top)",{size:17,weight:700,color:"var(--green)"});
+  llist(rc,svg,880,244,[2,8,5],{dw:46,gap:30,head:false});
+  const o=[["Queue","enqueue · dequeue","→ array or linked list"],["List","insert · remove · retrieve","→ array or linked list"],["Priority queue","insert · remove highest","→ a heap"],["Dictionary / map","insert · search · remove by key","→ hash table or search tree"]];
+  o.forEach(([n,a,b],i)=>{const x=40+i*360;box(rc,svg,x,380,330,96,"var(--card)",170+i);T(svg,x+165,408,n,{size:18,weight:700});T(svg,x+165,434,a,{size:15});T(svg,x+165,458,b,{size:15,color:"var(--green)"})});
+  T(svg,750,520,"swap the HOW without (necessarily) changing the code that uses the WHAT",{size:18,color:"var(--blue)"});
+},540);
+
+B("b1h",[
+  N("sk",40,360,700,"sticky",sticky(`"The Ice-cream Delivery Shop Sorts Up And Merges"`,`Traverse · Insert · Delete · Search · Sort · Update · Access · Merge`))
+],[],(rc,svg)=>{
+  const op=[["Traverse","display every record"],["Access","read A[2]"],["Insert","add a new student"],["Delete","remove a booking"],["Search","find by matric no."],["Sort","scores low → high"],["Update","fix a phone number"],["Merge","join two lists"]];
+  op.forEach(([n,e],i)=>{const r=i>>2,c=i%4,cx=210+c*355,y=r?220:60,x0=cx-80;
+    if(i===7){cells(rc,svg,x0-30,y,[1,3],{w:36,h:34,idx:false,seed:i*9});cells(rc,svg,x0+60,y,[2,4],{w:36,h:34,idx:false,fill:"var(--g)",seed:i*9+3});arrow(rc,svg,[cx,y+40],[cx,y+56],{bend:0,color:"red"});}
+    else cells(rc,svg,x0,y,i===5?[3,1,2,4]:i===6?[1,"9",3,4]:[1,2,3,4],{w:40,h:34,idx:false,hl:i===1?[2]:i===6?[1]:i===3?[2]:[],hlf:i===3?"var(--p)":"var(--y)",seed:i*9});
+    if(i===0)arrow(rc,svg,[x0,y+48],[x0+160,y+48],{bend:0,color:"red"});
+    if(i===1)arrow(rc,svg,[x0+100,y-26],[x0+100,y-4],{bend:0,color:"red"});
+    if(i===2){box(rc,svg,x0+64,y-40,32,26,"var(--g)",300);arrow(rc,svg,[x0+80,y-12],[x0+80,y+6],{bend:0,color:"green"})}
+    if(i===3){d1_ln(rc,svg,x0+84,y+4,x0+116,y+30,"var(--red)",2.6);d1_ln(rc,svg,x0+116,y+4,x0+84,y+30,"var(--red)",2.6)}
+    if(i===4){add(svg,rc.circle(x0+140,y+17,34,{stroke:"var(--red)",strokeWidth:2.6,roughness:0.6}));d1_ln(rc,svg,x0+152,y+30,x0+170,y+50,"var(--red)",3)}
+    if(i===5){arrow(rc,svg,[x0+20,y+44],[x0+60,y+44],{bend:-0.4,color:"red"});T(svg,x0+200,y+24,"→ 1 2 3 4",{size:15,anchor:"start",color:"var(--green)"})}
+    if(i===6)T(svg,x0+60,y-8,"5 → 9",{size:15,color:"var(--red)"});
+    T(svg,cx,y+(i===7?92:78),n,{size:19,weight:700});T(svg,cx,y+(i===7?114:100),e,{size:15,color:"var(--soft)"})});
+  const ox=820,oy=520;arrow(rc,svg,[ox,oy],[ox+250,oy],{bend:0,color:"ink"});arrow(rc,svg,[ox,oy],[ox,oy-140],{bend:0,color:"ink"});
+  T(svg,ox+250,oy+22,"n",{size:16});T(svg,ox-10,oy-130,"cost",{size:15,anchor:"end"});
+  d1_ln(rc,svg,ox+4,oy-20,ox+230,oy-20,"var(--green)",2.6);T(svg,ox+236,oy-16,"O(1)",{size:16,anchor:"start",color:"var(--green)"});
+  d1_ln(rc,svg,ox+4,oy-4,ox+220,oy-118,"var(--red)",2.6);T(svg,ox+226,oy-114,"O(n)",{size:16,anchor:"start",color:"var(--red)"});
+  d1_ls(svg,1120,400,["time = how the WORK grows with n","space = how the MEMORY grows with n","n records, one by one → O(n)","best choice = the problem + the","operations + the resources"],{size:16,lh:24});
+  T(svg,40,560,"Algorithm = a finite sequence of steps for solving a problem",{size:18,anchor:"start",weight:700});
+},580);
+
+B("b1i",[],[],(rc,svg)=>{
+  const st=["Intro","Types + memory","Arrays + strings","Pointers","Stacks","Queues","MIDTERM","Linked lists","Doubly + circular","Trees","Heaps + hashing","Graphs","Revision + final"];
+  const x=i=>90+i*110,y=130;
+  box(rc,svg,60,90,x(5)-30,80,"var(--g)",190,{roughness:0.6});T(svg,(60+x(5)+30)/2,80,"midterm scope: weeks 1–6",{size:17,weight:700,color:"var(--green)"});
+  d1_ln(rc,svg,x(0),y,x(12),y,"var(--ink)",3);
+  st.forEach((s,i)=>{const mid=i===6;add(svg,rc.circle(x(i),y,mid?30:20,{fill:mid?"var(--red)":"var(--card)",fillStyle:"solid",stroke:"var(--ink)",strokeWidth:2,roughness:0.6,seed:200+i}));
+    T(svg,x(i),y-22,(i===12?"13–15":String(i+1)),{size:14,color:"var(--soft)"});
+    T(svg,x(i),y+(i%2?68:42),s,{size:15,weight:mid?700:400,color:mid?"var(--red)":"var(--ink)"})});
+  T(svg,750,250,"notes shared so far: 1, 2, 3 + 5 (linked lists, taught early)",{size:17,color:"var(--blue)"});
+},270);
+
+
+/* ===== 2 · primitive types + memory (diagram-first) ===== */
+const d2_c=(rc,svg,x,y,w,h,t,f,seed,o={})=>{box(rc,svg,x,y,w,h,f||"var(--card)",seed||5,o.dash?{strokeLineDash:[6,5]}:{});if(t!=null&&t!=="")T(svg,x+w/2,y+h/2+(o.size?o.size/3:7),String(t),{size:o.size||19,weight:o.w||700,color:o.col||"var(--ink)"})};
+function d2_chain(rc,svg,x,y,items,o={}){const h=o.h||52,g=o.gap||46;let cx=x;const out=[];
+  items.forEach((it,i)=>{const [t,w,f,sub]=it;d2_c(rc,svg,cx,y,w,h,t,f||"var(--card)",400+i+(o.seed||0),{size:o.size||17});if(sub)T(svg,cx+w/2,y+h+22,sub,{size:14,color:"var(--soft)"});out.push([cx,w]);
+    if(i<items.length-1)arrow(rc,svg,[cx+w+6,y+h/2],[cx+w+g-6,y+h/2],{bend:0,color:"red"});cx+=w+g});return out}
+function d2_strip(rc,svg,x,y,bits,o={}){const bw=o.bw||30,gp=o.gap||4;let cx=x;
+  [...bits].forEach((b,i)=>{if(i===1||i===9)cx+=12;const f=i===0?"var(--p)":i<9?"var(--y)":"var(--g)";box(rc,svg,cx,y,bw,38,f,500+i,{roughness:0.5});T(svg,cx+bw/2,y+26,b,{size:17,weight:700});cx+=bw+gp});
+  T(svg,x+bw/2,y+60,"sign",{size:14,color:"var(--soft)"});T(svg,x+bw+12+4*(bw+gp),y+60,"exponent (8 bits)",{size:14,color:"var(--soft)"});T(svg,x+2*(bw+12)+9*(bw+gp)+11*(bw+gp)-10,y+60,"fraction (23 bits)",{size:14,color:"var(--soft)"});return cx}
+
+B("b2a",[
+  N("sk",760,420,440,"sticky",sticky(`"I Can Float Double Booleans" → 4 · 1 · 4 · 8 · 1`,`int · char · float · double (twice a float) · _Bool`))
+],[],(rc,svg)=>{const x0=200,bw=58,rows=[["int",4,"var(--b)","int age = 25;","whole numbers"],["char",1,"var(--p)","char grade = 'A';","1 character (stored as a code)"],["float",4,"var(--g)","float price = 15.5f;","real numbers"],["double",8,"var(--g)","double pi = 3.14159;","real numbers, more precision"],["_Bool",1,"var(--y)","_Bool passed = 1;","true / false"]];
+  T(svg,x0,34,"1 square = 1 byte",{anchor:"start",size:16,color:"var(--soft)"});
+  rows.forEach(([n,b,f,ex,what],i)=>{const y=52+i*62;T(svg,x0-20,y+30,n,{anchor:"end",size:21,weight:700});for(let k=0;k<b;k++)box(rc,svg,x0+k*bw,y,bw,44,f,600+i*9+k,{roughness:0.7});
+    T(svg,x0+b*bw+18,y+22,b+(b>1?" bytes":" byte"),{anchor:"start",size:17,weight:700,color:"var(--red)"});T(svg,x0+b*bw+18,y+42,what,{anchor:"start",size:15,color:"var(--soft)"});T(svg,1000,y+30,ex,{anchor:"start",size:17})});
+  const y=52+5*62+20;T(svg,60,y,"sizes depend on the language + system → sizeof(int) tells you",{anchor:"start",size:17});
+  T(svg,60,y+30,"char = the smallest addressable unit (1 byte, ≥ 8 bits)",{anchor:"start",size:17});
+  T(svg,60,y+60,"float / double are approximations: 0.1 + 0.2 may not be exactly 0.3",{anchor:"start",size:17});
+  T(svg,60,y+90,"memory needed: 100 ints × 4 bytes = 400 bytes",{anchor:"start",size:17,color:"var(--red)",weight:700})},520);
+
+B("b2b",[],[],(rc,svg)=>{const x=120,y=60;T(svg,x,y-22,"memory",{anchor:"start",size:16,color:"var(--soft)"});
+  [["0x1000","75","score","int"],["0x1004","'A'","grade","char"],["0x1008","1.75","height","float"]].forEach(([a,v,n,t],i)=>{const yy=y+i*70;T(svg,x-10,yy+33,a,{anchor:"end",size:16,color:"var(--blue)"});
+    d2_c(rc,svg,x,yy,160,56,v,"var(--y)",700+i,{size:22});box(rc,svg,x+240,yy+8,130,40,"var(--p)",710+i);T(svg,x+305,yy+34,n,{size:18,weight:700});arrow(rc,svg,[x+236,yy+28],[x+166,yy+28],{bend:0,color:"ink"});T(svg,x+390,yy+34,t,{anchor:"start",size:16,color:"var(--soft)"})});
+  T(svg,x+80,y+3*70+20,"value",{size:15,color:"var(--red)"});T(svg,x-50,y+3*70+20,"address",{size:15,color:"var(--red)"});T(svg,x+305,y+3*70+20,"name",{size:15,color:"var(--red)"});
+  T(svg,x-110,y+3*70+52,"0x1000 = 4096 in decimal · the value is stored in binary, in bytes",{anchor:"start",size:15,color:"var(--soft)"});
+  const X0=800;[["int age;","?","declaration: name + type"],["int age = 20;","20","initialisation: first value"],["age = 21;","21","assignment: new value"]].forEach(([c,v,l],i)=>{const yy=60+i*80;
+    T(svg,X0,yy+32,c,{anchor:"start",size:18,weight:700});d2_c(rc,svg,X0+200,yy,90,50,v,v==="?"?"var(--card)":"var(--y)",720+i,{dash:v==="?"});T(svg,X0+245,yy+70,"0x2000",{size:13,color:"var(--blue)"});T(svg,X0+310,yy+32,l,{anchor:"start",size:16,color:"var(--soft)"})});
+  T(svg,X0,320,"the address stays the same: only the value changes",{anchor:"start",size:16,color:"var(--red)"})},400);
+
+B("b2c",[],[],(rc,svg)=>{const y=110;d2_c(rc,svg,140,y,150,64,"75","var(--y)",730,{size:26});T(svg,215,y-14,"score",{size:19,weight:700});T(svg,215,y+92,"lives at 0x1000",{size:16,color:"var(--blue)"});
+  d2_c(rc,svg,640,y,190,64,"0x1000","var(--g)",731,{size:22,col:"var(--blue)"});T(svg,735,y-14,"ptr",{size:19,weight:700});T(svg,735,y+92,"holds an address",{size:16,color:"var(--soft)"});
+  arrow(rc,svg,[636,y+32],[296,y+32],{bend:0.25,color:"red"});T(svg,466,y-26,"*ptr follows the arrow → 75",{size:18,color:"var(--red)",weight:700});
+  [["&score","= the address of score (0x1000)"],["int *ptr = &score;","ptr stores that address"],["*ptr","= the value there (75)"],["%p","prints an address"]].forEach(([a,b],i)=>{T(svg,980,70+i*44,a,{anchor:"start",size:19,weight:700});T(svg,1170,70+i*44,b,{anchor:"start",size:16,color:"var(--soft)"})});
+  T(svg,140,y+150,"a pointer = a variable that stores an address · the value 75 is NOT its address",{anchor:"start",size:17})},300);
+
+B("b2d",[],[],(rc,svg)=>{const x=150,y=70,bits=[0,1,0,0,1,0,1,0],pw=[128,64,32,16,8,4,2,1];T(svg,60,40,"8 bits = 1 byte",{anchor:"start",size:18,weight:700});
+  bits.forEach((b,i)=>{d2_c(rc,svg,x+i*64,y,64,48,b,b?"var(--y)":"var(--card)",740+i,{size:22});T(svg,x+i*64+32,y+72,String(pw[i]),{size:15,color:"var(--soft)"})});
+  T(svg,x+8*64+24,y+32,"= 64 + 8 + 2 = 74",{anchor:"start",size:22,weight:700,color:"var(--red)"});
+  T(svg,60,y+120,"unsigned 8-bit: 0 to 2⁸ − 1 = 255 · signed numbers: two's complement",{anchor:"start",size:17});
+  const ay=y+170;T(svg,60,ay,"characters are stored as codes (ASCII):",{anchor:"start",size:17});
+  [["A","65","01000001"],["B","66","01000010"],["a","97","01100001"]].forEach(([c,d,bn],i)=>{const xx=60+i*330;d2_c(rc,svg,xx,ay+18,56,50,c,"var(--p)",760+i,{size:24});arrow(rc,svg,[xx+62,ay+43],[xx+110,ay+43],{bend:0,color:"ink"});T(svg,xx+120,ay+38,d,{anchor:"start",size:20,weight:700});T(svg,xx+120,ay+60,bn,{anchor:"start",size:15,color:"var(--soft)"})});
+  T(svg,1060,ay+38,"'a' = 'A' + 32",{anchor:"start",size:19,weight:700,color:"var(--red)"})},320);
+
+B("b2e",[],[],(rc,svg)=>{T(svg,60,36,"IEEE 754 single precision = 32 bits: 1 sign · 8 exponent · 23 fraction",{anchor:"start",size:18,weight:700});
+  d2_chain(rc,svg,60,64,[["12.5",120,"var(--y)"],["1100.1₂",160,null,"12 = 1100 · .5 = .1"],["1.1001 × 2³",190,null,"point moved 3 left"],["3 + 127 = 130",200,"var(--y)","bias 127"],["10000010",160,"var(--y)","exponent"],["1001 + 0s",150,"var(--g)","drop the leading 1"]]);
+  d2_strip(rc,svg,60,170,"0"+"10000010"+"10010000000000000000000");
+  T(svg,60,280,"= 0x41480000",{anchor:"start",size:24,weight:700,color:"var(--red)"});T(svg,300,280,"in memory: little-endian 00 00 48 41 · big-endian 41 48 00 00",{anchor:"start",size:17,color:"var(--soft)"});
+  T(svg,60,316,"slide 22's \"exponent = 2³\" is the power, not the stored field: the field is 130",{anchor:"start",size:15,color:"var(--soft)"})},350);
+
+B("b2f",[
+  N("sk",1040,250,400,"sticky",sticky(`Sign · Shift · Shave`,`sign bit · shift → +127 · shave off the leading 1`))
+],[],(rc,svg)=>{T(svg,60,36,"Assignment 1: 10.25",{anchor:"start",size:19,weight:700});
+  d2_chain(rc,svg,60,64,[["10.25",120,"var(--y)"],["1010.01₂",160,null,".25 → ×2 0.5 → ×2 1.0"],["1.01001 × 2³",200,null,"3 places left"],["3 + 127 = 130",200,"var(--y)"],["10000010",160,"var(--y)"],["01001 + 0s",150,"var(--g)"]]);
+  d2_strip(rc,svg,60,170,"0"+"10000010"+"01001000000000000000000");
+  T(svg,60,280,"= 0x41240000",{anchor:"start",size:24,weight:700,color:"var(--red)"});T(svg,300,280,"little-endian 00 00 24 41",{anchor:"start",size:17,color:"var(--soft)"})},360);
+
+B("b2g",[
+  N("sk",840,330,420,"sticky",sticky(`"Silly Hippos Dance Barefoot Tonight"`,`top → bottom: Stack · Heap · Data · BSS · Text`))
+],[],(rc,svg)=>{const x=110,w=300;const seg=[["Stack","locals + call frames · automatic","var(--p)",70],["","(free space)","var(--card)",60],["Heap","malloc / new · you free it","var(--g)",70],["Data","initialised globals + statics","var(--y)",56],["BSS","uninitialised → zero","var(--y)",56],["Text","machine code · read-only","var(--b)",56]];let y=40;
+  seg.forEach(([n,d,f,h],i)=>{box(rc,svg,x,y,w,h,f,800+i,n?{}:{strokeLineDash:[6,5]});if(n)T(svg,x+w/2,y+h/2+7,n,{size:21,weight:700});T(svg,x+w+30,y+h/2+6,d,{anchor:"start",size:16,color:n?"var(--ink)":"var(--soft)"});seg[i].y=y;y+=h});
+  arrow(rc,svg,[x+w-40,seg[0].y+48],[x+w-40,seg[1].y+46],{bend:0,color:"red"});T(svg,x+w-52,seg[1].y+36,"stack grows ↓",{anchor:"end",size:14,color:"var(--red)"});
+  arrow(rc,svg,[x+36,seg[2].y+24],[x+36,seg[1].y+14],{bend:0,color:"green"});T(svg,x+48,seg[1].y+36,"heap grows ↑",{anchor:"start",size:14,color:"var(--green)"});
+  arrow(rc,svg,[x-34,y],[x-34,40],{bend:0,color:"ink"});T(svg,x-44,60,"high",{anchor:"end",size:14,color:"var(--soft)"});T(svg,x-44,y-6,"low",{anchor:"end",size:14,color:"var(--soft)"});
+  const gx=840,gy=50;T(svg,gx+150,gy,"global",{size:20,weight:700});T(svg,gx+450,gy,"static",{size:20,weight:700});
+  box(rc,svg,gx,gy+16,300,120,"var(--b)",820);box(rc,svg,gx+320,gy+16,300,120,"var(--g)",821);
+  ["outside all functions","shared by every function","int total = 500;"].forEach((t,i)=>T(svg,gx+150,gy+50+i*32,t,{size:16}));["uses the static keyword","keeps its value between calls","static int count = 0;"].forEach((t,i)=>T(svg,gx+470,gy+50+i*32,t,{size:16}));
+  box(rc,svg,gx,gy+150,620,96,"var(--y)",822);T(svg,gx+310,gy+182,"both: live the whole run · zero if not set",{size:17,weight:700});T(svg,gx+310,gy+214,"both live in Data or BSS",{size:17})},640);
+
+/* ===== 3 · arrays, structures + strings ===== */
+B("b3a",[
+  N("sk",1040,300,420,"sticky",sticky(`"Hot Irons Can Fix Every Outfit"`,`Homogeneous · Indexed · Contiguous · Fixed · Efficient O(1) · Ordered`))
+],[],(rc,svg)=>{T(svg,60,40,"int scores[5] = {65, 72, 80, 68, 91};",{anchor:"start",size:20,weight:700});
+  cells(rc,svg,160,100,[65,72,80,68,91],{w:96,h:54,hl:[2],addr:[1000,1004,1008,1012,1016]});T(svg,160+5*96+24,132,"scores[2] = 80",{anchor:"start",size:20,color:"var(--red)",weight:700});
+  T(svg,100,92,"address",{anchor:"end",size:14,color:"var(--blue)"});T(svg,100,180,"index",{anchor:"end",size:14,color:"var(--soft)"});
+  const tags=[["same type","all int"],["index 0 … n−1","scores[2] = 3rd"],["side by side","4 bytes apart"],["fixed size","5 forever"],["O(1) access","jump by index"],["in order","0 → 4"]];
+  tags.forEach(([a,b],i)=>{const x=60+(i%3)*320,y=240+Math.floor(i/3)*74;box(rc,svg,x,y,290,58,"var(--card)",830+i);T(svg,x+16,y+26,a,{anchor:"start",size:18,weight:700});T(svg,x+16,y+48,b,{anchor:"start",size:15,color:"var(--soft)"})})},420);
+
+B("b3b",[],[],(rc,svg)=>{const rows=[["int a[5] = {65,72,80,68,91};",[65,72,80,68,91],[]],["int a[5] = {[0]=65, [2]=80, [4]=91};",[65,0,80,0,91],[1,3]],["int a[5] = {2, 4, 8};",[2,4,8,0,0],[3,4]],["int a[5] = {0};",[0,0,0,0,0],[0,1,2,3,4]],["int a[5];  (local, no initialiser)",["?","?","?","?","?"],[]]];
+  rows.forEach(([c,v,z],i)=>{const y=40+i*74;T(svg,60,y+30,c,{anchor:"start",size:17,weight:700});cells(rc,svg,520,y,v,{w:60,h:44,idx:false,hl:z,hlf:"var(--p)",seed:i*7})});
+  T(svg,840,70+0*74,"← purple = filled with 0 automatically",{anchor:"start",size:15,color:"var(--soft)"});T(svg,840,40+4*74+30,"← garbage until you assign",{anchor:"start",size:15,color:"var(--red)"});
+  const y=420;T(svg,60,y,"sum = 376 → avg = (double)sum / 5 = 75.20",{anchor:"start",size:18,weight:700});T(svg,60,y+28,"without the (double) cast, integer division gives 75",{anchor:"start",size:15,color:"var(--soft)"});
+  T(svg,760,y,"length: n = sizeof(arr) / sizeof(arr[0])",{anchor:"start",size:18,weight:700});T(svg,760,y+28,"{2,4,8,12,16,18} → 24 / 4 = 6",{anchor:"start",size:15,color:"var(--soft)"})},480);
+
+B("b3c",[],[],(rc,svg)=>{T(svg,60,44,"Address(A[i]) = B + i × w",{anchor:"start",size:26,weight:700});T(svg,60,74,"B = base address · w = bytes per element",{anchor:"start",size:16,color:"var(--soft)"});
+  const x=160,y=150;cells(rc,svg,x,y,[10,20,30,40],{w:110,h:54,hl:[2],addr:["B = 1000","1004","1008","1012"]});
+  arrow(rc,svg,[x+55,y+90],[x+2*110+50,y+90],{bend:0.25,color:"red"});T(svg,x+165,y+148,"2 steps × 4 bytes = 8",{size:17,color:"var(--red)"});
+  T(svg,700,y+34,"numbers[2] = 1000 + 2 × 4 = 1008",{anchor:"start",size:21,weight:700,color:"var(--red)"});
+  T(svg,700,y+70,"one multiply + one add → O(1), any index",{anchor:"start",size:17});T(svg,700,y+100,"index = offset from the start → that's why C counts from 0",{anchor:"start",size:17})},330);
+
+B("b3d",[],[],(rc,svg)=>{T(svg,60,40,"STATIC array",{anchor:"start",size:21,weight:700});cells(rc,svg,60,64,[1,2,3,4,5],{w:60,idx:false,fill:"var(--b)"});
+  box(rc,svg,52,56,316,62,"transparent",840,{fill:undefined,fillStyle:undefined,stroke:"var(--red)",strokeWidth:3});T(svg,60,150,"size fixed when declared · can't change",{anchor:"start",size:16,color:"var(--soft)"});
+  T(svg,760,40,"DYNAMIC array",{anchor:"start",size:21,weight:700});cells(rc,svg,760,64,[10,20,30],{w:60,idx:false,fill:"var(--g)",seed:4});d2_c(rc,svg,940,64,60,46,"40","var(--y)",845,{dash:true});
+  arrow(rc,svg,[1060,87],[1010,87],{bend:0,color:"green"});T(svg,1070,92,"append(40) · grows + shrinks at runtime",{anchor:"start",size:16,color:"var(--green)"});
+  const L=[["direct access by index","good locality (contiguous)","simple sequences + tables"],["fixed capacity","insert/delete shifts elements","one type only","no bounds check in C","needs one big block"]];
+  T(svg,60,210,"✓ strengths",{anchor:"start",size:19,weight:700,color:"var(--green)"});L[0].forEach((t,i)=>T(svg,60,244+i*30,"· "+t,{anchor:"start",size:17}));
+  T(svg,760,210,"✗ limits",{anchor:"start",size:19,weight:700,color:"var(--red)"});L[1].forEach((t,i)=>T(svg,760,244+i*30,"· "+t,{anchor:"start",size:17}))},400);
+
+B("b3e",[],[],(rc,svg)=>{T(svg,60,40,"int marks[3][4]  → 3 rows × 4 columns = 12",{anchor:"start",size:20,weight:700});const x=120,y=80,data=[[70,65,80,75],[60,72,68,81],[90,85,88,92]];
+  data.forEach((r,i)=>cells(rc,svg,x,y+i*54,r,{w:74,h:46,idx:false,hl:i===1?[2]:[],seed:i*5}));[0,1,2,3].forEach(j=>T(svg,x+j*74+37,y-10,"col "+j,{size:14,color:"var(--soft)"}));[0,1,2].forEach(i=>T(svg,x-14,y+i*54+29,"row "+i,{size:14,anchor:"end",color:"var(--soft)"}));
+  T(svg,x+4*74+24,y+54+29,"← marks[1][2] = 68",{anchor:"start",size:19,color:"var(--red)",weight:700});T(svg,x,y+3*54+30,"nested loops: outer = rows (i), inner = columns (j)",{anchor:"start",size:16,color:"var(--soft)"});
+  const X=900,Y=96;for(let k=2;k>=0;k--){if(k>1)continue;box(rc,svg,X+k*36,Y-k*36,300,170,k?"var(--b)":"var(--g)",850+k)}
+  T(svg,X+150,Y+90,"layer 0",{size:18,weight:700});T(svg,X+186,Y-50,"layer 1",{size:16,color:"var(--soft)"});
+  T(svg,X,Y+210,"int temperature[2][3][4]",{anchor:"start",size:18,weight:700});T(svg,X,Y+238,"2 layers × 3 rows × 4 cols = 24",{anchor:"start",size:16});T(svg,X,Y+264,"= an array of arrays of arrays",{anchor:"start",size:15,color:"var(--soft)"})},400);
+
+B("b3f",[
+  N("sk",1040,300,400,"sticky",sticky(`Read it like a book 📖`,`finish row 0, then row 1`))
+],[],(rc,svg)=>{const x=80,y=70;T(svg,x,40,"int A[2][3] = {{1,2,3},{4,5,6}};",{anchor:"start",size:18,weight:700});cells(rc,svg,x,y,[1,2,3],{w:60,idx:false});cells(rc,svg,x,y+52,[4,5,6],{w:60,idx:false,fill:"var(--g)",seed:5});
+  arrow(rc,svg,[x+200,y+50],[x+270,y+50],{bend:0,color:"red"});const mx=x+290;cells(rc,svg,mx,y+26,[1,2,3,4,5,6],{w:64});cells(rc,svg,mx+3*64,y+26,[4,5,6],{w:64,fill:"var(--g)",seed:5,idx:false});
+  T(svg,mx+96,y+14,"row 0",{size:15,color:"var(--soft)"});T(svg,mx+288,y+14,"row 1",{size:15,color:"var(--soft)"});
+  T(svg,80,250,"offset(A[i][j]) = i × C + j",{anchor:"start",size:24,weight:700});T(svg,80,282,"address = B + (i × C + j) × w     (C = number of columns)",{anchor:"start",size:17,color:"var(--soft)"});
+  T(svg,80,330,"marks[3][4], base 1000, 4-byte ints → marks[1][2] = 1000 + (1×4 + 2)×4 = 1024",{anchor:"start",size:18,color:"var(--red)",weight:700})},400);
+
+function d2_card(rc,svg,x,y,w,title,fields,seed,f){const h=46+fields.length*34;box(rc,svg,x,y,w,h,f||"var(--b)",seed);add(svg,rc.line(x,y+38,x+w,y+38,{stroke:"var(--ink)",strokeWidth:1.6,roughness:0.6}));
+  T(svg,x+w/2,y+26,title,{size:17,weight:700});fields.forEach(([k,v],i)=>{T(svg,x+14,y+64+i*34,k,{anchor:"start",size:16,color:"var(--soft)"});T(svg,x+w-14,y+64+i*34,v,{anchor:"end",size:17,weight:700})});return h}
+B("b3g",[],[],(rc,svg)=>{T(svg,60,40,"a record = fields about ONE thing, of DIFFERENT types → struct in C",{anchor:"start",size:19,weight:700});
+  d2_card(rc,svg,60,70,330,"struct Student",[["int age","20"],["float cgpa","4.25"],["char name[50]","\"Ada\""]],860,"var(--y)");
+  T(svg,440,110,"struct Student s = {20, 4.25f, \"Ada\"};",{anchor:"start",size:17,weight:700});T(svg,440,140,"values go in member order",{anchor:"start",size:15,color:"var(--soft)"});
+  T(svg,440,190,"s.age = 21;   s.cgpa = 4.50f;",{anchor:"start",size:17,weight:700});T(svg,440,220,"the dot reaches a member by NAME",{anchor:"start",size:15,color:"var(--soft)"});
+  T(svg,440,264,"name[50] holds up to 49 chars + '\\0'",{anchor:"start",size:15,color:"var(--soft)"});
+  const tx=1040;T(svg,tx,60,"array = egg tray",{anchor:"start",size:18,weight:700});cells(rc,svg,tx,74,[5,5,5,5],{w:52,idx:false,size:16});T(svg,tx,148,"many, SAME type, by index",{anchor:"start",size:15,color:"var(--soft)"});
+  T(svg,tx,200,"struct = ID card",{anchor:"start",size:18,weight:700});d2_card(rc,svg,tx,214,230,"one student",[["age","int"],["cgpa","float"]],862,"var(--p)");T(svg,tx,362,"one thing, MIXED types, by name",{anchor:"start",size:15,color:"var(--soft)"})},390);
+
+B("b3h",[],[],(rc,svg)=>{T(svg,60,40,"array of structs",{anchor:"start",size:19,weight:700});[["Ada","20","4.25"],["John","21","3.80"],["Mary","19","4.50"]].forEach((s,i)=>{d2_card(rc,svg,60+i*170,60,150,"["+i+"]",[["",s[0]],["age",s[1]],["cgpa",s[2]]],870+i,i===1?"var(--y)":"var(--b)")});
+  T(svg,60,262,"students[1].cgpa → 3.80",{anchor:"start",size:17,color:"var(--red)",weight:700});
+  const nx=620;T(svg,nx,40,"nested",{anchor:"start",size:19,weight:700});box(rc,svg,nx,60,300,170,"var(--b)",880);T(svg,nx+150,86,"Student s",{size:17,weight:700});T(svg,nx+20,118,"name \"Ada\" · age 20",{anchor:"start",size:15});
+  d2_card(rc,svg,nx+40,130,220,"address",[["city","Abuja"]],881,"var(--g)");T(svg,nx,262,"s.address.city → \"Abuja\"",{anchor:"start",size:17,color:"var(--red)",weight:700});
+  const px=1000;T(svg,px,40,"pointer to a struct",{anchor:"start",size:19,weight:700});d2_c(rc,svg,px,70,90,50,"ptr","var(--g)",885,{size:17});d2_card(rc,svg,px+200,60,190,"s",[["age","20"]],886,"var(--y)");arrow(rc,svg,[px+96,95],[px+196,95],{bend:0,color:"red"});
+  T(svg,px,170,"ptr->age  ≡  (*ptr).age",{anchor:"start",size:19,weight:700});T(svg,px,198,"how linked lists reach their nodes",{anchor:"start",size:15,color:"var(--soft)"});
+  const y=320;T(svg,60,y,"padding: struct { char letter; int number; }",{anchor:"start",size:18,weight:700});d2_c(rc,svg,60,y+18,46,46,"c","var(--y)",890,{size:17});[1,2,3].forEach(k=>d2_c(rc,svg,60+k*46,y+18,46,46,"","var(--card)",891+k,{dash:true}));
+  d2_c(rc,svg,60+4*46,y+18,184,46,"number (4)","var(--b)",895,{size:17});T(svg,129,y+90,"padding",{size:14,color:"var(--red)"});T(svg,460,y+48,"1 + 3 + 4 = often 8, not 5 → only sizeof tells you",{anchor:"start",size:17})},440);
+
+B("b3i",[
+  N("sk",1040,250,400,"sticky",sticky(`'\\0' = the full stop`,`no full stop → C keeps reading past the end`))
+],[],(rc,svg)=>{T(svg,60,40,"char name[] = \"Ada\";",{anchor:"start",size:20,weight:700});cells(rc,svg,60,64,["A","d","a","\\0"],{w:76,hl:[3],hlf:"var(--p)"});T(svg,60+4*76+24,96,"3 letters → 4 cells: the null character ends it",{anchor:"start",size:17});
+  T(svg,60,180,"\"Hello\" takes 6 · '\\0' is NOT '0' · C has no string type: char arrays",{anchor:"start",size:17});
+  T(svg,60,240,"reading input",{anchor:"start",size:19,weight:700});d2_c(rc,svg,60,258,190,46,"Ada Obi⏎","var(--card)",900,{size:17});
+  arrow(rc,svg,[256,270],[340,260],{bend:0,color:"red"});T(svg,350,262,"scanf(\"%29s\") → \"Ada\" (stops at a space)",{anchor:"start",size:16});
+  arrow(rc,svg,[256,294],[340,306],{bend:0,color:"green"});T(svg,350,312,"fgets → \"Ada Obi\\n\" (whole line, keeps \\n)",{anchor:"start",size:16});
+  T(svg,60,370,"Python strings are immutable · C++ std::string grows by itself",{anchor:"start",size:15,color:"var(--soft)"})},400);
+
+B("b3j",[],[],(rc,svg)=>{const R=[["strlen(\"Data Structures\")","15","counts chars before '\\0' (spaces count)"],["strcpy(dest, \"CS\")","dest = \"CS\"","copies, '\\0' included · dest must fit"],["strcat(\"Data \", \"Structures\")","\"Data Structures\"","joins onto the end of dest"],["strcmp(\"Apple\", \"Banana\")","< 0","0 equal · <0 first · >0 after"],["strchr(s, 'S') / strstr(s, \"Data\")","pointer or NULL","first match"]];
+  R.forEach(([c,r,n],i)=>{const y=30+i*70;box(rc,svg,60,y,430,50,"var(--b)",910+i);T(svg,275,y+32,c,{size:17,weight:700});arrow(rc,svg,[498,y+25],[570,y+25],{bend:0,color:"red"});d2_c(rc,svg,580,y,230,50,r,"var(--y)",920+i,{size:18});T(svg,840,y+32,n,{anchor:"start",size:16,color:"var(--soft)"})});
+  const y=30+5*70+20;T(svg,60,y,"never a == b on C strings: it compares ADDRESSES → use strcmp",{anchor:"start",size:18,weight:700,color:"var(--red)"});
+  T(svg,60,y+40,"strlen by hand:  while (text[len] != '\\0') len++;",{anchor:"start",size:17})},480);
+
+B("b3k",[],[],(rc,svg)=>{const s="Data Structures";T(svg,60,40,"s = \"Data Structures\"",{anchor:"start",size:19,weight:700});cells(rc,svg,60,60,[...s].map(c=>c===" "?"␣":c),{w:52,h:44,hl:[0,1,2,3],size:17});
+  box(rc,svg,60+5*52,60,52,44,"transparent",930,{fill:undefined,fillStyle:undefined,stroke:"var(--red)",strokeWidth:3});
+  T(svg,60,160,"substring s[0:4] → \"Data\" (end index not included)",{anchor:"start",size:17,weight:700,color:"var(--ink)"});T(svg,60,190,"search 'S' or \"Struct\" → index 5 (red box)",{anchor:"start",size:17,weight:700,color:"var(--red)"});
+  [["C","strstr → a pointer · NULL if absent · index = ptr − s","substring: copy in a loop, then '\\0'"],["C++","s.find() → index · string::npos if absent","s.substr(0, 4)"],["Python","s.find() → index · −1 if absent · 'S' in s","s[0:4] · s[5:]"]].forEach(([l,a,b],i)=>{const y=230+i*44;T(svg,60,y,l,{anchor:"start",size:18,weight:700});T(svg,170,y,a,{anchor:"start",size:16});T(svg,820,y,b,{anchor:"start",size:16,color:"var(--soft)"})});
+  T(svg,60,380,"comparing = dictionary order, case-sensitive: C strcmp · C++ compare() or == · Python == <",{anchor:"start",size:16,color:"var(--soft)"})},410);
+
+B("b3l",[],[],(rc,svg)=>{T(svg,60,40,"string mistakes that cost marks",{anchor:"start",size:20,weight:700});
+  ["no room for '\\0'","copying into a too-small array","== to compare strings","reading input with no size limit","going past the array's end","'0' mixed up with '\\0'"].forEach((t,i)=>{const x=60+(i%3)*460,y=66+Math.floor(i/3)*70;box(rc,svg,x,y,430,52,"var(--p)",940+i);T(svg,x+20,y+33,"✗ "+t,{anchor:"start",size:17})});
+  const y=250;[["array","same type · by index","contiguous","var(--b)"],["struct","mixed types · by name","may have padding","var(--y)"],["C string","chars · by index or functions","must end in '\\0'","var(--g)"]].forEach(([n,a,b,f],i)=>{const x=60+i*460;box(rc,svg,x,y,430,100,f,950+i);T(svg,x+215,y+32,n,{size:20,weight:700});T(svg,x+215,y+62,a,{size:16});T(svg,x+215,y+88,b,{size:15,color:"var(--soft)"})})},380);
+
+
+/* ===== 4 · basic operations (diagram-first) ===== */
+const d4_h=(svg,x,y,s,o={})=>T(svg,x,y,s,Object.assign({anchor:"start",size:21,weight:700,color:"var(--blue)"},o));
+const d4_mark=(rc,svg,x,y,s,col)=>{arrow(rc,svg,[x,y-34],[x,y-6],{bend:0,color:col||"red"});T(svg,x,y-40,s,{size:15,weight:700,color:col==="blue"?"var(--blue)":col==="green"?"var(--green)":"var(--red)"})};
+
+B("b4a",[],[],(rc,svg)=>{
+  /* traversal */
+  d4_h(svg,60,46,"Traversal: visit every cell");
+  const c=cells(rc,svg,80,90,[65,72,80,68,91],{w:80});
+  for(let i=0;i<4;i++)arrow(rc,svg,[c[i][0]+6,170],[c[i+1][0]-6,170],{bend:0.45,color:"red"});
+  T(svg,c[0][0],206,"i = 0",{size:15,color:"var(--red)"});T(svg,c[4][0],206,"i = 4",{size:15,color:"var(--red)"});
+  lab(svg,80,236,"for (i = 0; i < n; i++) → sum, min/max, print, count · O(n)",{size:17,color:"var(--ink)"});
+  /* access */
+  d4_h(svg,800,46,"Access by index: jump straight there");
+  const a=cells(rc,svg,820,130,[65,72,80,68,91],{w:80,hl:[2]});
+  arrow(rc,svg,[a[0][0],124],[a[2][0],124],{bend:-0.25,color:"green"});
+  lab(svg,820,226,"address = B + 2 × 4 → one sum, no walking · O(1)",{size:17,color:"var(--green)"});
+  /* linked access */
+  d4_h(svg,60,300,"Linked list by position: must walk from head");
+  const g=llist(rc,svg,80,360,["A","B","C","D"],{gap:44,dw:52,hl:[2]});
+  for(let i=0;i<2;i++)arrow(rc,svg,[g[i].x+30,g[i].y+60],[g[i+1].x+30,g[i+1].y+60],{bend:0.25,color:"red"});
+  lab(svg,80,500,"3rd node = 2 hops · k-th node = k−1 hops · O(n)",{size:17,color:"var(--red)"});
+  /* update */
+  d4_h(svg,800,300,"Update: overwrite in place");
+  const u=cells(rc,svg,820,360,[65,72,85,68,91],{w:80,hl:[2]});
+  T(svg,u[2][0],346,"was 80",{size:15,color:"var(--red)"});
+  lab(svg,820,456,"scores[2] = 85 → O(1) · if you must FIND it first, add the search cost",{size:17,color:"var(--ink)"});
+},530);
+
+B("b4b",[
+  N("al",40,40,460,"box w",`<span class="t">Insert (shift RIGHT)</span>`+X(`InsertIntoArray(A, n, cap, pos, val)
+1. if n == cap → [[overflow]]
+2. for i = n-1 [[down to]] pos:
+       A[i+1] = A[i]
+3. A[pos] = val;  n = n + 1`))
+],[],(rc,svg)=>{const x=580;
+  d4_h(svg,x,46,"insert 30 at index 2");
+  const b=cells(rc,svg,x,140,[10,20,40,50,""],{w:86});
+  arrow(rc,svg,[b[3][0]+4,132],[b[4][0]-2,132],{bend:-0.5,color:"red"});T(svg,(b[3][0]+b[4][0])/2,88,"①",{size:20,weight:700,color:"var(--red)"});
+  arrow(rc,svg,[b[2][0],132],[b[3][0]-8,132],{bend:-0.5,color:"red"});T(svg,(b[2][0]+b[3][0])/2,88,"②",{size:20,weight:700,color:"var(--red)"});
+  lab(svg,x+5*86+24,170,"① 50 moves first, ② then 40",{size:17,color:"var(--red)"});
+  arrow(rc,svg,[x+215,220],[x+215,262],{bend:0,color:"green"});
+  cells(rc,svg,x,272,[10,20,30,40,50],{w:86,hl:[2],seed:9});lab(svg,x+5*86+24,302,"③ A[2] = 30 · n = 5",{size:17,color:"var(--green)",weight:700});
+  lab(svg,60,330,"front / middle → shift up to n → O(n)",{size:18,color:"var(--ink)"});
+  lab(svg,60,362,"at the end with room → O(1) · array full → overflow",{size:18,color:"var(--ink)"});
+  lab(svg,60,394,"go BACKWARDS, or 40 overwrites 50 before 50 moves",{size:17,color:"var(--red)"});
+},420);
+
+B("b4c",[
+  N("al",40,40,460,"box w",`<span class="t">Delete (shift LEFT)</span>`+X(`DeleteFromArray(A, n, pos)
+1. if n == 0 → [[underflow]]
+2. for i = pos to n-2:
+       A[i] = A[i+1]
+3. n = n - 1`))
+],[],(rc,svg)=>{const x=580;
+  d4_h(svg,x,46,"delete index 2");
+  const b=cells(rc,svg,x,140,[10,20,30,40,50],{w:86,hl:[2],hlf:"var(--p)"});
+  add(svg,rc.line(b[2][0]-22,b[2][1]-18,b[2][0]+22,b[2][1]+18,{stroke:"var(--red)",strokeWidth:2.4}));
+  arrow(rc,svg,[b[3][0],132],[b[2][0]+6,132],{bend:0.5,color:"red"});T(svg,(b[2][0]+b[3][0])/2,88,"①",{size:20,weight:700,color:"var(--red)"});
+  arrow(rc,svg,[b[4][0],132],[b[3][0]+8,132],{bend:0.5,color:"red"});T(svg,(b[3][0]+b[4][0])/2,88,"②",{size:20,weight:700,color:"var(--red)"});
+  lab(svg,x+5*86+24,170,"① 40 moves in, ② then 50",{size:17,color:"var(--red)"});
+  arrow(rc,svg,[x+215,220],[x+215,262],{bend:0,color:"green"});
+  cells(rc,svg,x,272,[10,20,40,50,""],{w:86,seed:9});lab(svg,x+5*86+24,302,"n = 4 · left to right this time",{size:17,color:"var(--green)",weight:700});
+  lab(svg,60,330,"front / middle → O(n) · last element → O(1)",{size:18,color:"var(--ink)"});
+  lab(svg,60,362,"overflow = add to FULL · underflow = remove from EMPTY",{size:18,color:"var(--red)",weight:700});
+},400);
+
+B("b4d",[
+  N("bs",820,390,520,"box g",X(`low, high = 0, n - 1
+while low <= high:
+    mid = (low + high) // 2
+    if a[mid] == key: return mid
+    if a[mid] < key: low = mid + 1
+    else:            high = mid - 1
+return -1`))
+],[],(rc,svg)=>{
+  d4_h(svg,60,46,"Linear search: check one by one");
+  const c=cells(rc,svg,80,110,[7,3,9,4,8],{w:80,hl:[3],hlf:"var(--g)"});
+  ["✗","✗","✗","✓"].forEach((m,i)=>T(svg,c[i][0],c[i][1]-40,m,{size:22,weight:700,color:m==="✓"?"var(--green)":"var(--red)"}));
+  for(let i=0;i<3;i++)arrow(rc,svg,[c[i][0]+6,190],[c[i+1][0]-6,190],{bend:0.45,color:"red"});
+  lab(svg,80,250,"find 4 → any order works · up to n checks · O(n)",{size:17,color:"var(--ink)"});
+  lab(svg,80,280,"for i: if A[i] == target return i · return −1",{size:16,color:"var(--soft)"});
+  d4_h(svg,800,46,"Binary search: halve a SORTED array");
+  const r1=cells(rc,svg,820,150,[10,20,30,40,50],{w:80,hl:[2]});
+  d4_mark(rc,svg,r1[0][0],144,"low","blue");d4_mark(rc,svg,r1[2][0],144,"mid","red");d4_mark(rc,svg,r1[4][0],144,"high","blue");
+  lab(svg,1240,178,"① 30 < 40",{size:16,color:"var(--red)"});lab(svg,1240,202,"→ low = mid + 1",{size:16,color:"var(--red)"});
+  const r2=cells(rc,svg,820,290,["","","",40,50],{w:80,hl:[3],hlf:"var(--g)",seed:5});
+  d4_mark(rc,svg,r2[3][0]-14,284,"low=mid","green");d4_mark(rc,svg,r2[4][0]+10,284,"high","blue");
+  lab(svg,1240,320,"② 40 ✓ in 2 steps",{size:16,color:"var(--green)",weight:700});
+  lab(svg,60,360,"1,000,000 items:",{size:18,color:"var(--ink)",weight:700});
+  lab(svg,60,390,"linear → up to 1,000,000 checks",{size:17,color:"var(--red)"});
+  lab(svg,60,418,"binary → about 20 checks · O(log n)",{size:17,color:"var(--green)"});
+},500);
+
+B("b4e",[
+  N("sk",60,330,560,"sticky",sticky(`"Big Silly Insects crawl · Merge + Heap hop"`,`Bubble, Selection, Insertion = O(n²) · Merge, Heap = O(n log n)`))
+],[],(rc,svg)=>{
+  d4_h(svg,60,46,"Sorting: put in order");
+  cells(rc,svg,80,90,[40,10,50,20,30],{w:76,idx:false});arrow(rc,svg,[270,146],[270,196],{bend:0,color:"green"});
+  cells(rc,svg,80,206,[10,20,30,40,50],{w:76,idx:false,fill:"var(--g)",seed:7});
+  lab(svg,500,120,"slow O(n²): bubble · selection · insertion",{size:17,color:"var(--red)"});
+  lab(svg,500,160,"fast O(n log n): merge · heap",{size:17,color:"var(--green)"});
+  lab(svg,500,200,"quick sort: also named",{size:16,color:"var(--soft)"});
+  lab(svg,500,240,"sorted data → binary search works",{size:16,color:"var(--soft)"});
+  d4_h(svg,880,46,"Merging two SORTED rows");
+  const a=cells(rc,svg,900,90,[10,20,30],{w:70,idx:false});const b=cells(rc,svg,1180,90,[40,50],{w:70,idx:false,fill:"var(--p)",seed:4});
+  const m=cells(rc,svg,950,220,[10,20,30,40,50],{w:70,idx:false,fill:"var(--g)",seed:8});
+  arrow(rc,svg,[a[1][0],140],[m[1][0],212],{bend:0,color:"blue"});arrow(rc,svg,[b[0][0],140],[m[3][0]+6,212],{bend:0,color:"red"});
+  lab(svg,900,310,"take the smaller front each time → O(n + m)",{size:17,color:"var(--ink)"});
+},460);
+
+B("b4f",[],[],(rc,svg)=>{
+  d4_h(svg,60,46,"The speed ladder: fastest at the top");
+  const rows=[["O(1)",70,"var(--g)","access by index · update · insert/delete at the END · push · pop"],["O(log n)",150,"var(--g)","binary search (sorted)"],["O(n)",270,"var(--y)","traverse · linear search · insert/delete at front or middle"],["O(n + m)",300,"var(--y)","merge two sorted arrays"],["O(n log n)",420,"var(--p)","merge sort · heap sort"],["O(n²)",600,"var(--p)","bubble · selection · insertion sort"]];
+  rows.forEach(([o,w,f,t],i)=>{const y=86+i*66;box(rc,svg,190,y,w,44,f,400+i);T(svg,170,y+30,o,{anchor:"end",size:20,weight:700});T(svg,190+w+20,y+29,t,{anchor:"start",size:18})});
+  arrow(rc,svg,[52,100],[52,86+5*66+40],{bend:0,color:"red"});T(svg,40,250,"slower",{size:15,color:"var(--red)",rotate:-90});
+},500);
+
+/* ===== 5 · pointers + dynamic memory (diagram-first) ===== */
+const d4_cell=(rc,svg,x,y,w,val,addr,name,f,seed)=>{box(rc,svg,x,y,w,56,f,seed);T(svg,x+w/2,y+36,val,{size:22,weight:700});T(svg,x+w/2,y-10,addr,{size:15,color:"var(--blue)"});T(svg,x+w/2,y+82,name,{size:17,weight:700});return{x,y,w,cx:x+w/2,cy:y+28}};
+B("b5a",[
+  N("cd",880,40,560,"box w",X(`int score = 75;
+int *ptr = [[&]]score;   // & = address of
+printf("%d", [[*]]ptr);  // * = value at → 75
+*ptr = 80;           // score is now 80`))
+],[],(rc,svg)=>{
+  const s=d4_cell(rc,svg,90,90,150,"75","0x1000","score","var(--y)",420);
+  const p=d4_cell(rc,svg,500,90,170,"0x1000","0x2000","ptr","var(--g)",422);
+  arrow(rc,svg,[p.x-6,p.cy],[s.x+s.w+8,s.cy],{bend:-0.25,color:"red"});T(svg,370,236,"*ptr follows it → 75",{size:17,color:"var(--red)",weight:700});
+  arrow(rc,svg,[s.x+s.w-14,s.y-4],[p.x+14,p.y-4],{bend:-0.1,color:"blue",dash:1});T(svg,370,26,"&score = 0x1000 goes INTO ptr",{size:16,color:"var(--blue)"});
+  /* struct pointer */
+  const sx=90,sy=330;box(rc,svg,sx,sy,120,52,"var(--b)",430);T(svg,sx+60,sy+33,"age 20",{size:18,weight:700});box(rc,svg,sx+120,sy,140,52,"var(--b)",431);T(svg,sx+190,sy+33,"cgpa 4.25",{size:18,weight:700});T(svg,sx+130,sy-12,"struct Student s",{size:16,color:"var(--soft)"});
+  box(rc,svg,500,sy,100,52,"var(--g)",432);T(svg,550,sy+33,"p",{size:20,weight:700});arrow(rc,svg,[498,sy+26],[sx+266,sy+26],{bend:0,color:"red"});
+  T(svg,700,sy+24,"p->age  ==  (*p).age  → 20",{anchor:"start",size:19,weight:700,color:"var(--red)"});T(svg,700,sy+54,"how linked lists + trees reach their nodes",{anchor:"start",size:16,color:"var(--soft)"});
+  /* NULL */
+  box(rc,svg,500,sy+120,100,52,"var(--g)",434);T(svg,550,sy+153,"q",{size:20,weight:700});add(svg,rc.line(600,sy+146,660,sy+146,{stroke:"var(--ink)",strokeWidth:2}));[0,1,2].forEach(i=>add(svg,rc.line(660,sy+128+i*9-0,660,sy+164-i*9,{stroke:"var(--ink)",strokeWidth:2})));
+  T(svg,700,sy+152,"NULL = points nowhere (end of a list · failed malloc)",{anchor:"start",size:17});
+},560);
+
+B("b5b",[
+  N("cd",40,470,620,"box w",X(`int *arr = [[malloc]](5 * sizeof(int));
+if (arr == NULL) { /* out of memory */ }
+...
+[[free]](arr);`))
+],[],(rc,svg)=>{
+  box(rc,svg,40,60,400,380,"var(--card)",440,{strokeLineDash:[10,6]});T(svg,240,48,"STACK (automatic)",{size:18,weight:700});
+  box(rc,svg,560,60,880,380,"var(--card)",441,{strokeLineDash:[10,6]});T(svg,1000,48,"HEAP (you malloc + you free)",{size:18,weight:700});
+  const v=(y,n,s)=>{box(rc,svg,100,y,100,46,"var(--g)",s);T(svg,150,y+30,n,{size:19,weight:700})};
+  v(100,"arr",442);v(220,"old",443);v(340,"q",444);
+  /* live block */
+  for(let i=0;i<5;i++)box(rc,svg,640+i*56,100,56,46,"var(--b)",450+i);
+  arrow(rc,svg,[204,123],[634,123],{bend:0,color:"green"});T(svg,940,128,"malloc: borrow a block",{anchor:"start",size:17,color:"var(--green)",weight:700});
+  /* leak */
+  for(let i=0;i<3;i++)box(rc,svg,640+i*56,220,56,46,"var(--p)",460+i);add(svg,rc.line(204,243,330,243,{stroke:"var(--red)",strokeWidth:2.2,strokeLineDash:[6,5]}));T(svg,340,249,"✂",{size:20,color:"var(--red)"});
+  T(svg,830,250,"LEAK: no pointer left → can't free it",{anchor:"start",size:17,color:"var(--red)",weight:700});
+  /* dangling */
+  for(let i=0;i<2;i++)box(rc,svg,640+i*56,340,56,46,"var(--card)",470+i,{strokeLineDash:[5,4],stroke:"var(--soft)"});
+  arrow(rc,svg,[204,363],[634,363],{bend:0,color:"blue",dash:1});T(svg,770,370,"freed block: q still points here = DANGLING (use after free)",{anchor:"start",size:17,color:"var(--blue)"});
+  T(svg,700,470+12,"",{});lab(svg,700,500,"every malloc → exactly one free · never free twice",{size:18,color:"var(--ink)"});
+  lab(svg,700,530,"stack: freed for you when the function returns",{size:17,color:"var(--soft)"});
+},600);
+
+B("b5c",[],[],(rc,svg)=>{
+  d4_h(svg,60,46,"How a dynamic array grows (it must stay contiguous)");
+  const a=cells(rc,svg,100,110,[1,2,3,4],{w:70,fill:"var(--b)"});T(svg,100+4*70+20,140,"full (cap 4) + push 5",{anchor:"start",size:17,color:"var(--red)"});
+  box(rc,svg,92,102,4*70+16,62,"transparent",480,{fill:undefined,fillStyle:undefined,stroke:"var(--red)",strokeWidth:2,strokeLineDash:[8,6]});T(svg,100,92,"③ old block freed",{anchor:"start",size:15,color:"var(--red)"});
+  const b=cells(rc,svg,100,270,[1,2,3,4,5,"","",""],{w:70,hl:[4],seed:6});T(svg,100+8*70+20,300,"① new block, cap 8 (double)",{anchor:"start",size:17,color:"var(--green)"});
+  for(let i=0;i<4;i++)arrow(rc,svg,[a[i][0],a[i][1]+46],[b[i][0],b[i][1]-26],{bend:0,color:"green"});T(svg,410,226,"② copy each",{anchor:"start",size:16,color:"var(--green)"});
+  lab(svg,100,380,"④ point the array at the new block",{size:17,color:"var(--ink)"});
+  lab(svg,100,412,"C: realloc(p, newSize) does ①–③ when needed (it may extend in place)",{size:16,color:"var(--soft)"});
+  d4_h(svg,880,186,"Why DOUBLE, not +1?");
+  [1,2,4,8,16].forEach((c,i)=>{box(rc,svg,880,206+i*40,c*28,28,"var(--y)",490+i);T(svg,880+c*28+12,226+i*40,"cap "+c,{anchor:"start",size:15})});
+  lab(svg,880,430,"resizes get rare → append is O(1) on average",{size:17,color:"var(--green)",weight:700});
+  lab(svg,880,458,"C++ vector, Java ArrayList + Python lists grow this way",{size:16,color:"var(--soft)"});
+},490);
+
+
+/* ===== 6 · linked lists (diagram-first) ===== */
+/* own helpers so this section doesn't depend on other files' drawing code */
+const d6_t=(svg,x,y,s,o={})=>T(svg,x,y,s,Object.assign({size:16,color:"var(--soft)",anchor:"start"},o));
+const d6_dot=(rc,svg,p)=>add(svg,rc.circle(p[0],p[1],7,{fill:"var(--ink)",fillStyle:"solid",stroke:"var(--ink)",roughness:0.3}));
+/* one node: [data|next] or [prev|data|next]; returns geometry */
+function d6_node(rc,svg,x,y,v,o={}){const dw=o.dw||46,pw=o.pw||28,h=46,s=o.seed||600,g={x,y,h};let cx=x;
+  if(o.dbl){box(rc,svg,cx,y,pw,h,"var(--card)",s);g.prev=[cx+pw/2,y+h/2];cx+=pw}
+  box(rc,svg,cx,y,dw,h,o.fill||"var(--g)",s+1);T(svg,cx+dw/2,y+30,String(v),{size:19,weight:700});g.data=[cx+dw/2,y+h/2];cx+=dw;
+  box(rc,svg,cx,y,pw,h,"var(--card)",s+2);g.next=[cx+pw/2,y+h/2];cx+=pw;g.r=cx;g.w=cx-x;
+  d6_dot(rc,svg,g.next);if(g.prev)d6_dot(rc,svg,g.prev);return g}
+const d6_cross=(rc,svg,g)=>{[[g.x-6,g.y-6,g.r+6,g.y+g.h+6],[g.r+6,g.y-6,g.x-6,g.y+g.h+6]].forEach(l=>add(svg,rc.line(...l,{stroke:"var(--red)",strokeWidth:3.2,roughness:0.6})))};
+const d6_mk=(svg,x,y,s)=>T(svg,x,y,s,{size:17,color:"var(--red)",weight:700});
+/* a row of nodes: o.red = indices whose next-arrow changed (red) · o.cut = indices with no next-arrow ·
+   o.cross = freed nodes · o.hl = new nodes · o.head = index of head (false = none) · o.nul = draw →NULL */
+function d6_row(rc,svg,x,y,vals,o={}){const dbl=!!o.dbl,dw=o.dw||46,pw=o.pw||28,gp=o.gp||42,step=dw+pw*(dbl?2:1)+gp,gs=[];
+  vals.forEach((v,i)=>gs.push(d6_node(rc,svg,x+i*step,y,v,{dbl,dw,pw,fill:(o.hl||[]).includes(i)?"var(--y)":undefined,seed:(o.seed||600)+i*4})));
+  const has=(k,i)=>(o[k]||[]).includes(i),oy=dbl?-9:0;
+  gs.forEach((g,i)=>{const n=gs[i+1];if(!n||has("cut",i))return;
+    arrow(rc,svg,[g.next[0]+4,g.next[1]+oy],[n.x-2,n.y+23+oy],{bend:0,color:has("red",i)?"red":"ink"});
+    if(dbl&&!has("pcut",i+1))arrow(rc,svg,[n.prev[0]-4,n.prev[1]+11],[g.r+2,g.y+34],{bend:0,color:has("pred",i+1)?"red":"blue"})});
+  const L=gs[gs.length-1];
+  if(o.nul!==false&&!has("cut",gs.length-1)){arrow(rc,svg,[L.next[0]+4,L.next[1]],[L.r+38,L.next[1]],{bend:0,color:"ink"});d6_t(svg,L.r+44,L.next[1]+6,"NULL")}
+  if(dbl&&o.nul!==false){const f=gs[0];arrow(rc,svg,[f.prev[0]-4,f.prev[1]],[f.x-38,f.prev[1]],{bend:0,color:"blue"});d6_t(svg,f.x-44,f.prev[1]+6,"NULL",{anchor:"end"})}
+  (o.cross||[]).forEach(i=>d6_cross(rc,svg,gs[i]));
+  if(o.head!==false){const g=gs[o.head||0];T(svg,(g.prev?g.prev[0]+pw/2:g.x)+dw/2,y-12,"head",{size:16,weight:700,color:o.headRed?"var(--red)":"var(--soft)"})}
+  return gs}
+/* before (top) → after (bottom) picture inside a placeholder rect */
+function stepRow(rc,svg,R,before,after,o={}){const x=R.x,lx=x+(o.dbl?150:100);
+  d6_t(svg,x,R.y+52,"before");d6_row(rc,svg,lx,R.y+28,before,Object.assign({dbl:o.dbl,seed:700},o.b||{}));
+  arrow(rc,svg,[x+26,R.y+66],[x+26,R.y+122],{bend:0,color:"green"});
+  d6_t(svg,x,R.y+150,"after",{color:"var(--green)"});return d6_row(rc,svg,lx,R.y+126,after,Object.assign({dbl:o.dbl,seed:760},o.a||{}))}
+
+B("b6a",[
+  N("df",40,20,620,"box y",`<b>Linked list</b> = <b>nodes</b> scattered in memory, each holding <b>data + a pointer</b> to the next · linear but <b>non-contiguous</b>`),
+  N("dg",40,"b:df:20",1420,"plain",gap(330)),
+  N("ty",40,"b:dg:10",1420,"plain",gap(120))
+],[],(rc,svg,R)=>{const d=R.dg;
+  /* anatomy */
+  const a=d6_node(rc,svg,820,R.df.y+10,"data",{dw:110,pw:60,seed:610});d6_t(svg,a.data[0],a.y+72,"the value",{anchor:"middle"});d6_t(svg,a.next[0],a.y+72,"address of next",{anchor:"middle",color:"var(--red)"});
+  /* array: one block */
+  T(svg,d.x+150,d.y+26,"ARRAY: one block, side by side",{size:18,weight:700,color:"var(--blue)"});
+  cells(rc,svg,d.x+20,d.y+70,[15,3,17,90],{w:66,addr:[1000,1004,1008,1012]});d6_t(svg,d.x+20,d.y+168,"jump straight to [i]: O(1) · fixed size");
+  /* linked: scattered */
+  T(svg,1040,d.y+26,"LINKED LIST: nodes anywhere, follow the arrows",{size:18,weight:700,color:"var(--green)"});
+  const P=[[640,d.y+80,"3200"],[860,d.y+180,"3600"],[1080,d.y+70,"4000"],[1270,d.y+190,"4400"]],v=[15,3,17,90],gs=P.map((p,i)=>{const g=d6_node(rc,svg,p[0],p[1],v[i],{seed:620+i*4});T(svg,g.x+37,p[1]-10,p[2],{size:14,color:"var(--blue)"});return g});
+  T(svg,gs[0].x+23,gs[0].y-32,"head",{size:16,weight:700,color:"var(--red)"});
+  gs.forEach((g,i)=>{const n=gs[i+1];if(n)arrow(rc,svg,[g.next[0]+4,g.next[1]],[n.x-2,n.y+23],{bend:0.12,color:"ink"})});
+  const L=gs[3];arrow(rc,svg,[L.next[0],L.y+L.h+4],[L.next[0],L.y+L.h+44],{bend:0,color:"ink"});d6_t(svg,L.next[0]-18,L.y+L.h+66,"NULL");
+  d6_t(svg,640,d.y+300,"reach node k = walk from head: O(n) · grows any time · extra memory for pointers");
+  /* three types */
+  const t=R.ty,y=t.y+40;T(svg,t.x,y-16,"3 types:",{anchor:"start",size:17,weight:700});
+  d6_t(svg,t.x+90,y-16,"singly");d6_row(rc,svg,t.x+90,y,[1,2,3],{dw:30,pw:22,gp:26,head:false,seed:640});
+  d6_t(svg,t.x+520,y-16,"doubly");d6_row(rc,svg,t.x+570,y,[1,2,3],{dbl:true,dw:30,pw:22,gp:30,head:false,seed:660});
+  d6_t(svg,t.x+1030,y-16,"circular");const c=d6_row(rc,svg,t.x+1030,y,[1,2,3],{dw:30,pw:22,gp:26,head:false,nul:false,seed:680});
+  const l=c[2],f=c[0];add(svg,rc.linearPath([[l.next[0],l.y+46],[l.next[0],y+70],[f.x+14,y+70]],{stroke:"var(--red)",strokeWidth:2.4,roughness:0.7}));arrow(rc,svg,[f.x+14,y+70],[f.x+14,y+50],{bend:0,color:"red"})});
+
+B("b6b",[
+  N("dg",40,20,1420,"plain",gap(150)),
+  N("cp",40,"b:dg:20",440,"box g",X(`class Node {
+public:
+  int data;
+  Node* next;
+  Node(int d) { data = d; next = nullptr; }
+};
+Node* head = new Node(10);
+head->next = new Node(20);
+head->next->next = new Node(30);`)),
+  N("py","r:cp:30","t:cp",380,"box b",X(`class Node:
+  def __init__(self, d):
+    self.data = d
+    self.next = None
+
+head = Node(10)
+head.next = Node(20)`)),
+  N("tv","r:py:30","t:cp",510,"box w",`<b>Print</b> with a copy so head isn't lost:`+X(`temp = head
+while temp != NULL:
+    print temp.data
+    temp = temp.next`))
+],[],(rc,svg,R)=>{const d=R.dg,y=d.y+56;
+  [["① allocate, store data, mark head",[10]],["② new node · link 1st → 2nd",[10,20]],["③ new node · link · last next = NULL",[10,20,30]]].forEach(([t,v],i)=>{const x=d.x+i*480;
+    d6_mk(svg,x,y-30,t).setAttribute("text-anchor","start");d6_row(rc,svg,x+10,y,v,{dw:40,pw:26,gp:30,hl:[v.length-1],red:v.length>1?[v.length-2]:[],seed:800+i*20})})});
+
+B("b6c",[
+  N("i1",40,20,400,"box w",`<span class="t">① At the front · O(1)</span>`+X(`new->next = head;   // ①
+head = new;         // ②`)),
+  N("g1","r:i1:30","t:i1",990,"plain",gap(190)),
+  N("i2",40,"b:i1,g1:24",400,"box w",`<span class="t">② At the end · O(n)</span>walk to the last node, then`+X(`last->next = new;   // ②`)+`<span class="ann">O(1) only if you keep a tail pointer</span>`),
+  N("g2","r:i2:30","t:i2",990,"plain",gap(190)),
+  N("i3",40,"b:i2,g2:24",400,"box w",`<span class="t">③ At position k</span>walk <b>curr</b> to node k − 1, then`+X(`new->next = curr->next; // ①
+curr->next = new;       // ②`)),
+  N("g3","r:i3:30","t:i3",990,"plain",gap(190)),
+  N("sk",40,"b:i3,g3:24",620,"sticky",sticky(`"Grab the next hand before you let go"`,`set new->next FIRST, or everything after curr is lost`))
+],[],(rc,svg,R)=>{
+  let a=stepRow(rc,svg,R.g1,[2,3,4],[1,2,3,4],{a:{hl:[0],red:[0],headRed:true}});d6_mk(svg,(a[0].r+a[1].x)/2,a[0].y+70,"①");d6_mk(svg,a[0].x+60,a[0].y-34,"② head moves");
+  a=stepRow(rc,svg,R.g2,[1,2,3],[1,2,3,4],{a:{hl:[3],red:[2]}});d6_mk(svg,(a[2].r+a[3].x)/2,a[2].y+70,"②");
+  arrow(rc,svg,[a[0].x+20,a[0].y-30],[a[2].x+40,a[2].y-30],{bend:0,color:"blue",dash:1});d6_t(svg,a[1].x,a[0].y-38,"① walk",{color:"var(--blue)"});
+  a=stepRow(rc,svg,R.g3,[1,2,4],[1,2,3,4],{b:{},a:{hl:[2],red:[1,2]}});d6_mk(svg,(a[2].r+a[3].x)/2,a[2].y+70,"①");d6_mk(svg,(a[1].r+a[2].x)/2,a[1].y+70,"②");T(svg,a[1].x+37,a[1].y-12,"curr",{size:16,weight:700,color:"var(--red)"})});
+
+B("b6d",[
+  N("d1",40,20,400,"box w",`<span class="t">① First node · O(1)</span>`+X(`temp = head;        // ①
+head = head->next;  // ②
+free(temp);         // ③`)+`<span class="ann">empty list (head == NULL)? nothing to delete</span>`),
+  N("g1","r:d1:30","t:d1",990,"plain",gap(190)),
+  N("d2",40,"b:d1,g1:24",400,"box w",`<span class="t">② Last node · O(n)</span>walk <b>curr</b> to the <b>second-last</b> node`+X(`free(curr->next);
+curr->next = NULL;`)+`<span class="ann">O(n) even with a tail: you need the node before it</span>`),
+  N("g2","r:d2:30","t:d2",990,"plain",gap(190)),
+  N("d3",40,"b:d2,g2:24",400,"box w",`<span class="t">③ At position k</span>walk <b>curr</b> to node k − 1`+X(`temp = curr->next;
+curr->next = temp->next;
+free(temp);`)),
+  N("g3","r:d3:30","t:d3",990,"plain",gap(190))
+],[],(rc,svg,R)=>{
+  let a=stepRow(rc,svg,R.g1,[1,2,3,4],[1,2,3,4],{a:{cross:[0],cut:[0],head:1,headRed:true}});d6_mk(svg,a[0].x+37,a[0].y+76,"③ freed");
+  a=stepRow(rc,svg,R.g2,[1,2,3,4],[1,2,3,4],{a:{cross:[3],cut:[2,3]}});const c=a[2];arrow(rc,svg,[c.next[0],c.y+c.h+4],[c.next[0],c.y+c.h+40],{bend:0,color:"red"});d6_mk(svg,c.next[0]+8,c.y+c.h+40,"NULL").setAttribute("text-anchor","start");T(svg,c.x+37,c.y-12,"curr",{size:16,weight:700,color:"var(--red)"});
+  a=stepRow(rc,svg,R.g3,[1,2,3,4],[1,2,3,4],{a:{cross:[2],cut:[1,2]}});const p=a[1],n=a[3];arrow(rc,svg,[p.next[0],p.y-4],[n.x+20,n.y-4],{bend:-0.28,color:"red"});T(svg,p.x+37,p.y-12,"curr",{size:16,weight:700,color:"var(--red)"})});
+
+B("b6e",[
+  N("dg",40,20,900,"plain",gap(200)),
+  N("pr","r:dg:40","t:dg",480,"box g",`<b>✓</b> grows any time, no fixed size<br><b>✓</b> insert/delete at the front: O(1)<br><b>✓</b> builds stacks, queues, graphs`),
+  N("cn","r:dg:40","b:pr:20",480,"box p",`<b>✗</b> extra memory for pointers<br><b>✗</b> no jumping to [i]: walk from head<br><b>✗</b> not contiguous → cache-unfriendly`)
+],[],(rc,svg,R)=>{const d=R.dg,y=d.y+60;T(svg,d.x,d.y+20,"Search for 30: walk curr from head, one node at a time",{anchor:"start",size:18,weight:700});
+  const a=d6_row(rc,svg,d.x+20,y,[10,20,30,40],{hl:[2],seed:900});
+  ["① 10 ≠ 30","② 20 ≠ 30","③ found ✓"].forEach((s,i)=>{const g=a[i];arrow(rc,svg,[g.x+37,g.y+100],[g.x+37,g.y+52],{bend:0,color:i===2?"green":"blue"});d6_t(svg,g.x+37,g.y+122,s,{anchor:"middle",color:i===2?"var(--green)":"var(--blue)"})});
+  d6_t(svg,d.x+20,y+170,"up to n checks → O(n) · no binary search (can't jump to the middle)",{color:"var(--ink)"})});
+
+B("b6f",[
+  N("dg",40,20,1420,"plain",gap(250)),
+  N("cp",40,"b:dg:10",440,"box g",X(`class Node {
+  int data;
+  Node* prev;
+  Node* next;
+};
+a->next = b;   // forward
+b->prev = a;   // back`)),
+  N("bl","r:cp:40","t:cp",520,"box y",`every join = <b>two</b> pointers: <code>next</code> forward + <code>prev</code> back<br>first.prev = <b>NULL</b> · last.next = <b>NULL</b><br>→ walk <b>both ways</b>; keep a <b>tail</b> for O(1) at the end`)
+],[],(rc,svg,R)=>{const d=R.dg;
+  const g=d6_node(rc,svg,d.x+40,d.y+40,"data",{dbl:true,dw:110,pw:70,seed:950});d6_t(svg,g.prev[0],g.y+74,"prev ← back",{anchor:"middle",color:"var(--blue)"});d6_t(svg,g.next[0],g.y+74,"next → forward",{anchor:"middle"});
+  d6_row(rc,svg,d.x+520,d.y+160,[10,20,30,40],{dbl:true,seed:960});d6_t(svg,d.x+480,d.y+236,"black = next · blue = prev",{});});
+
+B("b6g",[
+  N("f",40,20,400,"box w",`<span class="t">Insert at front</span>`+X(`new->prev = NULL;
+new->next = head;
+head->prev = new;  // if not empty
+head = new;`)),
+  N("g1","r:f:30","t:f",990,"plain",gap(190)),
+  N("b",40,"b:f,g1:24",400,"box w",`<span class="t">Delete first</span>`+X(`temp = head;
+head = head->next;
+if (head) head->prev = NULL;
+free(temp);`)),
+  N("g2","r:b:30","t:b",990,"plain",gap(190)),
+  N("e",40,"b:b,g2:24",400,"box w",`<span class="t">Delete last</span>walk curr to the last node`+X(`if (curr->prev == NULL) head = NULL;
+else curr->prev->next = NULL;
+free(curr);`)),
+  N("g3","r:e:30","t:e",990,"plain",gap(190)),
+  N("p",40,"b:e,g3:24",400,"box w",`<span class="t">Delete at position</span>curr = node before the target`+X(`t = curr->next;
+curr->next = t->next;
+if (t->next) t->next->prev = curr;
+free(t);`)),
+  N("g4","r:p:30","t:p",990,"plain",gap(190))
+],[],(rc,svg,R)=>{const o={dbl:true};
+  stepRow(rc,svg,R.g1,[2,3],[1,2,3],Object.assign({a:{dbl:true,hl:[0],red:[0],pred:[1],headRed:true}},o));
+  stepRow(rc,svg,R.g2,[1,2,3],[1,2,3],Object.assign({a:{dbl:true,cross:[0],cut:[0],pcut:[1],head:1,headRed:true}},o));
+  stepRow(rc,svg,R.g3,[1,2,3],[1,2,3],Object.assign({a:{dbl:true,cross:[2],cut:[1,2],pcut:[2]}},o));
+  const a=stepRow(rc,svg,R.g4,[1,2,3],[1,2,3],Object.assign({a:{dbl:true,cross:[1],cut:[0,1],pcut:[1,2]}},o));
+  arrow(rc,svg,[a[0].next[0],a[0].y-6],[a[2].x+46,a[2].y-6],{bend:-0.3,color:"red"});arrow(rc,svg,[a[2].prev[0],a[2].y+a[2].h+6],[a[0].r-10,a[0].y+a[0].h+6],{bend:-0.3,color:"red"});
+  d6_t(svg,1300,R.g1.y+150,"red = pointers that change",{color:"var(--red)",anchor:"start",size:15})});
+
+/* a ring of nodes drawn as circles, arrows along the ring */
+function d6_ring(rc,svg,cx,cy,r,vals,o={}){const n=vals.length,pts=vals.map((v,i)=>{const a=-Math.PI/2+i*2*Math.PI/n;return[cx+r*Math.cos(a),cy+r*Math.sin(a)]});
+  pts.forEach((p,i)=>{const q=pts[(i+1)%n],a1=-Math.PI/2+i*2*Math.PI/n,a2=a1+2*Math.PI/n,da=0.32;
+    const s=[cx+r*Math.cos(a1+da),cy+r*Math.sin(a1+da)],e=[cx+r*Math.cos(a2-da),cy+r*Math.sin(a2-da)];
+    arrow(rc,svg,s,e,{bend:-0.18,color:i===n-1?"red":"ink"});
+    if(o.dbl){const ri=r-44,s2=[cx+ri*Math.cos(a2-da-0.05),cy+ri*Math.sin(a2-da-0.05)],e2=[cx+ri*Math.cos(a1+da+0.05),cy+ri*Math.sin(a1+da+0.05)];arrow(rc,svg,s2,e2,{bend:0.22,color:i===n-1?"red":"blue"})}});
+  pts.forEach((p,i)=>{add(svg,rc.circle(p[0],p[1],52,{fill:i===n-1?"var(--y)":"var(--g)",fillStyle:"solid",stroke:"var(--ink)",strokeWidth:2,seed:(o.seed||980)+i}));T(svg,p[0],p[1]+7,String(vals[i]),{size:19,weight:700})});
+  return pts}
+B("b6h",[
+  N("dg",40,20,1420,"plain",gap(400)),
+  N("nt",40,"b:dg:10",1420,"box y center",`the <b>last node points back to the first</b> → no NULL, loops forever · used for <b>round-robin</b> scheduling + <b>repeating playlists</b> · a <b>last</b> pointer gives you both ends: <code>last->next</code> = first`)
+],[],(rc,svg,R)=>{const d=R.dg;
+  T(svg,d.x+340,d.y+26,"CIRCULAR SINGLY: one way round",{size:18,weight:700});const p=d6_ring(rc,svg,d.x+340,d.y+210,140,[10,20,30,40,50]);
+  T(svg,p[4][0]-40,p[4][1]-34,"last",{size:16,weight:700,color:"var(--red)"});
+  T(svg,d.x+1060,d.y+26,"CIRCULAR DOUBLY: both ways round",{size:18,weight:700});const q=d6_ring(rc,svg,d.x+1060,d.y+210,140,[10,20,30,40],{dbl:true,seed:990});
+  T(svg,q[3][0]-50,q[3][1]-30,"last",{size:16,weight:700,color:"var(--red)"});
+  d6_t(svg,d.x+1240,d.y+360,"black = next · blue = prev",{size:15});d6_t(svg,d.x+520,d.y+360,"red = last → first",{size:15,color:"var(--red)"})});
+
+B("b6i",[
+  N("dg",40,20,1420,"plain",gap(230)),
+  N("nt",40,"b:dg:10",1420,"box g center",`queues + deques are built on linked lists: insert/delete at the <b>front</b> is O(1) (an array would shift everything)`)
+],[],(rc,svg,R)=>{const d=R.dg,y=d.y+60;
+  /* browser */
+  T(svg,d.x+170,y-26,"🌐 browser back / forward",{size:17,weight:700});["page 1","page 2","page 3"].forEach((s,i)=>{box(rc,svg,d.x+i*120,y,96,62,i===1?"var(--y)":"var(--b)",1000+i);T(svg,d.x+i*120+48,y+37,s,{size:15})});
+  [0,1].forEach(i=>{arrow(rc,svg,[d.x+i*120+98,y+20],[d.x+i*120+118,y+20],{bend:0,color:"ink"});arrow(rc,svg,[d.x+i*120+118,y+44],[d.x+i*120+98,y+44],{bend:0,color:"blue"})});d6_t(svg,d.x+60,y+100,"→ DOUBLY",{color:"var(--green)",weight:700,size:17});
+  /* image viewer */
+  T(svg,d.x+560,y-26,"🖼 image viewer ‹ prev · next ›",{size:17,weight:700});box(rc,svg,d.x+470,y,180,110,"var(--card)",1010);add(svg,rc.polygon([[d.x+490,y+92],[d.x+540,y+40],[d.x+580,y+80],[d.x+605,y+60],[d.x+635,y+92]],{fill:"var(--g)",fillStyle:"solid",stroke:"var(--ink)",roughness:0.8}));
+  T(svg,d.x+452,y+62,"‹",{size:34,weight:700});T(svg,d.x+668,y+62,"›",{size:34,weight:700});d6_t(svg,d.x+500,y+140,"→ DOUBLY",{color:"var(--green)",weight:700,size:17});
+  /* playlist ring */
+  T(svg,d.x+1040,y-26,"🎵 repeat playlist / turns in a game",{size:17,weight:700});d6_ring(rc,svg,d.x+1000,y+70,62,["♪1","♪2","♪3","♪4"],{seed:1020});d6_t(svg,d.x+1100,y+80,"→ CIRCULAR",{color:"var(--green)",weight:700,size:17})});
+
+
+/* ===== 7 · stacks (diagram-first) ===== */
+function stackPic(rc,svg,x,y,vals,cap,o={}){const w=o.w||90,h=36;for(let i=0;i<cap;i++){const yy=y+(cap-1-i)*h,v=vals[i];box(rc,svg,x,yy,w,h,v==null?"var(--card)":(i===vals.length-1?(o.top||"var(--y)"):"var(--b)"),300+i+(o.seed||0),v==null?{strokeLineDash:[5,4]}:{});if(v!=null)T(svg,x+w/2,yy+25,String(v),{size:18,weight:700});T(svg,x-12,yy+24,String(i),{size:14,anchor:"end",color:"var(--soft)"})}
+  const ty=vals.length?y+(cap-vals.length)*h+18:y+cap*h+16;arrow(rc,svg,[x+w+60,ty],[x+w+8,ty],{bend:0,color:"red"});T(svg,x+w+66,ty+6,o.lbl===false?"top":"top = "+(vals.length-1),{anchor:"start",size:16,color:"var(--red)",weight:700})}
+const d7_ln=(rc,svg,x1,y1,x2,y2,c,w,dash)=>add(svg,rc.line(x1,y1,x2,y2,Object.assign({stroke:c||"var(--ink)",strokeWidth:w||2,roughness:0.7},dash?{strokeLineDash:[7,6]}:{})));
+function d7_person(rc,svg,x,y,l,f,seed,dash){const o=dash?{strokeLineDash:[5,4]}:{};add(svg,rc.circle(x,y,28,Object.assign({fill:f,fillStyle:"solid",stroke:"var(--ink)",strokeWidth:2,roughness:0.6,seed},o)));box(rc,svg,x-18,y+17,36,46,f,seed+1,o);T(svg,x,y+48,l,{size:18,weight:700})}
+function d7_ring(rc,svg,cx,cy,r1,r2,vals,fill,seed){const n=vals.length,P=(r,a)=>[cx+r*Math.cos(a),cy+r*Math.sin(a)],mids=[];
+  for(let i=0;i<n;i++){const a0=-Math.PI/2+i*2*Math.PI/n,a1=a0+2*Math.PI/n,am=(a0+a1)/2;
+    add(svg,rc.polygon([P(r2,a0),P(r2,a1),P(r1,a1),P(r1,a0)],{fill:fill(i),fillStyle:"solid",stroke:"var(--ink)",strokeWidth:1.8,roughness:0.6,seed:seed+i}));
+    const m=P((r1+r2)/2,am);if(vals[i]!==""&&vals[i]!=null)T(svg,m[0],m[1]+7,String(vals[i]),{size:19,weight:700});const q=P(r2+18,am);T(svg,q[0],q[1]+5,String(i),{size:14,color:"var(--soft)"});mids.push(am)}
+  return{P,mids}}
+/* tiny pictures for the exam maps */
+function d7_mini(rc,svg,k,cx,cy){const S={stroke:"var(--ink)",strokeWidth:1.6,roughness:0.5},F=f=>Object.assign({fill:f,fillStyle:"solid"},S),r=(x,y,w,h,f)=>add(svg,rc.rectangle(x,y,w,h,F(f||"var(--b)")));
+  if(k==="stack"){[0,1,2].forEach(i=>r(cx-24,cy+8-i*13,48,12,i===2?"var(--y)":"var(--b)"))}
+  else if(k==="queue"){[0,1,2].forEach(i=>r(cx-33+i*22,cy-11,20,22));arrow(rc,svg,[cx-36,cy+18],[cx-46,cy+18],{bend:0,color:"green"});arrow(rc,svg,[cx+50,cy+18],[cx+38,cy+18],{bend:0,color:"green"})}
+  else if(k==="pq"){[[24,"var(--y)"],[16,"var(--b)"],[9,"var(--b)"]].forEach(([h,f],i)=>r(cx-30+i*20,cy+12-h,18,h,f));add(svg,rc.polygon([[cx-30,cy-14],[cx-26,cy-22],[cx-21,cy-16],[cx-16,cy-22],[cx-12,cy-14]],F("var(--y)")))}
+  else if(k==="deque"){[0,1,2].forEach(i=>r(cx-30+i*20,cy-10,20,20));arrow(rc,svg,[cx-36,cy],[cx-52,cy],{bend:0,color:"green",both:true});arrow(rc,svg,[cx+36,cy],[cx+52,cy],{bend:0,color:"green",both:true})}
+  else if(k==="ring"||k==="cq"){add(svg,rc.circle(cx,cy,44,F("var(--g)")));add(svg,rc.circle(cx,cy,18,F("var(--card)")));T(svg,cx,cy+33,k==="cq"?"% size":"overwrite",{size:12,color:"var(--soft)"})}
+  else if(k==="array"){[0,1,2,3].forEach(i=>{r(cx-36+i*18,cy-12,18,22);T(svg,cx-27+i*18,cy+24,String(i),{size:11,color:"var(--soft)"})})}
+  else if(k==="dll"){r(cx-40,cy-11,30,22,"var(--g)");r(cx+10,cy-11,30,22,"var(--g)");arrow(rc,svg,[cx-8,cy-4],[cx+8,cy-4],{bend:0,color:"ink"});arrow(rc,svg,[cx+8,cy+6],[cx-8,cy+6],{bend:0,color:"blue"})}
+  else if(k==="cll"){const p=[[cx,cy-16],[cx+18,cy+12],[cx-18,cy+12]];p.forEach(q=>add(svg,rc.circle(q[0],q[1],14,F("var(--g)"))));[[0,1],[1,2],[2,0]].forEach(([a,b])=>arrow(rc,svg,p[a],p[b],{bend:0.25,color:"red"}))}
+  else if(k==="tree"){const p=[[cx,cy-16],[cx-16,cy+4],[cx+16,cy+4],[cx-26,cy+22]];[[0,1],[0,2],[1,3]].forEach(([a,b])=>d7_ln(rc,svg,p[a][0],p[a][1],p[b][0],p[b][1],null,1.6));p.forEach(q=>add(svg,rc.circle(q[0],q[1],12,F("var(--p)"))))}}
+
+B("b7a",[],[],(rc,svg)=>{
+  T(svg,750,36,"LIFO = Last In, First Out · everything happens at the TOP",{size:22,weight:700});
+  const seq=[[[],"empty"],[[10],"push(10)"],[[10,20],"push(20)"],[[10,20,30],"push(30)"],[[10,20],"pop() → 30"],[[10,20],"peek() → 20"]];
+  seq.forEach(([v,l],i)=>{const x=90+i*230,y=80;stackPic(rc,svg,x,y,v,4,{w:70,seed:i*5});T(svg,x+35,y+4*36+40,l,{size:19,weight:700,color:i>=4?"var(--red)":"var(--ink)"});
+    if(i)arrow(rc,svg,[x-125,y+4*36+34],[x-60,y+4*36+34],{bend:0,color:"green"})});
+  T(svg,750,312,"push(x) · pop() · peek() (look, don't remove) · isEmpty()  →  all O(1)",{size:20});
+  T(svg,750,346,"used for: undo / redo · function calls + recursion (the call stack) · the browser BACK button · matching brackets",{size:18,color:"var(--soft)"})},380);
+
+B("b7b",[
+  N("pu",840,30,620,"box g",`<span class="t">push(x): check for overflow first</span>`+X(`if top == size - 1:
+    print "Stack [[Overflow]]"
+else:
+    top = top + 1
+    S[top] = x`)),
+  N("po",840,"b:pu:20",620,"box p",`<span class="t">pop(): check for underflow first</span>`+X(`if top == -1:
+    print "Stack [[Underflow]]"
+else:
+    x = S[top]
+    top = top - 1
+    return x`))
+],[],(rc,svg)=>{const y=70;
+  stackPic(rc,svg,90,y,[],5,{w:80});stackPic(rc,svg,340,y,[5,8,2],5,{w:80,seed:7});stackPic(rc,svg,590,y,[5,8,2,9,4],5,{w:80,seed:14});
+  const cy=y+5*36+36;[[130,"empty: top = −1","pop → UNDERFLOW"],[380,"3 items: top = 2",""],[630,"full: top = size − 1","push → OVERFLOW"]].forEach(([x,a,b])=>{T(svg,x,cy,a,{size:18,weight:700});if(b)T(svg,x,cy+28,b,{size:18,weight:700,color:"var(--red)"})});
+  T(svg,60,cy+84,"past paper: size 5 · push 5, pop 2 → top = 2",{anchor:"start",size:19,weight:700,color:"var(--blue)"});
+  T(svg,60,cy+114,"pop only moves top down (top − 1); the old value stays but is no longer in the stack",{anchor:"start",size:17,color:"var(--soft)"})},430);
+
+B("b7c",[],[],(rc,svg)=>{
+  T(svg,60,40,"Linked stack",{anchor:"start",size:20,weight:700});llist(rc,svg,90,90,[30,20,10],{gap:30,dw:48,head:"top"});
+  T(svg,60,178,"push = add a new head · pop = remove the head + free it",{anchor:"start",size:18});T(svg,60,204,"both O(1) · no overflow until memory runs out",{anchor:"start",size:18,color:"var(--soft)"});
+  T(svg,790,40,"Growing array stack",{anchor:"start",size:20,weight:700});
+  cells(rc,svg,790,70,[1,2,3,4],{w:54,hl:[0,1,2,3],hlf:"var(--b)",idx:false});T(svg,1020,100,"full + push 5",{anchor:"start",size:17,color:"var(--red)"});
+  arrow(rc,svg,[900,124],[900,158],{bend:0,color:"green"});T(svg,914,146,"double + copy",{anchor:"start",size:16,color:"var(--green)"});
+  cells(rc,svg,790,164,[1,2,3,4,5,"","",""],{w:54,hl:[4],idx:false,seed:4});T(svg,790,240,"doubling → far fewer resizes",{anchor:"start",size:18,color:"var(--soft)"});
+  const x=300,y=400;T(svg,60,y+30,"Two stacks,",{anchor:"start",size:20,weight:700});T(svg,60,y+56,"one array",{anchor:"start",size:20,weight:700});
+  cells(rc,svg,x,y,["a1","a2","","","","","b2","b1"],{w:80,hl:[0,1,6,7],hlf:"var(--b)",size:18});
+  arrow(rc,svg,[x+120,y-36],[x+120,y-4],{bend:0,color:"red"});T(svg,x+120,y-44,"topA = 1",{size:16,color:"var(--red)",weight:700});
+  arrow(rc,svg,[x+520,y-36],[x+520,y-4],{bend:0,color:"blue"});T(svg,x+520,y-44,"topB = 6",{size:16,color:"var(--blue)",weight:700});
+  arrow(rc,svg,[x+10,y+92],[x+250,y+92],{bend:0,color:"red"});T(svg,x+130,y+118,"A grows →",{size:17,color:"var(--red)"});
+  arrow(rc,svg,[x+630,y+92],[x+390,y+92],{bend:0,color:"blue"});T(svg,x+510,y+118,"← B grows",{size:17,color:"var(--blue)"});
+  T(svg,x+680,y+18,"safe to push while topA + 1 < topB",{anchor:"start",size:18,weight:700});T(svg,x+680,y+46,"FULL when topA + 1 == topB",{anchor:"start",size:18,weight:700,color:"var(--red)"})},560);
+
+/* ===== 8 · queues ===== */
+B("b8a",[],[],(rc,svg)=>{
+  T(svg,60,36,"FIFO = First In, First Out",{anchor:"start",size:22,weight:700});
+  box(rc,svg,60,80,110,110,"var(--p)",400);T(svg,115,140,"counter",{size:17,weight:700});
+  ["A","B","C","D"].forEach((p,i)=>d7_person(rc,svg,250+i*100,96,p,i===0?"var(--g)":"var(--b)",410+i*3));
+  d7_person(rc,svg,720,96,"E","var(--card)",430,true);
+  T(svg,250,66,"front",{size:17,color:"var(--green)",weight:700});T(svg,550,66,"rear",{size:17,color:"var(--red)",weight:700});
+  arrow(rc,svg,[226,206],[176,206],{bend:0,color:"green"});T(svg,120,232,"dequeue: leaves from the FRONT",{anchor:"start",size:17,color:"var(--green)"});
+  arrow(rc,svg,[700,206],[600,206],{bend:0,color:"red"});T(svg,560,232,"enqueue: joins at the REAR",{anchor:"start",size:17,color:"var(--red)"});
+  const x=920,y=100;T(svg,x,40,"Linear array queue",{anchor:"start",size:20,weight:700});
+  cells(rc,svg,x,y,["","",30,40,50,""],{w:74,hl:[0,1],hlf:"rgba(140,140,140,.35)"});
+  T(svg,x+2*74+37,y-12,"front = 2",{size:16,color:"var(--green)",weight:700});T(svg,x+4*74+37,y-12,"rear = 4",{size:16,color:"var(--red)",weight:700});
+  T(svg,x+74,y+92,"wasted after 2 dequeues",{size:16,color:"var(--red)"});
+  T(svg,60,300,"empty: front = rear = −1 · first enqueue → front = rear = 0 · enqueue: rear + 1 · dequeue: front + 1",{anchor:"start",size:18});
+  T(svg,60,330,"rear reaches size − 1 → \"full\" even with free cells at the start → fix: circular queue (shifting instead costs O(n))",{anchor:"start",size:18,color:"var(--red)"});
+  T(svg,60,360,"used for: printer queue · FCFS CPU scheduling · support requests · ticketing",{anchor:"start",size:18,color:"var(--soft)"})},390);
+
+B("b8b",[
+  N("cd",1000,30,460,"box w",X(`enqueue(x):
+  if (rear+1) % size == front: "[[Full]]"
+  else:
+    if front == -1: front = 0
+    rear = (rear + 1) % size
+    Q[rear] = x
+dequeue():
+  if front == -1: "[[Empty]]"; return
+  x = Q[front]
+  if front == rear: front = rear = -1
+  else: front = (front + 1) % size
+  return x`))
+],[],(rc,svg)=>{const cx=290,cy=285;const g=d7_ring(rc,svg,cx,cy,70,140,["C","D","","","","","A","B"],i=>i===6?"var(--g)":i===1?"var(--y)":(i===7||i===0)?"var(--b)":"var(--card)",500);
+  const pt=(i,r)=>g.P(r,g.mids[i]);
+  let a=pt(6,220),b=pt(6,146);arrow(rc,svg,a,b,{bend:0,color:"green"});T(svg,a[0]-6,a[1]-8,"front",{size:18,color:"var(--green)",weight:700});
+  a=pt(1,220);b=pt(1,146);arrow(rc,svg,a,b,{bend:0,color:"red"});T(svg,a[0]+6,a[1]-8,"rear",{size:18,color:"var(--red)",weight:700,anchor:"start"});
+  const w0=pt(7,190),w1=pt(0,190);arrow(rc,svg,w0,w1,{bend:-0.35,color:"blue"});T(svg,cx,cy-238,"wraps 7 → 0",{size:16,color:"var(--blue)"});
+  T(svg,cx,cy+6,"size 8",{size:16,color:"var(--soft)"});
+  const x=560;[["next index = (i + 1) % size","var(--ink)"],["FULL: (rear + 1) % size == front","var(--red)"],["EMPTY: front == −1","var(--red)"],["count = (rear − front + size) % size + 1","var(--ink)"],["here: (1 − 6 + 8) % 8 + 1 = 4","var(--soft)"]].forEach(([t,c],i)=>T(svg,x,90+i*52,t,{anchor:"start",size:20,weight:i<4?700:400,color:c}))},440);
+
+B("b8c",[],[],(rc,svg)=>{
+  T(svg,60,40,"Linked queue",{anchor:"start",size:20,weight:700});llist(rc,svg,80,100,[10,20,30],{gap:30,dw:48,head:"front"});T(svg,328,84,"rear",{size:17,color:"var(--red)",weight:700});
+  T(svg,60,190,"enqueue after rear · dequeue at front",{anchor:"start",size:17});T(svg,60,214,"both O(1)",{anchor:"start",size:17,color:"var(--soft)"});
+  T(svg,620,40,"Circular (ring) buffer",{anchor:"start",size:20,weight:700});
+  const cx=740,cy=170,g=d7_ring(rc,svg,cx,cy,48,104,["",92,93,94,95,96],i=>i===0?"var(--y)":"var(--b)",520);
+  const m=g.P(76,g.mids[0]);T(svg,m[0],m[1]+7,"97",{size:19,weight:700,color:"var(--red)"});const o=g.P(150,g.mids[0]);T(svg,o[0]+10,o[1]-4,"91 → 97: oldest overwritten",{size:15,color:"var(--red)",anchor:"start"});
+  T(svg,cx,cy+150,"fixed size · full → overwrite the OLDEST",{size:17});T(svg,cx,cy+174,"keep the last N: GPS, sensors, logins",{size:16,color:"var(--soft)"});
+  T(svg,1010,40,"Deque (double-ended)",{anchor:"start",size:20,weight:700});
+  cells(rc,svg,1090,120,[3,4,5,6],{w:70,idx:false});arrow(rc,svg,[1084,143],[1012,143],{bend:0,color:"green",both:true});arrow(rc,svg,[1376,143],[1448,143],{bend:0,color:"green",both:true});
+  T(svg,1040,110,"front",{size:16,color:"var(--green)",weight:700});T(svg,1412,110,"rear",{size:16,color:"var(--green)",weight:700});
+  T(svg,1230,210,"add + remove at BOTH ends",{size:17});T(svg,1230,234,"urgent jobs jump to the front",{size:16,color:"var(--soft)"})},360);
+
+B("b8d",[],[],(rc,svg)=>{
+  T(svg,60,40,"Priority queue: highest priority leaves first",{anchor:"start",size:20,weight:700});
+  [[9,"var(--y)"],[7,"var(--b)"],[5,"var(--b)"],[3,"var(--b)"],[1,"var(--b)"]].forEach(([p,f],i)=>{box(rc,svg,140+i*110,110,90,60,f,540+i);T(svg,185+i*110,148,String(p),{size:22,weight:700})});
+  add(svg,rc.polygon([[160,100],[166,80],[176,94],[185,76],[194,94],[204,80],[210,100]],{fill:"var(--y)",fillStyle:"solid",stroke:"var(--ink)",strokeWidth:1.8,roughness:0.6}));
+  arrow(rc,svg,[134,140],[70,140],{bend:0,color:"red"});T(svg,70,200,"out first",{anchor:"start",size:16,color:"var(--red)"});
+  [["unsorted array: insert O(1) · remove highest O(n)","var(--ink)"],["sorted array: insert O(n) · remove highest O(1)","var(--ink)"],["heap: both O(log n)","var(--ink)"],["e.g. CPU runs the shortest job first · triage","var(--soft)"]].forEach(([t,c],i)=>T(svg,60,240+i*30,t,{anchor:"start",size:18,color:c}));
+  T(svg,880,40,"A queue made of two stacks",{anchor:"start",size:20,weight:700});
+  stackPic(rc,svg,900,80,[1,2,3],4,{w:64,lbl:false});T(svg,932,250,"A (in)",{size:17,weight:700});
+  stackPic(rc,svg,1210,80,[3,2,1],4,{w:64,lbl:false,seed:9});T(svg,1242,250,"B (out)",{size:17,weight:700});
+  arrow(rc,svg,[980,232],[1196,232],{bend:0.25,color:"green"});T(svg,1088,290,"B empty? pour ALL of A in",{size:16,color:"var(--green)"});
+  T(svg,880,330,"enqueue = push onto A · dequeue = pop B (oldest on top)",{anchor:"start",size:17})},360);
+
+/* ===== 9 · exam drill ===== */
+const D9=[["Stack","undo / redo · recursion calls · browser BACK only · LIFO","stack"],
+ ["Queue","served in arrival order · FCFS scheduler · printer · FIFO","queue"],
+ ["Priority queue","shortest / highest / most urgent goes FIRST","pq"],
+ ["Deque","add or remove at BOTH ends · urgent jobs to the front","deque"],
+ ["Circular buffer","keep the LAST N, overwrite the oldest (GPS, sensors, logins)","ring"],
+ ["Circular array queue","enqueue + dequeue in O(1) without shifting","cq"],
+ ["Array","jump by index / roll number in O(1) · read often, change rarely","array"],
+ ["Doubly linked list","back AND forward · remove from the MIDDLE · walk backwards","dll"],
+ ["Circular linked list","round-robin · rotating players · repeating playlist","cll"],
+ ["Tree / graph","hierarchy (org chart, files) → tree · connections (roads, networks) → graph","tree"]];
+B("b9a",[N("q",40,300,320,"oval y big center",`Which structure?<br><small>find the scenario's key verb</small>`)].concat(D9.map((d,i)=>N("l"+i,612,30+i*64,840,"plain",`<b>${d[0]}</b> ← ${d[1]}`))),[],
+(rc,svg,R)=>{const ys=D9.map((d,i)=>{const r=R["l"+i];return r.y+r.h/2});const sx=430;
+  d7_ln(rc,svg,sx,ys[0],sx,ys[ys.length-1],null,2.4);d7_ln(rc,svg,R.q.x+R.q.w*1.05+4,R.q.y+R.q.h/2,sx,R.q.y+R.q.h/2,null,2.4);
+  D9.forEach((d,i)=>{const r=R["l"+i];box(rc,svg,r.x-12,r.y-7,r.w+14,r.h+14,i%2?"var(--card)":"var(--b)",600+i,{roughness:0.6});arrow(rc,svg,[sx,ys[i]],[462,ys[i]],{bend:0,color:"ink"});d7_mini(rc,svg,d[2],525,ys[i])})},680);
+
+B("b9b",[],[],(rc,svg)=>{
+  const R9=[["O(1)","var(--g)",120,["array access / update by index · push · pop · peek","enqueue + dequeue (circular / linked) · insert / delete at a list's head"]],
+    ["O(log n)","var(--g)",230,["binary search (sorted array)","heap insert / remove"]],
+    ["O(n)","var(--y)",350,["linear search · array insert / delete in the middle (shift)","reach position k in a list · singly: delete the LAST node · traverse"]],
+    ["O(n log n)","var(--p)",470,["merge sort · heap sort"]],
+    ["O(n²)","var(--p)",590,["bubble · selection · insertion sort"]]];
+  arrow(rc,svg,[44,520],[44,62],{bend:0,color:"green"});T(svg,32,300,"faster",{size:15,color:"var(--green)",rotate:-90});
+  R9.forEach(([o,f,w,ex],i)=>{const y=50+i*96;box(rc,svg,70,y,w,60,f,620+i);T(svg,86,y+38,o,{anchor:"start",size:22,weight:700});ex.forEach((t,j)=>T(svg,700,y+24+j*28,t,{anchor:"start",size:17}))});
+  T(svg,60,560,"Traps",{anchor:"start",size:20,weight:700,color:"var(--red)"});
+  ["doubly list: one step back O(1), but traversing back from the tail O(n), never \"impossible\"",
+   "circular list: next player O(1) · delete a known node: singly O(n) (you need the node before it), doubly O(1)",
+   "singly list: delete the last node is O(n) even with a tail pointer · merge two sorted arrays O(n + m)"].forEach((t,i)=>T(svg,60,592+i*30,t,{anchor:"start",size:17}))},690);
+
+const C9=[["Stack","stack","undo in a game / editor / photo app · recursion function calls (LIFO) · browser BACK button"],
+ ["Doubly linked list","dll","back AND forward · close a tab / cancel a print job from the MIDDLE (a plain queue can't) · top-10 scores, inserts anywhere (judgement call) · traverse back from the tail → O(n)"],
+ ["Deque","deque","insert / delete at BOTH ends (pick it over a doubly list if offered) · urgent jobs added at the front"],
+ ["Circular linked list","cll","repeating playlist · rotating players → next player O(1)"],
+ ["Queue","queue","pages served in arrival order · FCFS CPU scheduler"],
+ ["Priority queue","pq","CPU runs the shortest job first · unsorted array: remove highest O(n) · sorted array: insert O(n)"],
+ ["Array","array","access a student by roll number · constant-time access by index · read often, rarely changed · insert at an index → shift right, O(n)"],
+ ["Circular buffer","ring","last 100 GPS points / 50 readings / 3 failed logins / 100 calls · full + new reading → overwrite the OLDEST · the oldest sits at the FRONT"],
+ ["Circular array queue","cq","O(1) enqueue + dequeue without shifting · full test: (rear + 1) % size == front"]];
+B("b9c",C9.map((c,i)=>N("c"+i,40+(i%3)*475,i<3?60:"b:"+[0,1,2].map(j=>"c"+(Math.floor(i/3)*3-3+j)).join(",")+":34",440,"plain",`<div style="padding:8px 70px 8px 10px"><b>${c[0]}</b><br><span style="font-size:16px">${c[2]}</span></div>`)).concat([
+  N("nm",40,"b:c6,c7,c8:34",1420,"plain",`<div style="padding:8px 10px"><b>Numbers they asked</b><br><span style="font-size:16px">push 5, pop 2 → top = 2 · overflow when top == size − 1 · size 5, top 4, push → overflow · pop decrements top · dynamic stack full → double the array (fewer resizes) · linked stack pop frees memory → yes · two stacks one array: push A safe if topA + 1 &lt; topB<br>linear queue free cells at the start → wasted memory · dequeue that shifts → O(n) · first insert (front = rear = −1) → front = 0, rear = 0 · two-stack queue, B empty → pour all of A into B, pop B · linked queue enqueue / dequeue → O(1) / O(1)<br>singly list insert / delete at head → O(1) · singly delete last, no tail → O(n) · doubly insert at front → O(1)</span></div>`)]),[],
+(rc,svg,R)=>{T(svg,40,32,"Last session's midterm, grouped by answer (worked from the notes, not an official key)",{anchor:"start",size:18,color:"var(--soft)"});
+  C9.forEach((c,i)=>{const r=R["c"+i];box(rc,svg,r.x,r.y,r.w,r.h,"var(--card)",700+i,{roughness:0.7});d7_mini(rc,svg,c[1],r.x+r.w-40,r.y+34)});
+  const n=R.nm;box(rc,svg,n.x,n.y,n.w,n.h,"var(--y)",720,{roughness:0.7})});
+
+B("b9d",[
+  N("th",40,20,1420,"box y",`<span class="t">Theory questions → where the answer is</span>5 ADTs + a scenario each → the 9.1 map · linear (array, list, stack, queue) vs non-linear (tree, graph) · data types: <b>primitive</b> (int, char, float, double, bool) vs <b>non-primitive</b> (array, struct, string, list) · why study DS → §1.2 · array vs linked list → §1.5 · dynamic array stays contiguous → §5.3`),
+  N("s",40,"b:th:30",440,"box g",`<span class="t">Stack push + undo</span>`+X(`push(a):
+  if top == size-1: "Overflow"
+  else: top++; S[top] = a
+undo():  if top == -1: "nothing"
+         else: a = S[top]; top--
+show():  print S[top]`)),
+  N("q","r:s:30","t:s",440,"box b",`<span class="t">Queue: support requests</span>`+X(`full:  (rear+1) % size == front
+empty: front == -1
+add(r):  enqueue at rear
+serve(): dequeue from front
+show():  print Q[front]`)),
+  N("st","r:q:30","t:s",480,"box w",`<span class="t">Exam seating: 3-D array</span>`+X(`seat[3][F][200]
+for e = 0 to 2:
+  next = 0
+  for f = 0 to F-1:
+    for s = 0 to 199:
+      if next < count[e]:
+        seat[e][f][s] = student[e][next]
+        next++
+      else: seat[e][f][s] = EMPTY`)),
+  N("ll",40,"b:s,q,st:30",1420,"box w",`<span class="t">Cafeteria orders: singly linked list</span>`+X(`insert(id):  new.id = id; new.next = NULL
+             if head == NULL: head = new
+             else: walk curr to the last node; curr.next = new
+display():   curr = head; while curr != NULL: print curr.id; curr = curr.next
+cancel(id):  if head == NULL: return "empty"
+             if head.id == id: t = head; head = head.next; free t; return
+             prev = head
+             while prev.next != NULL and prev.next.id != id: prev = prev.next
+             if prev.next == NULL: return "not found"
+             t = prev.next; prev.next = t.next; free t`))
+],[]);
+
+
+/* ===== 5 (cont.) · lecture note 4: references, malloc family, pointer errors ===== */
+function n4cell(rc,svg,x,y,w,h,txt,f,seed,o={}){add(svg,rc.rectangle(x,y,w,h,Object.assign({stroke:"var(--ink)",strokeWidth:2,roughness:0.9,fill:f||"var(--card)",fillStyle:"solid",seed:seed||5},o)));if(txt!=null)T(svg,x+w/2,y+h/2+7,String(txt),{size:o.size||20,weight:700})}
+
+B("b5d",[
+  N("dg",40,20,1420,"plain",gap(310)),
+  N("pc",40,"b:dg:10",690,"box b",X(`int age = 25;
+int [[*ptr]] = &age;   // stores the ADDRESS
+*ptr = 30;           // age is now 30`)),
+  N("rc","r:pc:40","t:pc",690,"box g",X(`int age = 25;
+int [[&ref]] = age;   // C++ only: a 2nd NAME
+ref = 30;            // age is now 30`))
+],[],(rc,svg,R)=>{const d=R.dg,y=d.y+60;
+  T(svg,d.x+340,d.y+24,"POINTER = a box holding an address",{size:20,weight:700,color:"var(--blue)"});
+  n4cell(rc,svg,d.x+60,y+40,150,60,"0x1000","var(--b)",401);T(svg,d.x+135,y+30,"ptr",{size:18,color:"var(--blue)",weight:700});
+  n4cell(rc,svg,d.x+420,y+40,150,60,"25","var(--y)",402);T(svg,d.x+495,y+30,"age @ 0x1000",{size:16,color:"var(--soft)"});
+  arrow(rc,svg,[d.x+214,y+70],[d.x+414,y+70],{bend:0,color:"red"});T(svg,d.x+314,y+60,"*ptr follows it",{size:15,color:"var(--red)"});
+  ["can be NULL ✓","can point elsewhere later ✓","pointer arithmetic ✓","C and C++"].forEach((t,i)=>T(svg,d.x+60,y+140+i*26,"• "+t,{anchor:"start",size:16}));
+  const x2=d.x+760;T(svg,x2+330,d.y+24,"REFERENCE = a second name on the SAME box",{size:20,weight:700,color:"var(--green)"});
+  n4cell(rc,svg,x2+250,y+40,150,60,"25","var(--y)",403);
+  [["age",x2+170,y+20],["ref",x2+480,y+20]].forEach(([t,x,yy],i)=>{add(svg,rc.rectangle(x-36,yy-22,72,32,{stroke:"var(--ink)",strokeWidth:1.6,roughness:0.8,fill:i?"var(--g)":"var(--card)",fillStyle:"solid",seed:404+i}));T(svg,x,yy,t,{size:17,weight:700})});
+  arrow(rc,svg,[x2+206,y+10],[x2+262,y+42],{bend:0,color:"ink"});arrow(rc,svg,[x2+444,y+10],[x2+390,y+42],{bend:0,color:"green"});
+  ["must be set when declared","can't be moved to another variable","no arithmetic · never NULL","C++ only (C has pointers only)"].forEach((t,i)=>T(svg,x2+60,y+140+i*26,"• "+t,{anchor:"start",size:16}))},360);
+
+B("b5e",[
+  N("dg",40,20,1420,"plain",gap(250)),
+  N("lc",40,"b:dg:20",1420,"plain",gap(120)),
+  N("ck",40,"b:lc:10",900,"box y",`always check: <code>if (ptr == NULL)</code> → allocation failed · all four live in <code>&lt;stdlib.h&gt;</code> · memory comes from the <b>heap</b>`)
+],[],(rc,svg,R)=>{const d=R.dg,y=d.y+20,cw=34;
+  const fn=[["malloc(5 * sizeof(int))","memory ALLOCATION",["?","?","?","?","?"],"var(--b)","contents are garbage"],
+            ["calloc(5, sizeof(int))","CONTIGUOUS allocation",[0,0,0,0,0],"var(--g)","every byte set to 0"],
+            ["realloc(p, 8 * sizeof(int))","RE-allocation",["a","b","c","d","e","","",""],"var(--p)","grow or shrink, keeps data"],
+            ["free(p)","give it back",["","","","",""],"var(--card)","then p = NULL"]];
+  fn.forEach(([c,m,v,f,n],i)=>{const x=d.x+20+i*355;T(svg,x,y+14,c,{anchor:"start",size:16,weight:700,color:"var(--red)"});T(svg,x,y+40,m,{anchor:"start",size:16,color:"var(--soft)"});
+    v.forEach((t,j)=>{n4cell(rc,svg,x+j*cw,y+70,cw,44,t===""?null:t,t===""?"var(--card)":f,420+i*9+j,{size:16,strokeLineDash:i===3?[6,5]:undefined})});
+    if(i===3)add(svg,rc.line(x-6,y+64,x+5*cw+6,y+120,{stroke:"var(--red)",strokeWidth:2.4,roughness:1}));
+    T(svg,x,y+146,n,{anchor:"start",size:16})});
+  T(svg,d.x+20,y+190,"pointer = malloc(size_in_bytes) · calloc(number_of_elements, size_of_each) · new_ptr = realloc(old_ptr, new_size) · free(pointer)",{anchor:"start",size:16,color:"var(--blue)"});
+  const L=R.lc,ly=L.y+30;const st=["ages = malloc(3*sizeof(int))","check NULL","store 20 21 19","use / print","free(ages)","ages = NULL"];
+  st.forEach((s,i)=>{const x=L.x+20+i*235;n4cell(rc,svg,x,ly,205,52,null,i>=4?"var(--p)":"var(--card)",440+i);T(svg,x+102,ly+32,s,{size:15,weight:700});T(svg,x+102,ly-8,"①②③④⑤⑥"[i],{size:16,color:"var(--red)"});if(i<5)arrow(rc,svg,[x+208,ly+26],[x+232,ly+26],{bend:0,color:"ink"})})});
+
+B("b5f",[
+  N("dg",40,20,1420,"plain",gap(420)),
+  N("sk",40,"b:dg:10",760,"sticky",sticky(`"Nervous Users Drop Double Bowls Loudly"`,`Null · Uninitialised · Dangling · Double free · Buffer overflow · Leak`))
+],[],(rc,svg,R)=>{const d=R.dg;const W=460,H=200;
+  const card=(i,title,code,pic)=>{const x=d.x+(i%3)*(W+20),y=d.y+Math.floor(i/3)*(H+20);add(svg,rc.rectangle(x,y,W,H,{stroke:"var(--ink)",strokeWidth:2,roughness:1,fill:"var(--card)",fillStyle:"solid",seed:460+i}));
+    T(svg,x+16,y+30,title,{anchor:"start",size:19,weight:700,color:"var(--red)"});T(svg,x+16,y+H-18,code,{anchor:"start",size:15,color:"var(--blue)"});pic(x,y)};
+  const ptr=(x,y,s)=>{n4cell(rc,svg,x,y,70,40,"ptr","var(--b)",s,{size:15})};
+  card(0,"① Null pointer","int *ptr = NULL; *ptr = 10; ✗",(x,y)=>{ptr(x+30,y+70,470);arrow(rc,svg,[x+104,y+90],[x+220,y+90],{bend:0,color:"red"});add(svg,rc.circle(x+250,y+90,46,{stroke:"var(--red)",strokeWidth:2.4,roughness:0.8}));add(svg,rc.line(x+234,y+106,x+266,y+74,{stroke:"var(--red)",strokeWidth:2.4}));T(svg,x+290,y+96,"points nowhere",{anchor:"start",size:16})});
+  card(1,"② Uninitialised pointer","int *ptr; *ptr = 20; ✗ → start it as NULL",(x,y)=>{ptr(x+30,y+70,471);arrow(rc,svg,[x+104,y+90],[x+220,y+70],{bend:-0.3,color:"red"});T(svg,x+250,y+78,"? random address",{anchor:"start",size:18,weight:700});T(svg,x+250,y+104,"undefined behaviour",{anchor:"start",size:15,color:"var(--soft)"})});
+  card(2,"③ Dangling pointer","free(ptr); then use ptr ✗ → set ptr = NULL",(x,y)=>{ptr(x+30,y+70,472);arrow(rc,svg,[x+104,y+90],[x+230,y+90],{bend:0,color:"red"});n4cell(rc,svg,x+236,y+68,110,44,"freed","var(--card)",473,{size:15,strokeLineDash:[6,5]});add(svg,rc.line(x+232,y+64,x+350,y+116,{stroke:"var(--red)",strokeWidth:2.2}))});
+  card(3,"④ Double free","free(ptr); free(ptr); ✗",(x,y)=>{n4cell(rc,svg,x+40,y+66,120,48,"block","var(--b)",474,{size:16});T(svg,x+210,y+84,"free ✓",{anchor:"start",size:18,color:"var(--green)",weight:700});T(svg,x+210,y+112,"free again ✗",{anchor:"start",size:18,color:"var(--red)",weight:700})});
+  card(4,"⑤ Buffer overflow","int numbers[3]; numbers[5] = 100; ✗",(x,y)=>{[0,1,2].forEach(j=>n4cell(rc,svg,x+30+j*56,y+66,56,44,null,"var(--b)",475+j));[0,1,2].forEach(j=>T(svg,x+58+j*56,y+130,String(j),{size:14,color:"var(--soft)"}));n4cell(rc,svg,x+30+5*56,y+66,56,44,"100","var(--p)",479,{size:15,strokeLineDash:[6,5]});T(svg,x+58+5*56,y+130,"5 ✗",{size:14,color:"var(--red)"});T(svg,x+260,y+56,"someone else's memory",{size:14,color:"var(--red)"})});
+  card(5,"⑥ Memory leak","malloc'd, never freed, pointer lost",(x,y)=>{n4cell(rc,svg,x+220,y+66,130,48,"heap block","var(--y)",480,{size:15});ptr(x+30,y+70,481);arrow(rc,svg,[x+104,y+90],[x+180,y+90],{bend:0,color:"ink",nohead:true});add(svg,rc.line(x+150,y+78,x+176,y+102,{stroke:"var(--red)",strokeWidth:2.4}));T(svg,x+285,y+140,"nothing points to it",{size:15,color:"var(--red)"})})});
+
+(()=>{
 /* ---------- content ---------- */
 const sticky=(p,s)=>`<span class="bigp">${p}</span>${s?`<br><small>${s}</small>`:""}`;
 const X=s=>`<pre>${s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/\[\[/g,"<b>").replace(/\]\]/g,"</b>")}</pre>`;
@@ -431,7 +1546,7 @@ const gap=(h)=>`<div style="height:${h}px"></div>`;
 const lab=(svg,x,y,s,o={})=>T(svg,x,y,s,Object.assign({size:17,color:"var(--soft)",anchor:"start"},o));
 
 /* ===== 1 · what data structures are ===== */
-B("b1a",[
+B("x_b1a",[
   N("da",40,40,400,"box w",`<span class="t">Data</span><b>raw facts</b>, figures, symbols or observations a computer can collect + process<br><span class="ann">matric numbers · names + dates of birth · exam scores · bank balances · daily temperatures · images, audio, sensor readings</span><br>on its own it may not mean much`),
   N("in","r:da:110","t:da",400,"box y",`<span class="t">Information</span>data that has been <b>processed, organised or interpreted</b> → gives meaning + supports <b>decisions</b>`),
   N("ex","c:in","b:in:30",400,"plain",`<span class="ann">scores 65, 72, 48, 81, 54 = data → their <b>average</b> + the <b>top student</b> = information<br>slide 3's version: Ada CSC 78 · Bola MTH 65 · Chidi CSC 82 → 3 students, average 75.0, highest 82 (Chidi), 2 in CSC</span>`),
@@ -441,7 +1556,7 @@ B("b1a",[
   N("sk","r:sl:60","t:sl",540,"sticky",sticky(`Raw → Ripe → Rack`,`data is raw fruit · information is ripe (useful) · a data structure is the rack you store it on`))
 ],[E("da","in","①",{bend:0}),E("in","ds","②",{bend:0})]);
 
-B("b1b",[
+B("x_b1b",[
   N("w1",40,20,340,"box w",`<span class="t">① Efficient data access</span>find a record fast · e.g. a student system pulling one record from <b>thousands</b>`),
   N("w2","r:w1:30","t:w1",340,"box w",`<span class="t">② Efficient insertion + deletion</span>add/remove often · e.g. a <b>ticketing queue</b> serving customers in order`),
   N("w3","r:w2:30","t:w1",340,"box w",`<span class="t">③ Effective memory use</span>structures need different <b>amounts + arrangements</b> of memory`),
@@ -452,7 +1567,7 @@ B("b1b",[
   N("sk",40,"b:ap:40",520,"sticky",sticky(`"All Insects Make Paths Past Flowers"`,`Access · Insert/delete · Memory · Problem-solving · Performance · Foundation`))
 ],[]);
 
-B("b1c",[
+B("x_b1c",[
   N("li",40,20,680,"box g",`<span class="t">LINEAR</span>elements in a <b>sequence</b>: apart from the two ends, each has a <b>predecessor + a successor</b><br>array · linked list · stack · queue`),
   N("nl","r:li:60","t:li",680,"box p",`<span class="t">NON-LINEAR</span>elements form <b>hierarchical</b> or <b>network</b> relationships, not one line<br>tree · graph`),
   N("ar",40,"b:li:210",300,"box w",`<b>Array</b>: elements organised by <b>position</b> <span class="ann">[10, 20, 30, 40, 50]</span>`),
@@ -469,7 +1584,7 @@ B("b1c",[
   const gx=1300,gy=y+20;const gp=[[gx,gy],[gx+90,gy+10],[gx+40,gy+80],[gx+130,gy+90]];[[0,1],[0,2],[1,2],[1,3],[2,3]].forEach(([a,b])=>add(svg,rc.line(gp[a][0],gp[a][1],gp[b][0],gp[b][1],{stroke:"var(--ink)",strokeWidth:2,roughness:0.8})));
   gp.forEach((p,i)=>add(svg,rc.circle(p[0],p[1],24,{fill:"var(--p)",fillStyle:"solid",stroke:"var(--ink)",strokeWidth:1.8,seed:95+i})));lab(svg,gx-20,gy+118,"graph: a network");});
 
-B("b1d",[
+B("x_b1d",[
   N("q",40,20,1420,"box b",`<span class="t">Static vs dynamic allocation</span>this split is about <b>how memory is allocated + managed</b>, and whether storage can change while the program runs`),
   N("st",40,"b:q:40",600,"box w",`<span class="t">STATIC (fixed) allocation</span>memory size decided <b>before or at the start</b> of the object's lifetime, not requested + resized as it runs`+X(`int scores[5] = {70,65,80,75,90};
 // slide: "allocated at compile time
@@ -486,7 +1601,7 @@ if (scores != NULL) {      // check it worked
   N("sk","r:tb:40","b:cv:24",560,"sticky",sticky(`Static = a booked hall 🏛 · dynamic = chairs brought in as guests arrive`,`booked size never changes; extra chairs must be returned (free)`))
 ],[E("q","st","",{from:"b",to:"t",bend:0}),E("q","dy","",{from:"b",to:"t",bend:0})]);
 
-B("b1e",[
+B("x_b1e",[
   N("co",40,20,680,"box b",`<span class="t">CONTIGUOUS storage</span>elements sit in <b>consecutive</b> memory locations · arrays are the usual example`),
   N("lk","r:co:60","t:co",680,"box g",`<span class="t">LINKED storage</span>elements live in separate <b>nodes</b> joined by <b>pointers / references</b> · nodes need <b>not</b> be next to each other · e.g. a singly linked list: each node = data + pointer to the next`),
   N("fo",40,"b:co,lk:150",680,"box y",`<b>Address(A[i]) = base address + i × element size</b><br>e.g. ints of 4 bytes from 1000: <code>numbers[2]</code> → 1000 + 2×4 = <b>1008</b> → that's why indexing is <b>O(1)</b>`),
@@ -501,7 +1616,7 @@ B("b1e",[
   arrow(rc,svg,[x0n(800),ys[0]+23],[1008,ys[1]+23],{bend:0.1,color:"ink"});arrow(rc,svg,[x0n(1010),ys[1]+23],[1228,ys[2]+23],{bend:-0.1,color:"ink"});
   function x0n(x){return x+60+17+4}});
 
-B("b1f",[
+B("x_b1f",[
   N("pt",40,20,1420,"box y",`<span class="t">The key teaching point</span><b>static/dynamic</b> (how memory is <b>allocated</b>) and <b>contiguous/linked</b> (how elements are <b>laid out</b>) are <b>different classifications</b> · a structure can be <b>dynamically allocated and still contiguous</b>`),
   N("tb",40,"b:pt:40",860,"box w",`<table class="tb"><tr><th>example</th><th>allocation</th><th>storage</th></tr><tr><td>fixed-size local array</td><td>typically automatic</td><td>contiguous</td></tr><tr><td>array from malloc()</td><td><b>dynamic</b></td><td><b>contiguous</b></td></tr><tr><td>linked list, nodes from malloc()</td><td>dynamic</td><td>linked</td></tr><tr><td>dynamically resized array</td><td>dynamic resizing</td><td>contiguous at any given time</td></tr></table>`),
   N("cd","r:tb:40","t:tb",520,"box g",`<span class="t">The note's example</span>`+X(`int *a = malloc(10 * sizeof(int));`)+`<b>dynamic</b> allocation, but the 10 ints are <b>consecutive</b> → dynamic + contiguous<br>a linked list instead allocates <b>each node separately</b> + joins them with pointers`),
@@ -509,7 +1624,7 @@ B("b1f",[
   N("sk","r:rq:40","t:rq",520,"sticky",sticky(`WHEN you get memory ≠ HOW it's arranged`,`two questions, two answers: "static or dynamic?" + "contiguous or linked?"`))
 ],[]);
 
-B("b1g",[
+B("x_b1g",[
   N("df",40,20,700,"box y big",`An <b>ADT</b> defines a data type by the <b>values</b> it can hold + the <b>operations</b> on them, <b>without</b> saying how it's implemented`),
   N("wh","r:df:60","t:df",340,"oval b center",`ADT = <b>WHAT</b> it does`),
   N("ho","r:wh:40","t:df",280,"oval g center",`implementation = <b>HOW</b>`),
@@ -519,7 +1634,7 @@ B("b1g",[
   N("sk","r:wy:40","t:wy",520,"sticky",sticky(`ADT = the TV remote 📺 · implementation = the circuits inside`,`you press "volume up" (the operation); you don't care how the board does it`))
 ],[E("df","wh","",{bend:0})]);
 
-B("b1h",[
+B("x_b1h",[
   N("tb",40,20,860,"box w",`<table class="tb"><tr><th>operation</th><th>meaning</th><th>example</th></tr><tr><td><b>Traversal</b></td><td>visit elements systematically</td><td>display every student record</td></tr><tr><td><b>Insertion</b></td><td>add a new element</td><td>add a new student</td></tr><tr><td><b>Deletion</b></td><td>remove an element</td><td>remove a cancelled booking</td></tr><tr><td><b>Searching</b></td><td>locate an element</td><td>find a student by matric number</td></tr><tr><td><b>Sorting</b></td><td>arrange in order</td><td>scores lowest → highest</td></tr><tr><td><b>Updating</b></td><td>modify an element</td><td>fix a student's phone number</td></tr><tr><td><b>Accessing</b></td><td>retrieve an element</td><td>read the array element at an index</td></tr><tr><td><b>Merging</b></td><td>combine two collections</td><td>join two lists of records</td></tr></table>`),
   N("nt","r:tb:40","t:tb",520,"box b",`not every structure does these <b>equally well</b>: reading an array <b>by index</b> beats searching an <b>unsorted linked list</b> by value`),
   N("sk","r:tb:40","b:nt:30",520,"sticky",sticky(`"The Ice-cream Delivery Shop Sorts Up And Merges"`,`Traverse · Insert · Delete · Search · Sort · Update · Access · Merge`)),
@@ -529,14 +1644,15 @@ B("b1h",[
   N("pr",40,"b:ti,sp,bo:30",1420,"box w center",`the <b>best</b> data structure depends on <b>the problem</b>, <b>the operations needed</b> + <b>the resources available</b>`)
 ],[]);
 
-B("b1i",[
+B("x_b1i",[
   N("tb",40,20,1000,"box w",`<table class="tb"><tr><th>week</th><th>topic</th><th>content</th></tr><tr><td>1</td><td>Course introduction</td><td>importance + types of data structures, ADTs, efficiency</td></tr><tr><td>2</td><td>Primitive types + data representation</td><td>types, variables, addresses, memory organisation</td></tr><tr><td>3</td><td>Arrays, records + strings</td><td>1-D + multi-D arrays, structures, string processing, basic operations</td></tr><tr><td>4</td><td>Pointers, references + dynamic memory</td><td>addresses, stack vs heap, static vs dynamic, allocate + free</td></tr><tr><td>5</td><td>Stacks</td><td>LIFO, push, pop, peek; array + linked versions; applications</td></tr><tr><td>6</td><td>Queues</td><td>FIFO, enqueue, dequeue; array + linked; <b>circular queues</b>; applications</td></tr><tr><td>7</td><td><b>Mid-term exam</b></td><td></td></tr><tr><td>8</td><td>Linked structures</td><td>nodes + links, singly linked lists: traverse, insert, delete, search</td></tr><tr><td>9</td><td>Advanced linked structures</td><td>doubly + circular lists; linked vs array</td></tr><tr><td>10</td><td>Trees</td><td>root, nodes, edges, leaves, levels, height; binary trees</td></tr><tr><td>11</td><td>Heaps + hash tables</td><td>min/max heaps; hashing, hash functions, collisions</td></tr><tr><td>12</td><td>Graphs</td><td>directed/undirected, adjacency matrix + list, BFS + DFS</td></tr><tr><td>13–15</td><td>Revision · final exam</td><td></td></tr></table>`),
   N("mt","r:tb:40",40,420,"box y",`<span class="t">Midterm scope</span>weeks <b>1–6</b> by the outline · in practice the shared notes are 1, 2, 3 + 5 (linked lists, taught early)`),
   N("lo","r:tb:40","b:mt:30",420,"box b",`<span class="t">Course outcomes</span>explain structures + their memory representation · implement stacks, queues, trees, linked structures · pick the right structure · analyse <b>time + space</b> efficiency`)
 ],[]);
 
+
 /* ===== 2 · primitive types + memory ===== */
-B("b2a",[
+B("x_b2a",[
   N("dt",40,20,560,"box y",`<span class="t">Data type</span>says <b>what kind of value</b> a variable can represent + <b>which operations</b> work on it<br><span class="t" style="margin-top:8px">Primitive data types</span>the <b>basic</b> types a language gives you directly · exact types + sizes <b>depend on the language + implementation</b>`),
   N("tb","r:dt:40","t:dt",820,"box w",`<table class="tb"><tr><th>type</th><th>purpose</th><th>C example</th><th>typical size <span class="ann">(slide 6)</span></th></tr><tr><td><b>int</b></td><td>whole numbers</td><td><code>int age = 25;</code></td><td>4 bytes</td></tr><tr><td><b>char</b></td><td>a character or small integer</td><td><code>char grade = 'A';</code></td><td>1 byte</td></tr><tr><td><b>float</b></td><td>real numbers, single precision</td><td><code>float price = 15.5f;</code></td><td>4 bytes</td></tr><tr><td><b>double</b></td><td>real numbers, more precision</td><td><code>double pi = 3.14159265;</code></td><td>8 bytes</td></tr><tr><td><b>_Bool</b></td><td>true / false</td><td><code>_Bool passed = 1;</code></td><td>typically 1 byte</td></tr></table>`),
   N("ii",40,"b:dt,tb:30",340,"box w",`<span class="t">int</span>no fractional part · counts: students, stock, transactions · size varies → <code>sizeof(int)</code> tells you`),
@@ -547,7 +1663,7 @@ B("b2a",[
   N("sk","r:wy:40","t:wy",480,"sticky",sticky(`"I Can Float Double Booleans" → 4 · 1 · 4 · 8 · 1`,`int 4 · char 1 · float 4 · double 8 (double the float) · bool 1`))
 ],[]);
 
-B("b2b",[
+B("x_b2b",[
   N("df",40,20,560,"box y",`A <b>variable</b> is a <b>named object</b> that stores a value the program can read or change while it runs`+X(`int score = 75;`)+`three properties: <b>name</b> (score) · <b>value</b> (75) · <b>address</b> (where it lives)`),
   N("dg","r:df:40","t:df",820,"plain",gap(200)),
   N("dc",40,"b:df,dg:30",440,"box w",`<span class="t">Declaration</span>introduces it + its type<br><code>int age;</code>`),
@@ -563,7 +1679,7 @@ B("b2b",[
     T(svg,x+420,yy+27,"bytes: "+r[4],{size:16,anchor:"start",color:"var(--soft)"})});
   ["name","type","value","address"].forEach((h,i)=>T(svg,[x+60,x+160,x+245,x+345][i],y-12,h,{size:15,color:"var(--red)"}));lab(svg,x,y+176,"slide 14: one row per variable · 0x1000 is an illustrative address")});
 
-B("b2c",[
+B("x_b2c",[
   N("ad",40,20,560,"box w",`<span class="t">Memory address</span>identifies a location in addressable memory · get it with <b>&amp;</b> (address-of) · print with <b>%p</b>`+X(`int score = 75;
 printf("Value: %d\\n", score);
 printf("Address: %p\\n", (void *)[[&score]]);`)+`<span class="ann">a real address looks like 0x7ffe… and changes between runs + systems</span>`),
@@ -577,7 +1693,7 @@ printf("%d\\n", *ptr);   // 75`)+`<b>&amp;score</b> = its address · <b>ptr</b> 
   box(rc,svg,d.x+460,y,160,54,"var(--g)",173);T(svg,d.x+540,y+35,"0x1000",{size:22,weight:700,color:"var(--blue)"});T(svg,d.x+540,y-10,"ptr",{size:16,color:"var(--blue)"});
   arrow(rc,svg,[d.x+458,y+27],[d.x+168,y+27],{bend:0.2,color:"red"});T(svg,d.x+314,y+84,"*ptr follows the address → 75",{size:17,color:"var(--red)"})});
 
-B("b2d",[
+B("x_b2d",[
   N("bb",40,20,440,"box w",`<span class="t">Bits + bytes</span>a <b>bit</b> is 0 or 1 · <b>8 bits = 1 byte</b> · the same pattern means different things by <b>type + encoding</b>: <code>01000001</code> = 65 as a number, <b>'A'</b> in ASCII`),
   N("dg","r:bb:40","t:bb",940,"plain",gap(140)),
   N("ui",40,"b:bb,dg:30",440,"box y",`<span class="t">Ranges</span>unsigned 8-bit: <b>0 to 2⁸ − 1 = 255</b><br>signed: depends on the representation · modern systems use <b>two's complement</b>`),
@@ -589,7 +1705,7 @@ B("b2d",[
   bits.forEach((b,i)=>{box(rc,svg,x+i*62,y,62,44,b?"var(--y)":"var(--card)",180+i);T(svg,x+i*62+31,y+30,String(b),{size:22,weight:700});T(svg,x+i*62+31,y+68,String(pw[i]),{size:15,color:"var(--soft)"})});
   T(svg,x+8*62+26,y+30,"= 64 + 8 + 2 = 74",{anchor:"start",size:22,weight:700,color:"var(--red)"});lab(svg,x,y+96,"place values under each bit · add the ones that are 1")});
 
-B("b2e",[
+B("x_b2e",[
   N("fm",40,20,1420,"box b",`<span class="t">IEEE 754 single precision = 32 bits</span><b>1 sign</b> bit · <b>8 exponent</b> bits · <b>23 fraction</b> (mantissa) bits · covers a wide range, but some values are only approximate`),
   N("dg",40,"b:fm:20",1420,"plain",gap(110)),
   N("s1",40,"b:dg:20",330,"box w",`<span class="t">① To binary</span>12 = <b>1100</b>₂ · 0.5 = <b>0.1</b>₂<br>→ 12.5 = <b>1100.1</b>₂`),
@@ -602,7 +1718,7 @@ B("b2e",[
   [...bits].forEach((b,i)=>{const f=i===0?"var(--p)":i<9?"var(--y)":"var(--g)";box(rc,svg,x+i*(bw+6)+(i>=1?14:0)+(i>=9?14:0),y,bw,40,f,200+i,{roughness:0.6});T(svg,x+i*(bw+6)+(i>=1?14:0)+(i>=9?14:0)+bw/2,y+28,b,{size:18,weight:700})});
   T(svg,x+17,y+66,"sign",{size:15,color:"var(--soft)"});T(svg,x+14+4*40+17,y+66,"exponent (8) = 130",{size:15,color:"var(--soft)"});T(svg,x+28+9*40+11*40,y+66,"fraction (23)",{size:15,color:"var(--soft)"})});
 
-B("b2f",[
+B("x_b2f",[
   N("q",40,20,1420,"box y",`<span class="t">Assignment 1: 10.25 in IEEE 754 single precision</span><span class="ann">(worked here so you can check yours · same 4 steps as 12.5)</span>`),
   N("a",40,"b:q:30",330,"box w",`<span class="t">a. To binary</span>10 = <b>1010</b>₂ · 0.25 = <b>0.01</b>₂ (×2 → 0.5 → 0 · ×2 → 1.0 → 1)<br>→ <b>1010.01</b>₂`),
   N("b","r:a:30","t:a",330,"box w",`<span class="t">b. Normalise</span>point <b>3 left</b>: <b>1.01001 × 2³</b>`),
@@ -612,7 +1728,7 @@ B("b2f",[
   N("sk","r:r:40","t:r",480,"sticky",sticky(`Fractions: keep doubling`,`×2 each time; the digit before the point is the next bit`))
 ],[]);
 
-B("b2g",[
+B("x_b2g",[
   N("st",90,20,510,"box p",`<span class="t">⬇ Stack</span>function call <b>frames</b>: return addresses, local (<b>automatic</b>) variables, parameters · managed <b>automatically</b> (push/pop) · grows <b>downward</b> (high → low addresses)<br><span class="ann">compilers may keep a local in a register or optimise it away</span>`),
   N("hp",90,"b:st:22",510,"box g",`<span class="t">⬆ Heap</span><b>dynamically allocated</b> memory: <code>malloc()</code> in C, <code>new</code> in C++ · managed <b>by you</b> (allocate + <code>free</code>; forget = <b>memory leak</b>) · grows <b>upward</b>`),
   N("da",90,"b:hp:22",510,"box y",`<span class="t">Data segment</span><b>initialised</b> globals + statics · e.g. <code>int count = 100;</code> · lives the whole run`),
@@ -639,7 +1755,7 @@ void example(void) {
 (rc,svg,R)=>{const x=R.st.x-26;arrow(rc,svg,[x,R.tx.y+R.tx.h],[x,R.st.y],{bend:0,color:"ink"});T(svg,x-10,R.st.y+40,"high",{size:14,anchor:"middle",color:"var(--soft)",rotate:-90});T(svg,x-10,R.tx.y+R.tx.h-50,"low",{size:14,anchor:"middle",color:"var(--soft)",rotate:-90})});
 
 /* ===== 3 · arrays, structures + strings ===== */
-B("b3a",[
+B("x_b3a",[
   N("df",40,20,700,"box y big",`An <b>array</b> = elements of the <b>same type</b> in <b>consecutive</b> memory, reached through <b>one name + an index</b>`),
   N("wh","r:df:40","t:df",680,"box w",`<span class="t">Why</span>five scores need five variables <code>score1…score5</code>, or one array:<br><code>int scores[5] = {65, 72, 80, 68, 91};</code>`),
   N("dg",40,"b:df,wh:20",700,"plain",gap(100)),
@@ -648,7 +1764,7 @@ B("b3a",[
   N("sk",40,"b:ix:30",700,"sticky",sticky(`"Hot Irons Can Fix Every Outfit"`,`Homogeneous · Indexed · Contiguous · Fixed · Efficient · Ordered`))
 ],[],(rc,svg,R)=>{const d=R.dg;cells(rc,svg,d.x+40,d.y+28,[65,72,80,68,91],{w:80,hl:[2],addr:[1000,1004,1008,1012,1016]});T(svg,d.x+40+5*80+20,d.y+58,"scores[2] = 80",{anchor:"start",size:19,color:"var(--red)",weight:700})});
 
-B("b3b",[
+B("x_b3b",[
   N("dc",40,20,440,"box w",`<span class="t">Declare</span><code>data_type name[size];</code>`+X(`int ages[10];
 float temperatures[7];
 char letters[26];`)+`size must be known at compile time <span class="ann">(variable-length arrays only where the C version supports them)</span>`),
@@ -670,7 +1786,7 @@ double avg = [[(double)]]sum / 5;`)+`376 → <b>75.20</b> · the cast stops <b>i
   N("ln","r:tr:30","t:ac",420,"box b",`<span class="t">Slide extras</span>length: <code>n = sizeof(arr) / sizeof(arr[0]);</code><br>backwards: <code>for (i = 4; i >= 0; i--)</code><br>Java: <code>new int[5]</code>, <code>arr.length</code> · Python list: <code>append</code>, <code>remove</code>, <code>insert(2, 25)</code>`)
 ],[]);
 
-B("b3c",[
+B("x_b3c",[
   N("fo",40,20,620,"box y big",`<b>Address(A[i]) = B + i × w</b><br><small>B = base address (first element) · w = bytes per element</small>`),
   N("dg","r:fo:40","t:fo",760,"plain",gap(160)),
   N("e1",40,"b:fo,dg:24",440,"box w",`<span class="t">Example (note 1)</span>ints, 4 bytes, start 1000:<br><code>numbers[2]</code> = 1000 + 2×4 = <b>1008</b>`),
@@ -679,7 +1795,7 @@ B("b3c",[
   N("sk",40,"b:e1,e2,wy:30",700,"sticky",sticky(`Base + steps × stride 🚶`,`start at the front door, take i steps, each step w bytes long`))
 ],[],(rc,svg,R)=>{const d=R.dg;cells(rc,svg,d.x+40,d.y+34,[10,20,30,40],{w:90,addr:["B = 1000","1004","1008","1012"],hl:[2]});arrow(rc,svg,[d.x+40+45,d.y+118],[d.x+40+2*90+40,d.y+118],{bend:0.22,color:"red"});T(svg,d.x+40+135,d.y+168,"2 steps × 4 bytes",{size:15,color:"var(--red)"});T(svg,d.x+40+4*90+30,d.y+64,"+ 2 × 4 = 1008",{anchor:"start",size:20,color:"var(--red)",weight:700})});
 
-B("b3d",[
+B("x_b3d",[
   N("sa",40,20,440,"box w",`<span class="t">Static array (slide 30)</span><b>fixed size</b> set when declared · memory allocated <b>before the program runs</b> (compile time)`),
   N("da","r:sa:30","t:sa",500,"box g",`<span class="t">Dynamic array (slides 31–32)</span>can <b>grow or shrink</b> while running · memory allocated at <b>runtime</b><br><span class="hg">✓ flexible size · efficient use of memory</span><br><span class="hp">✗ slightly slower (resizing) · careful memory management in low-level languages</span>`),
   N("py","r:da:30","t:sa",420,"box b",`Python list as the dynamic example:`+X(`a = [10, 20, 30]
@@ -689,7 +1805,7 @@ a.remove(20)   # [10,30,40]`)),
   N("li","r:ad:40","t:ad",700,"box p",`<span class="t">✗ Limitations</span><ul><li><b>fixed capacity</b> (ordinary arrays)</li><li>insert/delete may <b>shift</b> elements</li><li>all elements <b>one type</b></li><li><b>no bounds checking</b> in C: a bad index = undefined behaviour</li><li>a big array needs a big <b>contiguous</b> block</li></ul>`)
 ],[]);
 
-B("b3e",[
+B("x_b3e",[
   N("df",40,20,560,"box y",`A <b>multidimensional array</b> arranges elements in <b>several dimensions</b> · "an <b>array of arrays</b>" · most common: <b>2-D</b> = a table / matrix`),
   N("ap",40,"b:df:24",560,"box w",`uses: scores per student per course · monthly sales per branch · <b>image pixels</b> · matrices in numerical work + ML · game boards + grids`),
   N("cd","r:df:40","t:df",420,"box g",`<code>data_type a[rows][cols];</code>`+X(`int marks[3][4] = {
@@ -709,7 +1825,7 @@ B("b3e",[
 ],[],(rc,svg,R)=>{const d=R.dg,x=d.x+40,y=d.y+40;[[70,65,80,75],[60,72,68,81],[90,85,88,92]].forEach((row,i)=>cells(rc,svg,x,y+i*46,row,{w:66,idx:false,hl:i===1?[2]:[],seed:i*7}));
   [0,1,2,3].forEach(j=>T(svg,x+j*66+33,y-10,"c"+j,{size:14,color:"var(--soft)"}));[0,1,2].forEach(i=>T(svg,x-16,y+i*46+29,"r"+i,{size:14,color:"var(--soft)"}));T(svg,x+132,y+3*46+26,"marks[1][2] = 68",{size:18,color:"var(--red)",weight:700})});
 
-B("b3f",[
+B("x_b3f",[
   N("rm",40,20,620,"box y",`C stores multi-D arrays in <b>row-major order</b>: all of row 0, then all of row 1, …`+X(`int A[2][3] = { {1, 2, 3},
                 {4, 5, 6} };`)+`memory order: <b>1 2 3 4 5 6</b>`),
   N("dg","r:rm:40","t:rm",760,"plain",gap(160)),
@@ -720,7 +1836,7 @@ B("b3f",[
   arrow(rc,svg,[x+190,y+50],[x+250,y+50],{bend:0,color:"red"});const mx=x+270;cells(rc,svg,mx,y+26,[1,2,3,4,5,6],{w:62});
   [[0,"row 0"],[3,"row 1"]].forEach(([i,t])=>T(svg,mx+i*62+93,y+12,t,{size:15,color:"var(--soft)"}));box(rc,svg,mx+3*62,y+26,186,46,"transparent",222,{fill:undefined,fillStyle:undefined,stroke:"var(--green)",strokeWidth:2.6});lab(svg,mx,y+120,"offset of A[1][0] = 1·3 + 0 = 3 ✓")});
 
-B("b3g",[
+B("x_b3g",[
   N("df",40,20,620,"box y",`A <b>record</b> = related <b>fields</b> describing <b>one entity</b>; fields may have <b>different types</b> · in C: <b>struct</b> groups members under one name`),
   N("tb",40,"b:df:24",620,"box w",`<table class="tb"><tr><th>field</th><th>example</th><th>type</th></tr><tr><td>Name</td><td>Ada</td><td>char array</td></tr><tr><td>Age</td><td>20</td><td>int</td></tr><tr><td>CGPA</td><td>4.25</td><td>float</td></tr><tr><td>Matric no.</td><td>CSC/2026/001</td><td>char array</td></tr></table>`),
   N("de","r:df:40","t:df",360,"box g",`<span class="t">Declare a type</span>`+X(`struct Student {
@@ -741,7 +1857,7 @@ s.cgpa = 4.50f;`)+`<span class="ann">slide 43 memory: age 4 bytes · cgpa 4 byte
   N("sk","r:dt:40","b:ky:24",800,"sticky",sticky(`Array = an egg tray 🥚 · struct = a student ID card 🪪`,`tray: lots of the same thing in slots · card: different facts about ONE person`))
 ],[]);
 
-B("b3h",[
+B("x_b3h",[
   N("ar",40,20,460,"box w",`<span class="t">Array of structures</span>many records of one struct type`+X(`struct Student students[3] = {
   {20, 4.25f, "Ada"},
   {21, 3.80f, "John"},
@@ -766,7 +1882,7 @@ printf("%zu\\n", sizeof(struct Example));
 ],[],(rc,svg,R)=>{const d=R.dg,x=d.x+20,y=d.y+40;box(rc,svg,x,y,40,44,"var(--y)",230);T(svg,x+20,y+29,"c",{size:18,weight:700});[1,2,3].forEach(i=>{box(rc,svg,x+i*40,y,40,44,"var(--card)",231+i,{strokeLineDash:[5,4]})});box(rc,svg,x+160,y,140,44,"var(--b)",236);T(svg,x+230,y+29,"number",{size:17,weight:700});
   T(svg,x+80,y+66,"padding",{size:14,color:"var(--red)"});T(svg,x+150,y-12,"1 + 3 + 4 = 8 bytes",{size:16,color:"var(--soft)"})});
 
-B("b3i",[
+B("x_b3i",[
   N("df",40,20,620,"box y",`A C <b>string</b> = an <b>array of characters</b> ending in the <b>null character '\\0'</b> · C has <b>no built-in string type</b> (char arrays or pointers to chars)`),
   N("dg",40,"b:df:20",620,"plain",gap(100)),
   N("nt",40,"b:dg:10",620,"box w",`"Ada" = 3 visible chars but <b>4 elements</b> · <b>'\\0' ≠ '0'</b> · "Hello" takes <b>6</b>: H e l l o \\0`),
@@ -779,7 +1895,7 @@ fgets(fullName, sizeof fullName, stdin);`)+`<b>%29s</b> leaves room for '\\0' bu
   N("sk",40,"b:nt:30",620,"sticky",sticky(`'\\0' is the full stop of a C string`,`no full stop → the computer keeps reading into whatever's next`))
 ],[],(rc,svg,R)=>{const d=R.dg;cells(rc,svg,d.x+40,d.y+20,["A","d","a","\\0"],{w:70,hl:[3],hlf:"var(--p)"});T(svg,d.x+40+4*70+20,d.y+50,"char name[] = \"Ada\";",{anchor:"start",size:19,weight:700})});
 
-B("b3j",[
+B("x_b3j",[
   N("tb",40,20,900,"box w",`<table class="tb"><tr><th>job</th><th>C (<code>&lt;string.h&gt;</code>)</th><th>result / rule</th></tr>
 <tr><td>length</td><td><code>strlen(s)</code></td><td>chars <b>before '\\0'</b> (doesn't count it) · "Data Structures" → <b>15</b> (spaces count)</td></tr>
 <tr><td>copy</td><td><code>strcpy(dest, src)</code></td><td>copies src <b>including '\\0'</b> · dest must be big enough</td></tr>
@@ -796,7 +1912,7 @@ while (text[length] != '\\0')
   N("sk",40,"b:tb:30",900,"sticky",sticky(`"Long Copies Cat Compares Characters, Searching Strings"`,`strLen · strCpy · strCat · strCmp · strChr · strStr`))
 ],[]);
 
-B("b3k",[
+B("x_b3k",[
   N("su",40,20,460,"box w",`<span class="t">Substring (slicing)</span>a <b>part</b> of a string: "Data" from "Data Structures"<br><b>C</b>: no built-in → copy chars in a loop, end with <code>sub[i] = '\\0'</code><br><b>C++</b>: <code>s.substr(0, 4)</code> = 4 chars from index 0<br><b>Python</b>: <code>s[0:4]</code> "Data" · <code>s[5:15]</code> "Structures" · <code>s[:4]</code> · <code>s[5:]</code> · end index <b>not included</b>`),
   N("se","r:su:30","t:su",460,"box w",`<span class="t">Searching</span>"is it there + where?"<br><b>C</b>: <code>strchr</code> / <code>strstr</code> → a <b>pointer</b> or NULL<br><b>C++</b>: <code>s.find(…)</code> → an <b>index</b>, or <code>string::npos</code> if absent<br><b>Python</b>: <code>'S' in s</code> → True/False · <code>s.find()</code> → index or <b>−1</b><br><span class="ann">'S' / "Struct" in "Data Structures" → <b>5</b> in all three</span>`),
   N("cp","r:se:30","t:su",460,"box w",`<span class="t">Comparing</span>equal? or which comes first in <b>dictionary (lexicographic)</b> order<br><b>C</b>: <code>strcmp</code> (never ==)<br><b>C++</b>: <code>a.compare(b)</code> → 0 / &lt;0 / &gt;0, and <code>==, &lt;, &gt;</code> also work<br><b>Python</b>: <code>== != &lt; &gt; &lt;= &gt;=</code> directly · <b>case-sensitive</b>`),
@@ -804,13 +1920,14 @@ B("b3k",[
   N("sk","r:tr:40","t:tr",680,"sticky",sticky(`C hands you a pointer · C++ + Python hand you an index`,`not found: NULL (C) · npos (C++) · −1 (Python)`))
 ],[]);
 
-B("b3l",[
+B("x_b3l",[
   N("er",40,20,560,"box p",`<span class="t">Common string mistakes</span><ul><li>no room for the <b>'\\0'</b></li><li>copying / joining into a <b>too-small</b> array</li><li>using <b>==</b> to compare contents</li><li>reading input <b>without a size limit</b></li><li>going <b>past the array's bounds</b></li><li>assuming every line fits the buffer</li><li>mixing up <b>'0'</b> and <b>'\\0'</b></li></ul><span class="ann">C strings are byte-based: one Unicode character can take several bytes</span>`),
   N("cm","r:er:40","t:er",820,"box w",`<table class="tb"><tr><th></th><th>array</th><th>structure</th><th>C string</th></tr><tr><td>purpose</td><td>a sequence of elements</td><td>group related fields</td><td>store text</td></tr><tr><td>types</td><td>one element type</td><td>members may differ</td><td>characters</td></tr><tr><td>access</td><td>index</td><td>member name</td><td>index or string functions</td></tr><tr><td>example</td><td><code>int A[5];</code></td><td><code>struct Student s;</code></td><td><code>char name[20];</code></td></tr><tr><td>usual ops</td><td>traverse, search, update, sort</td><td>read / update fields</td><td>length, copy, compare, join, search</td></tr><tr><td>memory</td><td>contiguous</td><td>members + possible <b>padding</b></td><td>needs a <b>'\\0'</b> at the end</td></tr></table>`)
 ],[]);
 
+
 /* ===== 4 · basic operations ===== */
-B("b4a",[
+B("x_b4a",[
   N("tr",40,20,460,"box w",`<span class="t">Traversal</span>visit each element to process it`+X(`for (int i = 0; i < 5; i++)
   printf("%d ", scores[i]);`)+`for: display · totals · min + max · counting · transforming · <b>O(n)</b>`),
   N("ac","r:tr:30","t:tr",460,"box g",`<span class="t">Accessing</span>retrieve one element · <code>int value = scores[2];</code><br>array by valid index: <b>O(1)</b> (address is calculated)<br>linked list by position: walk from the start → <b>O(n)</b>`),
@@ -818,7 +1935,7 @@ B("b4a",[
   N("sk",40,"b:tr,ac,up:30",900,"sticky",sticky(`Know the index → instant · know only the value → go looking`,`O(1) to jump, O(n) to hunt`))
 ],[]);
 
-B("b4b",[
+B("x_b4b",[
   N("al",40,20,520,"box w",`<span class="t">InsertIntoArray(A, n, capacity, pos, value)</span>`+X(`1. if n == capacity → report [[overflow]]
 2. if pos is invalid → report an error
 3. for i = n-1 [[down to]] pos:
@@ -834,7 +1951,7 @@ B("b4b",[
   arrow(rc,svg,[x+3*70+40,y1-6],[x+4*70+35,y1-6],{bend:-0.45,color:"red"});arrow(rc,svg,[x+2*70+35,y1-6],[x+3*70+28,y1-6],{bend:-0.45,color:"red"});T(svg,x+4*70+8,y1-44,"①",{size:17,color:"var(--red)",weight:700});T(svg,x+3*70,y1-44,"②",{size:17,color:"var(--red)",weight:700});T(svg,x+5*70+20,y1-14,"① 50 → [4] first · ② then 40 → [3]",{anchor:"start",size:15,color:"var(--red)"});
   cells(rc,svg,x,y2,[10,20,30,40,50],{w:70,hl:[2],seed:9});T(svg,x+5*70+20,y2+30,"③ A[2] = 30 · n = 5",{anchor:"start",size:17,color:"var(--red)",weight:700});lab(svg,x+5*70+20,y1+58,"(Python: a.insert(2, 25) shifts for you)",{size:15})});
 
-B("b4c",[
+B("x_b4c",[
   N("al",40,20,520,"box w",`<span class="t">DeleteFromArray(A, n, pos)</span>`+X(`1. if n == 0 → report [[underflow]]
 2. if pos is invalid → report an error
 3. for i = pos to n-2:
@@ -847,7 +1964,7 @@ B("b4c",[
   cells(rc,svg,x,d.y+44,[10,20,30,40,50],{w:70,hl:[2],hlf:"var(--p)"});arrow(rc,svg,[x+3*70+35,d.y+44-6],[x+2*70+35,d.y+44-6],{bend:0.5,color:"red"});arrow(rc,svg,[x+4*70+35,d.y+44-6],[x+3*70+35,d.y+44-6],{bend:0.5,color:"red"});
   cells(rc,svg,x,d.y+130,[10,20,40,50,""],{w:70,seed:9});T(svg,x+5*70+20,d.y+160,"n = 4 · left to right this time",{anchor:"start",size:17,color:"var(--red)"})});
 
-B("b4d",[
+B("x_b4d",[
   N("ls",40,20,560,"box w",`<span class="t">Linear search</span>check each element <b>in turn</b> until found or the end`+X(`int linearSearch(int A[], int n, int target) {
   for (int i = 0; i < n; i++)
     if (A[i] == target) return i;
@@ -866,14 +1983,14 @@ return -1`)),
   cells(rc,svg,x,y,[10,20,30,40,50],{w:54,hl:[2],size:17});lab(svg,x,y+92,"① mid = 2 → 30 < 40 → low = 3",{size:15});
   cells(rc,svg,x,y+118,["","","",40,50],{w:54,hl:[3],hlf:"var(--g)",size:17,seed:5});lab(svg,x,y+210,"② mid = 3 → 40 ✓ found in 2 steps",{size:15,color:"var(--green)"})});
 
-B("b4e",[
+B("x_b4e",[
   N("so",40,20,480,"box w",`<span class="t">Sorting</span>arrange in order (ascending / descending)<br>[40, 10, 50, 20, 30] → [10, 20, 30, 40, 50]<br>useful for <b>ordered display</b> + faster searching (binary search needs it)`),
   N("tb","r:so:40","t:so",400,"box y",`<table class="tb"><tr><th>algorithm</th><th>worst case</th></tr><tr><td>bubble sort</td><td>O(n²)</td></tr><tr><td>selection sort</td><td>O(n²)</td></tr><tr><td>insertion sort</td><td>O(n²)</td></tr><tr><td>merge sort</td><td><b>O(n log n)</b></td></tr><tr><td>heap sort</td><td><b>O(n log n)</b></td></tr><tr><td>quick sort</td><td><span class="ann">named, no bound given</span></td></tr></table>`),
   N("me","r:tb:40","t:so",400,"box g",`<span class="t">Merging</span>combine two collections<br>[10, 20, 30] + [40, 50] → [10, 20, 30, 40, 50]<br>two <b>sorted</b> arrays kept sorted: <b>O(n + m)</b> (n, m = their lengths)`),
   N("sk",40,"b:so,tb,me:30",900,"sticky",sticky(`"Big Silly Insects" are slow (n²) · "Merge + Heap" are quick (n log n)`,`Bubble · Selection · Insertion vs Merge · Heap`))
 ],[]);
 
-B("b4f",[
+B("x_b4f",[
   N("tb",40,20,900,"box w",`<table class="tb"><tr><th>operation</th><th>meaning</th><th>typical array cost</th></tr>
 <tr><td>access</td><td>get an element by index</td><td><b>O(1)</b></td></tr>
 <tr><td>traversal</td><td>visit all elements</td><td><b>O(n)</b></td></tr>
@@ -890,7 +2007,7 @@ B("b4f",[
 ],[]);
 
 /* ===== 5 · pointers + dynamic memory ===== */
-B("b5a",[
+B("x_b5a",[
   N("pt",40,20,560,"box y",`<span class="t">A pointer stores an address</span>`+X(`int score = 75;
 int *ptr = &score;   // ptr holds score's address
 printf("%d", *ptr);  // 75: follow it
@@ -901,7 +2018,7 @@ printf("%d", *ptr);  // 75: follow it
   N("sk","r:rf:40","t:rf",480,"sticky",sticky(`A pointer is a sticky note with a house number on it`,`the note isn't the house · * walks you to the door`))
 ],[]);
 
-B("b5b",[
+B("x_b5b",[
   N("ma",40,20,560,"box w",`<span class="t">malloc + free</span><span class="ann">(note 1 + note 2)</span>`+X(`#include <stdlib.h>
 int *ptr = [[malloc]](sizeof(int));     // 1 int
 int *arr = malloc(5 * sizeof(int));  // 5 ints
@@ -914,7 +2031,7 @@ if (arr == NULL) { /* out of memory */ }
   N("sk",40,"b:ma,ip,sh:30",900,"sticky",sticky(`malloc borrows · free returns 📚`,`every malloc needs exactly one free · a library book never returned = a leak`))
 ],[]);
 
-B("b5c",[
+B("x_b5c",[
   N("q",40,20,620,"box y",`<span class="t">How can a dynamic array stay contiguous?</span><span class="ann">(last session's final, Q2a: 8 marks)</span> it often can't grow in place (the bytes after it may be in use), so when full it usually <b>moves</b>:`),
   N("st",40,"b:q:24",620,"box w",`① <b>allocate</b> a new, bigger block (usually <b>double</b>)<br>② <b>copy</b> every element across<br>③ <b>free</b> the old block<br>④ point the array at the new block<br><span class="ann">C does ①–③ with <code>realloc(p, newSize)</code></span>`),
   N("dg","r:q:40","t:q",760,"plain",gap(230)),
@@ -925,8 +2042,9 @@ B("b5c",[
   arrow(rc,svg,[x+87,d.y+100],[x+87,d.y+134],{bend:0,color:"green"});T(svg,x+74,d.y+124,"copy",{anchor:"end",size:15,color:"var(--green)"});
   box(rc,svg,x-8,d.y+22,4*58+16,62,"transparent",250,{fill:undefined,fillStyle:undefined,stroke:"var(--red)",strokeWidth:2,strokeLineDash:[8,6]});T(svg,x+4*58+20,d.y+92,"old block → freed",{anchor:"start",size:15,color:"var(--red)"})});
 
+
 /* ===== 6 · linked lists ===== */
-B("b6a",[
+B("x_b6a",[
   N("df",40,20,700,"box y",`<span class="t">Linked list</span>a <b>non-contiguous, linear</b> data structure whose elements (<b>nodes</b>) are linked by <b>pointers / references</b><br>each node = <b>data</b> (the information) + a <b>pointer (link)</b> to the next node's address`),
   N("dg",40,"b:df:30",1000,"plain",gap(150)),
   N("vs","r:df:40","t:df",680,"box b",`<span class="t">Linked list vs array (slide 5)</span><b>array</b>: size given at creation → <b>fixed length</b> · <b>linked list</b>: <b>dynamic</b> size, add nodes any time<br>an array holds <b>similar</b> data types; the slide says a linked list "can store various nodes of <b>different data types</b>"`),
@@ -938,7 +2056,7 @@ B("b6a",[
   lab(svg,d.x+30,y+gs[0].h+56,"blue = where the node lives · red = the address stored in its next field");
   T(svg,gs[0].x+35,y-34,"",{});});
 
-B("b6b",[
+B("x_b6b",[
   N("st",40,20,520,"box w",`<span class="t">Creating a list of size 3 (slide 9)</span>① allocate the <b>first</b> node, store data, mark it <b>head</b><br>② allocate the <b>second</b>, store data, <b>link</b> first → second<br>③ allocate the <b>third</b>, store data, link second → third, set its <b>next = NULL</b> so the last node ends the list<br><span class="ann">"two buckets" per node: one holds data, one holds the next address · traverse in <b>one direction only</b></span>`),
   N("cp","r:st:40","t:st",420,"box g",`<span class="t">C++ (slides 8 + 10)</span>`+X(`class Node {
 public:
@@ -981,7 +2099,7 @@ function stepRow(rc,svg,x,y,before,after,o={}){const P={gap:34,dw:46,pw:30},lx=x
   lab(svg,x,y+48,"before",{size:16});llist(rc,svg,lx,y+20,before,Object.assign({},P,{dbl:o.dbl,seed:o.seed||0},o.b||{}));
   arrow(rc,svg,[x+28,y+60],[x+28,y+118],{bend:0,color:"green"});
   lab(svg,x,y+138,"after",{size:16,color:"var(--green)"});llist(rc,svg,lx,y+110,after,Object.assign({},P,{dbl:o.dbl,seed:(o.seed||0)+50,head:false},o.a||{}))}
-B("b6c",[
+B("x_b6c",[
   N("i1",40,20,420,"box w",`<span class="t">① At the beginning (slides 13–16)</span>create the new node (1) on its own → <code>newNode->next = head</code> → <code>head = newNode</code><br><span class="hg">no traversal needed: O(1)</span>`),
   N("g1","r:i1:30","t:i1",960,"plain",gap(170)),
   N("i2",40,"b:i1,g1:40",420,"box w",`<span class="t">② At the end (slides 17–19)</span>create the new node (4) → <b>traverse to the last node</b> → <code>lastNode->next = newNode</code> (its next is already NULL)<br><span class="ann">walking to the end costs O(n) unless you keep a tail pointer</span>`),
@@ -995,7 +2113,7 @@ B("b6c",[
   stepRow(rc,svg,R.g2.x+20,R.g2.y+20,[1,2,3],[1,2,3,4],{seed:10,a:{hl:[3]}});
   stepRow(rc,svg,R.g3.x+20,R.g3.y+20,[1,2,4],[1,2,3,4],{seed:20,b:{hl:[1]},a:{hl:[2]}});lab(svg,R.g3.x+20+100+110-20,R.g3.y+24,"curr (pos − 1)",{color:"var(--red)",size:15})});
 
-B("b6d",[
+B("x_b6d",[
   N("d1",40,20,420,"box w",`<span class="t">① First node (slides 25–27)</span><code>temp = head</code> → <code>head = head->next</code> → <code>free(temp)</code> (check head ≠ NULL first)<br><span class="hg">O(1)</span>`),
   N("g1","r:d1:30","t:d1",960,"plain",gap(170)),
   N("d2",40,"b:d1,g1:40",420,"box w",`<span class="t">② Last node (slides 32–35)</span>traverse with <b>curr</b> to the <b>second-last</b> node → <code>curr->next = NULL</code> → delete the last node<br><span class="ann">singly list, no tail pointer: you must walk there → <b>O(n)</b></span>`),
@@ -1009,7 +2127,7 @@ B("b6d",[
   stepRow(rc,svg,R.g2.x+20,R.g2.y+20,[1,2,3,4],[1,2,3],{seed:10,b:{hl:[3]}});
   stepRow(rc,svg,R.g3.x+20,R.g3.y+20,[1,2,3,4],[1,2,4],{seed:20,b:{hl:[2]}})});
 
-B("b6e",[
+B("x_b6e",[
   N("se",40,20,620,"box w",`<span class="t">Searching</span><span class="ann">the slide titled "Searching" only repeats the delete-by-position picture; this is the standard walk it stands for:</span>`+X(`curr = head
 while curr != NULL:
     if curr->data == key: return found
@@ -1020,7 +2138,7 @@ return not found`)+`linear: up to <b>n</b> nodes → <b>O(n)</b> · no jumping t
   N("sk","r:se:40","b:pr,cn:30",780,"sticky",sticky(`Flexible but forgetful`,`grows anywhere, but has to walk from the head every time it looks for something`))
 ],[]);
 
-B("b6f",[
+B("x_b6f",[
   N("df",40,20,560,"box y",`<span class="t">Doubly linked list</span>each node has <b>three</b> fields: <b>data</b> · <b>next</b> (pointer to the next node) · <b>prev</b> (pointer to the previous node)<br>→ quick insert/delete + traversal <b>in both directions</b>`),
   N("dg","r:df:40","t:df",820,"plain",gap(120)),
   N("mk",40,"b:df,dg:30",560,"box w",`<span class="t">Building 4 nodes (slide 41)</span>① head node: <b>prev + next = NULL</b><br>② <code>head.next = new Node(v2)</code> then <code>head.next.prev = head</code><br>③ <code>head.next.next = new Node(v3)</code> then <code>head.next.next.prev = head.next</code><br>④ repeat · the last node's <b>next must be NULL</b> · keep <b>head</b> (+ optionally a <b>tail</b>: makes appends easy)`),
@@ -1047,7 +2165,7 @@ head.next.[[prev]] = head`)+`<span class="ann">prints forward as 10 &lt;-&gt; 20
   N("sk",40,"b:mk,cp,py:30",900,"sticky",sticky(`Every new link is a handshake 🤝`,`set next going forward AND prev coming back: two pointers per join`))
 ],[],(rc,svg,R)=>{const d=R.dg;llist(rc,svg,d.x+70,d.y+46,[10,20,30,40],{dbl:true,gap:42,dw:56});lab(svg,d.x+70,d.y+118,"black = next · blue = prev · first.prev = NULL · last.next = NULL")});
 
-B("b6g",[
+B("x_b6g",[
   N("f",40,20,420,"box w",`<span class="t">Insert at the front (slides 43–44)</span>① new node, <code>new->prev = NULL</code><br>② <code>new->next = head</code><br>③ if the list isn't empty: <code>head->prev = new</code><br>④ the new node is the <b>new head</b>`),
   N("g1","r:f:30","t:f",960,"plain",gap(180)),
   N("b",40,"b:f,g1:30",420,"box w",`<span class="t">Delete the first node (slides 46–47)</span>empty? return · <code>temp = head</code> · <code>head = head->next</code> · if the new head isn't NULL: <code>head->prev = NULL</code> · free temp`),
@@ -1060,7 +2178,7 @@ B("b6g",[
 ],[],(rc,svg,R)=>{const row=(g,bv,av,o)=>stepRow(rc,svg,g.x+20,g.y+10,bv,av,Object.assign({dbl:true},o));
   row(R.g1,[2,3],[1,2,3],{a:{hl:[0]}});row(R.g2,[1,2,3],[2,3],{b:{hl:[0]},seed:5});row(R.g3,[1,2,3],[1,2],{b:{hl:[2]},seed:9});row(R.g4,[1,2,3],[1,3],{b:{hl:[1]},seed:13})});
 
-B("b6h",[
+B("x_b6h",[
   N("df",40,20,620,"box y",`<span class="t">Circular linked list</span>the <b>last node points back to the first</b> → a closed loop · traversal never meets NULL<br><span class="ann">regular list: last → NULL · circular: last → first</span><br>used for <b>scheduling</b> + <b>playlists</b>: smooth, repeated cycling`),
   N("s1",40,"b:df:30",620,"box w",`<span class="t">① Circular singly</span>one pointer (<b>next</b>) per node · the last node's next → the first · <b>one direction</b> only · the slides keep a <b>last</b> pointer: <code>last->next</code> is the first node`),
   N("g1","r:df:40","t:df",760,"plain",gap(130)),
@@ -1070,7 +2188,7 @@ B("b6h",[
 ],[],(rc,svg,R)=>{llist(rc,svg,R.g1.x+40,R.g1.y+40,[10,20,30,40,50],{circ:true,gap:26,dw:44});lab(svg,R.g1.x+40+4*130-6,R.g1.y+28,"last",{color:"var(--red)",weight:700});
   llist(rc,svg,R.g2.x+40,R.g2.y+60,[10,20,30,40],{circ:true,dbl:true,gap:30,dw:44,seed:9})});
 
-B("b6i",[
+B("x_b6i",[
   N("a1",40,20,340,"box w",`🎵 <b>music player</b>: songs linked to the previous + next song`),
   N("a2","r:a1:30","t:a1",340,"box w",`🌐 <b>web browser</b>: previous + next pages via back/forward → <b>doubly</b>`),
   N("a3","r:a2:30","t:a1",340,"box w",`🖼 <b>image viewer</b>: previous + next image buttons → <b>doubly</b>`),
@@ -1079,10 +2197,11 @@ B("b6i",[
   N("sk","r:a5:40","t:a5",380,"sticky",sticky(`Back + forward → doubly · round and round → circular`,`the exam's favourite pairing`))
 ],[]);
 
+
 /* ===== 7 · stacks ===== */
 function stackPic(rc,svg,x,y,vals,cap,o={}){const w=o.w||90,h=36;for(let i=0;i<cap;i++){const yy=y+(cap-1-i)*h,v=vals[i];box(rc,svg,x,yy,w,h,v==null?"var(--card)":(i===vals.length-1?(o.top||"var(--y)"):"var(--b)"),300+i+(o.seed||0),v==null?{strokeLineDash:[5,4]}:{});if(v!=null)T(svg,x+w/2,yy+25,String(v),{size:18,weight:700});T(svg,x-12,yy+24,String(i),{size:14,anchor:"end",color:"var(--soft)"})}
   const ty=vals.length?y+(cap-vals.length)*h+18:y+cap*h+16;arrow(rc,svg,[x+w+60,ty],[x+w+8,ty],{bend:0,color:"red"});T(svg,x+w+66,ty+6,o.lbl===false?"top":"top = "+(vals.length-1),{anchor:"start",size:16,color:"var(--red)",weight:700})}
-B("b7a",[
+B("x_b7a",[
   N("df",40,20,560,"box y",`<span class="t">Stack = LIFO</span><b>Last In, First Out</b>: the last item added is the first removed · all action happens at <b>one end</b>, the <b>top</b>`),
   N("op",40,"b:df:24",560,"box w",`<table class="tb"><tr><th>operation</th><th>does</th><th>cost</th></tr><tr><td><b>push(x)</b></td><td>add x on top</td><td>O(1)</td></tr><tr><td><b>pop()</b></td><td>remove + return the top</td><td>O(1)</td></tr><tr><td><b>peek()</b> / top</td><td>look at the top, don't remove</td><td>O(1)</td></tr><tr><td><b>isEmpty()</b></td><td>anything in it?</td><td>O(1)</td></tr><tr><td>isFull()</td><td>array version only</td><td>O(1)</td></tr></table><span class="ann">note 1's stack ADT lists push, pop, peek, isEmpty</span>`),
   N("dg","r:df:40","t:df",820,"plain",gap(230)),
@@ -1091,7 +2210,7 @@ B("b7a",[
 ],[],(rc,svg,R)=>{const d=R.dg,y=d.y+30;const st=[[[10],"push 10"],[[10,20],"push 20"],[[10,20,30],"push 30"],[[10,20],"pop → 30"]];
   st.forEach(([v,l],i)=>{const x=d.x+40+i*200;stackPic(rc,svg,x,y,v,4,{w:70,seed:i*5,lbl:false});T(svg,x+35,y+4*36+30,l,{size:17,weight:700,color:i===3?"var(--red)":"var(--ink)"})})});
 
-B("b7b",[
+B("x_b7b",[
   N("in",40,20,440,"box w",`<span class="t">Array stack</span>an array <code>S[size]</code> + an index <b>top</b><br>empty: <b>top = −1</b><br>full: <b>top = size − 1</b>`),
   N("pu","r:in:30","t:in",460,"box g",`<span class="t">push(x): overflow check first</span>`+X(`if top == size - 1:
     print "Stack [[Overflow]]"
@@ -1109,7 +2228,7 @@ else:
   N("sk","r:dg:30","b:ex:24",950,"sticky",sticky(`Push: "is there room?" · Pop: "is there anything?"`,`full = top at size − 1 · empty = top at −1`))
 ],[],(rc,svg,R)=>{const d=R.dg;stackPic(rc,svg,d.x+50,d.y+10,[5,8,2],5,{w:80});T(svg,d.x+90,d.y+5*36+36,"size 5 · 3 items",{size:16,color:"var(--soft)"})});
 
-B("b7c",[
+B("x_b7c",[
   N("ls",40,20,460,"box w",`<span class="t">Linked stack</span>the <b>head</b> is the top<br><b>push</b> = insert at the front · <b>pop</b> = delete the front · both <b>O(1)</b><br>no fixed size: no overflow until memory runs out · <b>pop frees</b> the node's memory (free/delete)`),
   N("dg","r:ls:30","t:ls",440,"plain",gap(110)),
   N("dy","r:dg:30","t:ls",450,"box g",`<span class="t">Growing array stack</span>push when full → <b>double the array</b> (copy across) instead of overflowing · benefit: <b>fewer resizes</b> (§5.3)`),
@@ -1121,7 +2240,7 @@ B("b7c",[
   arrow(rc,svg,[x+385,y-34],[x+385,y-4],{bend:0,color:"blue"});T(svg,x+385,y-40,"topB",{size:15,color:"var(--blue)",weight:700});lab(svg,x,y+100,"topA = 1 · topB = 5 · 1 + 1 < 5 → still room")});
 
 /* ===== 8 · queues ===== */
-B("b8a",[
+B("x_b8a",[
   N("df",40,20,560,"box y",`<span class="t">Queue = FIFO</span><b>First In, First Out</b>: served in arrival order · add at the <b>rear</b> (enqueue), remove at the <b>front</b> (dequeue)`),
   N("op",40,"b:df:24",560,"box w",`<b>enqueue(x)</b> at the rear · <b>dequeue()</b> from the front · <b>peek / front()</b> · <b>isEmpty</b> · <b>isFull</b><br>uses: <b>printer queue</b>, <b>FCFS CPU scheduling</b>, customer-support requests, ticketing, web pages served in arrival order`),
   N("dg","r:df:40","t:df",820,"plain",gap(150)),
@@ -1132,7 +2251,7 @@ B("b8a",[
   T(svg,x+2*74+37,y-12,"front = 2",{size:16,color:"var(--green)",weight:700});T(svg,x+4*74+37,y-12,"rear = 4",{size:16,color:"var(--red)",weight:700});
   T(svg,x+74,y+90,"wasted after 2 dequeues",{size:15,color:"var(--red)"})});
 
-B("b8b",[
+B("x_b8b",[
   N("id",40,20,560,"box y",`<span class="t">Circular queue</span>the last cell is followed by cell 0 → <b>reuse</b> the freed space · indexes wrap with <b>% size</b> · enqueue + dequeue both <b>O(1)</b>, no shifting`),
   N("cd",40,"b:id:24",560,"box w",X(`enqueue(x):
   if (rear + 1) % size == front: "[[Full]]"
@@ -1158,7 +2277,7 @@ dequeue():
   T(svg,cx+250,cy-70,"front = 6 (A)",{anchor:"start",size:18,color:"var(--green)",weight:700});T(svg,cx+250,cy-40,"rear = 1 (D): it wrapped past 7 → 0",{anchor:"start",size:18,color:"var(--red)",weight:700});
   T(svg,cx+250,cy,"count = (1 − 6 + 8) % 8 + 1 = 4",{anchor:"start",size:18});T(svg,cx+250,cy+30,"next enqueue goes to (1 + 1) % 8 = 2",{anchor:"start",size:18,color:"var(--soft)"})});
 
-B("b8c",[
+B("x_b8c",[
   N("lq",40,20,460,"box w",`<span class="t">Linked queue</span>keep <b>front</b> + <b>rear</b> pointers<br>enqueue = add after rear · dequeue = remove at front · both <b>O(1)</b> · grows as needed`),
   N("dg","r:lq:30","t:lq",500,"plain",gap(100)),
   N("cb",40,"b:lq,dg:30",460,"box y",`<span class="t">Circular buffer (ring buffer)</span>a <b>fixed-size</b> circular queue that, when full, <b>overwrites the oldest</b> item instead of refusing · the oldest is at the <b>front</b><br>for "keep the <b>last N</b>": last 100 GPS points · last 50 sensor / temperature readings · last 3 failed logins · a call log`),
@@ -1166,7 +2285,7 @@ B("b8c",[
   N("sk","r:dq:30","t:cb",420,"sticky",sticky(`Ring buffer = a dashcam 🎥`,`it records over the oldest footage when the card is full`))
 ],[],(rc,svg,R)=>{const d=R.dg;llist(rc,svg,d.x+30,d.y+40,[10,20,30],{gap:30,dw:48,head:"front"});T(svg,d.x+30+2*112+24,d.y+24,"rear",{size:17,color:"var(--red)",weight:700})});
 
-B("b8d",[
+B("x_b8d",[
   N("pq",40,20,620,"box y",`<span class="t">Priority queue</span>each item has a <b>priority</b>; the <b>highest</b> (or lowest) comes out first, not the oldest · e.g. a CPU running the <b>shortest job first</b>, hospital triage, urgent print jobs<br><span class="ann">note 1: implement with a <b>heap</b> or another suitable structure</span>`),
   N("tb",40,"b:pq:24",620,"box w",`<table class="tb"><tr><th>built on</th><th>insert</th><th>remove highest</th></tr><tr><td><b>unsorted</b> array / list</td><td>O(1) (just append)</td><td><b>O(n)</b> (search for it)</td></tr><tr><td><b>sorted</b> array</td><td><b>O(n)</b> (shift into place)</td><td>O(1) (it's at the end)</td></tr><tr><td>sorted linked list</td><td>O(n) to find the spot</td><td>O(1) (at the head)</td></tr><tr><td>heap (week 11)</td><td>O(log n)</td><td>O(log n)</td></tr></table>`),
   N("ts","r:pq:40","t:pq",760,"box g",`<span class="t">A queue made of two stacks</span>enqueue: <b>push onto stack A</b><br>dequeue: if <b>stack B is empty</b>, <b>pop everything from A and push it onto B</b> (this reverses the order) → then <b>pop B</b><br><span class="ann">the oldest item ends up on top of B, so FIFO is kept</span>`),
@@ -1176,7 +2295,7 @@ B("b8d",[
   stackPic(rc,svg,d.x+440,y,[3,2,1],4,{w:64,seed:9});T(svg,d.x+472,y+4*36+28,"B (out): pop → 1 ✓",{size:16,weight:700})});
 
 /* ===== 9 · exam drill ===== */
-B("b9a",[
+B("x_b9a",[
   N("q",40,20,1420,"box y center",`<b>Read the scenario for its verb</b>: last-first? first-first? keep the last N? jump by index? both ends? middle of a list? highest priority?`),
   N("s1",40,"b:q:40",330,"box w",`<span class="t">→ Stack</span>undo / redo · recursion + function calls · browser <b>back</b> button only · "LIFO"`),
   N("s2","r:s1:30","t:s1",330,"box w",`<span class="t">→ Queue</span>served in arrival order · FCFS scheduler · printer queue · support requests · "FIFO"`),
@@ -1190,7 +2309,7 @@ B("b9a",[
   N("s10","r:s9:30","t:s9",730,"box p",`<span class="t">→ Tree / graph</span>hierarchy (org chart, family tree, file system) → <b>tree</b> · connections (roads, networks, social) → <b>graph</b>`)
 ],[]);
 
-B("b9b",[
+B("x_b9b",[
   N("tb",40,20,1420,"box w",`<table class="tb"><tr><th>structure</th><th>access by index</th><th>search</th><th>insert at front</th><th>insert at end</th><th>delete front</th><th>delete end</th><th>middle (position known)</th></tr>
 <tr><td><b>array</b></td><td>O(1)</td><td>O(n) · sorted O(log n)</td><td>O(n) shift</td><td>O(1) if room</td><td>O(n) shift</td><td>O(1)</td><td>O(n) shift</td></tr>
 <tr><td><b>singly linked</b> (head only)</td><td>O(n)</td><td>O(n)</td><td><b>O(1)</b></td><td>O(n) walk · O(1) with tail</td><td><b>O(1)</b></td><td><b>O(n)</b> even with a tail</td><td>O(n) to reach it</td></tr>
@@ -1201,7 +2320,7 @@ B("b9b",[
   N("km","r:tr:40","t:tr",700,"box p",`<span class="t">Delete a known node in a circular list?</span><span class="ann">(asked twice last session)</span> singly: you need the node <b>before</b> it → <b>O(n)</b> to find it · doubly, or if you're handed the previous node: <b>O(1)</b> · read the options, and use the singly answer when nothing extra is given`)
 ],[]);
 
-B("b9c",[
+B("x_b9c",[
   N("hd",40,20,1420,"box y",`<span class="t">Last session's midterm (CSC 301/CYB 309): 100 scenario questions</span><span class="ann">answers are worked out from the notes, not an official key · the photos were partly unreadable, so options are paraphrased</span>`),
   N("c1",40,"b:hd:24",700,"box w",`<table class="tb"><tr><th>question</th><th>answer</th></tr>
 <tr><td>undo in a game / text editor · photo-editor undo</td><td><b>stack</b></td></tr>
@@ -1243,7 +2362,7 @@ B("b9c",[
 <tr><td>doubly list: traverse back from the tail</td><td><b>O(n)</b></td></tr></table>`)
 ],[]);
 
-B("b9d",[
+B("x_b9d",[
   N("hd",40,20,1420,"box y",`<span class="t">Last session's final: the written questions inside midterm scope</span><span class="ann">(5 of 7, at least one per section) · what each answer needs</span>`),
   N("a1",40,"b:hd:24",460,"box w",`<span class="t">A · 5 ADTs + a scenario each (5)</span>stack → undo · queue → printer · list/array → class register · tree → org chart · graph → road map · priority queue → triage<br><b>Classify by linearity (5)</b>: linear = array, list, stack, queue · non-linear = tree, graph`),
   N("a2","r:a1:20","t:a1",460,"box w",`<span class="t">A · two categories of data types (5)</span><b>primitive</b> (built in: int, char, float, double, bool) vs <b>non-primitive</b> / derived (built from them: arrays, structs, strings, lists)<br><b>Why study DS?</b> → the 6 reasons in §1.2`),
@@ -1273,6 +2392,63 @@ cancel(id): if head == NULL: return "empty"
   N("c1",40,"b:b1,b2:24",700,"box b",`<span class="t">C · stack overflow in push (8) · undo stack (12)</span>push with the <b>top == size − 1</b> check (§7.2) · each edit = <b>push(action)</b> · undo = <b>pop()</b> (check empty) · show = <b>peek()</b>`),
   N("c2","r:c1:20","t:c1",700,"box b",`<span class="t">C · queue full/empty "all in the indexing" (8) · support requests (12)</span>full: <b>(rear + 1) % size == front</b> · empty: <b>front == −1</b> (§8.2) · new request = <b>enqueue</b> at rear · process = <b>dequeue</b> from front · show = <b>front()</b>`)
 ],[]);
+
+
+/* ===== 5 (cont.) · lecture note 4: references, malloc family, pointer errors ===== */
+function n4cell(rc,svg,x,y,w,h,txt,f,seed,o={}){add(svg,rc.rectangle(x,y,w,h,Object.assign({stroke:"var(--ink)",strokeWidth:2,roughness:0.9,fill:f||"var(--card)",fillStyle:"solid",seed:seed||5},o)));if(txt!=null)T(svg,x+w/2,y+h/2+7,String(txt),{size:o.size||20,weight:700})}
+
+B("x_b5d",[
+  N("dg",40,20,1420,"plain",gap(310)),
+  N("pc",40,"b:dg:10",690,"box b",X(`int age = 25;
+int [[*ptr]] = &age;   // stores the ADDRESS
+*ptr = 30;           // age is now 30`)),
+  N("rc","r:pc:40","t:pc",690,"box g",X(`int age = 25;
+int [[&ref]] = age;   // C++ only: a 2nd NAME
+ref = 30;            // age is now 30`))
+],[],(rc,svg,R)=>{const d=R.dg,y=d.y+60;
+  T(svg,d.x+340,d.y+24,"POINTER = a box holding an address",{size:20,weight:700,color:"var(--blue)"});
+  n4cell(rc,svg,d.x+60,y+40,150,60,"0x1000","var(--b)",401);T(svg,d.x+135,y+30,"ptr",{size:18,color:"var(--blue)",weight:700});
+  n4cell(rc,svg,d.x+420,y+40,150,60,"25","var(--y)",402);T(svg,d.x+495,y+30,"age @ 0x1000",{size:16,color:"var(--soft)"});
+  arrow(rc,svg,[d.x+214,y+70],[d.x+414,y+70],{bend:0,color:"red"});T(svg,d.x+314,y+60,"*ptr follows it",{size:15,color:"var(--red)"});
+  ["can be NULL ✓","can point elsewhere later ✓","pointer arithmetic ✓","C and C++"].forEach((t,i)=>T(svg,d.x+60,y+140+i*26,"• "+t,{anchor:"start",size:16}));
+  const x2=d.x+760;T(svg,x2+330,d.y+24,"REFERENCE = a second name on the SAME box",{size:20,weight:700,color:"var(--green)"});
+  n4cell(rc,svg,x2+250,y+40,150,60,"25","var(--y)",403);
+  [["age",x2+170,y+20],["ref",x2+480,y+20]].forEach(([t,x,yy],i)=>{add(svg,rc.rectangle(x-36,yy-22,72,32,{stroke:"var(--ink)",strokeWidth:1.6,roughness:0.8,fill:i?"var(--g)":"var(--card)",fillStyle:"solid",seed:404+i}));T(svg,x,yy,t,{size:17,weight:700})});
+  arrow(rc,svg,[x2+206,y+10],[x2+262,y+42],{bend:0,color:"ink"});arrow(rc,svg,[x2+444,y+10],[x2+390,y+42],{bend:0,color:"green"});
+  ["must be set when declared","can't be moved to another variable","no arithmetic · never NULL","C++ only (C has pointers only)"].forEach((t,i)=>T(svg,x2+60,y+140+i*26,"• "+t,{anchor:"start",size:16}))},360);
+
+B("x_b5e",[
+  N("dg",40,20,1420,"plain",gap(250)),
+  N("lc",40,"b:dg:20",1420,"plain",gap(120)),
+  N("ck",40,"b:lc:10",900,"box y",`always check: <code>if (ptr == NULL)</code> → allocation failed · all four live in <code>&lt;stdlib.h&gt;</code> · memory comes from the <b>heap</b>`)
+],[],(rc,svg,R)=>{const d=R.dg,y=d.y+20,cw=34;
+  const fn=[["malloc(5 * sizeof(int))","memory ALLOCATION",["?","?","?","?","?"],"var(--b)","contents are garbage"],
+            ["calloc(5, sizeof(int))","CONTIGUOUS allocation",[0,0,0,0,0],"var(--g)","every byte set to 0"],
+            ["realloc(p, 8 * sizeof(int))","RE-allocation",["a","b","c","d","e","","",""],"var(--p)","grow or shrink, keeps data"],
+            ["free(p)","give it back",["","","","",""],"var(--card)","then p = NULL"]];
+  fn.forEach(([c,m,v,f,n],i)=>{const x=d.x+20+i*355;T(svg,x,y+14,c,{anchor:"start",size:16,weight:700,color:"var(--red)"});T(svg,x,y+40,m,{anchor:"start",size:16,color:"var(--soft)"});
+    v.forEach((t,j)=>{n4cell(rc,svg,x+j*cw,y+70,cw,44,t===""?null:t,t===""?"var(--card)":f,420+i*9+j,{size:16,strokeLineDash:i===3?[6,5]:undefined})});
+    if(i===3)add(svg,rc.line(x-6,y+64,x+5*cw+6,y+120,{stroke:"var(--red)",strokeWidth:2.4,roughness:1}));
+    T(svg,x,y+146,n,{anchor:"start",size:16})});
+  T(svg,d.x+20,y+190,"pointer = malloc(size_in_bytes) · calloc(number_of_elements, size_of_each) · new_ptr = realloc(old_ptr, new_size) · free(pointer)",{anchor:"start",size:16,color:"var(--blue)"});
+  const L=R.lc,ly=L.y+30;const st=["ages = malloc(3*sizeof(int))","check NULL","store 20 21 19","use / print","free(ages)","ages = NULL"];
+  st.forEach((s,i)=>{const x=L.x+20+i*235;n4cell(rc,svg,x,ly,205,52,null,i>=4?"var(--p)":"var(--card)",440+i);T(svg,x+102,ly+32,s,{size:15,weight:700});T(svg,x+102,ly-8,"①②③④⑤⑥"[i],{size:16,color:"var(--red)"});if(i<5)arrow(rc,svg,[x+208,ly+26],[x+232,ly+26],{bend:0,color:"ink"})})});
+
+B("x_b5f",[
+  N("dg",40,20,1420,"plain",gap(420)),
+  N("sk",40,"b:dg:10",760,"sticky",sticky(`"Nervous Users Drop Double Bowls Loudly"`,`Null · Uninitialised · Dangling · Double free · Buffer overflow · Leak`))
+],[],(rc,svg,R)=>{const d=R.dg;const W=460,H=200;
+  const card=(i,title,code,pic)=>{const x=d.x+(i%3)*(W+20),y=d.y+Math.floor(i/3)*(H+20);add(svg,rc.rectangle(x,y,W,H,{stroke:"var(--ink)",strokeWidth:2,roughness:1,fill:"var(--card)",fillStyle:"solid",seed:460+i}));
+    T(svg,x+16,y+30,title,{anchor:"start",size:19,weight:700,color:"var(--red)"});T(svg,x+16,y+H-18,code,{anchor:"start",size:15,color:"var(--blue)"});pic(x,y)};
+  const ptr=(x,y,s)=>{n4cell(rc,svg,x,y,70,40,"ptr","var(--b)",s,{size:15})};
+  card(0,"① Null pointer","int *ptr = NULL; *ptr = 10; ✗",(x,y)=>{ptr(x+30,y+70,470);arrow(rc,svg,[x+104,y+90],[x+220,y+90],{bend:0,color:"red"});add(svg,rc.circle(x+250,y+90,46,{stroke:"var(--red)",strokeWidth:2.4,roughness:0.8}));add(svg,rc.line(x+234,y+106,x+266,y+74,{stroke:"var(--red)",strokeWidth:2.4}));T(svg,x+290,y+96,"points nowhere",{anchor:"start",size:16})});
+  card(1,"② Uninitialised pointer","int *ptr; *ptr = 20; ✗ → start it as NULL",(x,y)=>{ptr(x+30,y+70,471);arrow(rc,svg,[x+104,y+90],[x+220,y+70],{bend:-0.3,color:"red"});T(svg,x+250,y+78,"? random address",{anchor:"start",size:18,weight:700});T(svg,x+250,y+104,"undefined behaviour",{anchor:"start",size:15,color:"var(--soft)"})});
+  card(2,"③ Dangling pointer","free(ptr); then use ptr ✗ → set ptr = NULL",(x,y)=>{ptr(x+30,y+70,472);arrow(rc,svg,[x+104,y+90],[x+230,y+90],{bend:0,color:"red"});n4cell(rc,svg,x+236,y+68,110,44,"freed","var(--card)",473,{size:15,strokeLineDash:[6,5]});add(svg,rc.line(x+232,y+64,x+350,y+116,{stroke:"var(--red)",strokeWidth:2.2}))});
+  card(3,"④ Double free","free(ptr); free(ptr); ✗",(x,y)=>{n4cell(rc,svg,x+40,y+66,120,48,"block","var(--b)",474,{size:16});T(svg,x+210,y+84,"free ✓",{anchor:"start",size:18,color:"var(--green)",weight:700});T(svg,x+210,y+112,"free again ✗",{anchor:"start",size:18,color:"var(--red)",weight:700})});
+  card(4,"⑤ Buffer overflow","int numbers[3]; numbers[5] = 100; ✗",(x,y)=>{[0,1,2].forEach(j=>n4cell(rc,svg,x+30+j*56,y+66,56,44,null,"var(--b)",475+j));[0,1,2].forEach(j=>T(svg,x+58+j*56,y+130,String(j),{size:14,color:"var(--soft)"}));n4cell(rc,svg,x+30+5*56,y+66,56,44,"100","var(--p)",479,{size:15,strokeLineDash:[6,5]});T(svg,x+58+5*56,y+130,"5 ✗",{size:14,color:"var(--red)"});T(svg,x+260,y+56,"someone else's memory",{size:14,color:"var(--red)"})});
+  card(5,"⑥ Memory leak","malloc'd, never freed, pointer lost",(x,y)=>{n4cell(rc,svg,x+220,y+66,130,48,"heap block","var(--y)",480,{size:15});ptr(x+30,y+70,481);arrow(rc,svg,[x+104,y+90],[x+180,y+90],{bend:0,color:"ink",nohead:true});add(svg,rc.line(x+150,y+78,x+176,y+102,{stroke:"var(--red)",strokeWidth:2.4}));T(svg,x+285,y+140,"nothing points to it",{size:15,color:"var(--red)"})})});
+
+})();
 /* ---------- sticker doodles (drawn ~46px around x,y) ---------- */
 const P=Math.PI;
 const S=(f,st,w)=>{const o={stroke:st||"var(--ink)",strokeWidth:w||2,roughness:0.9};if(f){o.fill=f;o.fillStyle="solid"}return o};
@@ -1387,6 +2563,7 @@ Object.assign(I,{
   bulb:(rc,s,x,y)=>{add(s,rc.circle(x,y-6,30,S("var(--y)")));add(s,rc.rectangle(x-7,y+9,14,10,S("var(--soft)")));add(s,rc.line(x-4,y-6,x,y+2,S(0,"var(--red)")));add(s,rc.line(x+4,y-6,x,y+2,S(0,"var(--red)")))},
   heart:(rc,s,x,y)=>{add(s,rc.path(`M${x} ${y+18} C${x-26} ${y} ${x-18} ${y-22} ${x} ${y-8} C${x+18} ${y-22} ${x+26} ${y} ${x} ${y+18} Z`,S("var(--p)","var(--red)",2.4)))}
 });
+
 /* one sticker per idea, never repeated */
 const ICONS={
   b1a:{da:"db",in:"bulb",ds:"boxes"},
@@ -1413,6 +2590,34 @@ const ICONS={
   b9a:{q:"ask"},
   b9d:{hd:"school"}
 };
+
+/* one sticker per idea, never repeated */
+Object.assign(ICONS,{
+  x_b1a:{da:"db",in:"bulb",ds:"boxes"},
+  x_b1b:{w1:"magnifier",w5:"speedo"},
+  x_b1d:{st:"lock",dy:"sparkle"},
+  x_b1e:{co:"grid",lk:"chain"},
+  x_b1g:{st:"stack"},
+  x_b1h:{ti:"clock",sp:"ruler"},
+  x_b1i:{mt:"flag"},
+  x_b2b:{as:"swap"},
+  x_b2g:{st:"stairs",hp:"pyramid",tx:"tape"},
+  x_b3d:{li:"warn"},
+  x_b3g:{ky:"balance"},
+  x_b3i:{io:"printer"},
+  x_b4d:{bs:"target"},
+  x_b5b:{ip:"ghost"},
+  x_b5c:{st:"truck"},
+  x_b6e:{pr:"check",cn:"cross"},
+  x_b6h:{df:"loop"},
+  x_b7b:{pu:"burst"},
+  x_b8a:{pb:"trash"},
+  x_b8c:{cb:"camera"},
+  x_b8d:{pq:"crown"},
+  x_b9a:{q:"ask"},
+  x_b9d:{hd:"school"}
+});
+
 /* ---------- boot ---------- */
 function boot(){const r=window.rough||null;
   /* #only=b1a,b5b shows just those boards (handy for checking one diagram) */
@@ -1420,6 +2625,16 @@ function boot(){const r=window.rough||null;
     document.querySelectorAll("main>*").forEach(el=>{const keep=(el.classList.contains("board")&&ids.includes(el.id))||(el.tagName==="H3"&&el.nextElementSibling&&ids.includes(el.nextElementSibling.id));el.style.display=keep?"":"none"})}
   BOARDS.forEach(b=>{const el=document.getElementById(b.id);if(el&&el.offsetParent===null)return;try{render(b,r)}catch(e){console.error(b.id,e)}})}
 (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(boot);
+</script>
+
+<script>
+(function(){const b=document.getElementById("styleSw"),d=document.getElementById("mDia"),x=document.getElementById("mDet");
+  function draw(){BOARDS.forEach(bd=>{const el=document.getElementById(bd.id);if(el&&el.offsetParent!==null&&!el.querySelector("svg"))try{render(bd,window.rough||null)}catch(e){console.error(bd.id,e)}})}
+  function set(m){const dia=m!=="det";d.hidden=!dia;x.hidden=dia;b.textContent=dia?"Switch to detailed notes":"Switch to diagram notes";b.setAttribute("aria-pressed",String(!dia));try{localStorage.setItem("noteStyle",dia?"dia":"det")}catch(e){}requestAnimationFrame(draw)}
+  let m="dia";try{m=localStorage.getItem("noteStyle")||"dia"}catch(e){}
+  set(m);b.addEventListener("click",()=>{set(d.hidden?"dia":"det");window.scrollTo(0,0)});
+  (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(()=>requestAnimationFrame(draw));
+})();
 </script>
 <aside class="bps-cta" aria-label="About Blue Particle Studios">
   <p><span class="k">Made by Blue Particle Studios</span>Free study notes for students. Blue Particle Studios is a motion design studio in Abuja: we make brand films, ads, launch videos and websites. Share these notes with your class.</p>
