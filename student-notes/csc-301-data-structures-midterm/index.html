@@ -166,10 +166,21 @@ main[hidden]{display:none!important}
     <p class="covn">No notes on stacks or queues (weeks 5–6) have been shared. Those sections are built from the course outline, the stack/queue parts of notes 1–3 and last session's midterm, and each one is marked <span class="ann">from the outline</span>. Not here: trees, heaps, hash tables + graphs (weeks 10–12, after the midterm; no notes yet). Each section's ✂ line says what small print was left out.</p>
   </section>
   <nav class="toc" aria-label="Sections">
-    <a href="#s1">1 · What data structures are</a><a href="#s2">2 · Types + memory</a><a href="#s3">3 · Arrays, structs + strings</a>
+    <a href="#s0">0 · Memory trees</a><a href="#s1">1 · What data structures are</a><a href="#s2">2 · Types + memory</a><a href="#s3">3 · Arrays, structs + strings</a>
     <a href="#s4">4 · Basic operations</a><a href="#s5">5 · Pointers + dynamic memory</a><a href="#s6">6 · Linked lists</a>
     <a href="#s7">7 · Stacks</a><a href="#s8">8 · Queues</a><a href="#s9">9 · Exam drill</a>
   </nav>
+
+  <span class="week">START HERE · THE WHOLE COURSE AS TREES</span>
+  <h2 id="s0">0 · Memory trees</h2>
+  <p class="sub">Each topic as one tree: parent → kids → their kids. Read left to right, then cover a branch and say it back.</p>
+  <h3>0.1 The family tree of data structures</h3><div class="board" id="b0a"></div>
+  <h3>0.2 Memory + pointers</h3><div class="board" id="b0b"></div>
+  <h3>0.3 Arrays</h3><div class="board" id="b0c"></div>
+  <h3>0.4 Strings + structs</h3><div class="board" id="b0d"></div>
+  <h3>0.5 Linked lists</h3><div class="board" id="b0e"></div>
+  <h3>0.6 Stacks</h3><div class="board" id="b0f"></div>
+  <h3>0.7 Queues</h3><div class="board" id="b0g"></div>
 
   <span class="week">PART 1 · FOUNDATIONS</span>
   <h2 id="s1">1 · What data structures are</h2>
@@ -294,10 +305,21 @@ main[hidden]{display:none!important}
     <p class="covn">No notes on stacks or queues (weeks 5–6) have been shared. Those sections are built from the course outline, the stack/queue parts of notes 1–3 and last session's midterm, and each one is marked <span class="ann">from the outline</span>. Not here: trees, heaps, hash tables + graphs (weeks 10–12, after the midterm; no notes yet). Each section's ✂ line says what small print was left out.</p>
   </section>
   <nav class="toc" aria-label="Sections">
-    <a href="#x_s1">1 · What data structures are</a><a href="#x_s2">2 · Types + memory</a><a href="#x_s3">3 · Arrays, structs + strings</a>
+    <a href="#x_s0">0 · Memory trees</a><a href="#x_s1">1 · What data structures are</a><a href="#x_s2">2 · Types + memory</a><a href="#x_s3">3 · Arrays, structs + strings</a>
     <a href="#x_s4">4 · Basic operations</a><a href="#x_s5">5 · Pointers + dynamic memory</a><a href="#x_s6">6 · Linked lists</a>
     <a href="#x_s7">7 · Stacks</a><a href="#x_s8">8 · Queues</a><a href="#x_s9">9 · Exam drill</a>
   </nav>
+
+  <span class="week">START HERE · THE WHOLE COURSE AS TREES</span>
+  <h2 id="x_s0">0 · Memory trees</h2>
+  <p class="sub">Each topic as one tree: parent → kids → their kids. Read left to right, then cover a branch and say it back.</p>
+  <h3>0.1 The family tree of data structures</h3><div class="board" id="x_b0a"></div>
+  <h3>0.2 Memory + pointers</h3><div class="board" id="x_b0b"></div>
+  <h3>0.3 Arrays</h3><div class="board" id="x_b0c"></div>
+  <h3>0.4 Strings + structs</h3><div class="board" id="x_b0d"></div>
+  <h3>0.5 Linked lists</h3><div class="board" id="x_b0e"></div>
+  <h3>0.6 Stacks</h3><div class="board" id="x_b0f"></div>
+  <h3>0.7 Queues</h3><div class="board" id="x_b0g"></div>
 
   <span class="week">PART 1 · FOUNDATIONS</span>
   <h2 id="x_s1">1 · What data structures are</h2>
@@ -1595,6 +1617,107 @@ for (i=0;i<2;i++) for (j=0;j<3;j++)
   T(svg,gx,gy+200,"i picks the block · j the page · k the row · l the column",{anchor:"start",size:15,color:"var(--soft)"})},
 );
 
+
+/* ===== 0 · memory trees: parent → kids → grandkids, one view per topic ===== */
+const MTC=[["var(--b)","var(--blue)"],["var(--g)","var(--green)"],["var(--p)","var(--red)"],["var(--y)","var(--ink)"]];
+const MTL={x:[0,250,560,1000],w:[210,270,400,420],leaf:[210,290,560,420]};
+function mtH(n){return n.pic?n.ph:n.d?36+n.d.split("\n").length*21:40}
+function mtSpan(n){const own=mtH(n)+14;if(!n.c||!n.c.length)return n._s=own;n._t=n.c.reduce((a,c)=>a+mtSpan(c),0);return n._s=Math.max(own,n._t)}
+function mtPos(n,dep,y){n._dep=dep;n._h=mtH(n);if(!n.c||!n.c.length){n._y=y+n._s/2;return}
+  let cy=y+(n._s-n._t)/2;n.c.forEach(c=>{mtPos(c,dep+1,cy);cy+=c._s});
+  n._y=Math.min(y+n._s-n._h/2-7,Math.max(y+n._h/2+7,(n.c[0]._y+n.c[n.c.length-1]._y)/2))}
+function mtEst(n){const ls=(n.d||"").split("\n");return Math.max(n.t.length*8.2,...ls.map(l=>l.length*6.8))+36}
+function mtW(n,L){return n.w||n._w||(n.c&&n.c.length?L.w:L.leaf)[n._dep]}
+function mtDraw(rc,svg,ox,n,col,seed,L){const d=n._dep,x=ox+L.x[d],w=mtW(n,L),h=n._h,y=n._y-h/2;
+  if(n.pic)n.pic(rc,svg,x,y,w,h);
+  else{const strong=d<2,f=d===0?"var(--y)":strong?col[0]:"var(--card)",st=d===0?"var(--ink)":strong?col[1]:"var(--ink)";
+    add(svg,rc.rectangle(x,y,w,h,{stroke:st,strokeWidth:strong?2.6:1.6,roughness:0.9,fill:f,fillStyle:"solid",seed:seed%997+1}));
+    T(svg,x+12,y+(n.d?25:26),n.t,{anchor:"start",size:d===0?22:d===1?19:17,weight:700,color:d===1?col[1]:"var(--ink)"});
+    if(n.d)n.d.split("\n").forEach((s,i)=>T(svg,x+12,y+47+i*21,s,{anchor:"start",size:15,color:d===0?"var(--ink)":"var(--soft)"}))}
+  {const lv=(n.c||[]).filter(c=>!c.pic&&!(c.c&&c.c.length));if(lv.length){const sw=Math.min(L.leaf[d+1],Math.max(170,...lv.map(mtEst)));lv.forEach(c=>c._w=sw)}
+    if(d+1>=2){const nl=(n.c||[]).filter(c=>c.c&&c.c.length);if(nl.length){const nw=Math.min(L.w[d+1],Math.max(170,...nl.map(mtEst)));nl.forEach(c=>c._w=nw)}}}
+  (n.c||[]).forEach((c,i)=>{const cc=d===0?MTC[i%MTC.length]:col,x1=x+w,y1=n._y,x2=ox+L.x[d+1],y2=c._y,mx=(x1+x2)/2;
+    add(svg,rc.path(`M${x1} ${y1} C${mx} ${y1} ${mx} ${y2} ${x2} ${y2}`,{stroke:cc[1],strokeWidth:2.2,roughness:0.5,seed:(seed+i*7)%997+1}));
+    mtDraw(rc,svg,ox,c,cc,seed*3+i*11+5,L)})}
+function MT(id,tree,L){L=L||MTL;mtSpan(tree);
+  B(id,[N("dg",40,20,1420,"plain",gap(tree._s+10))],[],(rc,svg,R)=>{mtPos(tree,0,R.dg.y+4);mtDraw(rc,svg,R.dg.x,tree,null,id.charCodeAt(2)*13,L)})}
+const mt=(t,d,c,o)=>Object.assign({t,d,c},o||{});
+const mtPic=(w,ph,pic)=>({pic,w,ph});
+
+/* tiny pictures */
+const picArr=mtPic(380,96,(rc,svg,x,y)=>{cells(rc,svg,x+10,y+26,[7,3,9,1,5],{w:56,h:40,size:17,hl:[2]});T(svg,x+10,y+14,"a[2] = 9 · jump straight to it",{anchor:"start",size:15,color:"var(--red)"})});
+const picStr=mtPic(420,96,(rc,svg,x,y)=>{cells(rc,svg,x+10,y+26,["C","a","t","\\0"],{w:56,h:40,size:17,hl:[3]});T(svg,x+10,y+14,"\"Cat\" needs 4 bytes: 3 chars + '\\0'",{anchor:"start",size:15,color:"var(--red)"})});
+const picLL=mtPic(520,84,(rc,svg,x,y)=>{llist(rc,svg,x+10,y+30,[10,20,30],{gap:34,dw:48,pw:28})});
+const picStk=mtPic(380,150,(rc,svg,x,y)=>{["5","8","2"].forEach((v,i)=>{box(rc,svg,x+30,y+102-i*40,100,40,i===2?"var(--y)":"var(--b)",900+i);T(svg,x+80,y+129-i*40,v,{size:17,weight:700})});
+  arrow(rc,svg,[x+200,y+40],[x+136,y+40],{bend:0,color:"red"});T(svg,x+206,y+46,"top: push + pop here",{anchor:"start",size:15,color:"var(--red)"})});
+const picQ=mtPic(520,90,(rc,svg,x,y)=>{cells(rc,svg,x+110,y+26,[4,7,1,9],{w:52,h:40,size:17,idx:false});
+  arrow(rc,svg,[x+104,y+46],[x+40,y+46],{bend:0,color:"red"});T(svg,x+20,y+82,"out: FRONT",{anchor:"start",size:15,color:"var(--red)"});
+  arrow(rc,svg,[x+390,y+46],[x+324,y+46],{bend:0,color:"green"});T(svg,x+330,y+82,"in: REAR",{anchor:"start",size:15,color:"var(--green)"})});
+const picMem=mtPic(420,100,(rc,svg,x,y)=>{box(rc,svg,x+10,y+36,110,44,"var(--b)",930);T(svg,x+65,y+64,"0x1000",{size:16,weight:700});T(svg,x+65,y+26,"ptr",{size:15,color:"var(--blue)",weight:700});
+  arrow(rc,svg,[x+124,y+58],[x+226,y+58],{bend:0,color:"red"});box(rc,svg,x+232,y+36,90,44,"var(--y)",931);T(svg,x+277,y+64,"25",{size:17,weight:700});T(svg,x+277,y+26,"age @ 0x1000",{size:14,color:"var(--soft)"})});
+
+/* 0.1 the family tree */
+MT("b0a",mt("DATA STRUCTURES","ways to organise data\nso it's quick to use",[
+  mt("Primitive","one value, built into C",[
+    mt("int · 4 bytes","whole numbers"),mt("char · 1 byte","one character, stored as a code"),
+    mt("float · 4 · double · 8","real numbers → stored as IEEE 754"),mt("_Bool · 1 byte","true / false")]),
+  mt("Non-primitive","built out of primitives",[
+    mt("Linear","one after another",[mt("Array","same type, side by side, index from 0"),mt("String","char array ending in '\\0'"),mt("Linked list","nodes joined by pointers"),mt("Stack","LIFO · in + out at the top"),mt("Queue","FIFO · in at rear, out at front")]),
+    mt("Non-linear","hierarchy or network",[mt("Tree","hierarchy · file system, org chart"),mt("Graph","network · roads, friends (after the midterm)")])]),
+  mt("How it's stored","two separate questions",[
+    mt("Static vs dynamic","size fixed before running vs grows at runtime"),mt("Contiguous vs linked","side by side (array) vs joined by pointers (list)")]),
+  mt("ADT","WHAT it does, not HOW",[mt("Stack ADT · Queue ADT · List ADT","the operations are listed, the code is hidden")]),
+  mt("Efficiency","Big-O",[mt("Time","O(1) < O(log n) < O(n) < O(n log n) < O(n²)"),mt("Space","how much memory it takes")])]));
+
+/* 0.2 memory + pointers */
+MT("b0b",mt("MEMORY","where data lives",[
+  mt("Variable","3 parts",[mt("name · value · address","int age = 25; lives at some address"),picMem]),
+  mt("Pointer symbols","",[mt("&x","address of x"),mt("*p","the value p points to"),mt("p->field","field of the struct p points to")]),
+  mt("Pointer vs reference","",[mt("Pointer","holds an address · can be NULL · can move · C + C++"),mt("Reference","2nd name for the same box · never NULL · C++ only")]),
+  mt("Heap functions","<stdlib.h> · check NULL",[mt("malloc(bytes)","memory, contents garbage"),mt("calloc(n, size)","memory, all zeros"),mt("realloc(p, size)","grow or shrink, keeps data"),mt("free(p)","give it back, then p = NULL")]),
+  mt("Pointer errors","Nervous Users Drop\nDouble Bowls Loudly",[mt("Null · uninitialised","*p on NULL / on a random address"),mt("Dangling · double free","using or freeing memory already freed"),mt("Buffer overflow · leak","write past the end · never freed")]),
+  mt("IEEE 754 float","32 bits",[mt("1 · 8 · 23","sign · exponent (+127 bias) · mantissa")]),
+  mt("Memory layout","low → high",[mt("code · data · heap ↑ · stack ↓","heap = malloc · stack = local variables")])]));
+
+/* 0.3 arrays */
+MT("b0c",mt("ARRAY","same type, side by side\nindex from 0",[
+  mt("Picture","",[picArr]),
+  mt("Address formula","",[mt("1-D","addr = base + i × size"),mt("2-D row-major","addr = base + (i × cols + j) × size")]),
+  mt("Operations","+ cost",[mt("access a[i]","O(1)"),mt("traverse · linear search","O(n)"),mt("insert · delete","O(n): shift right / shift left"),mt("binary search","O(log n), only if sorted")]),
+  mt("Types","",[mt("Static","size fixed: int a[5];"),mt("Dynamic","malloc'd, grows with realloc"),mt("Multi-D","a[2][3] · a[2][3][4][5] = 120 ints")]),
+  mt("Problems","",[mt("fixed size","can't grow · may waste space"),mt("slow insert / delete","everything after must shift")])]));
+
+/* 0.4 strings + structs */
+MT("b0d",mt("STRINGS","+ structs (records)",[
+  mt("String","char array + '\\0'",[picStr,mt("strlen · strcpy · strcat","length · copy · join"),mt("strcmp · strstr","compare (0 = equal) · find substring")]),
+  mt("String mistakes","",[mt("no room for '\\0'","char s[3] = \"Cat\" overflows"),mt("== on strings","compares addresses → use strcmp")]),
+  mt("Struct (record)","different types, one name",[mt("struct Student { int id; char name[20]; };",""),mt("s.id   ·   p->id","dot for a variable, arrow for a pointer"),mt("padding","size can be bigger than the sum of fields")])]));
+
+/* 0.5 linked lists */
+MT("b0e",mt("LINKED LIST","nodes joined by pointers",[
+  mt("Node","data + next",[picLL]),
+  mt("Types","",[mt("Singly","next only · one direction · last → NULL"),mt("Doubly","prev + next · both ways · more memory"),mt("Circular","last → head · no NULL · loops")]),
+  mt("Operations","+ cost",[mt("insert / delete at front","O(1)"),mt("insert / delete at end","O(n) · O(1) insert with a tail pointer"),mt("at a position · search","O(n) · walk from head, no binary search")]),
+  mt("vs array","",[mt("✓ grows freely, no shifting","just relink pointers"),mt("✗ no a[i], extra pointer memory","must walk from the head")]),
+  mt("Uses","",[mt("undo · playlists · back/forward","doubly = back + forward · circular = playlist loop"),mt("builds stacks + queues","")])]));
+
+/* 0.6 stacks */
+MT("b0f",mt("STACK","LIFO\nlast in, first out",[
+  mt("Picture","",[picStk]),
+  mt("Operations","all O(1)",[mt("push(x)","add on top"),mt("pop()","remove + return the top"),mt("peek()","look at the top"),mt("isEmpty() · isFull()","top == −1 · top == size − 1")]),
+  mt("Errors","",[mt("Overflow","push onto a FULL stack"),mt("Underflow","pop / peek an EMPTY stack")]),
+  mt("Types","",[mt("Array stack","top starts at −1"),mt("Linked stack","push + pop at the head · full only when malloc fails"),mt("Two stacks, one array","grow toward each other")]),
+  mt("Uses","",[mt("undo · back button","last thing done comes off first"),mt("function calls · brackets · postfix","the call stack · matching ( ) · 2 3 + → 5")])]));
+
+/* 0.7 queues */
+MT("b0g",mt("QUEUE","FIFO\nfirst in, first out",[
+  mt("Picture","",[picQ]),
+  mt("Operations","all O(1)",[mt("enqueue(x)","add at the REAR"),mt("dequeue()","remove from the FRONT"),mt("front() · isEmpty() · isFull()","look · nothing in · no room")]),
+  mt("Errors","",[mt("Overflow","enqueue on a FULL queue"),mt("Underflow","dequeue an EMPTY queue")]),
+  mt("Problem","linear array queue",[mt("space before front is wasted","after dequeues the slots can't be reused → circular queue fixes it")]),
+  mt("Types","",[mt("Circular queue","rear wraps: rear = (rear + 1) % size\nfull when (rear + 1) % size == front"),mt("Linked queue","front + rear pointers · no fixed size"),mt("Priority queue","highest priority leaves first, not arrival order"),mt("Deque","insert + delete at BOTH ends")]),
+  mt("Uses","",[mt("printer jobs · CPU scheduling","first come, first served"),mt("buffers · BFS","keyboard / streaming buffers")])]));
+
 (()=>{
 /* ---------- content ---------- */
 const sticky=(p,s)=>`<span class="bigp">${p}</span>${s?`<br><small>${s}</small>`:""}`;
@@ -2611,6 +2734,107 @@ for (i=0;i<2;i++) for (j=0;j<3;j++)
   for(let i=0;i<2;i++)for(let j=0;j<3;j++){const bx=gx+i*340+j*22,by=gy+16+j*22;for(let k=0;k<4;k++)for(let l=0;l<5;l++)g9box(rc,svg,bx+l*34,by+k*30,34,30,(i===1&&j===2&&k===3&&l===4)?"var(--y)":"var(--b)",600+i*60+j*20+k*5+l)}
   T(svg,gx,gy+200,"i picks the block · j the page · k the row · l the column",{anchor:"start",size:15,color:"var(--soft)"})},
 );
+
+
+/* ===== 0 · memory trees: parent → kids → grandkids, one view per topic ===== */
+const MTC=[["var(--b)","var(--blue)"],["var(--g)","var(--green)"],["var(--p)","var(--red)"],["var(--y)","var(--ink)"]];
+const MTL={x:[0,250,560,1000],w:[210,270,400,420],leaf:[210,290,560,420]};
+function mtH(n){return n.pic?n.ph:n.d?36+n.d.split("\n").length*21:40}
+function mtSpan(n){const own=mtH(n)+14;if(!n.c||!n.c.length)return n._s=own;n._t=n.c.reduce((a,c)=>a+mtSpan(c),0);return n._s=Math.max(own,n._t)}
+function mtPos(n,dep,y){n._dep=dep;n._h=mtH(n);if(!n.c||!n.c.length){n._y=y+n._s/2;return}
+  let cy=y+(n._s-n._t)/2;n.c.forEach(c=>{mtPos(c,dep+1,cy);cy+=c._s});
+  n._y=Math.min(y+n._s-n._h/2-7,Math.max(y+n._h/2+7,(n.c[0]._y+n.c[n.c.length-1]._y)/2))}
+function mtEst(n){const ls=(n.d||"").split("\n");return Math.max(n.t.length*8.2,...ls.map(l=>l.length*6.8))+36}
+function mtW(n,L){return n.w||n._w||(n.c&&n.c.length?L.w:L.leaf)[n._dep]}
+function mtDraw(rc,svg,ox,n,col,seed,L){const d=n._dep,x=ox+L.x[d],w=mtW(n,L),h=n._h,y=n._y-h/2;
+  if(n.pic)n.pic(rc,svg,x,y,w,h);
+  else{const strong=d<2,f=d===0?"var(--y)":strong?col[0]:"var(--card)",st=d===0?"var(--ink)":strong?col[1]:"var(--ink)";
+    add(svg,rc.rectangle(x,y,w,h,{stroke:st,strokeWidth:strong?2.6:1.6,roughness:0.9,fill:f,fillStyle:"solid",seed:seed%997+1}));
+    T(svg,x+12,y+(n.d?25:26),n.t,{anchor:"start",size:d===0?22:d===1?19:17,weight:700,color:d===1?col[1]:"var(--ink)"});
+    if(n.d)n.d.split("\n").forEach((s,i)=>T(svg,x+12,y+47+i*21,s,{anchor:"start",size:15,color:d===0?"var(--ink)":"var(--soft)"}))}
+  {const lv=(n.c||[]).filter(c=>!c.pic&&!(c.c&&c.c.length));if(lv.length){const sw=Math.min(L.leaf[d+1],Math.max(170,...lv.map(mtEst)));lv.forEach(c=>c._w=sw)}
+    if(d+1>=2){const nl=(n.c||[]).filter(c=>c.c&&c.c.length);if(nl.length){const nw=Math.min(L.w[d+1],Math.max(170,...nl.map(mtEst)));nl.forEach(c=>c._w=nw)}}}
+  (n.c||[]).forEach((c,i)=>{const cc=d===0?MTC[i%MTC.length]:col,x1=x+w,y1=n._y,x2=ox+L.x[d+1],y2=c._y,mx=(x1+x2)/2;
+    add(svg,rc.path(`M${x1} ${y1} C${mx} ${y1} ${mx} ${y2} ${x2} ${y2}`,{stroke:cc[1],strokeWidth:2.2,roughness:0.5,seed:(seed+i*7)%997+1}));
+    mtDraw(rc,svg,ox,c,cc,seed*3+i*11+5,L)})}
+function MT(id,tree,L){L=L||MTL;mtSpan(tree);
+  B(id,[N("dg",40,20,1420,"plain",gap(tree._s+10))],[],(rc,svg,R)=>{mtPos(tree,0,R.dg.y+4);mtDraw(rc,svg,R.dg.x,tree,null,id.charCodeAt(2)*13,L)})}
+const mt=(t,d,c,o)=>Object.assign({t,d,c},o||{});
+const mtPic=(w,ph,pic)=>({pic,w,ph});
+
+/* tiny pictures */
+const picArr=mtPic(380,96,(rc,svg,x,y)=>{cells(rc,svg,x+10,y+26,[7,3,9,1,5],{w:56,h:40,size:17,hl:[2]});T(svg,x+10,y+14,"a[2] = 9 · jump straight to it",{anchor:"start",size:15,color:"var(--red)"})});
+const picStr=mtPic(420,96,(rc,svg,x,y)=>{cells(rc,svg,x+10,y+26,["C","a","t","\\0"],{w:56,h:40,size:17,hl:[3]});T(svg,x+10,y+14,"\"Cat\" needs 4 bytes: 3 chars + '\\0'",{anchor:"start",size:15,color:"var(--red)"})});
+const picLL=mtPic(520,84,(rc,svg,x,y)=>{llist(rc,svg,x+10,y+30,[10,20,30],{gap:34,dw:48,pw:28})});
+const picStk=mtPic(380,150,(rc,svg,x,y)=>{["5","8","2"].forEach((v,i)=>{box(rc,svg,x+30,y+102-i*40,100,40,i===2?"var(--y)":"var(--b)",900+i);T(svg,x+80,y+129-i*40,v,{size:17,weight:700})});
+  arrow(rc,svg,[x+200,y+40],[x+136,y+40],{bend:0,color:"red"});T(svg,x+206,y+46,"top: push + pop here",{anchor:"start",size:15,color:"var(--red)"})});
+const picQ=mtPic(520,90,(rc,svg,x,y)=>{cells(rc,svg,x+110,y+26,[4,7,1,9],{w:52,h:40,size:17,idx:false});
+  arrow(rc,svg,[x+104,y+46],[x+40,y+46],{bend:0,color:"red"});T(svg,x+20,y+82,"out: FRONT",{anchor:"start",size:15,color:"var(--red)"});
+  arrow(rc,svg,[x+390,y+46],[x+324,y+46],{bend:0,color:"green"});T(svg,x+330,y+82,"in: REAR",{anchor:"start",size:15,color:"var(--green)"})});
+const picMem=mtPic(420,100,(rc,svg,x,y)=>{box(rc,svg,x+10,y+36,110,44,"var(--b)",930);T(svg,x+65,y+64,"0x1000",{size:16,weight:700});T(svg,x+65,y+26,"ptr",{size:15,color:"var(--blue)",weight:700});
+  arrow(rc,svg,[x+124,y+58],[x+226,y+58],{bend:0,color:"red"});box(rc,svg,x+232,y+36,90,44,"var(--y)",931);T(svg,x+277,y+64,"25",{size:17,weight:700});T(svg,x+277,y+26,"age @ 0x1000",{size:14,color:"var(--soft)"})});
+
+/* 0.1 the family tree */
+MT("b0a",mt("DATA STRUCTURES","ways to organise data\nso it's quick to use",[
+  mt("Primitive","one value, built into C",[
+    mt("int · 4 bytes","whole numbers"),mt("char · 1 byte","one character, stored as a code"),
+    mt("float · 4 · double · 8","real numbers → stored as IEEE 754"),mt("_Bool · 1 byte","true / false")]),
+  mt("Non-primitive","built out of primitives",[
+    mt("Linear","one after another",[mt("Array","same type, side by side, index from 0"),mt("String","char array ending in '\\0'"),mt("Linked list","nodes joined by pointers"),mt("Stack","LIFO · in + out at the top"),mt("Queue","FIFO · in at rear, out at front")]),
+    mt("Non-linear","hierarchy or network",[mt("Tree","hierarchy · file system, org chart"),mt("Graph","network · roads, friends (after the midterm)")])]),
+  mt("How it's stored","two separate questions",[
+    mt("Static vs dynamic","size fixed before running vs grows at runtime"),mt("Contiguous vs linked","side by side (array) vs joined by pointers (list)")]),
+  mt("ADT","WHAT it does, not HOW",[mt("Stack ADT · Queue ADT · List ADT","the operations are listed, the code is hidden")]),
+  mt("Efficiency","Big-O",[mt("Time","O(1) < O(log n) < O(n) < O(n log n) < O(n²)"),mt("Space","how much memory it takes")])]));
+
+/* 0.2 memory + pointers */
+MT("b0b",mt("MEMORY","where data lives",[
+  mt("Variable","3 parts",[mt("name · value · address","int age = 25; lives at some address"),picMem]),
+  mt("Pointer symbols","",[mt("&x","address of x"),mt("*p","the value p points to"),mt("p->field","field of the struct p points to")]),
+  mt("Pointer vs reference","",[mt("Pointer","holds an address · can be NULL · can move · C + C++"),mt("Reference","2nd name for the same box · never NULL · C++ only")]),
+  mt("Heap functions","<stdlib.h> · check NULL",[mt("malloc(bytes)","memory, contents garbage"),mt("calloc(n, size)","memory, all zeros"),mt("realloc(p, size)","grow or shrink, keeps data"),mt("free(p)","give it back, then p = NULL")]),
+  mt("Pointer errors","Nervous Users Drop\nDouble Bowls Loudly",[mt("Null · uninitialised","*p on NULL / on a random address"),mt("Dangling · double free","using or freeing memory already freed"),mt("Buffer overflow · leak","write past the end · never freed")]),
+  mt("IEEE 754 float","32 bits",[mt("1 · 8 · 23","sign · exponent (+127 bias) · mantissa")]),
+  mt("Memory layout","low → high",[mt("code · data · heap ↑ · stack ↓","heap = malloc · stack = local variables")])]));
+
+/* 0.3 arrays */
+MT("b0c",mt("ARRAY","same type, side by side\nindex from 0",[
+  mt("Picture","",[picArr]),
+  mt("Address formula","",[mt("1-D","addr = base + i × size"),mt("2-D row-major","addr = base + (i × cols + j) × size")]),
+  mt("Operations","+ cost",[mt("access a[i]","O(1)"),mt("traverse · linear search","O(n)"),mt("insert · delete","O(n): shift right / shift left"),mt("binary search","O(log n), only if sorted")]),
+  mt("Types","",[mt("Static","size fixed: int a[5];"),mt("Dynamic","malloc'd, grows with realloc"),mt("Multi-D","a[2][3] · a[2][3][4][5] = 120 ints")]),
+  mt("Problems","",[mt("fixed size","can't grow · may waste space"),mt("slow insert / delete","everything after must shift")])]));
+
+/* 0.4 strings + structs */
+MT("b0d",mt("STRINGS","+ structs (records)",[
+  mt("String","char array + '\\0'",[picStr,mt("strlen · strcpy · strcat","length · copy · join"),mt("strcmp · strstr","compare (0 = equal) · find substring")]),
+  mt("String mistakes","",[mt("no room for '\\0'","char s[3] = \"Cat\" overflows"),mt("== on strings","compares addresses → use strcmp")]),
+  mt("Struct (record)","different types, one name",[mt("struct Student { int id; char name[20]; };",""),mt("s.id   ·   p->id","dot for a variable, arrow for a pointer"),mt("padding","size can be bigger than the sum of fields")])]));
+
+/* 0.5 linked lists */
+MT("b0e",mt("LINKED LIST","nodes joined by pointers",[
+  mt("Node","data + next",[picLL]),
+  mt("Types","",[mt("Singly","next only · one direction · last → NULL"),mt("Doubly","prev + next · both ways · more memory"),mt("Circular","last → head · no NULL · loops")]),
+  mt("Operations","+ cost",[mt("insert / delete at front","O(1)"),mt("insert / delete at end","O(n) · O(1) insert with a tail pointer"),mt("at a position · search","O(n) · walk from head, no binary search")]),
+  mt("vs array","",[mt("✓ grows freely, no shifting","just relink pointers"),mt("✗ no a[i], extra pointer memory","must walk from the head")]),
+  mt("Uses","",[mt("undo · playlists · back/forward","doubly = back + forward · circular = playlist loop"),mt("builds stacks + queues","")])]));
+
+/* 0.6 stacks */
+MT("b0f",mt("STACK","LIFO\nlast in, first out",[
+  mt("Picture","",[picStk]),
+  mt("Operations","all O(1)",[mt("push(x)","add on top"),mt("pop()","remove + return the top"),mt("peek()","look at the top"),mt("isEmpty() · isFull()","top == −1 · top == size − 1")]),
+  mt("Errors","",[mt("Overflow","push onto a FULL stack"),mt("Underflow","pop / peek an EMPTY stack")]),
+  mt("Types","",[mt("Array stack","top starts at −1"),mt("Linked stack","push + pop at the head · full only when malloc fails"),mt("Two stacks, one array","grow toward each other")]),
+  mt("Uses","",[mt("undo · back button","last thing done comes off first"),mt("function calls · brackets · postfix","the call stack · matching ( ) · 2 3 + → 5")])]));
+
+/* 0.7 queues */
+MT("b0g",mt("QUEUE","FIFO\nfirst in, first out",[
+  mt("Picture","",[picQ]),
+  mt("Operations","all O(1)",[mt("enqueue(x)","add at the REAR"),mt("dequeue()","remove from the FRONT"),mt("front() · isEmpty() · isFull()","look · nothing in · no room")]),
+  mt("Errors","",[mt("Overflow","enqueue on a FULL queue"),mt("Underflow","dequeue an EMPTY queue")]),
+  mt("Problem","linear array queue",[mt("space before front is wasted","after dequeues the slots can't be reused → circular queue fixes it")]),
+  mt("Types","",[mt("Circular queue","rear wraps: rear = (rear + 1) % size\nfull when (rear + 1) % size == front"),mt("Linked queue","front + rear pointers · no fixed size"),mt("Priority queue","highest priority leaves first, not arrival order"),mt("Deque","insert + delete at BOTH ends")]),
+  mt("Uses","",[mt("printer jobs · CPU scheduling","first come, first served"),mt("buffers · BFS","keyboard / streaming buffers")])]));
 
 })();
 /* ---------- sticker doodles (drawn ~46px around x,y) ---------- */
