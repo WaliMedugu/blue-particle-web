@@ -1,0 +1,961 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DTS 304 Data Management I: Exam Notes | Blue Particle Studios</title>
+<meta name="description" content="Free visual notes for DTS 304 Data Management I: databases and metadata, file-based systems vs the database approach, DBMS pros and cons, DDL, DML and DCL, the DBMS environment and roles, the ANSI-SPARC three-level architecture, client-server architectures, ER shapes and keys, plus a past-paper answer key.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Blue Particle Studios">
+<meta property="og:url" content="https://blueparticlestudios.com/student-notes/dts-304-data-management-exam/">
+<meta property="og:title" content="DTS 304 Data Management I: Exam Notes">
+<meta property="og:description" content="Free visual notes for DTS 304 Data Management I: databases and metadata, file-based systems vs the database approach, DBMS pros and cons, DDL, DML and DCL, the DBMS environment and roles, the ANSI-SPARC three-level architecture, client-server architectures, ER shapes and keys, plus a past-paper answer key.">
+<meta property="og:image" content="https://blueparticlestudios.com/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DTS 304 Data Management I: Exam Notes">
+<meta name="twitter:description" content="Free visual notes for DTS 304 Data Management I: databases and metadata, file-based systems vs the database approach, DBMS pros and cons, DDL, DML and DCL, the DBMS environment and roles, the ANSI-SPARC three-level architecture, client-server architectures, ER shapes and keys, plus a past-paper answer key.">
+<meta name="twitter:image" content="https://blueparticlestudios.com/og.jpg">
+<link rel="canonical" href="https://blueparticlestudios.com/student-notes/dts-304-data-management-exam/">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Permanent+Marker&family=Inter+Tight:wght@500;600&display=swap">
+<!-- Kalam + Permanent Marker draw "Z" like a "2": (and "1" like an "I"): this loads ONLY those glyphs from Patrick Hand, which is first in the font stacks -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Patrick+Hand&text=1&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&text=Z&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Patrick+Hand&display=swap">
+<style>
+/* Layout: one column of hand-drawn boards on dotted paper; each board is a diagram first, words second. */
+:root{
+  --paper:#FCFCF8; --dot:rgba(36,87,184,.14); --ink:#1E2C45; --soft:#5C6A82;
+  --blue:#2457B8; --red:#D2462F; --green:#2B8A4B;
+  --y:#FFEB85; --g:#CDF2D4; --p:#FFD6E5; --b:#D8E8FF; --card:#FFFFFF;
+  --f-hand:"Comic Neue","Patrick Hand","Segoe Print","Comic Sans MS",cursive;
+  --f-mark:"Patrick Hand","Comic Neue","Segoe Print",cursive;
+  --f-code:Consolas,"Cascadia Mono","Courier New",monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#141D2B; --dot:rgba(141,184,255,.12); --ink:#E7EDF6; --soft:#A3B1C6;
+  --blue:#8DB8FF; --red:#FF8B74; --green:#7FDB9C;
+  --y:#4A4220; --g:#1F4430; --p:#4A2433; --b:#1E3556; --card:#1B2738; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#141D2B; --dot:rgba(141,184,255,.12); --ink:#E7EDF6; --soft:#A3B1C6;
+  --blue:#8DB8FF; --red:#FF8B74; --green:#7FDB9C;
+  --y:#4A4220; --g:#1F4430; --p:#4A2433; --b:#1E3556; --card:#1B2738; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:18px/1.45 var(--f-hand);
+  background-image:radial-gradient(var(--dot) 1.2px,transparent 1.3px);background-size:24px 24px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 80px}
+main{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+h1{font:400 clamp(38px,6vw,62px)/1.05 var(--f-mark);margin:0;text-wrap:balance}
+h2{font:400 clamp(28px,4vw,40px)/1.1 var(--f-mark);margin:48px 0 0;text-decoration:underline wavy var(--red) 2px;text-underline-offset:10px;text-wrap:balance}
+h3{font:700 22px/1.25 var(--f-hand);color:var(--blue);margin:20px 0 0;text-wrap:balance}
+p{margin:0}
+.sub{color:var(--soft);font-size:17px}
+.toc{display:flex;flex-wrap:wrap;gap:10px}
+.toc a{font:700 16px var(--f-hand);color:var(--ink);text-decoration:none;border:2px solid var(--ink);border-radius:18px 14px 20px 12px;padding:3px 14px;background:var(--card)}
+.toc a:hover{background:var(--y)}
+.toc a:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.tag{font:400 20px var(--f-mark);color:var(--paper);background:var(--red);align-self:flex-start;padding:4px 16px;transform:rotate(-2deg);margin-top:30px}
+.skip{color:var(--soft);font-size:16px;border-top:2px dashed var(--soft);padding-top:8px}
+.skip::before{content:"✂ left out: "}
+
+/* boards */
+.dboard{background:var(--card);border:2.5px solid var(--ink);border-radius:16px 11px 18px 10px;padding:18px;box-shadow:4px 5px 0 rgba(0,0,0,.09);display:flex;flex-direction:column;gap:14px;min-width:0}
+.row{display:flex;flex-wrap:wrap;gap:14px;align-items:stretch}
+.row>*{flex:1 1 220px;min-width:0}
+.box{border:2px solid var(--ink);border-radius:12px 9px 14px 8px;padding:10px 14px;background:var(--card);min-width:0}
+.box .t{display:block;font-weight:700;font-size:20px;margin-bottom:2px}
+.box ul,.box ol,.dboard>ul,.dboard>ol{margin:4px 0 0;padding-left:22px}
+.box li,.dboard li{margin:2px 0}
+.fy{background:var(--y)} .fg{background:var(--g)} .fp{background:var(--p)} .fb{background:var(--b)}
+.oval{border-radius:50%;text-align:center;padding:14px 22px;display:flex;flex-direction:column;justify-content:center}
+.big{font-size:21px;font-weight:700}
+.center{text-align:center}
+.arrow{flex:0 0 auto;align-self:center;font:700 30px var(--f-mark);color:var(--red);padding:0 2px}
+.down{flex:0 0 auto;align-self:center;font:700 26px/1 var(--f-mark);color:var(--red)}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.flow>.box{flex:1 1 150px}
+.sticky{background:var(--y);transform:rotate(-1.2deg);box-shadow:4px 5px 0 rgba(0,0,0,.13);padding:12px 18px;border-radius:2px;align-self:flex-start;max-width:640px}
+.sticky::before{content:"🧠 memory trick";display:block;font:400 14px var(--f-mark);color:var(--red);margin-bottom:2px}
+.exam{border-left:5px solid var(--red);padding:6px 12px;background:var(--p);border-radius:0 10px 10px 0}
+.exam::before{content:"📝 asked before: ";font-weight:700;color:var(--red)}
+.c{display:inline-block;border:2px solid var(--red);border-radius:52% 46% 55% 44%/58% 50% 48% 52%;padding:0 8px;transform:rotate(-1.5deg);font-weight:700}
+.hy{background:linear-gradient(transparent 38%,var(--y) 38%,var(--y) 90%,transparent 90%);padding:0 2px}
+.hg{background:linear-gradient(transparent 38%,var(--g) 38%,var(--g) 90%,transparent 90%);padding:0 2px}
+.ann{color:var(--blue)}
+.warn{color:var(--red);font-weight:700}
+code{font:15px/1.35 var(--f-code);background:rgba(36,87,184,.10);padding:0 3px;border-radius:3px}
+pre{font:14.5px/1.45 var(--f-code);margin:4px 0 0;white-space:pre;background:rgba(36,87,184,.08);padding:10px 12px;border-radius:8px;overflow-x:auto;max-width:100%}
+pre b{color:var(--red);font-weight:700}
+.vs{font:400 26px var(--f-mark);color:var(--red);align-self:center;flex:0 0 auto}
+
+/* 3-level architecture */
+.tier{display:grid;grid-template-columns:150px 1fr;gap:10px 14px;align-items:center}
+.tier .lab{font-weight:700;color:var(--blue);text-align:right}
+.views{display:flex;gap:10px;flex-wrap:wrap}
+.views .box{flex:1 1 90px;text-align:center}
+.drum{width:120px;height:86px;margin:0 auto;border:2.5px solid var(--ink);border-radius:50%/18%;background:var(--b);display:flex;align-items:center;justify-content:center;font-weight:700}
+@media (max-width:620px){.tier{grid-template-columns:1fr}.tier .lab{text-align:left}}
+
+/* ER shapes */
+.shapes{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.shape{border:2px dashed var(--soft);border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center;min-width:0}
+.shape svg{width:180px;max-width:100%;height:auto}
+.shape .t{font-weight:700;font-size:19px}
+.shape small{color:var(--soft);font-size:15px}
+.er{fill:var(--card);stroke:var(--ink);stroke-width:2.5}
+.er-dash{fill:var(--card);stroke:var(--ink);stroke-width:2.5;stroke-dasharray:7 5}
+.er-line{stroke:var(--ink);stroke-width:2;fill:none}
+.er-txt{fill:var(--ink);font:700 15px var(--f-hand);text-anchor:middle;dominant-baseline:middle}
+.er-u{text-decoration:underline}
+
+/* answer key */
+.key{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:6px 18px;font-size:17px}
+.key div{border-bottom:1px dashed var(--soft);padding:3px 0}
+.key b{color:var(--red);display:inline-block;min-width:34px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<style>
+#mDia{max-width:1500px}
+.board{width:100%;overflow-x:auto;overflow-y:hidden}
+.sizer{position:relative}
+.inner{position:absolute;left:0;top:0;transform-origin:0 0}
+.inner>svg{position:absolute;left:0;top:0;overflow:visible}
+.nd{position:absolute;padding:12px 16px;font:400 18px/1.4 var(--f-hand);color:var(--ink)}
+.nd.s-plain{padding:4px 6px}
+main[hidden]{display:none!important}
+#styleSw{position:fixed;top:58px;right:14px;z-index:60;font:700 16px var(--f-hand);color:var(--ink);background:var(--card);border:2px solid var(--ink);border-radius:16px 12px 18px 10px;padding:6px 14px;cursor:pointer;box-shadow:3px 4px 0 rgba(0,0,0,.18)}
+#styleSw:hover{background:var(--y)}
+@media (max-width:700px){#styleSw{top:auto;bottom:14px;font-size:15px}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.js"></script>
+
+<style>
+.bps-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;max-width:1600px;margin:0 auto 8px;font:600 15px/1.2 "Inter Tight",system-ui,sans-serif}
+.bps-bar a{color:var(--ink);text-decoration:none}
+.bps-brand{display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:-.02em;font-size:16px}
+.bps-brand svg{width:22px;height:22px}
+.bps-links{display:flex;gap:14px;flex-wrap:wrap}
+.bps-links a{border-bottom:1.5px solid currentColor;padding-bottom:1px}
+.bps-cta{max-width:1600px;margin:56px auto 0;border:2.5px solid var(--ink);border-radius:10px 16px 12px 18px;padding:22px 24px;background:var(--card);display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between}
+.bps-cta p{margin:0;max-width:62ch}
+.bps-cta .k{font:400 22px var(--f-mark);display:block;margin-bottom:4px}
+.bps-cta .btns{display:flex;gap:10px;flex-wrap:wrap}
+.bps-cta .btns a{font:600 15px "Inter Tight",system-ui,sans-serif;text-decoration:none;border:2px solid var(--ink);border-radius:999px;padding:8px 16px;color:var(--ink)}
+.bps-cta .btns a.hot{background:#2342ff;border-color:#2342ff;color:#fff}
+.bps-foot{max-width:1600px;margin:24px auto 0;font:500 13px "Inter Tight",system-ui,sans-serif;color:var(--soft);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.bps-foot a{color:var(--soft)}
+</style>
+</head>
+<body>
+<header class="bps-bar" id="top">
+  <a class="bps-brand" href="/" aria-label="Blue Particle Studios, home"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" fill="none" stroke="currentColor"/><path d="M2.5 2.5l19 19M21.5 2.5l-19 19" stroke="currentColor" stroke-width=".6" opacity=".45"/><circle cx="12" cy="12" r="4.4" fill="#2342ff"/></svg>Blue Particle</a>
+  <nav class="bps-links" aria-label="Notes"><a href="/student-notes/">All student notes</a><a href="/">Our studio</a></nav>
+</header>
+<button id="styleSw" type="button" aria-pressed="false">Switch to detailed notes</button>
+<main id="mDia">
+  <span class="sub">DTS 304 · Data Management I · exam notes</span>
+  <h1>DTS 304 Sketch Notes</h1>
+  <div class="dboard fy">
+    <p class="big">What's on tomorrow's paper (course rep, 26 Nov, both sections)</p>
+    <ul>
+      <li><b>Focus on Lesson 1 and Lesson 2</b>, plus a <b>few parts of Lessons 3 and 4</b>.</li>
+      <li><span class="warn">You won't be asked to draw an ER diagram</span>, but you <b>must know the shapes and the keys</b> (§7).</li>
+      <li><span class="warn">Cardinality will not come out.</span></li>
+    </ul>
+    <p class="sub">Last session: the midterm was 50 multiple-choice questions on Lessons 1–2 (answers in §8). The final was theory: answer 4 of 6. The theory questions that fit tomorrow's scope are tagged 📝 throughout.</p>
+  </div>
+  <nav class="toc" aria-label="Trees"><a href="#d1">1 · Databases: the basics</a><a href="#d2">2 · File-based systems vs the database approach</a><a href="#d3">3 · DBMS pros, cons + the SQL languages</a><a href="#d4">4 · The DBMS environment + roles</a><a href="#d5">5 · The three-level architecture</a><a href="#d6">6 · Multi-user architectures</a><a href="#d7">7 · ER shapes + keys</a></nav>
+  <span class="tag">LESSON 1 · AS TREES</span>
+  <p class="sub">Each topic is one tree: parent → kids → their kids. Read left to right, then cover the right side and say it back.</p>
+  <h3>1 · Databases: the basics</h3><div class="board" id="d1"></div>
+  <h3>2 · File-based systems vs the database approach</h3><div class="board" id="d2"></div>
+  <h3>3 · DBMS pros, cons + the SQL languages</h3><div class="board" id="d3"></div>
+  <h3>4 · The DBMS environment + roles</h3><div class="board" id="d4"></div>
+
+  <span class="tag">LESSON 2 · AS TREES</span>
+  <h3>5 · The three-level architecture</h3><div class="board" id="d5"></div>
+  <h3>6 · Multi-user architectures</h3><div class="board" id="d6"></div>
+  <h3>The 3-level diagram: learn to redraw it</h3>
+  <div class="dboard">
+    <div class="tier">
+      <span class="lab">External level</span>
+      <div class="views"><div class="box fy">User 1<br><b>View 1</b></div><div class="box fy">User 2<br><b>View 2</b></div><div class="box fy">… User n<br><b>View n</b></div></div>
+      <span></span><span class="down">↓ external / conceptual mapping ↓</span>
+      <span class="lab">Conceptual level</span>
+      <div class="box fg center"><b>Conceptual schema</b></div>
+      <span></span><span class="down">↓ conceptual / internal mapping ↓</span>
+      <span class="lab">Internal level</span>
+      <div class="box fb center"><b>Internal schema</b></div>
+      <span></span><span class="down">↓</span>
+      <span class="lab">Physical data organisation</span>
+      <div class="drum">Database</div>
+    </div>
+  </div>
+  <span class="tag">LESSONS 3–4 · SHAPES + KEYS</span>
+  <h3>7 · ER shapes + keys</h3><div class="board" id="d7"></div>
+  <h3>The ER shapes, drawn</h3>
+  <div class="dboard">
+    <div class="shapes">
+      <div class="shape"><svg viewBox="0 0 180 80" aria-hidden="true"><rect class="er" x="20" y="18" width="140" height="44"/><text class="er-txt" x="90" y="40">STUDENT</text></svg><span class="t">Entity</span><small>rectangle</small></div>
+      <div class="shape"><svg viewBox="0 0 180 80" aria-hidden="true"><rect class="er" x="14" y="12" width="152" height="56"/><rect class="er" x="22" y="20" width="136" height="40"/><text class="er-txt" x="90" y="40">DEPENDANT</text></svg><span class="t">Weak entity</span><small>double rectangle · can't exist without its owner</small></div>
+      <div class="shape"><svg viewBox="0 0 180 80" aria-hidden="true"><polygon class="er" points="90,8 168,40 90,72 12,40"/><text class="er-txt" x="90" y="40">enrols</text></svg><span class="t">Relationship</span><small>diamond</small></div>
+      <div class="shape"><svg viewBox="0 0 180 80" aria-hidden="true"><polygon class="er" points="90,4 174,40 90,76 6,40"/><polygon class="er" points="90,14 152,40 90,66 28,40"/><text class="er-txt" x="90" y="40">has</text></svg><span class="t">Identifying relationship</span><small>double diamond · links a weak entity to its owner</small></div>
+      <div class="shape"><svg viewBox="0 0 180 80" aria-hidden="true"><ellipse class="er" cx="90" cy="40" rx="72" ry="26"/><text class="er-txt" x="90" y="40">Name</text></svg><span class="t">Attribute</span><small>oval</small></div>
+      <div class="shape"><svg viewBox="0 0 180 80" aria-hidden="true"><ellipse class="er" cx="90" cy="40" rx="72" ry="26"/><text class="er-txt er-u" x="90" y="40">RegNo</text><line class="er-line" x1="62" y1="50" x2="118" y2="50"/></svg><span class="t">Key attribute</span><small>oval, name <u>underlined</u> · the primary key</small></div>
+      <div class="shape"><svg viewBox="0 0 180 80" aria-hidden="true"><ellipse class="er" cx="90" cy="40" rx="78" ry="32"/><ellipse class="er" cx="90" cy="40" rx="66" ry="22"/><text class="er-txt" x="90" y="40">Phone</text></svg><span class="t">Multivalued attribute</span><small>double oval · can hold many values</small></div>
+      <div class="shape"><svg viewBox="0 0 180 80" aria-hidden="true"><ellipse class="er-dash" cx="90" cy="40" rx="72" ry="26"/><text class="er-txt" x="90" y="40">Age</text></svg><span class="t">Derived attribute</span><small>dashed oval · calculated from another (Age from DOB)</small></div>
+      <div class="shape"><svg viewBox="0 0 180 120" aria-hidden="true"><line class="er-line" x1="90" y1="40" x2="40" y2="90"/><line class="er-line" x1="90" y1="40" x2="140" y2="90"/><ellipse class="er" cx="90" cy="28" rx="56" ry="20"/><text class="er-txt" x="90" y="28">Name</text><ellipse class="er" cx="40" cy="96" rx="38" ry="17"/><text class="er-txt" x="40" y="96">First</text><ellipse class="er" cx="140" cy="96" rx="38" ry="17"/><text class="er-txt" x="140" y="96">Last</text></svg><span class="t">Composite attribute</span><small>oval with its parts as smaller ovals</small></div>
+    </div>
+    <div class="sticky"><b>Rect</b> = thing · <b>diamond</b> = doing · <b>oval</b> = describing. <b>Double</b> = weak or many, <b>dashed</b> = derived, <b>underlined</b> = key.</div>
+    <p class="exam">Draw the five main components of an ERD: entity, attribute, multivalued attribute, derived attribute and composite attribute [10]</p>
+  </div>
+  <span class="tag">EXAM DRILL</span>
+  <h3>Last session's 50 MCQs: answer key</h3>
+  <div class="dboard">
+    <div class="key">
+      <div><b>1</b>raw facts and figures</div><div><b>2</b>organising + controlling resources</div><div><b>3</b>Classification (not a C)</div><div><b>4</b>common attributes</div><div><b>5</b>improved data integrity</div>
+      <div><b>6</b>complexity</div><div><b>7</b>metadata</div><div><b>8</b>wasted storage space</div><div><b>9</b>different languages → different files</div><div><b>10</b>data definition was embedded in programs</div>
+      <div><b>11</b>shared collection of logically related data</div><div><b>12</b>data about other data</div><div><b>13</b>define, create + maintain databases</div><div><b>14</b>DDL: defining structures + constraints</div><div><b>15</b>DML: manipulating + retrieving data</div>
+      <div><b>16</b>view: a subset seen by a user</div><div><b>17</b>reduced complexity</div><div><b>18</b>external, conceptual, internal</div><div><b>19</b>the user's view</div><div><b>20</b>community-wide structure</div>
+      <div><b>21</b>physical representation of data</div><div><b>22</b>conceptual changes don't affect external views</div><div><b>23</b>internal changes don't affect conceptual</div><div><b>24</b>hardware assembly (NOT a function)</div><div><b>25</b>metadata about the database</div>
+      <div><b>26</b>procedures</div><div><b>27</b>network switch engineer (NOT a role)</div><div><b>28</b>designing + maintaining the database</div><div><b>30</b>managing transactions + consistency</div><div><b>31</b>logical structure of the database</div>
+      <div><b>32</b>reduce data redundancy</div><div><b>33</b>application programmer</div><div><b>34</b>DROP</div><div><b>35</b>concurrency control manager</div><div><b>36</b>describe data, relationships + constraints</div>
+      <div><b>37</b>storage paths + file organisations</div><div><b>38</b>only the part relevant to them</div><div><b>39</b>non-procedural language</div><div><b>40</b>values uniform across applications</div><div><b>41</b>unique and not null</div>
+      <div><b>42</b>INSERT</div><div><b>43</b>link two tables</div><div><b>44</b>hierarchical</div><div><b>45</b>naive users</div><div><b>46</b>uses more than one attribute</div>
+      <div><b>47</b>a real-world object</div><div><b>48</b>a characteristic of an entity</div><div><b>49</b>logical design</div><div><b>50</b>multi-user system</div>
+    </div>
+    <p class="sub">Q29's options were cut off in the photo. Cover the answers and test yourself: if you can say the answer before reading it, you're ready.</p>
+  </div>
+  <p class="sub">The SQL answers and the theory questions from last session are in the detailed notes (switch, top right).</p>
+</main>
+<main id="mDet" hidden>
+  <span class="sub">DTS 304 · Data Management I · exam notes (Lessons 1–2 + shapes and keys from 3–4)</span>
+  <h1>DTS 304 Sketch Notes</h1>
+
+  <div class="dboard fy">
+    <p class="big">What's on tomorrow's paper (course rep, 26 Nov, both sections)</p>
+    <ul>
+      <li><b>Focus on Lesson 1 and Lesson 2</b>, plus a <b>few parts of Lessons 3 and 4</b>.</li>
+      <li><span class="warn">You won't be asked to draw an ER diagram</span>, but you <b>must know the shapes and the keys</b> (§7).</li>
+      <li><span class="warn">Cardinality will not come out.</span></li>
+    </ul>
+    <p class="sub">Last session: the midterm was 50 multiple-choice questions on Lessons 1–2 (answers in §8). The final was theory: answer 4 of 6. The theory questions that fit tomorrow's scope are tagged 📝 throughout.</p>
+  </div>
+
+  <nav class="toc" aria-label="Sections">
+    <a href="#s1">1 · Data + databases</a><a href="#s2">2 · File-based vs database</a><a href="#s3">3 · DBMS pros, cons + languages</a>
+    <a href="#s4">4 · Environment + roles</a><a href="#s5">5 · Three-level architecture</a><a href="#s6">6 · Multi-user architectures</a>
+    <a href="#s7">7 · ER shapes + keys</a><a href="#s8">8 · Exam drill</a>
+  </nav>
+
+  <!-- ============ LESSON 1 ============ -->
+  <span class="tag">LESSON 1 · INTRODUCTION TO DATABASES</span>
+  <h2 id="s1">1 · Data, management + databases</h2>
+
+  <h3>1.1 Data → management → database</h3>
+  <div class="dboard">
+    <div class="flow">
+      <div class="box fy"><span class="t">Data</span>Facts and numbers used to analyse something or make decisions. <span class="ann">"raw facts and figures"</span></div>
+      <span class="arrow">→</span>
+      <div class="box fg"><span class="t">Management</span>Planning, organising, leading and controlling an organisation's resources to reach its goals efficiently.</div>
+      <span class="arrow">→</span>
+      <div class="box fb"><span class="t">Database</span>An organised, electronic collection of data, usually kept and accessed through a computer system.</div>
+    </div>
+    <div class="box"><span class="t">Formal definition (learn this one)</span>A database is a <span class="hy">shared collection of logically related data (and a description of this data)</span>, designed to meet the information needs of an organisation.</div>
+    <div class="row">
+      <div class="box"><span class="t">Logically related data =</span>
+        <ul><li><b>Entities</b> → tables</li><li><b>Attributes</b> → fields</li><li><b>Relationships</b> between them</li></ul>
+        <small class="sub">These three make up the ERD (§7).</small></div>
+      <div class="box"><span class="t">Metadata / system catalog</span>"<b>Data about data</b>": the description of the data stored in the database. It is what gives a database its structure, and it enables <b>program–data independence</b>.</div>
+    </div>
+  </div>
+
+  <h3>1.2 The 5 Cs of data management</h3>
+  <div class="dboard">
+    <p>Five guidelines for building data products:</p>
+    <div class="flow">
+      <div class="box oval fp">Consent</div><div class="box oval fp">Clarity</div><div class="box oval fp">Consistency</div><div class="box oval fp">Control<br><small>(+ transparency)</small></div><div class="box oval fp">Consequences<br><small>(+ harm)</small></div>
+    </div>
+    <div class="sticky">"<b>C</b>an <b>C</b>lass <b>C</b>ontinue <b>C</b>almly, <b>C</b>aptain?" Consent, Clarity, Consistency, Control, Consequences. <span class="warn">"Classification" is NOT one of them</span> (asked in the MCQs).</div>
+  </div>
+
+  <h3>1.3 Relational database</h3>
+  <div class="dboard">
+    <p>Groups data using the <span class="hy">common attributes</span> found in the data, so the "clumps" of data are easy to understand. The grouping is called the <b>schema</b>. The relational model is the main choice for financial records, logistics, personnel data and more.</p>
+    <div class="box">
+      <span class="t">Draw it like this (a relation = a table)</span>
+<pre>         STUDENT  ← relation (table)
+ ┌────────┬─────────┬────────┐
+ │ <b>RegNo</b>  │ Name    │ Dept   │ ← attributes (columns)
+ ├────────┼─────────┼────────┤
+ │ 241001 │ Ada     │ SEN    │ ← tuple (row / record)
+ │ 241002 │ Musa    │ CYB    │
+ └────────┴─────────┴────────┘
+   ↑ primary key: unique, not null</pre>
+      <small class="sub">Relation = table · tuple = row · attribute = column · domain = the allowed values for a column · tables are linked by keys.</small>
+    </div>
+    <div class="box fg"><span class="t">Why the industry mostly uses it</span>
+      <ul><li><b>Simple</b>: everything is a table, which is easy to understand.</li>
+      <li><b>SQL</b>: one standard, non-procedural language.</li>
+      <li><b>Integrity</b>: primary and foreign keys keep data correct and linked.</li>
+      <li><b>Flexible queries</b>: join any tables on common attributes.</li>
+      <li><b>Data independence</b>, and widely supported (MySQL, Oracle, SQL Server).</li></ul></div>
+    <p class="exam">Draw and explain the relational database model [10] · Why is it mostly used in industry? [5]</p>
+  </div>
+
+  <h3>1.4 Examples of database applications</h3>
+  <div class="dboard">
+    <div class="flow">
+      <div class="box">🛒 supermarket purchases</div><div class="box">💳 credit-card purchases</div><div class="box">✈️ booking a holiday</div><div class="box">📚 the library</div><div class="box">🛡️ taking out insurance</div><div class="box">🎬 renting a video</div><div class="box">🌐 using the internet</div><div class="box">🎓 studying at university</div><div class="box">🏦 online banking</div><div class="box">🏥 hospital records</div>
+    </div>
+    <p class="exam">List 10 examples of database applications [10]. The first 8 are from the slides, and the last 2 are safe extras.</p>
+  </div>
+
+  <h2 id="s2">2 · File-based systems vs the database approach</h2>
+
+  <h3>2.1 File-based system</h3>
+  <div class="dboard">
+    <div class="row">
+      <div class="box fp"><span class="t">File-based system</span>A collection of application programs that perform services for end users (e.g. reports). <b>Each program defines and manages its own data.</b> The data is stored in files with <span class="warn">no metadata</span>, so there's no organising structure.</div>
+      <span class="vs">vs</span>
+      <div class="box fg"><span class="t">Database</span>A self-organising collection of <b>integrated</b> records. Its <b>metadata gives it structure</b>, and all programs share it.</div>
+    </div>
+<pre>FILE-BASED                         DATABASE APPROACH
+Sales prog ──► Sales files         Sales prog ──┐
+Lease prog ──► Lease files         Lease prog ──┼──► DBMS ──► one shared DB
+Staff prog ──► Staff files         Staff prog ──┘         (+ metadata)</pre>
+  </div>
+
+  <h3>2.2 Five limitations of the file-based approach</h3>
+  <div class="dboard">
+    <div class="row">
+      <div class="box"><span class="t">1 · Separation + isolation</span>Each program keeps its own data, so users of one program may not know about useful data in another.</div>
+      <div class="box"><span class="t">2 · Duplication</span>The same data is held by different programs, which <b>wastes space</b> and can leave different values or formats for the same item.</div>
+      <div class="box"><span class="t">3 · Data dependence</span>The file structure is defined <b>in the program code</b>, so changing it means changing the programs.</div>
+      <div class="box"><span class="t">4 · Incompatible file formats</span>Programs written in different languages can't easily read each other's files.</div>
+      <div class="box"><span class="t">5 · Fixed queries</span>Each program does one job, so every new requirement needs a new program. Programs multiply ("proliferation").</div>
+    </div>
+    <div class="sticky">"<b>S</b>ome <b>D</b>ays <b>D</b>on't <b>I</b>mprove <b>F</b>ast": Separation, Duplication, Dependence, Incompatible formats, Fixed queries.</div>
+  </div>
+
+  <h3>2.3 Why the database approach arose</h3>
+  <div class="dboard">
+    <div class="flow">
+      <div class="box fp">The data definition was <b>embedded in application programs</b>, not stored separately.</div>
+      <span class="arrow">+</span>
+      <div class="box fp"><b>No control</b> over access to and changes to the data beyond what each program imposed.</div>
+      <span class="arrow">→</span>
+      <div class="box fg big center">the database<br>+ the DBMS</div>
+    </div>
+  </div>
+
+  <h3>2.4 DBMS + database application program</h3>
+  <div class="dboard">
+    <div class="flow">
+      <div class="box fb"><span class="t">Application program</span>Interacts with the database by sending requests (<b>SQL statements</b>) to the DBMS.</div>
+      <span class="arrow">⇄</span>
+      <div class="box fy"><span class="t">DBMS</span>Software that lets users <span class="hy">define, create, maintain and control access to</span> the database. e.g. MySQL, Oracle, SQLite (XAMPP/WAMP bundle MySQL).</div>
+      <span class="arrow">⇄</span>
+      <div class="box fg center"><span class="t">Database</span>data + metadata</div>
+    </div>
+    <div class="box"><span class="t">Controlled access: what the DBMS provides</span>
+      <ul><li>a <b>security</b> system (stops unauthorised access)</li><li>an <b>integrity</b> system (keeps data consistent)</li><li>a <b>concurrency</b> control system (lets many users share data at the same time)</li><li>a <b>recovery</b> control system (restores the database after a failure)</li><li>a <b>user-accessible catalog</b> (the metadata)</li></ul></div>
+    <div class="sticky">"<b>S</b>afe <b>I</b>nterns <b>C</b>an <b>R</b>ead <b>C</b>atalogs": Security, Integrity, Concurrency, Recovery, Catalog.</div>
+  </div>
+
+  <h3>2.5 Views</h3>
+  <div class="dboard">
+    <div class="flow">
+      <div class="box fb center">Whole database</div><span class="arrow">→</span>
+      <div class="box center">Lecturer's view<br><small>(names + grades)</small></div>
+      <div class="box center">Bursar's view<br><small>(names + fees)</small></div>
+    </div>
+    <p>A <b>view</b> is a <span class="hy">subset of the database</span>, so each user gets their own view.</p>
+    <div class="box fg"><span class="t">Benefits</span><ul>
+      <li><b>Reduce complexity</b> (users see only what they need)</li><li>Provide a level of <b>security</b> (hide data)</li>
+      <li>Let you <b>customise</b> how the database looks</li><li>Show a <b>consistent, unchanging</b> picture even if the underlying database changes</li></ul></div>
+  </div>
+
+  <h2 id="s3">3 · DBMS advantages, disadvantages + languages</h2>
+
+  <h3>3.1 Advantages of a DBMS (13)</h3>
+  <div class="dboard">
+    <div class="row">
+      <div class="box fg"><span class="t">About the data</span><ul>
+        <li>Control of data <b>redundancy</b></li><li>Data <b>consistency</b></li><li><b>Sharing</b> of data</li><li>Improved data <b>integrity</b></li><li>Improved <b>security</b></li></ul></div>
+      <div class="box fg"><span class="t">About the organisation</span><ul>
+        <li>Enforcement of <b>standards</b></li><li><b>Economy of scale</b></li><li><b>Balance</b> conflicting requirements</li><li>Improved data <b>accessibility</b> + responsiveness</li><li>Increased <b>productivity</b></li></ul></div>
+      <div class="box fg"><span class="t">About the system</span><ul>
+        <li>Improved <b>maintenance</b> through data independence</li><li>Increased <b>concurrency</b></li><li>Improved <b>backup + recovery</b></li></ul></div>
+    </div>
+    <p class="sub">Each one fixes a file-based limitation from §2.2: redundancy fixes duplication, sharing fixes isolation, independence fixes dependence.</p>
+  </div>
+
+  <h3>3.2 Disadvantages of a DBMS (7)</h3>
+  <div class="dboard">
+    <div class="flow">
+      <div class="box fp">Complexity</div><div class="box fp">Size</div><div class="box fp">Cost of the DBMS</div><div class="box fp">Extra hardware costs</div><div class="box fp">Cost of conversion</div><div class="box fp">Performance</div><div class="box fp">Higher impact of a failure</div>
+    </div>
+    <div class="sticky">"<b>C</b>ows <b>S</b>leep, <b>C</b>hickens <b>H</b>op, <b>C</b>ats <b>P</b>urr <b>H</b>appily": Complexity, Size, Cost, Hardware, Conversion, Performance, Higher impact.</div>
+  </div>
+
+  <h3>3.3 DDL · DML · DCL and their SQL commands</h3>
+  <div class="dboard">
+    <div class="row">
+      <div class="box fb"><span class="t">DDL · Data Definition Language</span>Defines the <b>structure</b>: data types, structures and constraints. The definitions are stored in the database (catalog).
+<pre><b>CREATE</b>  ALTER  <b>DROP</b>  TRUNCATE  RENAME</pre></div>
+      <div class="box fy"><span class="t">DML · Data Manipulation Language</span>Works on the <b>data inside</b> the tables: query, add, change, remove.
+<pre><b>SELECT</b>  <b>INSERT</b>  UPDATE  <b>DELETE</b></pre></div>
+      <div class="box fp"><span class="t">DCL · Data Control Language</span>Controls <b>who can do what</b> (permissions).
+<pre><b>GRANT</b>  <b>REVOKE</b></pre></div>
+    </div>
+    <p>SQL is a <b>non-procedural</b> language: you say <i>what</i> you want, not <i>how</i> to get it.</p>
+    <div class="sticky">DDL = the <b>shape</b> of the box · DML = the <b>stuff</b> in the box · DCL = the <b>lock</b> on the box. <span class="warn">DROP removes a table; DELETE removes rows.</span></div>
+    <p class="exam">Explain DDL, DML and DCL, and write the commands found in each [10]</p>
+  </div>
+
+  <h3>3.4 The four SQL answers from last session's paper (MySQL)</h3>
+  <div class="dboard">
+<pre><b>-- a) create a table with 10 fields + a primary key</b>
+CREATE TABLE student (
+  reg_no     INT AUTO_INCREMENT PRIMARY KEY,
+  first_name VARCHAR(50),  last_name VARCHAR(50),
+  gender     CHAR(1),      dob       DATE,
+  email      VARCHAR(100), phone     VARCHAR(15),
+  dept_id    INT,          level     INT,
+  cgpa       DECIMAL(3,2)
+);
+
+<b>-- c) add a foreign key while creating a table</b>
+CREATE TABLE department ( dept_id INT PRIMARY KEY, name VARCHAR(50) );
+CREATE TABLE lecturer (
+  staff_id INT PRIMARY KEY,
+  name     VARCHAR(50),
+  dept_id  INT,
+  <b>FOREIGN KEY (dept_id) REFERENCES department(dept_id)</b>
+);
+
+<b>-- b) delete multiple rows</b>
+DELETE FROM student WHERE reg_no IN (3, 5, 7);
+DELETE FROM student WHERE level = 100;   -- every matching row
+
+<b>-- d) view all information in a table</b>
+SELECT * FROM student;</pre>
+  </div>
+  <p class="skip">the image-only slides 17 + 20–22 (their content is rebuilt above from the standard SQL groups)</p>
+
+  <h2 id="s4">4 · The DBMS environment + roles</h2>
+
+  <h3>4.1 Five components of the DBMS environment</h3>
+  <div class="dboard">
+    <div class="flow">
+      <div class="box fb"><span class="t">Hardware</span>From one PC to a network of computers.</div>
+      <div class="box fb"><span class="t">Software</span>The DBMS, the OS, network software, and the application programs.</div>
+      <div class="box fy"><span class="t">Data</span>The organisation's data, plus its description (the <b>schema</b>).</div>
+      <div class="box fg"><span class="t">Procedures</span>The <b>instructions and rules</b> for designing and using the database (DDL/DML/DCL).</div>
+      <div class="box fg"><span class="t">People</span>Naive and sophisticated users, plus the DA, DBA, designers and programmers.</div>
+    </div>
+    <p class="ann">Data sits in the middle: it's the bridge between the machine side (hardware + software) and the human side (procedures + people).</p>
+    <div class="sticky">"<b>H</b>appy <b>S</b>tudents <b>D</b>on't <b>P</b>anic <b>P</b>ermanently": Hardware, Software, Data, Procedures, People.</div>
+  </div>
+
+  <h3>4.2 Five roles in the database environment</h3>
+  <div class="dboard">
+    <div class="row">
+      <div class="box fy"><span class="t">Data Administrator (DA)</span>Manages the <b>data as a resource</b>: monitors, maintains and controls the organisation's data assets and how they're used by applications and business processes. <span class="ann">Business-side, planning.</span></div>
+      <div class="box fy"><span class="t">Database Administrator (DBA)</span><b>Designs, implements and maintains</b> the database system; sets the policies for its security, maintenance and use. <span class="ann">Technical-side.</span></div>
+    </div>
+    <div class="row">
+      <div class="box fb"><span class="t">Database Designers</span><b>Logical</b> designers draw the ERD (what data, which relationships). <b>Physical</b> designers decide how it's stored (storage media).</div>
+      <div class="box fb"><span class="t">Application Programmers</span>Build the <b>front end</b> (the GUI) and link it to the back end (the DBMS), using SQL.</div>
+      <div class="box fg"><span class="t">End Users</span><b>Naive</b> users use ready-made screens, e.g. a bank customer or teller. <b>Sophisticated</b> users know the database and write their own queries.</div>
+    </div>
+    <div class="sticky">"<b>D</b>on't <b>D</b>isturb <b>D</b>ad's <b>A</b>fternoon <b>U</b>p-time": DA, DBA, Designers, Application programmers, Users.</div>
+    <p class="exam">List the five roles in the database environment, with an explanation of each [10]</p>
+  </div>
+
+  <!-- ============ LESSON 2 ============ -->
+  <span class="tag">LESSON 2 · THE DATABASE ENVIRONMENT</span>
+  <h2 id="s5">5 · The ANSI-SPARC three-level architecture</h2>
+
+  <h3>5.1 Why three levels (objectives)</h3>
+  <div class="dboard">
+    <ul>
+      <li>All users can access the <b>same data</b>.</li>
+      <li>A user's view is <b>immune to changes</b> made in other views.</li>
+      <li>Users don't need to know <b>physical storage details</b>.</li>
+      <li>The DBA can change the <b>storage structures</b> without affecting users' views.</li>
+      <li>The internal structure is unaffected by changes to the <b>physical</b> side of storage.</li>
+      <li>The DBA can change the <b>conceptual</b> structure without affecting all users.</li>
+    </ul>
+    <p class="ann">In one line: separate each user's view from how the data is physically stored.</p>
+  </div>
+
+  <h3>5.2 The diagram (it was on the paper; learn to redraw it)</h3>
+  <div class="dboard">
+    <div class="tier">
+      <span class="lab">External level</span>
+      <div class="views"><div class="box fy">User 1<br><b>View 1</b></div><div class="box fy">User 2<br><b>View 2</b></div><div class="box fy">… User n<br><b>View n</b></div></div>
+      <span></span><span class="down">↓ external / conceptual mapping ↓</span>
+      <span class="lab">Conceptual level</span>
+      <div class="box fg center"><b>Conceptual schema</b></div>
+      <span></span><span class="down">↓ conceptual / internal mapping ↓</span>
+      <span class="lab">Internal level</span>
+      <div class="box fb center"><b>Internal schema</b></div>
+      <span></span><span class="down">↓</span>
+      <span class="lab">Physical data organisation</span>
+      <div class="drum">Database</div>
+    </div>
+  </div>
+
+  <h3>5.3 What lives at each level</h3>
+  <div class="dboard">
+    <div class="row">
+      <div class="box fy"><span class="t">External = the users' view</span>The part of the database <b>relevant to one user</b>. Different users can see the same data in different forms (e.g. a date as 27/11 or Nov 27), and can see derived data (age instead of date of birth). Users work through a GUI here.</div>
+      <div class="box fg"><span class="t">Conceptual = the community view</span><b>What</b> data is stored and the <b>relationships</b> among it: all entities, attributes and relationships, the constraints, and the security and integrity information. <span class="warn">No storage details.</span></div>
+      <div class="box fb"><span class="t">Internal = the physical representation</span><b>How</b> the data is stored: storage space for data and indexes, record descriptions, record placement, data compression and encryption, on primary or secondary storage.</div>
+    </div>
+    <div class="sticky">Go top to bottom: <b>E</b>ach <b>C</b>ustomer <b>I</b>gnores the engine. External = what <i>I</i> see · Conceptual = <i>what</i> is stored · Internal = <i>how</i> it's stored.</div>
+    <p class="exam">Explain the diagram and what is found in each part [10]</p>
+  </div>
+
+  <h3>5.4 Mappings + schemas</h3>
+  <div class="dboard">
+    <div class="row">
+      <div class="box"><span class="t">External/conceptual mapping</span>Translates between each user's view and the conceptual schema.</div>
+      <div class="box"><span class="t">Conceptual/internal mapping</span>Translates between the conceptual schema and the internal (stored) records and indexes.</div>
+    </div>
+    <p><b>Schema</b> = the <span class="hy">description (logical structure) of the database</span>, which rarely changes. <b>Instance</b> = the data in it at one moment, which changes all the time.</p>
+  </div>
+
+  <h3>5.5 Logical vs physical data independence</h3>
+  <div class="dboard">
+    <div class="row">
+      <div class="box fg"><span class="t">Logical data independence</span>The <b>external schemas</b> are immune to changes in the <b>conceptual schema</b>.<br><small>e.g. adding or removing a table or field shouldn't force changes to users' views or rewrites of application programs.</small></div>
+      <span class="vs">vs</span>
+      <div class="box fb"><span class="t">Physical data independence</span>The <b>conceptual schema</b> is immune to changes in the <b>internal schema</b>.<br><small>e.g. a new file organisation, storage structure or device shouldn't force changes to the conceptual or external schemas.</small></div>
+    </div>
+<pre>External  ┐
+          ├─ <b>logical</b> independence  (protects views from conceptual changes)
+Conceptual┤
+          ├─ <b>physical</b> independence (protects conceptual from storage changes)
+Internal  ┘</pre>
+    <div class="sticky">Each independence protects the level <b>above</b> the line it sits on. Logical is the upper line, physical is the lower line.</div>
+    <p class="exam">Explain the difference between logical and physical data independence [10]</p>
+  </div>
+
+  <h3>5.6 Data models, DBMS functions, catalog + TP monitors</h3>
+  <div class="dboard">
+    <div class="row">
+      <div class="box"><span class="t">Data model</span>A set of concepts to <b>describe data, relationships and constraints</b>.
+        <ul><li><b>Object-based</b>: ER, object-oriented</li><li><b>Record-based</b>: <b>relational</b>, network, <b>hierarchical</b></li><li><b>Physical</b>: how data is stored</li></ul></div>
+      <div class="box"><span class="t">Typical DBMS functions</span><ul>
+        <li>store, retrieve + update data</li><li>a user-accessible catalog</li><li>transaction support</li><li>concurrency control</li><li>recovery</li><li>authorisation (security)</li><li>integrity</li><li>data independence + utilities</li></ul>
+        <small class="sub">NOT a function: hardware assembly.</small></div>
+    </div>
+    <div class="row">
+      <div class="box fy"><span class="t">System catalog</span>Holds the <b>metadata</b> about the database: names, types and sizes of data items, constraints, users and their permissions.</div>
+      <div class="box fy"><span class="t">Transaction Processing (TP) Monitor</span>A program between clients and servers that <b>manages user transactions and keeps them consistent</b>, so large systems can handle many transactions at once.</div>
+    </div>
+  </div>
+
+  <h2 id="s6">6 · Multi-user DBMS architectures</h2>
+
+  <h3>6.1 Teleprocessing + file-server</h3>
+  <div class="dboard">
+    <div class="row">
+      <div class="box fp"><span class="t">Teleprocessing (traditional)</span>
+<pre>[dumb terminal]─┐
+[dumb terminal]─┼─► MAINFRAME
+[dumb terminal]─┘   (all processing)</pre>
+        One mainframe with many terminals attached. The trend now is <b>downsizing</b> away from it.</div>
+      <div class="box fp"><span class="t">File-server</span>
+<pre>[PC: DBMS + app]─┐
+[PC: DBMS + app]─┼─network─► FILE SERVER
+[PC: DBMS + app]─┘           (database)</pre>
+        The database sits on the file server, and the DBMS + apps run on <b>each workstation</b>.<br>
+        <span class="warn">Disadvantages:</span> heavy network traffic · a copy of the DBMS on every workstation · harder concurrency, recovery and integrity control.</div>
+    </div>
+  </div>
+
+  <h3>6.2 Traditional two-tier client–server</h3>
+  <div class="dboard">
+    <div class="flow">
+      <div class="box fy center"><span class="t">Tier 1 · Client</span>user interface<br>+ runs the applications</div>
+      <span class="arrow">⇄</span>
+      <div class="box center"><small>network</small><br>requests → / ← results</div>
+      <span class="arrow">⇄</span>
+      <div class="box fb center"><span class="t">Tier 2 · Server</span>DBMS<br>+ the database</div>
+    </div>
+    <div class="box fg"><span class="t">Advantages</span><ul>
+      <li>wider access to existing databases</li><li>increased performance</li><li>possible reduction in hardware costs</li><li>reduction in communication costs</li><li>increased consistency</li></ul></div>
+    <p class="exam">Draw the diagram of traditional two-tier client–server [5]</p>
+  </div>
+
+  <h3>6.3 Three-tier client–server</h3>
+  <div class="dboard">
+    <p><span class="warn">The two-tier problem:</span> a <b>"fat" client</b> needs a powerful computer, and there's a lot of client-side administration. By 1995 a third tier had been proposed.</p>
+    <div class="flow">
+      <div class="box fy center"><span class="t">Tier 1 · Client</span>user interface only<br><small>("thin" client)</small></div>
+      <span class="arrow">⇄</span>
+      <div class="box fg center"><span class="t">Tier 2 · Application server</span>business logic<br>+ data processing</div>
+      <span class="arrow">⇄</span>
+      <div class="box fb center"><span class="t">Tier 3 · Database server</span>DBMS<br>+ the database</div>
+    </div>
+    <div class="box fg"><span class="t">Advantages</span><ul>
+      <li><b>Thin client</b>, so cheaper hardware</li><li>Application maintenance is <b>centralised</b></li>
+      <li>Easier to modify or replace <b>one tier</b> without affecting the others</li><li>Separating business logic from the database makes <b>load balancing</b> easier</li>
+      <li>Maps naturally to the <b>web</b> (browser → web server → database)</li></ul></div>
+  </div>
+
+  <!-- ============ LESSONS 3–4 (only shapes + keys) ============ -->
+  <span class="tag">LESSONS 3–4 · ONLY THE SHAPES + KEYS</span>
+  <h2 id="s7">7 · ER diagram shapes + keys</h2>
+
+  <h3>7.1 What an ER diagram is</h3>
+  <div class="dboard">
+    <p>An <b>Entity–Relationship Diagram (ERD)</b> is a picture of a database's <span class="hy">entities, their attributes and the relationships between them</span>. It's used in <b>logical (conceptual) design</b>, before any tables are built. The textbook uses <b>Chen notation</b> (below).</p>
+    <div class="row">
+      <div class="box"><span class="t">Entity</span>A <b>real-world object</b> we store data about (Student, Course). It becomes a table.</div>
+      <div class="box"><span class="t">Attribute</span>A <b>characteristic of an entity</b> (Name, RegNo). It becomes a column.</div>
+      <div class="box"><span class="t">Relationship</span>How entities are <b>associated</b> (a Student <i>enrols in</i> a Course).</div>
+    </div>
+    <p class="exam">Define an Entity Relationship Diagram/Model [5]</p>
+  </div>
+
+  <h3>7.2 The shapes (Chen notation)</h3>
+  <div class="dboard">
+    <div class="shapes">
+      <div class="shape"><svg viewBox="0 0 180 80" aria-hidden="true"><rect class="er" x="20" y="18" width="140" height="44"/><text class="er-txt" x="90" y="40">STUDENT</text></svg><span class="t">Entity</span><small>rectangle</small></div>
+      <div class="shape"><svg viewBox="0 0 180 80" aria-hidden="true"><rect class="er" x="14" y="12" width="152" height="56"/><rect class="er" x="22" y="20" width="136" height="40"/><text class="er-txt" x="90" y="40">DEPENDANT</text></svg><span class="t">Weak entity</span><small>double rectangle · can't exist without its owner</small></div>
+      <div class="shape"><svg viewBox="0 0 180 80" aria-hidden="true"><polygon class="er" points="90,8 168,40 90,72 12,40"/><text class="er-txt" x="90" y="40">enrols</text></svg><span class="t">Relationship</span><small>diamond</small></div>
+      <div class="shape"><svg viewBox="0 0 180 80" aria-hidden="true"><polygon class="er" points="90,4 174,40 90,76 6,40"/><polygon class="er" points="90,14 152,40 90,66 28,40"/><text class="er-txt" x="90" y="40">has</text></svg><span class="t">Identifying relationship</span><small>double diamond · links a weak entity to its owner</small></div>
+      <div class="shape"><svg viewBox="0 0 180 80" aria-hidden="true"><ellipse class="er" cx="90" cy="40" rx="72" ry="26"/><text class="er-txt" x="90" y="40">Name</text></svg><span class="t">Attribute</span><small>oval</small></div>
+      <div class="shape"><svg viewBox="0 0 180 80" aria-hidden="true"><ellipse class="er" cx="90" cy="40" rx="72" ry="26"/><text class="er-txt er-u" x="90" y="40">RegNo</text><line class="er-line" x1="62" y1="50" x2="118" y2="50"/></svg><span class="t">Key attribute</span><small>oval, name <u>underlined</u> · the primary key</small></div>
+      <div class="shape"><svg viewBox="0 0 180 80" aria-hidden="true"><ellipse class="er" cx="90" cy="40" rx="78" ry="32"/><ellipse class="er" cx="90" cy="40" rx="66" ry="22"/><text class="er-txt" x="90" y="40">Phone</text></svg><span class="t">Multivalued attribute</span><small>double oval · can hold many values</small></div>
+      <div class="shape"><svg viewBox="0 0 180 80" aria-hidden="true"><ellipse class="er-dash" cx="90" cy="40" rx="72" ry="26"/><text class="er-txt" x="90" y="40">Age</text></svg><span class="t">Derived attribute</span><small>dashed oval · calculated from another (Age from DOB)</small></div>
+      <div class="shape"><svg viewBox="0 0 180 120" aria-hidden="true"><line class="er-line" x1="90" y1="40" x2="40" y2="90"/><line class="er-line" x1="90" y1="40" x2="140" y2="90"/><ellipse class="er" cx="90" cy="28" rx="56" ry="20"/><text class="er-txt" x="90" y="28">Name</text><ellipse class="er" cx="40" cy="96" rx="38" ry="17"/><text class="er-txt" x="40" y="96">First</text><ellipse class="er" cx="140" cy="96" rx="38" ry="17"/><text class="er-txt" x="140" y="96">Last</text></svg><span class="t">Composite attribute</span><small>oval with its parts as smaller ovals</small></div>
+    </div>
+    <div class="sticky"><b>Rect</b> = thing · <b>diamond</b> = doing · <b>oval</b> = describing. <b>Double</b> = weak or many, <b>dashed</b> = derived, <b>underlined</b> = key.</div>
+    <p class="exam">Draw the five main components of an ERD: entity, attribute, multivalued attribute, derived attribute and composite attribute [10]</p>
+  </div>
+
+  <h3>7.3 The keys</h3>
+  <div class="dboard">
+<pre>   DEPARTMENT                        STUDENT
+ ┌──────────┬──────┐       ┌────────┬────────┬───────┬──────────┐
+ │ <b>dept_id</b>  │ name │       │ <b>reg_no</b> │ email  │ name  │ dept_id  │
+ ├──────────┼──────┤       ├────────┼────────┼───────┼──────────┤
+ │ 1        │ SEN  │◄──────┼────────┼────────┼───────┼─ 1       │
+ │ 2        │ CYB  │       │ 241001 │ a@uni  │ Ada   │          │
+ └──────────┴──────┘       └────────┴────────┴───────┴──────────┘
+   primary key               primary key  candidate      foreign key
+                                          (alternate)    → DEPARTMENT</pre>
+    <div class="row">
+      <div class="box fy"><span class="t">Primary key</span>The chosen key that uniquely identifies each row. It must be <span class="hy">unique and NOT NULL</span>, and there's one per table. <small>(reg_no)</small></div>
+      <div class="box fy"><span class="t">Candidate key</span>Any column (or minimal set) that <b>could</b> be the primary key. <small>(reg_no, email)</small></div>
+      <div class="box"><span class="t">Alternate key</span>A candidate key that <b>wasn't chosen</b> as the primary key. <small>(email)</small></div>
+    </div>
+    <div class="row">
+      <div class="box fg"><span class="t">Foreign key</span>A column that refers to the <b>primary key of another table</b>. It <span class="hy">links two tables</span>. <small>(student.dept_id → department.dept_id)</small></div>
+      <div class="box fp"><span class="t">Composite key</span>A key made of <b>more than one attribute</b>. <small>e.g. (reg_no, course_code) in an ENROLMENT table</small></div>
+      <div class="box"><span class="t">Super key</span>Any set of columns that uniquely identifies a row, even one with extra columns. <small>(reg_no + name)</small></div>
+    </div>
+    <div class="sticky">Every <b>primary</b> key was a <b>candidate</b>. The losing candidates are <b>alternates</b>. A <b>foreign</b> key is someone else's primary key living in your table.</div>
+  </div>
+  <p class="skip">full ERD construction (entity → relationship → attribute steps), all of cardinality and Lesson 4 (the course rep says they won't come out)</p>
+
+  <!-- ============ DRILL ============ -->
+  <span class="tag">EXAM DRILL</span>
+  <h2 id="s8">8 · Last session's questions</h2>
+
+  <h3>8.1 Theory questions in tomorrow's scope</h3>
+  <div class="dboard">
+    <ol>
+      <li>Define: database technology [2] · DBMS [2] · file-based system [1] → §1.1, §2.1, §2.4<br><small class="ann">Database technology = the software, methods and tools (DBMS, query languages, storage) used to store, organise, manage and retrieve data.</small></li>
+      <li>List 10 examples of database applications [10] → §1.4</li>
+      <li>List the five roles in the database environment, with an explanation of each [10] → §4.2</li>
+      <li>Draw and explain the relational database model [10] · why it's mostly used [5] → §1.3</li>
+      <li>DDL, DML, DCL: explain each and give its commands [10] → §3.3</li>
+      <li>Explain the three-level diagram and what is in each part [10] → §5.2, §5.3</li>
+      <li>Logical vs physical data independence [10] → §5.5</li>
+      <li>Draw traditional two-tier client–server [5] → §6.2</li>
+      <li>Define an ERD [5] · draw the five ERD components [10] → §7.1, §7.2</li>
+      <li>SQL: create a table with 10 fields + a primary key · delete multiple rows · add a foreign key · view everything → §3.4</li>
+    </ol>
+    <p class="sub">Not tomorrow: Q1 (build the registrar's ERD), which was compulsory last session, and "the four cardinalities". Both are ruled out by the course rep.</p>
+  </div>
+
+  <h3>8.2 Last session's 50 MCQs: answer key (the ones in the photos)</h3>
+  <div class="dboard">
+    <div class="key">
+      <div><b>1</b>raw facts and figures</div><div><b>2</b>organising + controlling resources</div><div><b>3</b>Classification (not a C)</div><div><b>4</b>common attributes</div><div><b>5</b>improved data integrity</div>
+      <div><b>6</b>complexity</div><div><b>7</b>metadata</div><div><b>8</b>wasted storage space</div><div><b>9</b>different languages → different files</div><div><b>10</b>data definition was embedded in programs</div>
+      <div><b>11</b>shared collection of logically related data</div><div><b>12</b>data about other data</div><div><b>13</b>define, create + maintain databases</div><div><b>14</b>DDL: defining structures + constraints</div><div><b>15</b>DML: manipulating + retrieving data</div>
+      <div><b>16</b>view: a subset seen by a user</div><div><b>17</b>reduced complexity</div><div><b>18</b>external, conceptual, internal</div><div><b>19</b>the user's view</div><div><b>20</b>community-wide structure</div>
+      <div><b>21</b>physical representation of data</div><div><b>22</b>conceptual changes don't affect external views</div><div><b>23</b>internal changes don't affect conceptual</div><div><b>24</b>hardware assembly (NOT a function)</div><div><b>25</b>metadata about the database</div>
+      <div><b>26</b>procedures</div><div><b>27</b>network switch engineer (NOT a role)</div><div><b>28</b>designing + maintaining the database</div><div><b>30</b>managing transactions + consistency</div><div><b>31</b>logical structure of the database</div>
+      <div><b>32</b>reduce data redundancy</div><div><b>33</b>application programmer</div><div><b>34</b>DROP</div><div><b>35</b>concurrency control manager</div><div><b>36</b>describe data, relationships + constraints</div>
+      <div><b>37</b>storage paths + file organisations</div><div><b>38</b>only the part relevant to them</div><div><b>39</b>non-procedural language</div><div><b>40</b>values uniform across applications</div><div><b>41</b>unique and not null</div>
+      <div><b>42</b>INSERT</div><div><b>43</b>link two tables</div><div><b>44</b>hierarchical</div><div><b>45</b>naive users</div><div><b>46</b>uses more than one attribute</div>
+      <div><b>47</b>a real-world object</div><div><b>48</b>a characteristic of an entity</div><div><b>49</b>logical design</div><div><b>50</b>multi-user system</div>
+    </div>
+    <p class="sub">Q29's options were cut off in the photo. Cover the answers and test yourself: if you can say the answer before reading it, you're ready.</p>
+  </div>
+</main>
+
+<script>
+/* ---------- engine ---------- */
+const W=1500, NS="http://www.w3.org/2000/svg";
+const BOARDS=[];
+const N=(k,x,y,w,s,h)=>({k,x,y,w,s,h});
+const E=(a,b,l,o)=>({a,b,l:l||"",o:o||{}});
+const B=(id,nodes,edges,draw,minH)=>BOARDS.push({id,nodes,edges:edges||[],draw,minH:minH||0});
+const FILL={y:"var(--y)",g:"var(--g)",p:"var(--p)",b:"var(--b)",w:"var(--card)",r:"var(--card)"};
+
+function fallbackRC(svg){
+  const mk=(d,o)=>{const p=document.createElementNS(NS,"path");p.setAttribute("d",d);p.setAttribute("stroke",o.stroke||"var(--ink)");p.setAttribute("stroke-width",o.strokeWidth||2);p.setAttribute("fill",o.fill||"none");if(o.strokeLineDash)p.setAttribute("stroke-dasharray",o.strokeLineDash.join(" "));const g=document.createElementNS(NS,"g");g.appendChild(p);return g};
+  const pts=a=>a.map((p,i)=>(i?"L":"M")+p[0]+" "+p[1]).join(" ");
+  return{rectangle:(x,y,w,h,o={})=>mk(`M${x} ${y} h${w} v${h} h${-w} Z`,o),
+    ellipse:(cx,cy,w,h,o={})=>mk(`M${cx-w/2} ${cy} a${w/2} ${h/2} 0 1 0 ${w} 0 a${w/2} ${h/2} 0 1 0 ${-w} 0`,o),
+    circle:(cx,cy,d,o={})=>mk(`M${cx-d/2} ${cy} a${d/2} ${d/2} 0 1 0 ${d} 0 a${d/2} ${d/2} 0 1 0 ${-d} 0`,o),
+    line:(x1,y1,x2,y2,o={})=>mk(`M${x1} ${y1} L${x2} ${y2}`,o),
+    linearPath:(a,o={})=>mk(pts(a),o), polygon:(a,o={})=>mk(pts(a)+" Z",o),
+    curve:(a,o={})=>mk(a.length===3?`M${a[0][0]} ${a[0][1]} Q${2*a[1][0]-(a[0][0]+a[2][0])/2} ${2*a[1][1]-(a[0][1]+a[2][1])/2} ${a[2][0]} ${a[2][1]}`:pts(a),o),
+    arc:(x,y,w,h,s,e,closed,o={})=>{const p=t=>[x+w/2*Math.cos(t),y+h/2*Math.sin(t)];const a=p(s),b=p(e);return mk(`M${closed?x+" "+y+" L":""}${a[0]} ${a[1]} A${w/2} ${h/2} 0 ${e-s>Math.PI?1:0} 1 ${b[0]} ${b[1]}${closed?" Z":""}`,o)},
+    path:(d,o={})=>mk(d,o)};
+}
+function add(svg,node){svg.appendChild(node);node.querySelectorAll("path").forEach(p=>{["stroke","fill"].forEach(a=>{const v=p.getAttribute(a);if(v&&v.indexOf("var(")===0){p.style[a]=v;p.removeAttribute(a)}})});return node}
+function T(svg,x,y,str,o={}){const t=document.createElementNS(NS,"text");t.setAttribute("x",x);t.setAttribute("y",y);t.setAttribute("text-anchor",o.anchor||"middle");t.style.fill=o.color||"var(--ink)";t.style.fontFamily=o.mark?"var(--f-mark)":"var(--f-hand)";t.style.fontSize=(o.size||18)+"px";t.style.fontWeight=o.weight||400;if(o.rotate)t.setAttribute("transform",`rotate(${o.rotate} ${x} ${y})`);t.textContent=str;svg.appendChild(t);return t}
+
+function parseRef(v){const [type,keys,g]=v.split(":");return{type,keys:(keys||"").split(","),g:+(g||0)}}
+function rx(v,R,w){if(typeof v==="number")return v;const p=parseRef(v),r=R[p.keys[0]];
+  if(p.type==="r")return r.x+r.w+p.g; if(p.type==="l")return r.x+p.g; if(p.type==="c")return r.x+r.w/2-w/2+p.g; if(p.type==="lw")return r.x-w-p.g; return 0}
+function ry(v,R,h){if(typeof v==="number")return v;const p=parseRef(v),rs=p.keys.map(k=>R[k]);
+  if(p.type==="b")return Math.max(...rs.map(r=>r.y+r.h))+p.g; if(p.type==="t")return rs[0].y+p.g;
+  if(p.type==="m")return rs[0].y+rs[0].h/2-h/2+p.g; if(p.type==="o")return rs[0].y+p.g;
+  if(p.type==="mo"){const a=rs[0],b=rs[rs.length-1];return (a.y+b.y+b.h)/2-h/2+p.g} if(p.type==="a")return rs[0].y-h-p.g; return 0}
+
+function boundary(r,tx,ty,pad){const cx=r.x+r.w/2,cy=r.y+r.h/2;let dx=tx-cx,dy=ty-cy;const L=Math.hypot(dx,dy)||1;dx/=L;dy/=L;let t;
+  if(/oval/.test(r.s)){const a=r.w*0.55,b=r.h*0.67;t=1/Math.sqrt((dx/a)**2+(dy/b)**2);pad=Math.min(pad,4)}
+  else{const hw=r.w/2,hh=r.h/2;t=Math.min(Math.abs(dx)>1e-6?hw/Math.abs(dx):1e9,Math.abs(dy)>1e-6?hh/Math.abs(dy):1e9)}
+  return[cx+dx*(t+pad),cy+dy*(t+pad)]}
+/* drawn extent of a node: ovals are drawn 1.1w x 1.34h around their text */
+function ext(r){return /oval/.test(r.s)?{x:r.x-r.w*0.05,y:r.y-r.h*0.17,w:r.w*1.1,h:r.h*1.34}:r}
+/* a point on the bottom (dir=1) or top (dir=-1) edge of a node, as close as possible to x=tx */
+function edgeAt(r0,tx,dir,pad){const e=ext(r0),x=Math.max(e.x+0.18*e.w,Math.min(e.x+0.82*e.w,tx));
+  if(/oval/.test(r0.s)){const a=e.w/2,b=e.h/2,cx=e.x+a,cy=e.y+b;return[x,cy+dir*(b*Math.sqrt(Math.max(0,1-((x-cx)/a)**2))+pad)]}
+  return[x,dir>0?e.y+e.h+pad:e.y-pad]}
+/* a port on side s (l/r/t/b) of a node, slid along that side toward v (a y for l/r, an x for t/b); hugs ovals */
+function port(r0,s,v,pad){const e=ext(r0),oval=/oval/.test(r0.s);if(oval)pad=Math.min(pad,4);
+  if(s==="l"||s==="r"){const y=Math.max(e.y+e.h*0.25,Math.min(e.y+e.h*0.75,v)),dir=s==="r"?1:-1;
+    if(oval){const a=e.w/2,b=e.h/2,cy=e.y+b;return[e.x+a+dir*(a*Math.sqrt(Math.max(0,1-((y-cy)/b)**2))+pad),y]}
+    return[s==="r"?e.x+e.w+pad:e.x-pad,y]}
+  const x=Math.max(e.x+e.w*0.2,Math.min(e.x+e.w*0.8,v));return edgeAt(r0,x,s==="b"?1:-1,pad)}
+function side(r0,s,pad){const r=ext(r0),cx=r.x+r.w/2,cy=r.y+r.h/2;return s==="t"?[cx,r.y-pad]:s==="b"?[cx,r.y+r.h+pad]:s==="l"?[r.x-pad,cy]:[r.x+r.w+pad,cy]}
+function head(rc,svg,x,y,fx,fy,col){const a=Math.atan2(y-fy,x-fx),L=15;[0.45,-0.45].forEach(d=>add(svg,rc.line(x,y,x-L*Math.cos(a+d),y-L*Math.sin(a+d),{stroke:col,strokeWidth:2.4,roughness:0.8})))}
+function arrow(rc,svg,p1,p2,o={}){const col=o.color==="blue"?"var(--blue)":o.color==="ink"?"var(--ink)":o.color==="green"?"var(--green)":"var(--red)";
+  const dx=p2[0]-p1[0],dy=p2[1]-p1[1],L=Math.hypot(dx,dy)||1,bend=o.bend==null?0.12:o.bend;
+  const c=[(p1[0]+p2[0])/2+(-dy/L)*bend*L,(p1[1]+p2[1])/2+(dx/L)*bend*L];
+  const opt={stroke:col,strokeWidth:2.4,roughness:1.1,bowing:1};if(o.dash)opt.strokeLineDash=[9,7];
+  add(svg,rc.curve([p1,c,p2],opt));
+  if(!o.nohead)head(rc,svg,p2[0],p2[1],c[0],c[1],col);
+  if(o.both)head(rc,svg,p1[0],p1[1],c[0],c[1],col);
+  return c}
+
+function render(cfg,rough_){
+  const host=document.getElementById(cfg.id);if(!host)return;host.innerHTML="";
+  const sizer=document.createElement("div");sizer.className="sizer";const inner=document.createElement("div");inner.className="inner";inner.style.width=W+"px";
+  const svg=document.createElementNS(NS,"svg");inner.appendChild(svg);sizer.appendChild(inner);host.appendChild(sizer);
+  const R={};
+  const ready=n=>[n.x,n.y].every(v=>typeof v==="number"||parseRef(v).keys.every(k=>R[k]));
+  const queue=[...cfg.nodes];let guard=0;
+  while(queue.length&&guard<2000){const n=queue.shift();if(!ready(n)){queue.push(n);guard++;continue}
+    const d=document.createElement("div");d.className="nd "+n.s.split(" ").map(t=>"s-"+t).join(" ");d.style.width=n.w+"px";d.innerHTML=n.h;
+    if((ICONS[cfg.id]||{})[n.k]&&/\bbox\b/.test(n.s))d.classList.add("has-ic");inner.appendChild(d);
+    const h=d.offsetHeight,x=rx(n.x,R,n.w),y=ry(n.y,R,h);d.style.left=x+"px";d.style.top=y+"px";R[n.k]={x,y,w:n.w,h,s:n.s}}
+  if(queue.length)console.error(cfg.id,"unresolved",queue.map(n=>n.k));
+  /* edge geometry first, so curves + labels count toward the board height */
+  const geo=cfg.edges.map(e=>{const A=R[e.a],Bn=R[e.b];if(!A||!Bn)return null;const o=e.o,bend=o.bend==null?0.12:o.bend;
+    const mid=(p1,p2)=>{const ex=p2[0]-p1[0],ey=p2[1]-p1[1],EL=Math.hypot(ex,ey)||1;return[(p1[0]+p2[0])/2+(-ey/EL)*bend*EL,(p1[1]+p2[1])/2+(ex/EL)*bend*EL]};
+    /* the old way: aim at the other box's centre, clip at the outline */
+    const centre=()=>{const ca=[A.x+A.w/2,A.y+A.h/2],cb=[Bn.x+Bn.w/2,Bn.y+Bn.h/2];
+      let p1=o.from?side(A,o.from,8):null,p2=o.to?side(Bn,o.to,8):null;
+      const s1=p1||ca,s2=p2||cb,dx=s2[0]-s1[0],dy=s2[1]-s1[1],L=Math.hypot(dx,dy)||1;
+      const c0=[(s1[0]+s2[0])/2+(-dy/L)*bend*L,(s1[1]+s2[1])/2+(dx/L)*bend*L];
+      if(!p1)p1=boundary(A,c0[0],c0[1],8);if(!p2)p2=boundary(Bn,c0[0],c0[1],10);return[p1,p2]};
+    let cands=[];
+    const tow=(r,sd)=>{const e=ext(r);return sd==="l"||sd==="r"?e.y+e.h/2:e.x+e.w/2};
+    if(o.free||(!!o.from!==!!o.to))cands=[{p:centre(),s:null}];
+    else if(o.from&&o.to)cands=[{p:[port(A,o.from,tow(Bn,o.from),4),port(Bn,o.to,tow(A,o.to),6)],s:[o.from,o.to]}];
+    else{/* port anchoring: candidate routes between the sides that face each other.
+        Rows of boxes share one y (straight arrows); otherwise each end leans toward the other box. */
+      const ea=ext(A),eb=ext(Bn),ov=(a0,a1,b0,b1)=>{const lo=Math.max(a0,b0),hi=Math.min(a1,b1);return hi-lo>12?(lo+hi)/2:null};
+      const yAl=ov(ea.y,ea.y+ea.h,eb.y,eb.y+eb.h),xAl=ov(ea.x,ea.x+ea.w,eb.x,eb.x+eb.w);
+      const ca=[ea.x+ea.w/2,ea.y+ea.h/2],cb=[eb.x+eb.w/2,eb.y+eb.h/2];
+      if(eb.x-(ea.x+ea.w)>16)cands.push({p:[port(A,"r",yAl??cb[1],4),port(Bn,"l",yAl??ca[1],6)],s:["r","l"]});
+      if(ea.x-(eb.x+eb.w)>16)cands.push({p:[port(A,"l",yAl??cb[1],4),port(Bn,"r",yAl??ca[1],6)],s:["l","r"]});
+      if(eb.y-(ea.y+ea.h)>10)cands.push({p:[port(A,"b",xAl??cb[0],4),port(Bn,"t",xAl??ca[0],6)],s:["b","t"]});
+      if(ea.y-(eb.y+eb.h)>10)cands.push({p:[port(A,"t",xAl??cb[0],4),port(Bn,"b",xAl??ca[0],6)],s:["t","b"]});
+      cands.push({p:centre(),s:null})}
+    /* score each route: boxes it cuts (worst) · tips landing next to some other box · arriving almost parallel to the edge it enters */
+    const score=({p:[p1,p2],s})=>{const c=mid(p1,p2),q=[2*c[0]-(p1[0]+p2[0])/2,2*c[1]-(p1[1]+p2[1])/2];let n=0,near=0;
+      Object.entries(R).forEach(([k,r])=>{const own=k===e.a||k===e.b,x0=ext(r),pd=/oval/.test(r.s)?0:(own?6:1);
+        for(let t=own?0.2:0.04;t<=(own?0.8:0.96);t+=0.04){const u=1-t,x=u*u*p1[0]+2*u*t*q[0]+t*t*p2[0],y=u*u*p1[1]+2*u*t*q[1]+t*t*p2[1];
+          const inn=/oval/.test(r.s)?(((x-(x0.x+x0.w/2))/(x0.w/2))**2+((y-(x0.y+x0.h/2))/(x0.h/2))**2<1):(x>x0.x+pd&&x<x0.x+x0.w-pd&&y>x0.y+pd&&y<x0.y+x0.h-pd);if(inn)n++}
+        if(!own)[p1,p2].forEach(p=>{if(p[0]>x0.x-14&&p[0]<x0.x+x0.w+14&&p[1]>x0.y-14&&p[1]<x0.y+x0.h+14)near++})});
+      let ang=s?0:0.6;if(s){const d1=[q[0]-p1[0],q[1]-p1[1]],d2=[p2[0]-q[0],p2[1]-q[1]];
+        [[d1,s[0]],[d2,s[1]]].forEach(([d,sd])=>{const L=Math.hypot(...d)||1,along=(sd==="l"||sd==="r")?Math.abs(d[1])/L:Math.abs(d[0])/L;if(along>0.72)ang+=1})}
+      return n*100+near*40+ang*25};
+    let best=cands[0],bs=score(best);for(let i=1;i<cands.length;i++){const sc=score(cands[i]);if(sc<bs-0.01){best=cands[i];bs=sc}}
+    const [p1,p2]=best.p,c=mid(p1,p2);
+    return{e,p1,p2,c,s:best.s,mid,lab:e.l?[c[0]+(o.lx||0),c[1]+(o.ly||0)]:null}});
+  /* endpoints sharing one side of one box: if any two are crowded, re-space the whole group evenly along that side
+     (in the order of the boxes they lead to) and snap them back onto the outline, so arrowheads never merge */
+  {const grp={};geo.forEach(g=>{if(!g||!g.s)return;[[0,g.e.a,g.s[0],g.e.b],[1,g.e.b,g.s[1],g.e.a]].forEach(([i,k,sd,other])=>{(grp[k+"|"+sd]=grp[k+"|"+sd]||[]).push({g,i,k,sd,other})})});
+    Object.values(grp).forEach(list=>{if(list.length<2)return;const h=list[0].sd==="l"||list[0].sd==="r",cv=a=>(a.i?a.g.p2:a.g.p1)[h?1:0];
+      const vals=list.map(cv).sort((a,b)=>a-b);if(!vals.some((v,j)=>j&&v-vals[j-1]<30))return;
+      const ok=list.map(a=>{const r=ext(R[a.other]);return h?r.y+r.h/2:r.x+r.w/2});list.sort((a,b)=>ok[list.indexOf(a)]-ok[list.indexOf(b)]);
+      const r=ext(R[list[0].k]),lo=h?r.y+r.h*0.15:r.x+r.w*0.15,hi=h?r.y+r.h*0.85:r.x+r.w*0.85;
+      list.forEach((a,j)=>{const v=list.length===1?(lo+hi)/2:lo+(hi-lo)*j/(list.length-1),p=port(R[a.k],a.sd,v,a.i?6:4);
+        if(a.i)a.g.p2=p;else a.g.p1=p;a.g.c=a.g.mid(a.g.p1,a.g.p2);if(a.g.lab)a.g.lab=[a.g.c[0]+(a.g.e.o.lx||0),a.g.c[1]+(a.g.e.o.ly||0)]})})}
+  geo.forEach(g=>{if(g&&Math.hypot(g.p2[0]-g.p1[0],g.p2[1]-g.p1[1])<24)console.warn(cfg.id,"stub arrow",g.e.a,"→",g.e.b)});
+  let H=Math.max(cfg.minH,...Object.values(R).map(r=>r.y+r.h),...geo.filter(Boolean).map(g=>Math.max(g.c[1],g.p1[1],g.p2[1])+(g.lab?Math.max(0,g.lab[1]-g.c[1])+14:0)))+40;
+  inner.style.height=H+"px";svg.setAttribute("width",W);svg.setAttribute("height",H);svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+  const rc=rough_?rough_.svg(svg):fallbackRC(svg);
+  const n0=svg.childNodes.length;if(cfg.draw)cfg.draw(rc,svg,R,H);cfg._drawN=[n0,svg.childNodes.length];
+  let seed=7;
+  cfg.nodes.forEach(n=>{const r=R[n.k],toks=n.s.split(" "),f=FILL[toks.find(t=>FILL[t])]||"var(--card)";seed+=3;
+    const o={stroke:toks.includes("r")?"var(--red)":"var(--ink)",strokeWidth:2.2,roughness:1.3,fill:f,fillStyle:"solid",seed};if(toks.includes("dash"))o.strokeLineDash=[10,7];
+    if(toks.includes("oval"))add(svg,rc.ellipse(r.x+r.w/2,r.y+r.h/2,r.w*1.1,r.h*1.34,o));
+    else if(toks.includes("box"))add(svg,rc.rectangle(r.x,r.y,r.w,r.h,o));});
+  const icm=ICONS[cfg.id]||{};
+  Object.keys(icm).forEach(k=>{const r=R[k],f=I[icm[k]];if(!r||!f||!/\bbox\b/.test(r.s))return;try{f(rc,svg,r.x+r.w-36,r.y+34)}catch(e){console.error(cfg.id,k,e)}});
+  const labels=[];
+  geo.forEach(g=>{if(!g)return;const e=g.e,o=e.o;arrow(rc,svg,g.p1,g.p2,o);
+    if(e.l){const d=document.createElement("div");d.className="el"+(o.color==="blue"?" blue":"");d.textContent=e.l;d.style.left=g.lab[0]+"px";d.style.top=g.lab[1]+"px";labels.push(d);g.el=d}});
+  labels.forEach(d=>inner.appendChild(d));
+  /* a label longer than about half its arrow would hide it → move it beside the line instead of on it */
+  geo.forEach(g=>{if(!g||!g.el||g.e.o.lx!=null||g.e.o.ly!=null)return;const dx=g.p2[0]-g.p1[0],dy=g.p2[1]-g.p1[1],L=Math.hypot(dx,dy),w=g.el.offsetWidth,h=g.el.offsetHeight;
+    if(w>0.4*L||(Math.abs(dy)>Math.abs(dx)&&h>0.4*L)){if(Math.abs(dx)>=Math.abs(dy))g.el.style.top=(g.c[1]-h/2-12)+"px";else g.el.style.left=(g.c[0]+w/2+14)+"px"}});
+  cfg._H=H;cfg._host=host;cfg._inner=inner;cfg._sizer=sizer;cfg._R=R;cfg._geo=geo.filter(Boolean);cfg._svg=svg;fit(cfg);
+}
+function fit(cfg){if(!cfg._host)return;const avail=cfg._host.clientWidth||W;let s=Math.min(1,avail/W);if(s<0.6)s=0.6;
+  cfg._inner.style.transform=`scale(${s})`;cfg._sizer.style.width=(W*s)+"px";cfg._sizer.style.height=(cfg._H*s)+"px"}
+window.addEventListener("resize",()=>BOARDS.forEach(fit));
+
+
+const ICONS={};
+const gap=(h)=>`<div style="height:${h}px"></div>`;
+
+/* ===== 0 · memory trees: parent → kids → grandkids, one view per topic ===== */
+const MTC=[["var(--b)","var(--blue)"],["var(--g)","var(--green)"],["var(--p)","var(--red)"],["var(--y)","var(--ink)"]];
+const MTL={x:[0,250,560,1000],w:[210,270,400,420],leaf:[210,290,560,420]};
+function mtH(n){return n.pic?n.ph:n.d?36+n.d.split("\n").length*21:40}
+function mtSpan(n){const own=mtH(n)+14;if(!n.c||!n.c.length)return n._s=own;n._t=n.c.reduce((a,c)=>a+mtSpan(c),0);return n._s=Math.max(own,n._t)}
+function mtPos(n,dep,y){n._dep=dep;n._h=mtH(n);if(!n.c||!n.c.length){n._y=y+n._s/2;return}
+  let cy=y+(n._s-n._t)/2;n.c.forEach(c=>{mtPos(c,dep+1,cy);cy+=c._s});
+  n._y=Math.min(y+n._s-n._h/2-7,Math.max(y+n._h/2+7,(n.c[0]._y+n.c[n.c.length-1]._y)/2))}
+function mtEst(n){const ls=(n.d||"").split("\n");return Math.max(n.t.length*8.2,...ls.map(l=>l.length*6.8))+36}
+function mtW(n,L){return n.w||n._w||(n.c&&n.c.length?L.w:L.leaf)[n._dep]}
+function mtDraw(rc,svg,ox,n,col,seed,L){const d=n._dep,x=ox+L.x[d],w=mtW(n,L),h=n._h,y=n._y-h/2;
+  if(n.pic)n.pic(rc,svg,x,y,w,h);
+  else{const strong=d<2,f=d===0?"var(--y)":strong?col[0]:"var(--card)",st=d===0?"var(--ink)":strong?col[1]:"var(--ink)";
+    add(svg,rc.rectangle(x,y,w,h,{stroke:st,strokeWidth:strong?2.6:1.6,roughness:0.9,fill:f,fillStyle:"solid",seed:seed%997+1}));
+    T(svg,x+12,y+(n.d?25:26),n.t,{anchor:"start",size:d===0?22:d===1?19:17,weight:700,color:d===1?col[1]:"var(--ink)"});
+    if(n.d)n.d.split("\n").forEach((s,i)=>T(svg,x+12,y+47+i*21,s,{anchor:"start",size:15,color:d===0?"var(--ink)":"var(--soft)"}))}
+  {const lv=(n.c||[]).filter(c=>!c.pic&&!(c.c&&c.c.length));if(lv.length){const sw=Math.min(L.leaf[d+1],Math.max(170,...lv.map(mtEst)));lv.forEach(c=>c._w=sw)}
+    if(d+1>=2){const nl=(n.c||[]).filter(c=>c.c&&c.c.length);if(nl.length){const nw=Math.min(L.w[d+1],Math.max(170,...nl.map(mtEst)));nl.forEach(c=>c._w=nw)}}}
+  (n.c||[]).forEach((c,i)=>{const cc=d===0?MTC[i%MTC.length]:col,x1=x+w,y1=n._y,x2=ox+L.x[d+1],y2=c._y,mx=(x1+x2)/2;
+    add(svg,rc.path(`M${x1} ${y1} C${mx} ${y1} ${mx} ${y2} ${x2} ${y2}`,{stroke:cc[1],strokeWidth:2.2,roughness:0.5,seed:(seed+i*7)%997+1}));
+    mtDraw(rc,svg,ox,c,cc,seed*3+i*11+5,L)})}
+function MT(id,tree,L){L=L||MTL;mtSpan(tree);
+  B(id,[N("dg",40,20,1420,"plain",gap(tree._s+10))],[],(rc,svg,R)=>{mtPos(tree,0,R.dg.y+4);mtDraw(rc,svg,R.dg.x,tree,null,id.charCodeAt(2)*13,L)})}
+const mt=(t,d,c,o)=>Object.assign({t,d,c},o||{});
+const mtPic=(w,ph,pic)=>({pic,w,ph});
+
+
+/* DTS 304 memory trees: one tree per section, parent → kids → grandkids */
+MT("d1",mt("DATABASES","Lesson 1 · the basics",[
+  mt("Data","raw facts + figures",[mt("→ information","data made useful for decisions")]),
+  mt("Database","the formal definition",[mt("shared collection of logically related data","+ a description of that data, for an organisation's needs"),
+    mt("logically related =","entities (tables) · attributes (fields) · relationships")]),
+  mt("Metadata","data about data",[mt("system catalog","gives the database its structure"),mt("enables","program–data independence")]),
+  mt("5 Cs of data management","",[mt("Consent · Clarity · Consistency","for building data products"),mt("Control · Consequences","+ transparency · + harm"),mt("NOT a C: Classification","asked in the MCQs")]),
+  mt("Relational database","groups data by COMMON ATTRIBUTES",[mt("relation = table","tuple = row · attribute = column"),mt("domain","the allowed values for a column"),
+    mt("why industry uses it","simple tables · SQL · keys keep integrity\nflexible joins · data independence")]),
+  mt("Applications","",[mt("supermarket · credit card · holiday booking","library · insurance · video rental"),mt("internet · university","+ online banking · hospital records")])]));
+
+MT("d2",mt("FILE-BASED vs DB","Lesson 1 · why databases",[
+  mt("File-based system","each program owns its data",[mt("data in files","no metadata → no structure")]),
+  mt("5 limitations","",[mt("Separation + isolation","can't see other programs' data"),mt("Duplication","wasted space, clashing values"),mt("Data dependence","file structure lives in the code"),mt("Incompatible formats","different languages, different files"),mt("Fixed queries","every new need = a new program")]),
+  mt("Why DBs arose","",[mt("data definition embedded in programs",""),mt("no control over access","beyond each program")]),
+  mt("DBMS","define · create · maintain · control access",[mt("Security","stops unauthorised access"),mt("Integrity","keeps data consistent"),mt("Concurrency","many users at once"),mt("Recovery","restore after a failure"),mt("Catalog","user-accessible metadata")]),
+  mt("Views","a SUBSET of the database",[mt("reduce complexity · security","users see only what they need"),mt("customise · consistent picture","even if the database underneath changes")])]));
+
+MT("d3",mt("DBMS PROS, CONS","+ the SQL languages",[
+  mt("Advantages","13",[mt("about the data","redundancy control · consistency · sharing\nintegrity · security"),mt("about the organisation","standards · economy of scale · balance needs\naccessibility · productivity"),mt("about the system","maintenance (independence) · concurrency\nbackup + recovery")]),
+  mt("Disadvantages","7",[mt("Complexity · Size","big, hard to learn"),mt("Cost of DBMS · extra hardware","+ cost of conversion"),mt("Performance · higher impact of failure","one system, one point of failure")]),
+  mt("DDL","the SHAPE of the table",[mt("CREATE · ALTER · DROP","TRUNCATE · RENAME")]),
+  mt("DML","the DATA inside",[mt("SELECT · INSERT · UPDATE · DELETE","DROP kills a table · DELETE kills rows")]),
+  mt("DCL","WHO can do what",[mt("GRANT · REVOKE","permissions")]),
+  mt("SQL","non-procedural",[mt("say WHAT you want, not HOW","")])]));
+
+MT("d4",mt("DB ENVIRONMENT","components + people",[
+  mt("5 components","",[mt("Hardware","one PC → a network"),mt("Software","DBMS · OS · network · apps"),mt("Data","+ its description (schema) · the bridge"),mt("Procedures","rules for designing + using the DB"),mt("People","users + the roles below")]),
+  mt("5 roles","",[mt("Data Administrator (DA)","manages data as a RESOURCE · business side"),mt("Database Administrator (DBA)","designs, builds, maintains · technical side"),
+    mt("Database designers","logical = draws the ERD · physical = storage"),mt("Application programmers","build the front end, linked with SQL"),mt("End users","naive (ready screens) · sophisticated (own queries)")])]));
+
+MT("d5",mt("3-LEVEL ARCH.","ANSI-SPARC\nLesson 2",[
+  mt("Objective","",[mt("separate each user's view","from how data is physically stored")]),
+  mt("External level","the USER's view",[mt("one view per user","same data, different forms · derived data (age)")]),
+  mt("Conceptual level","the COMMUNITY view",[mt("WHAT is stored + relationships","entities, constraints, security · no storage details")]),
+  mt("Internal level","the PHYSICAL view",[mt("HOW it's stored","storage space, indexes, records, compression, encryption")]),
+  mt("Mappings","",[mt("external / conceptual",""),mt("conceptual / internal","")]),
+  mt("Data independence","",[mt("Logical","external views immune to CONCEPTUAL changes"),mt("Physical","conceptual immune to INTERNAL (storage) changes")]),
+  mt("Schema vs instance","",[mt("Schema","the structure · rarely changes"),mt("Instance","the data right now · changes all the time")]),
+  mt("Also in Lesson 2","",[mt("Data models","object-based (ER, OO) · record-based (relational,\nnetwork, hierarchical) · physical"),mt("System catalog","metadata: names, types, sizes, constraints, users"),mt("TP monitor","manages transactions between clients + servers")])]));
+
+MT("d6",mt("MULTI-USER","DBMS architectures",[
+  mt("Teleprocessing","traditional",[mt("one mainframe + dumb terminals","all processing central · trend: downsizing")]),
+  mt("File-server","",[mt("DB on the server, DBMS on every PC",""),mt("✗ problems","heavy network traffic · DBMS copy on each PC\nharder concurrency, recovery, integrity")]),
+  mt("Two-tier client–server","",[mt("Tier 1 · client","user interface + applications"),mt("Tier 2 · server","DBMS + database"),mt("✓ pros","wider access · performance · lower hardware\n+ communication costs · consistency"),mt("✗ problem","FAT client: needs a powerful PC")]),
+  mt("Three-tier client–server","",[mt("client · app server · DB server","UI only · business logic · DBMS + data"),mt("✓ pros","thin client · central maintenance · change one tier\nload balancing · maps to the web")])]));
+
+MT("d7",mt("ER + KEYS","shapes + keys only\n(Lessons 3–4)",[
+  mt("ERD","a picture of the database",[mt("entities · attributes · relationships","used in logical (conceptual) design")]),
+  mt("Parts","",[mt("Entity","a real-world object → a table"),mt("Attribute","a characteristic → a column"),mt("Relationship","how entities are linked")]),
+  mt("Shapes (Chen)","rect = thing · diamond = doing\noval = describing",[mt("rectangle · double rectangle","entity · weak entity"),mt("diamond · double diamond","relationship · identifying relationship"),mt("oval · underlined oval","attribute · key attribute"),mt("double oval · dashed oval","multivalued · derived (Age from DOB)"),mt("oval of ovals","composite (Name → First, Last)")]),
+  mt("Keys","",[mt("Primary","unique + NOT NULL · one per table"),mt("Candidate","could be the primary key"),mt("Alternate","a candidate that wasn't chosen"),mt("Foreign","another table's primary key · LINKS tables"),mt("Composite","more than one attribute"),mt("Super","any set that's unique, extras allowed")])]));
+
+/* ---------- boot ---------- */
+function boot(){const r=window.rough||null;
+  /* #only=b1a,b5b shows just those boards (handy for checking one diagram) */
+  const m=/^#only=(.+)$/.exec(location.hash);if(m){const ids=decodeURIComponent(m[1]).split(",");
+    document.querySelectorAll("main>*").forEach(el=>{const keep=(el.classList.contains("board")&&ids.includes(el.id))||(el.tagName==="H3"&&el.nextElementSibling&&ids.includes(el.nextElementSibling.id));el.style.display=keep?"":"none"})}
+  BOARDS.forEach(b=>{const el=document.getElementById(b.id);if(el&&el.offsetParent===null)return;try{render(b,r)}catch(e){console.error(b.id,e)}})}
+(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(boot);
+</script>
+
+<script>
+(function(){const b=document.getElementById("styleSw"),d=document.getElementById("mDia"),x=document.getElementById("mDet");
+  function draw(){BOARDS.forEach(bd=>{const el=document.getElementById(bd.id);if(el&&el.offsetParent!==null&&!el.querySelector("svg"))try{render(bd,window.rough||null)}catch(e){console.error(bd.id,e)}})}
+  function set(m){const dia=m!=="det";d.hidden=!dia;x.hidden=dia;b.textContent=dia?"Switch to detailed notes":"Switch to diagram notes";b.setAttribute("aria-pressed",String(!dia));try{localStorage.setItem("noteStyle",dia?"dia":"det")}catch(e){}requestAnimationFrame(draw)}
+  let m="dia";try{m=localStorage.getItem("noteStyle")||"dia"}catch(e){}
+  set(m);b.addEventListener("click",()=>{set(d.hidden?"dia":"det");window.scrollTo(0,0)});
+  (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(()=>requestAnimationFrame(draw));
+})();
+</script>
+<aside class="bps-cta" aria-label="About Blue Particle Studios">
+  <p><span class="k">Made by Blue Particle Studios</span>Free study notes for students. Blue Particle Studios is a motion design studio in Abuja: we make brand films, ads, launch videos and websites. Share these notes with your class.</p>
+  <div class="btns"><a class="hot" href="/">See our work →</a><a href="/student-notes/">More student notes</a><a href="https://wa.me/2349061950587">WhatsApp us</a></div>
+</aside>
+<footer class="bps-foot"><span>© 2026 Blue Particle Studios · CAC BN 9846749</span><a href="#top">Back to top ↑</a></footer>
+</body>
+</html>
