@@ -1,9 +1,23 @@
 [
  {
+  "slug": "dough-episode-dm-open-1080p60-bps",
+  "file": "dough-episode-dm-open_1080p60_bps.mp4",
+  "title": "Dough Episode DM Open",
+  "kind": "ad",
+  "img": false,
+  "shape": "9:16",
+  "w": 1080,
+  "h": 1920,
+  "dur": 130.2,
+  "mb": 141.7,
+  "mtime": 1795785527,
+  "download": "https://github.com/WaliMedugu/blue-particle-web/releases/download/gallery/dough-episode-dm-open_1080p60_bps.mp4"
+ },
+ {
   "slug": "dough-town-showcase-9x16-1080p30-bps",
   "file": "dough-town-showcase-9x16_1080p30_bps.mp4",
   "title": "Dough Town Showcase",
-  "kind": "client",
+  "kind": "ad",
   "img": false,
   "shape": "9:16",
   "w": 1080,
@@ -17,7 +31,7 @@
   "slug": "dough-town-showcase-1080p30-bps",
   "file": "dough-town-showcase_1080p30_bps.mp4",
   "title": "Dough Town Showcase",
-  "kind": "client",
+  "kind": "ad",
   "img": false,
   "shape": "1:1",
   "w": 1080,
